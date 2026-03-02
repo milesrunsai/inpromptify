@@ -47,7 +47,7 @@ export default function SecurityPage() {
               <h2 className="text-lg font-semibold text-gray-900">Reporting Vulnerabilities</h2>
               <p>
                 If you discover a security vulnerability, please disclose it responsibly. Contact us at{" "}
-                <a href="mailto:security@InpromptiFy.ai" className="text-[#6366F1] underline">security@InpromptiFy.ai</a>.
+                <a href="mailto:security@inpromptify.com" className="text-[#6366F1] underline">security@inpromptify.com</a>.
                 We take all reports seriously and aim to respond within 48&nbsp;hours.
               </p>
             </section>
@@ -56,7 +56,7 @@ export default function SecurityPage() {
               <h2 className="text-lg font-semibold text-gray-900">Questions</h2>
               <p>
                 For general security questions, reach us at{" "}
-                <a href="mailto:security@InpromptiFy.ai" className="text-[#6366F1] underline">security@InpromptiFy.ai</a>.
+                <a href="mailto:security@inpromptify.com" className="text-[#6366F1] underline">security@inpromptify.com</a>.
               </p>
             </section>
           </div>

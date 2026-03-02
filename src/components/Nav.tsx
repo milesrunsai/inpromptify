@@ -16,14 +16,12 @@ const menuGroups = [
   {
     label: "Company",
     links: [
+      { label: "About", href: "/about" },
       { label: "How It Works", href: "/how-it-works" },
+      { label: "How Scoring Works", href: "/scoring" },
       { label: "Pricing", href: "/pricing" },
       { label: "Contact", href: "/contact" },
     ],
-  },
-  {
-    label: "Opportunities",
-    links: [{ label: "Jobs", href: "/jobs" }],
   },
 ];
 

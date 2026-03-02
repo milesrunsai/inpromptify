@@ -125,9 +125,9 @@ export default function HomePage() {
                   A score that means something
                 </h2>
                 <p className="text-sm text-gray-500 leading-relaxed mb-4">
-                  PromptScore evaluates four dimensions: output quality, token efficiency,
-                  iteration strategy, and speed. Fewer tokens for the same result means
-                  lower costs and faster workflows.
+                  PromptScore evaluates five dimensions: prompt quality, token efficiency,
+                  response quality, iteration intelligence, and speed. Each dimension
+                  is weighted and scored independently.
                 </p>
                 <p className="text-sm text-gray-500 leading-relaxed mb-4">
                   Detailed breakdowns show exactly where a candidate excels — or
@@ -333,23 +333,23 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ─── Browse Categories ─── */}
+        {/* ─── Use Cases ─── */}
         <section className="relative">
           <div className="relative max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
             <div className="text-center mb-14">
-              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Browse</p>
+              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Use Cases</p>
               <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-3">
-                Find your challenge
+                Built for how you work
               </h2>
               <p className="text-sm text-gray-500 max-w-md mx-auto">
-                Professional assessments, job opportunities, or casual practice — pick your path.
+                Whether you are hiring, upskilling, or benchmarking — InpromptiFy adapts to your workflow.
               </p>
             </div>
             <div className="grid md:grid-cols-3 gap-px bg-white/[0.04] rounded-xl overflow-hidden">
               {[
-                { label: "01", title: "Assessments", desc: "Professional AI prompting tests. Prove your skills with a PromptScore.", href: "/tests", cta: "Browse Assessments" },
-                { label: "02", title: "Jobs", desc: "Real job openings. Apply by completing a prompting challenge.", href: "/jobs", cta: "Browse Jobs" },
-                { label: "03", title: "Explore", desc: "Casual challenges to sharpen your AI skills at your own pace.", href: "/explore", cta: "Start Exploring" },
+                { label: "01", title: "Hiring", desc: "Screen AI capability in 5 minutes. Send candidates an assessment link, get scored results with hire/no-hire recommendations.", href: "/signup?plan=team-free", cta: "Start Assessing" },
+                { label: "02", title: "Team Benchmarking", desc: "Issue a standardized assessment to your entire team. Identify skill gaps, find your strongest AI users, and target training.", href: "/signup?plan=team-free", cta: "Benchmark Your Team" },
+                { label: "03", title: "Skill Development", desc: "Practice with real AI models under real constraints. Track your PromptScore over time and build a verified skill profile.", href: "/explore", cta: "Start Practicing" },
               ].map((item) => (
                 <div key={item.title} className="bg-[#0C1120] p-7 flex flex-col">
                   <span className="text-[11px] font-mono text-gray-600 block mb-3">{item.label}</span>

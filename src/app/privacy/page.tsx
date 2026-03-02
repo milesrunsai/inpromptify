@@ -93,7 +93,7 @@ export default function PrivacyPage() {
               <h2 className="text-lg font-semibold text-gray-900">10. Contact</h2>
               <p>
                 Questions about this policy? Contact us at{" "}
-                <a href="mailto:gatelayerplus@gmail.com" className="text-[#6366F1] underline">gatelayerplus@gmail.com</a>.
+                <a href="mailto:hello@inpromptify.com" className="text-[#6366F1] underline">hello@inpromptify.com</a>.
               </p>
             </section>
           </div>

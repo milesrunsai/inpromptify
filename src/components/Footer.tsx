@@ -19,9 +19,9 @@ export default function Footer() {
           <div>
             <h4 className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-3">Company</h4>
             <ul className="space-y-2 text-[13px]">
-              <li><span className="text-gray-600 cursor-default">About</span></li>
-              <li><span className="text-gray-600 cursor-default">Blog</span></li>
-              <li><span className="text-gray-600 cursor-default">Careers</span></li>
+              <li><Link href="/about" className="text-gray-500 hover:text-gray-300 transition-colors">About</Link></li>
+              <li><Link href="/scoring" className="text-gray-500 hover:text-gray-300 transition-colors">How Scoring Works</Link></li>
+              <li><Link href="/contact" className="text-gray-500 hover:text-gray-300 transition-colors">Contact</Link></li>
             </ul>
           </div>
           {/* Legal */}

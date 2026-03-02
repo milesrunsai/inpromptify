@@ -86,7 +86,7 @@ export default function HowItWorksPage() {
                 {
                   step: "3",
                   title: "Get your Prompt Score",
-                  description: "Submit when you're satisfied. You'll immediately see your score (0-100) with a breakdown across efficiency, speed, accuracy, and attempts. See where you rank. Put it on your LinkedIn if you're proud of it.",
+                  description: "Submit when you're satisfied. You'll immediately see your score (0-100) with a breakdown across five dimensions: prompt quality, efficiency, speed, response quality, and iteration intelligence. See where you rank. Put it on your LinkedIn if you're proud of it.",
                 },
               ].map((item) => (
                 <div key={item.step} className="flex gap-6 items-start">
@@ -107,15 +107,16 @@ export default function HowItWorksPage() {
             <h2 className="text-2xl font-bold text-gray-900 mb-3">The Prompt Score</h2>
             <p className="text-sm text-gray-600 mb-10 max-w-xl">
               A composite metric from 0 to 100 that measures how effectively someone uses AI to accomplish a task.
-              Four weighted components:
+              Five weighted dimensions:
             </p>
 
             <div className="space-y-6">
               {[
-                { name: "Accuracy", weight: "35%", desc: "Does the output match what was asked for? Evaluated against the success criteria defined by the test creator." },
-                { name: "Efficiency", weight: "30%", desc: "How many tokens did they burn relative to the budget? Getting the same result with fewer tokens scores higher." },
-                { name: "Speed", weight: "20%", desc: "How fast did they finish? Faster is better, as long as quality holds." },
-                { name: "Attempts", weight: "15%", desc: "How many prompts did they need? Fewer, more precise prompts indicate stronger prompting ability." },
+                { name: "Prompt Quality", weight: "25%", desc: "Clarity, specificity, structure, and constraints. Does the prompt give the model enough to work with on the first try?" },
+                { name: "Efficiency", weight: "25%", desc: "How many tokens did they burn relative to the budget? Getting the same result with fewer tokens scores higher." },
+                { name: "Speed", weight: "15%", desc: "How fast did they finish? Faster is better, as long as quality holds." },
+                { name: "Response Quality", weight: "20%", desc: "Does the output match what was asked for? Evaluated against the success criteria defined by the test creator." },
+                { name: "Iteration Intelligence", weight: "15%", desc: "Did they improve between attempts? Strategic refinement scores higher than random retries." },
               ].map((metric) => (
                 <div key={metric.name} className="flex gap-4 items-start">
                   <span className="text-xs font-mono font-bold text-gray-400 w-10 shrink-0 mt-0.5 text-right">{metric.weight}</span>
