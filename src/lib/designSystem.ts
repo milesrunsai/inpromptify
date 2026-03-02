@@ -3,7 +3,7 @@
 
 export const ds = {
   // Layout
-  page: "px-6 lg:px-10 py-8 max-w-[1200px]",
+  page: "py-2 max-w-full",
   
   // Typography
   pageTitle: "text-[22px] font-semibold text-white tracking-[-0.02em]",
