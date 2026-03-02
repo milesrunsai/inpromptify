@@ -159,14 +159,13 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("Submit error:", error);
+    const errMsg = error instanceof Error ? error.message : String(error);
 
-    // Fallback to mock if API fails
-    const mockResponse = "I apologize, but the AI service is temporarily unavailable. Please try again in a moment.";
     return NextResponse.json({
-      response: mockResponse,
+      response: "The AI service encountered an error. Please try again.",
       tokensUsed: { prompt: 0, completion: 0, total: 0 },
       model: "fallback",
-      error: "AI service temporarily unavailable",
+      error: errMsg,
       timestamp: new Date().toISOString(),
     }, { status: 200 });
   }
