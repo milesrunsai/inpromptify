@@ -68,6 +68,7 @@ export async function ensureSchema() {
 
   // Add new columns if they don't exist (safe for existing DBs)
   await sql`DO $$ BEGIN
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS user_id INTEGER REFERENCES users(id) ON DELETE CASCADE;
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS custom_criteria JSONB;
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS cover_image TEXT;
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS visibility VARCHAR(20) DEFAULT 'private';
@@ -75,6 +76,9 @@ export async function ensureSchema() {
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS company_name VARCHAR(255);
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS location VARCHAR(255);
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS salary_range VARCHAR(100);
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS candidates_count INTEGER DEFAULT 0;
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS avg_score NUMERIC(5,2) DEFAULT 0;
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS completion_rate NUMERIC(5,2) DEFAULT 0;
   EXCEPTION WHEN OTHERS THEN NULL;
   END $$`;
 
