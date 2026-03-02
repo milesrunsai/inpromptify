@@ -41,13 +41,7 @@ export default function LoginPage() {
           {/* Logo */}
           <div className="text-center mb-8">
             <Link href="/" className="inline-flex items-center gap-0 group mb-6">
-              <span className="font-mono text-xl tracking-tight select-none text-white">
-                <span className="text-indigo-500 font-normal opacity-60 group-hover:opacity-100 transition-opacity">[</span>
-                <span className="font-semibold">Inprompti</span>
-                <span className="font-semibold text-indigo-400">F</span>
-                <span className="font-semibold">y</span>
-                <span className="text-indigo-500 font-normal opacity-60 group-hover:opacity-100 transition-opacity">]</span>
-              </span>
+              <span className="inline-flex items-center gap-2"><img src="/logo.png" alt="InpromptiFy" width={24} height={24} /><span className="font-semibold text-white text-lg">InpromptiFy</span></span>
             </Link>
             <h1 className="text-2xl font-bold text-white mt-4">Welcome back</h1>
             <p className="text-gray-500 text-sm mt-2">Log in to your account</p>

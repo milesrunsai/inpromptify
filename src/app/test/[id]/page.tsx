@@ -97,11 +97,7 @@ export default function TestLandingPage({ params }: { params: Promise<{ id: stri
     <div className="min-h-screen bg-[#0A0F1C]">
       <div className="border-b border-white/[0.06]">
         <div className="max-w-3xl mx-auto px-5 py-4 flex items-center justify-between">
-          <Link href="/" className="font-mono text-base text-white">
-            <span className="text-indigo-500 opacity-60">[</span>
-            <span className="font-semibold">InpromptiFy</span>
-            <span className="text-indigo-500 opacity-60">]</span>
-          </Link>
+          <Link href="/" ><span className="inline-flex items-center gap-2"><img src="/logo.png" alt="InpromptiFy" width={20} height={20} /><span className="font-semibold text-white">InpromptiFy</span></span></Link>
           <span className="text-xs text-gray-500">AI Prompting Assessment</span>
         </div>
       </div>

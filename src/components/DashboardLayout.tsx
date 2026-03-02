@@ -64,12 +64,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div className="flex items-center justify-between h-14">
             {/* Left: Logo + Create */}
             <div className="flex items-center gap-5">
-              <Link href="/" className="flex items-center gap-2 group shrink-0">
-                <span className="font-mono text-sm text-white">
-                  <span className="text-indigo-500 opacity-60 group-hover:opacity-100 transition-opacity">[</span>
-                  <span className="font-semibold">IF</span>
-                  <span className="text-indigo-500 opacity-60 group-hover:opacity-100 transition-opacity">]</span>
-                </span>
+              <Link href="/" className="flex items-center gap-2 shrink-0">
+                <img src="/logo.png" alt="InpromptiFy" width={22} height={22} />
               </Link>
 
               {/* Desktop tabs */}

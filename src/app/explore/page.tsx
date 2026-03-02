@@ -60,8 +60,9 @@ export default function ExplorePage() {
       <div className="bg-[#0C1120] border-b border-white/[0.06]">
         <div className="max-w-5xl mx-auto px-6 py-5">
           <div className="flex items-center justify-between mb-4">
-            <Link href="/" className="font-mono text-sm text-white">
-              <span className="text-indigo-500 opacity-60">[</span>InpromptiFy<span className="text-indigo-500 opacity-60">]</span>
+            <Link href="/" className="inline-flex items-center gap-2">
+              <img src="/logo.png" alt="InpromptiFy" width={20} height={20} />
+              <span className="font-semibold text-white text-sm">InpromptiFy</span>
             </Link>
             <div className="flex items-center gap-3">
               <Link href="/test/demo" className="text-[13px] text-gray-400 hover:text-white transition-colors">Try Demo</Link>

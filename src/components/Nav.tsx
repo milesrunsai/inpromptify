@@ -65,14 +65,9 @@ export default function Nav({ transparent = false }: { transparent?: boolean }) 
       <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
         <div className="flex justify-between h-14 items-center">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-0 group">
-            <span className={`font-mono text-lg tracking-tight select-none ${isDark ? "text-white" : "text-gray-900"}`}>
-              <span className="text-indigo-500 font-normal opacity-60 group-hover:opacity-100 transition-opacity">[</span>
-              <span className="font-semibold">Inprompti</span>
-              <span className="font-semibold text-indigo-400">F</span>
-              <span className="font-semibold">y</span>
-              <span className="text-indigo-500 font-normal opacity-60 group-hover:opacity-100 transition-opacity">]</span>
-            </span>
+          <Link href="/" className="flex items-center gap-2 group">
+            <img src="/logo.png" alt="InpromptiFy" width={24} height={24} className="shrink-0" />
+            <span className={`font-semibold text-base ${isDark ? "text-white" : "text-gray-900"}`}>InpromptiFy</span>
           </Link>
 
           {/* Desktop: dropdown + auth */}

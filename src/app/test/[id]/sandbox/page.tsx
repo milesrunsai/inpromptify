@@ -304,7 +304,7 @@ export default function TestSandboxPage({
         <div className="max-w-2xl w-full">
           <div className="text-center mb-8">
             <Link href="/" className="font-mono text-sm text-white inline-block mb-6">
-              <span className="text-indigo-500 opacity-60">[</span>IF<span className="text-indigo-500 opacity-60">]</span>
+              <img src="/logo.png" alt="InpromptiFy" width={18} height={18} className="inline-block" />
             </Link>
             <h1 className="text-2xl font-bold text-white mb-2">{test.title}</h1>
             <p className="text-sm text-gray-500">{test.description || test.task_prompt.slice(0, 120) + "..."}</p>
@@ -364,7 +364,7 @@ export default function TestSandboxPage({
       <div className="bg-[#0C1120] border-b border-white/[0.06] px-3 sm:px-4 py-2.5 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <Link href="/" className="font-mono text-sm text-white shrink-0">
-            <span className="text-indigo-500 opacity-60">[</span>IF<span className="text-indigo-500 opacity-60">]</span>
+            <img src="/logo.png" alt="InpromptiFy" width={18} height={18} className="inline-block" />
           </Link>
           <span className="text-xs text-white/10 hidden sm:inline">|</span>
           <div className="min-w-0 hidden sm:block">

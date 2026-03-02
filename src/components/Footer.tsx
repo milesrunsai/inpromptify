@@ -61,9 +61,7 @@ export default function Footer() {
           <p className="text-[11px] text-gray-600">
             © 2026 InpromptiFy. All rights reserved.
           </p>
-          <span className="font-mono text-[11px] text-gray-700 tracking-tight select-none">
-            [InpromptiFy]
-          </span>
+          <img src="/logo.png" alt="InpromptiFy" width={18} height={18} className="opacity-40" />
         </div>
       </div>
     </footer>

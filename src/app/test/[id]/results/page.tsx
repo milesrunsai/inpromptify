@@ -189,7 +189,7 @@ export default function TestResultsPage({ params }: { params: Promise<{ id: stri
       <div className="bg-[#0C1120] border-b border-white/[0.06] sticky top-0 z-30">
         <div className="max-w-3xl mx-auto px-5 py-3 flex items-center justify-between">
           <Link href="/" className="font-mono text-sm text-white">
-            <span className="text-indigo-500 opacity-60">[</span>InpromptiFy<span className="text-indigo-500 opacity-60">]</span>
+            <span className="inline-flex items-center gap-1.5"><img src="/logo.png" alt="InpromptiFy" width={18} height={18} /><span className="font-semibold text-white">InpromptiFy</span></span>
           </Link>
           <span className="text-xs text-gray-600">Assessment Results</span>
         </div>

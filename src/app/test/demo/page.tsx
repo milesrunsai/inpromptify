@@ -162,13 +162,7 @@ export default function DemoTestPage() {
         <div className="max-w-md w-full relative z-10 animate-fade-in-up">
           <div className="text-center mb-6">
             <Link href="/" className="inline-flex items-center gap-0 group">
-              <span className="font-mono text-xl tracking-tight select-none text-white">
-                <span className="text-indigo-500 font-normal opacity-60 group-hover:opacity-100 transition-opacity">[</span>
-                <span className="font-semibold">Inprompti</span>
-                <span className="font-semibold text-indigo-400">F</span>
-                <span className="font-semibold">y</span>
-                <span className="text-indigo-500 font-normal opacity-60 group-hover:opacity-100 transition-opacity">]</span>
-              </span>
+              <span className="inline-flex items-center gap-2"><img src="/logo.png" alt="InpromptiFy" width={24} height={24} /><span className="font-semibold text-white text-lg">InpromptiFy</span></span>
             </Link>
           </div>
 
@@ -224,7 +218,7 @@ export default function DemoTestPage() {
       <div className="bg-[#0C1120] border-b border-white/[0.06] px-4 py-2.5 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
           <Link href="/" className="font-mono text-sm text-white">
-            <span className="text-indigo-500 opacity-60">[</span>IF<span className="text-indigo-500 opacity-60">]</span>
+            <img src="/logo.png" alt="InpromptiFy" width={18} height={18} className="inline-block" />
           </Link>
           <span className="text-xs text-white/10">|</span>
           <span className="text-sm font-medium text-white">{DEMO_TASK.name}</span>
