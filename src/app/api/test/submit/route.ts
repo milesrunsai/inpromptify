@@ -40,17 +40,18 @@ function checkRateLimit(ip: string, isAuthenticated: boolean = false): { allowed
     dayEntry.count++;
   }
 
+  maybeCleanup();
   return { allowed: true };
 }
 
-// Clean up old entries every 10 minutes
-if (typeof globalThis !== "undefined") {
-  const cleanup = () => {
-    const now = Date.now();
-    for (const [key, val] of minuteMap) { if (now > val.resetAt) minuteMap.delete(key); }
-    for (const [key, val] of dailyMap) { if (now > val.resetAt) dailyMap.delete(key); }
-  };
-  setInterval(cleanup, 600_000);
+// Lazy cleanup — runs inside checkRateLimit instead of setInterval (avoids build issues)
+let lastCleanup = Date.now();
+function maybeCleanup() {
+  const now = Date.now();
+  if (now - lastCleanup < 600_000) return;
+  lastCleanup = now;
+  for (const [key, val] of minuteMap) { if (now > val.resetAt) minuteMap.delete(key); }
+  for (const [key, val] of dailyMap) { if (now > val.resetAt) dailyMap.delete(key); }
 }
 
 interface AnthropicMessage {
