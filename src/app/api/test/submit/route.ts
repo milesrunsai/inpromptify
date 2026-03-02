@@ -1,31 +1,56 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// Simple in-memory rate limiter
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
-const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
-const RATE_LIMIT_MAX = 10; // 10 requests per minute per IP
+// Tiered rate limiting
+// Per-minute: prevent burst abuse
+// Per-day: cap total free AI usage per IP (controls cost)
+const minuteMap = new Map<string, { count: number; resetAt: number }>();
+const dailyMap = new Map<string, { count: number; resetAt: number }>();
 
-function checkRateLimit(ip: string): boolean {
+const MINUTE_LIMIT = 6; // 6 requests per minute per IP
+const DAILY_FREE_LIMIT = 15; // 15 total free prompts per day per IP (enough for ~3 tests)
+const DAILY_AUTH_LIMIT = 100; // authenticated users get more
+
+function checkRateLimit(ip: string, isAuthenticated: boolean = false): { allowed: boolean; reason?: string } {
   const now = Date.now();
-  const entry = rateLimitMap.get(ip);
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
-    return true;
+
+  // Per-minute check
+  const minEntry = minuteMap.get(ip);
+  if (!minEntry || now > minEntry.resetAt) {
+    minuteMap.set(ip, { count: 1, resetAt: now + 60_000 });
+  } else if (minEntry.count >= MINUTE_LIMIT) {
+    return { allowed: false, reason: "Too many requests. Please wait a moment." };
+  } else {
+    minEntry.count++;
   }
-  if (entry.count >= RATE_LIMIT_MAX) return false;
-  entry.count++;
-  return true;
+
+  // Daily check
+  const dailyLimit = isAuthenticated ? DAILY_AUTH_LIMIT : DAILY_FREE_LIMIT;
+  const dayEntry = dailyMap.get(ip);
+  const dayMs = 86_400_000;
+  if (!dayEntry || now > dayEntry.resetAt) {
+    dailyMap.set(ip, { count: 1, resetAt: now + dayMs });
+  } else if (dayEntry.count >= dailyLimit) {
+    return {
+      allowed: false,
+      reason: isAuthenticated
+        ? "Daily limit reached. Upgrade your plan for more."
+        : "Daily free limit reached. Sign up for more assessments.",
+    };
+  } else {
+    dayEntry.count++;
+  }
+
+  return { allowed: true };
 }
 
-// Clean up old entries every 5 minutes
+// Clean up old entries every 10 minutes
 if (typeof globalThis !== "undefined") {
   const cleanup = () => {
     const now = Date.now();
-    for (const [key, val] of rateLimitMap) {
-      if (now > val.resetAt) rateLimitMap.delete(key);
-    }
+    for (const [key, val] of minuteMap) { if (now > val.resetAt) minuteMap.delete(key); }
+    for (const [key, val] of dailyMap) { if (now > val.resetAt) dailyMap.delete(key); }
   };
-  setInterval(cleanup, 300_000);
+  setInterval(cleanup, 600_000);
 }
 
 interface AnthropicMessage {
@@ -119,10 +144,16 @@ Respond naturally and helpfully to their prompts. Your response quality will be 
 
 export async function POST(request: NextRequest) {
   try {
-    // Rate limiting
+    // Check auth status (cookie-based, don't block if missing)
+    const authCookie = request.cookies.get("authjs.session-token")?.value || 
+                       request.cookies.get("__Secure-authjs.session-token")?.value;
+    const isAuthenticated = !!authCookie;
+
+    // Rate limiting — stricter for anonymous users
     const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "unknown";
-    if (!checkRateLimit(ip)) {
-      return NextResponse.json({ error: "Too many requests. Please wait a moment." }, { status: 429 });
+    const rateCheck = checkRateLimit(ip, isAuthenticated);
+    if (!rateCheck.allowed) {
+      return NextResponse.json({ error: rateCheck.reason }, { status: 429 });
     }
 
     const body = await request.json();
