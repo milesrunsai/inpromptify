@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 
 const PLANS: Record<string, { priceId: string; name: string }> = {
-  professional: { priceId: "price_professional_monthly", name: "Professional" },
-  team: { priceId: "price_team_monthly", name: "Team" },
-  business: { priceId: "price_business_monthly", name: "Business" },
+  professional: { priceId: "price_1T6PFqH46oIUlUacECXJNy69", name: "Professional" },
+  team: { priceId: "price_1T6PGDH46oIUlUacdtCuObxl", name: "Team" },
+  business: { priceId: "price_1T6PGNH46oIUlUactpgSiH8R", name: "Business" },
 };
 
 export async function POST(request: NextRequest) {
