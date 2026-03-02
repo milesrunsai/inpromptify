@@ -1,10 +1,8 @@
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import HeroMockup from "@/components/home/HeroMockup";
 import ScorePreview from "@/components/home/ScorePreview";
 import DashboardPreview from "@/components/home/DashboardPreview";
-import BeforeAfter from "@/components/home/BeforeAfter";
 import UsageCounter from "@/components/home/UsageCounter";
 
 export default function HomePage() {
@@ -20,42 +18,53 @@ export default function HomePage() {
           <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28 w-full">
             <div className="max-w-2xl mb-12">
               <p className="text-[13px] font-mono text-indigo-400/80 mb-4 animate-fade-in-up">
-                // assess what matters
+                // for hiring managers
               </p>
               <h1 className="text-4xl sm:text-5xl md:text-[3.5rem] font-bold text-white tracking-tight leading-[1.08] mb-5 animate-fade-in-up-delay-1">
-                Measure how your team{" "}
-                <span className="text-gray-500">actually uses AI.</span>
+                Screen AI capability{" "}
+                <span className="text-gray-500">before you hire.</span>
               </h1>
               <p className="text-base text-gray-500 leading-relaxed mb-8 max-w-lg animate-fade-in-up-delay-2">
-                Prompt quality varies 10x between employees. InpromptiFy scores prompting
-                efficiency, identifies skill gaps, and shows you where AI spend turns into AI value.
+                Give candidates a real-world AI task. Get a clear score on how effectively they use AI at work. Five minutes to set up. No resumes, no self-reporting, no guessing.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 animate-fade-in-up-delay-3">
                 <Link href="/signup?plan=team-free" className="inline-flex items-center justify-center text-white bg-indigo-600 hover:bg-indigo-500 px-6 py-2.5 rounded-md text-sm font-medium transition-colors">
-                  Assess Your Team Free
+                  Create Your First Assessment
                 </Link>
                 <Link href="/test/demo" className="inline-flex items-center justify-center text-gray-400 hover:text-gray-200 px-6 py-2.5 rounded-md text-sm transition-colors border border-white/[0.06] hover:border-white/[0.12]">
-                  Try the Demo
+                  See the Candidate Experience
                 </Link>
               </div>
             </div>
 
-            <div className="animate-fade-in-up-delay-3">
-              <HeroMockup />
+            {/* Mini proof strip */}
+            <div className="grid grid-cols-3 gap-px bg-white/[0.04] rounded-lg overflow-hidden max-w-lg animate-fade-in-up-delay-3">
+              <div className="bg-[#0C1120] px-4 py-3 text-center">
+                <span className="text-lg font-bold text-white block">5 min</span>
+                <span className="text-[11px] text-gray-600">setup time</span>
+              </div>
+              <div className="bg-[#0C1120] px-4 py-3 text-center">
+                <span className="text-lg font-bold text-white block">5</span>
+                <span className="text-[11px] text-gray-600">scoring dimensions</span>
+              </div>
+              <div className="bg-[#0C1120] px-4 py-3 text-center">
+                <span className="text-lg font-bold text-white block">0-100</span>
+                <span className="text-[11px] text-gray-600">AI proficiency score</span>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* ─── Early Access Banner ─── */}
+        {/* ─── Early Access ─── */}
         <section className="border-y border-white/[0.04]">
-          <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-8">
+          <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-6">
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <UsageCounter />
               </div>
               <span className="hidden sm:block h-4 w-px bg-white/[0.06]" />
-              <span className="text-sm text-gray-500">Free team assessments for the first 100 companies</span>
+              <span className="text-sm text-gray-500">Free for the first 100 companies</span>
               <Link href="/signup?plan=team-free" className="text-sm text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
                 Claim your spot
               </Link>
@@ -63,35 +72,34 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ─── The Cost of Bad Prompting ─── */}
+        {/* ─── The Problem ─── */}
         <section className="relative">
           <div className="relative max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
             <div className="text-center mb-14">
               <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">The Problem</p>
               <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-3">
-                Your team is burning money on bad prompts
+                You can't tell who's good with AI from a resume
               </h2>
               <p className="text-sm text-gray-500 max-w-lg mx-auto">
-                Every inefficient prompt costs you tokens, time, and output quality.
-                Most organizations have no visibility into the problem.
+                Everyone claims &ldquo;proficient with AI tools.&rdquo; But research shows a 10x gap in actual performance. You need proof, not claims.
               </p>
             </div>
             <div className="grid md:grid-cols-3 gap-px bg-white/[0.04] rounded-xl overflow-hidden mb-10">
               {[
                 {
                   stat: "10x",
-                  label: "Variation in prompt effectiveness",
-                  desc: "Harvard and Wharton research shows prompt quality varies by an order of magnitude between users performing the same task. Most teams have no way to measure this.",
+                  label: "Variation in AI effectiveness",
+                  desc: "Harvard and Wharton research shows prompt quality varies by an order of magnitude between users performing the same task.",
                 },
                 {
                   stat: "30%",
                   label: "Of GenAI projects abandoned",
-                  desc: "Gartner predicts nearly a third of generative AI projects will be abandoned after proof of concept — often because teams lack the skills to use the tools effectively.",
+                  desc: "Gartner: nearly a third of GenAI projects fail after proof of concept, often because teams lack the skills to use the tools.",
                 },
                 {
                   stat: "$600B",
                   label: "AI spend vs. value gap",
-                  desc: "Sequoia Capital identified a $600B gap between AI infrastructure investment and actual revenue generated. The bottleneck is not the models — it is how people use them.",
+                  desc: "Sequoia Capital: $600B gap between AI infrastructure investment and revenue. The bottleneck is people, not models.",
                 },
               ].map((item) => (
                 <div key={item.stat} className="bg-[#0C1120] p-7 text-center">
@@ -101,150 +109,35 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <div className="text-center">
-              <p className="text-sm text-gray-400 mb-6">
-                InpromptiFy measures prompting skill across your team so you can close the gap between AI spend and AI value.
-              </p>
-              <Link
-                href="/pricing"
-                className="inline-flex items-center justify-center text-gray-400 hover:text-gray-200 px-6 py-2.5 rounded-md text-sm transition-colors border border-white/[0.06] hover:border-white/[0.12]"
-              >
-                Calculate Your Waste
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* ─── Scoring Preview ─── */}
-        <section className="border-y border-white/[0.04]">
-          <div className="relative max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Scoring</p>
-                <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-4">
-                  A score that means something
-                </h2>
-                <p className="text-sm text-gray-500 leading-relaxed mb-4">
-                  PromptScore evaluates five dimensions: prompt quality, token efficiency,
-                  response quality, iteration intelligence, and speed. Each dimension
-                  is weighted and scored independently.
-                </p>
-                <p className="text-sm text-gray-500 leading-relaxed mb-4">
-                  Detailed breakdowns show exactly where a candidate excels — or
-                  falls short. No more guessing.
-                </p>
-                <p className="text-sm text-indigo-400/80 font-medium">
-                  The same result with fewer tokens means lower costs and faster workflows — that is what efficient prompting looks like.
-                </p>
-              </div>
-              <ScorePreview />
-            </div>
-          </div>
-        </section>
-
-        {/* ─── Dashboard Preview ─── */}
-        <section className="relative">
-          <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
-            <div className="text-center mb-12">
-              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Dashboard</p>
-              <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-3">
-                Compare candidates at a glance
-              </h2>
-              <p className="text-sm text-gray-500 max-w-md mx-auto">
-                Your employer dashboard shows every test result, ranked and filterable.
-              </p>
-            </div>
-            <DashboardPreview />
-          </div>
-        </section>
-
-        {/* ─── Free Team Assessment ─── */}
-        <section className="border-y border-white/[0.04]">
-          <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
-            <div className="text-center mb-14">
-              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">For Teams</p>
-              <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-3">
-                See how your team actually performs — free
-              </h2>
-              <p className="text-sm text-gray-500 max-w-xl mx-auto">
-                Issue a standardized AI skills assessment to your entire team. Get a breakdown
-                of who prompts efficiently, who needs training, and where your biggest cost
-                savings are. No credit card required.
-              </p>
-            </div>
-            <div className="grid md:grid-cols-2 gap-8 items-start">
-              <div className="space-y-4">
-                {[
-                  "Standardized prompt assessment for up to 25 employees",
-                  "Individual PromptScore breakdowns",
-                  "Team efficiency heatmap",
-                  "Token usage analysis per person",
-                  "Exportable PDF report",
-                ].map((item) => (
-                  <div key={item} className="flex items-start gap-3">
-                    <span className="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
-                    <span className="text-sm text-gray-400">{item}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="bg-[#0C1120] rounded-xl border border-white/[0.06] p-6">
-                <div className="flex items-center justify-between mb-5">
-                  <h3 className="text-sm font-semibold text-white">Team Results</h3>
-                  <span className="text-[10px] font-mono text-indigo-400/70 uppercase">Live Preview</span>
-                </div>
-                <div className="space-y-3">
-                  {[
-                    { name: "S. Chen", score: 92, efficiency: "Top 5%", bar: "w-[92%]" },
-                    { name: "M. Rivera", score: 78, efficiency: "Top 25%", bar: "w-[78%]" },
-                    { name: "J. Park", score: 65, efficiency: "Average", bar: "w-[65%]" },
-                    { name: "A. Thompson", score: 41, efficiency: "Needs Training", bar: "w-[41%]" },
-                  ].map((row) => (
-                    <div key={row.name} className="flex items-center gap-3">
-                      <span className="text-[13px] text-gray-400 w-24 shrink-0">{row.name}</span>
-                      <div className="flex-1 h-2 bg-white/[0.04] rounded-full overflow-hidden">
-                        <div className={`h-full rounded-full ${row.score >= 80 ? "bg-indigo-500" : row.score >= 60 ? "bg-indigo-500/60" : "bg-indigo-500/30"} ${row.bar}`} />
-                      </div>
-                      <span className="text-[11px] font-mono text-gray-600 w-10 text-right">{row.score}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-5 pt-4 border-t border-white/[0.04] flex justify-between">
-                  <span className="text-[11px] text-gray-600">Team avg: 69</span>
-                  <span className="text-[11px] text-indigo-400/70">Est. savings: $14K/yr</span>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mt-10">
-              <Link
-                href="/signup?plan=team-free"
-                className="inline-flex items-center justify-center text-white bg-indigo-600 hover:bg-indigo-500 px-6 py-2.5 rounded-md text-sm font-medium transition-colors"
-              >
-                Assess Your Team Free
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center text-gray-400 hover:text-gray-200 px-6 py-2.5 rounded-md text-sm transition-colors border border-white/[0.06] hover:border-white/[0.12]"
-              >
-                Talk to Sales
-              </Link>
-            </div>
           </div>
         </section>
 
         {/* ─── How It Works ─── */}
-        <section className="relative">
+        <section className="border-y border-white/[0.04]">
           <div className="relative max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
             <div className="text-center mb-14">
-              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Process</p>
+              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">How It Works</p>
               <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-                Three steps. Thirty seconds.
+                Three steps. Five minutes.
               </h2>
             </div>
             <div className="grid md:grid-cols-3 gap-px bg-white/[0.04] rounded-xl overflow-hidden">
               {[
-                { step: "01", title: "Create", desc: "Describe what you want to test. AI generates the task, scoring criteria, and settings in seconds." },
-                { step: "02", title: "Assess", desc: "Candidates enter a sandboxed environment and solve the task with a real LLM. Token usage is tracked." },
-                { step: "03", title: "Optimize", desc: "Get PromptScores with detailed cost analytics. Identify who needs training and where money is being wasted." },
+                {
+                  step: "01",
+                  title: "Create an assessment",
+                  desc: "Describe the role or task. InpromptiFy generates a real-world AI challenge with scoring criteria, token budget, and time limit. Or choose from role-specific templates.",
+                },
+                {
+                  step: "02",
+                  title: "Send to candidates",
+                  desc: "Share a link. Candidates enter a sandboxed environment with a real AI model and solve the task. No account required. Everything is tracked: prompts, tokens, time, iterations.",
+                },
+                {
+                  step: "03",
+                  title: "Compare and decide",
+                  desc: "Each candidate gets a 0-100 AI Proficiency Score across five dimensions. Your dashboard shows everyone ranked, with hire/no-hire recommendations and detailed breakdowns.",
+                },
               ].map((item) => (
                 <div key={item.step} className="bg-[#0C1120] p-7">
                   <span className="text-[11px] font-mono text-gray-600 block mb-4">{item.step}</span>
@@ -256,107 +149,201 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ─── Before / After ─── */}
-        <section className="border-y border-white/[0.04]">
-          <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
-            <div className="text-center mb-12">
-              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Why InpromptiFy</p>
-              <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-                The old way vs. the better way
-              </h2>
+        {/* ─── The Score ─── */}
+        <section>
+          <div className="relative max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">The Score</p>
+                <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-4">
+                  Not a gut feeling. A score.
+                </h2>
+                <p className="text-sm text-gray-500 leading-relaxed mb-4">
+                  Every candidate gets an AI Proficiency Score (0-100) based on five independently weighted dimensions: prompt quality, efficiency, speed, response quality, and iteration intelligence.
+                </p>
+                <p className="text-sm text-gray-500 leading-relaxed mb-5">
+                  Three of five dimensions are fully deterministic — token count, speed, attempt count. The remaining two use hybrid evaluation: structural heuristics plus LLM-as-judge. Every score includes a full audit trail.
+                </p>
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                  {[
+                    { score: "80-100", label: "Strong Hire", color: "text-emerald-400 border-emerald-500/20" },
+                    { score: "65-79", label: "Hire", color: "text-blue-400 border-blue-500/20" },
+                    { score: "50-64", label: "Consider", color: "text-amber-400 border-amber-500/20" },
+                    { score: "0-49", label: "Not Recommended", color: "text-red-400 border-red-500/20" },
+                  ].map((band) => (
+                    <div key={band.score} className={`border rounded-lg px-3 py-2 ${band.color}`}>
+                      <span className="text-[12px] font-mono block">{band.score}</span>
+                      <span className="text-[11px] font-semibold">{band.label}</span>
+                    </div>
+                  ))}
+                </div>
+                <Link href="/scoring" className="text-[13px] font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
+                  How scoring works in detail &rarr;
+                </Link>
+              </div>
+              <ScorePreview />
             </div>
-            <BeforeAfter />
           </div>
         </section>
 
-        {/* ─── Features ─── */}
-        <section className="relative">
+        {/* ─── Dashboard ─── */}
+        <section className="border-y border-white/[0.04]">
+          <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
+            <div className="text-center mb-12">
+              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Your Dashboard</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-3">
+                Compare every candidate. Side by side.
+              </h2>
+              <p className="text-sm text-gray-500 max-w-md mx-auto">
+                One view for all results. Filter by score, sort by dimension, export to PDF. Make better hiring decisions with real data.
+              </p>
+            </div>
+            <DashboardPreview />
+          </div>
+        </section>
+
+        {/* ─── What You Can Test ─── */}
+        <section>
           <div className="relative max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
             <div className="text-center mb-14">
-              <p className="text-[11px] font-mono text-violet-400/70 uppercase tracking-wider mb-3">Features</p>
-              <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-                Everything you need to assess AI skills
+              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Flexible</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-3">
+                Test any role. Any task.
               </h2>
+              <p className="text-sm text-gray-500 max-w-md mx-auto">
+                Custom assessments or pre-built role templates. If the job involves AI, you can test for it.
+              </p>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.04] rounded-xl overflow-hidden">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.04] rounded-xl overflow-hidden">
               {[
-                { title: "Real LLM Sandbox", desc: "Candidates use actual AI models in a controlled, monitored environment." },
-                { title: "Prompt Scoring", desc: "Automated 0-100 scoring based on efficiency, quality, and iteration count." },
-                { title: "Any Skill, Any Role", desc: "Legal drafting, code debugging, medical reports, ad copy — test anything with custom criteria." },
-                { title: "Token Budgets", desc: "Set token limits to measure how efficiently candidates work with AI. Lower usage, same quality — that is the goal." },
-                { title: "Cost Analytics", desc: "Track per-employee AI spend and identify optimization opportunities across your organization." },
-                { title: "Team Benchmarks", desc: "See how your team compares to industry averages with anonymized benchmark data." },
-                { title: "Time Controls", desc: "Configurable time limits keep assessments standardized and fair." },
-                { title: "Analytics Dashboard", desc: "Compare candidates side-by-side with detailed performance breakdowns." },
-              ].map((f) => (
-                <div key={f.title} className="bg-[#0C1120] p-6 hover:bg-[#0E1326] transition-colors">
-                  <h3 className="text-sm font-semibold text-white mb-1.5">{f.title}</h3>
-                  <p className="text-[13px] text-gray-500 leading-relaxed">{f.desc}</p>
+                { role: "Sales / BDR", task: "Draft a personalized outreach email using prospect data and AI" },
+                { role: "Marketing", task: "Generate ad copy variations and optimize for target audience" },
+                { role: "Software Engineering", task: "Debug code and write tests using AI as a pair programmer" },
+                { role: "Data Analysis", task: "Extract insights from a dataset using AI-assisted analysis" },
+                { role: "Customer Support", task: "Draft support responses that match brand voice and policy" },
+                { role: "Legal / Compliance", task: "Summarize a contract and flag risk clauses" },
+                { role: "Product Management", task: "Write a PRD from user research notes using AI" },
+                { role: "Custom", task: "Create any task with your own criteria, budget, and time limit" },
+              ].map((item) => (
+                <div key={item.role} className="bg-[#0C1120] p-5 hover:bg-[#0E1326] transition-colors">
+                  <h3 className="text-sm font-semibold text-white mb-1">{item.role}</h3>
+                  <p className="text-[12px] text-gray-500 leading-relaxed">{item.task}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ─── Pricing Teaser ─── */}
+        {/* ─── Why Not Resumes ─── */}
+        <section className="border-y border-white/[0.04]">
+          <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
+            <div className="text-center mb-14">
+              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Why This Matters</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+                What hiring looks like without this
+              </h2>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-[#0C1120] border border-red-500/10 rounded-xl p-6">
+                <h3 className="text-sm font-semibold text-red-400/80 mb-4 uppercase tracking-wider">Without InpromptiFy</h3>
+                <ul className="space-y-3 text-sm text-gray-500">
+                  {[
+                    "Resume says 'proficient with ChatGPT' — no way to verify",
+                    "Interview question: 'How do you use AI?' — rehearsed answer",
+                    "Every candidate sounds equally good on paper",
+                    "Hire based on gut feeling, discover skill gaps month 2",
+                    "Paying for AI tools nobody uses effectively",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <span className="text-red-500/60 mt-0.5 shrink-0">&times;</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="bg-[#0C1120] border border-emerald-500/10 rounded-xl p-6">
+                <h3 className="text-sm font-semibold text-emerald-400/80 mb-4 uppercase tracking-wider">With InpromptiFy</h3>
+                <ul className="space-y-3 text-sm text-gray-500">
+                  {[
+                    "Candidate completes a real AI task in 5-10 minutes",
+                    "You see exactly how they prompt, iterate, and solve",
+                    "0-100 score with hire/no-hire recommendation",
+                    "Compare candidates objectively with full audit trail",
+                    "Know who will actually use AI effectively on day one",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <span className="text-emerald-500/80 mt-0.5 shrink-0">&#10003;</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── Integrity ─── */}
+        <section>
+          <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
+            <div className="grid md:grid-cols-2 gap-12 items-start">
+              <div>
+                <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Test Integrity</p>
+                <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-4">
+                  Built to be hard to game
+                </h2>
+                <p className="text-sm text-gray-500 leading-relaxed">
+                  Assessments run in a sandboxed environment. We track paste events, tab switches, and typing patterns as integrity signals. Multi-dimensional scoring means gaming one dimension hurts another. Meta-prompting attempts are detected and penalized.
+                </p>
+                <Link href="/scoring#anti-gaming" className="text-[13px] font-medium text-indigo-400 hover:text-indigo-300 mt-4 inline-block transition-colors">
+                  Full integrity details &rarr;
+                </Link>
+              </div>
+              <div className="space-y-3">
+                {[
+                  { label: "Sandboxed environment", desc: "Controlled AI interaction. No external paste, monitored session." },
+                  { label: "Behavioral signals", desc: "Tab switches, paste events, typing patterns — logged and flagged." },
+                  { label: "Anti-meta-prompting", desc: "Detects attempts to have AI generate the prompt itself." },
+                  { label: "Dynamic tasks", desc: "No fixed question bank. Custom criteria per assessment." },
+                  { label: "Audit trail", desc: "Every score is explainable. Full breakdown per dimension." },
+                ].map((item) => (
+                  <div key={item.label} className="bg-[#0C1120] border border-white/[0.04] rounded-lg px-4 py-3">
+                    <span className="text-[13px] font-semibold text-white">{item.label}</span>
+                    <p className="text-[12px] text-gray-600 mt-0.5">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── Pricing ─── */}
         <section className="border-y border-white/[0.04]">
           <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
             <div className="text-center mb-10">
               <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Pricing</p>
               <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-3">
-                Simple, transparent pricing
+                Start free. Pay when it works.
               </h2>
               <p className="text-sm text-gray-500 max-w-md mx-auto">
-                Start free. Scale when you&apos;re ready.
+                No credit card for free tier. Upgrade when you need more assessments or team seats.
               </p>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.04] rounded-xl overflow-hidden max-w-4xl mx-auto">
               {[
-                { plan: "Starter", price: "$0", period: "/mo", desc: "3 assessments/month. Try it free.", cta: "Get Started", highlight: false },
-                { plan: "Professional", price: "$49", period: "/mo", desc: "25 assessments. PDF reports. Consultants.", cta: "Get Started", highlight: false },
-                { plan: "Team", price: "$199", period: "/mo", desc: "150 assessments. 10 seats. Full analytics.", cta: "Start Free Trial", highlight: true },
-                { plan: "Business", price: "$599", period: "/mo", desc: "500 assessments. 50 seats. API + SSO.", cta: "Start Free Trial", highlight: false },
+                { plan: "Starter", price: "$0", period: "/mo", desc: "3 assessments/month. One seat. Try it free.", cta: "Get Started", highlight: false },
+                { plan: "Professional", price: "$49", period: "/mo", desc: "25 assessments. PDF reports. For consultants and recruiters.", cta: "Get Started", highlight: false },
+                { plan: "Team", price: "$199", period: "/mo", desc: "150 assessments. 10 seats. Team analytics.", cta: "Start Free Trial", highlight: true },
+                { plan: "Business", price: "$599", period: "/mo", desc: "500 assessments. 50 seats. API access. SSO.", cta: "Contact Sales", highlight: false },
               ].map((p) => (
                 <div key={p.plan} className={`p-6 ${p.highlight ? "bg-indigo-600/[0.06] border-y border-indigo-500/20 sm:border-y-0 sm:border-x" : "bg-[#0C1120]"}`}>
                   <h3 className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">{p.plan}</h3>
                   <div className="flex items-baseline gap-0.5 mb-3">
                     <span className="text-2xl font-bold text-white">{p.price}</span>
-                    {p.period && <span className="text-sm text-gray-600">{p.period}</span>}
+                    <span className="text-sm text-gray-600">{p.period}</span>
                   </div>
                   <p className="text-[13px] text-gray-500 mb-5">{p.desc}</p>
-                  <Link href="/pricing" className={`block text-center text-[13px] font-medium py-2 rounded-md transition-colors ${p.highlight ? "bg-indigo-600 hover:bg-indigo-500 text-white" : "bg-white/[0.04] hover:bg-white/[0.08] text-gray-400 border border-white/[0.06]"}`}>
+                  <Link href={p.plan === "Business" ? "/contact" : "/pricing"} className={`block text-center text-[13px] font-medium py-2 rounded-md transition-colors ${p.highlight ? "bg-indigo-600 hover:bg-indigo-500 text-white" : "bg-white/[0.04] hover:bg-white/[0.08] text-gray-400 border border-white/[0.06]"}`}>
                     {p.cta}
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ─── Use Cases ─── */}
-        <section className="relative">
-          <div className="relative max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
-            <div className="text-center mb-14">
-              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Use Cases</p>
-              <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-3">
-                Built for how you work
-              </h2>
-              <p className="text-sm text-gray-500 max-w-md mx-auto">
-                Whether you are hiring, upskilling, or benchmarking — InpromptiFy adapts to your workflow.
-              </p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-px bg-white/[0.04] rounded-xl overflow-hidden">
-              {[
-                { label: "01", title: "Hiring", desc: "Screen AI capability in 5 minutes. Send candidates an assessment link, get scored results with hire/no-hire recommendations.", href: "/signup?plan=team-free", cta: "Start Assessing" },
-                { label: "02", title: "Team Benchmarking", desc: "Issue a standardized assessment to your entire team. Identify skill gaps, find your strongest AI users, and target training.", href: "/signup?plan=team-free", cta: "Benchmark Your Team" },
-                { label: "03", title: "Skill Development", desc: "Practice with real AI models under real constraints. Track your PromptScore over time and build a verified skill profile.", href: "/explore", cta: "Start Practicing" },
-              ].map((item) => (
-                <div key={item.title} className="bg-[#0C1120] p-7 flex flex-col">
-                  <span className="text-[11px] font-mono text-gray-600 block mb-3">{item.label}</span>
-                  <h3 className="text-base font-semibold text-white mb-2">{item.title}</h3>
-                  <p className="text-sm text-gray-500 leading-relaxed mb-5 flex-1">{item.desc}</p>
-                  <Link href={item.href} className="text-[13px] font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
-                    {item.cta} &rarr;
                   </Link>
                 </div>
               ))}
@@ -369,18 +356,18 @@ export default function HomePage() {
           <div className="absolute inset-0 dot-grid opacity-15" />
           <div className="relative max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28 text-center">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight">
-              Know who can actually prompt.
+              Stop guessing who can use AI.{" "}
+              <span className="text-gray-500">Start measuring it.</span>
             </h2>
             <p className="text-sm text-gray-500 mb-8 max-w-md mx-auto">
-              The gap between good and bad prompting is 10x. Start measuring it —
-              free for teams up to 25 people.
+              The gap between good and bad AI usage is 10x. A 5-minute assessment shows you who is on which side. Free for teams up to 25.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link href="/signup?plan=team-free" className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors">
-                Assess Your Team Free
+                Create Your First Assessment
               </Link>
-              <Link href="/pricing" className="inline-flex items-center justify-center text-gray-400 hover:text-gray-200 px-6 py-2.5 rounded-md text-sm transition-colors border border-white/[0.06] hover:border-white/[0.12]">
-                See Pricing
+              <Link href="/contact" className="inline-flex items-center justify-center text-gray-400 hover:text-gray-200 px-6 py-2.5 rounded-md text-sm transition-colors border border-white/[0.06] hover:border-white/[0.12]">
+                Talk to Us
               </Link>
             </div>
           </div>

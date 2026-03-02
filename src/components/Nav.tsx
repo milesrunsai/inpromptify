@@ -6,20 +6,17 @@ import { useSession } from "next-auth/react";
 
 const menuGroups = [
   {
-    label: "Platform",
+    label: "Product",
     links: [
-      { label: "Assessments", href: "/tests" },
-      { label: "Explore", href: "/explore" },
-      { label: "Leaderboard", href: "/leaderboard" },
+      { label: "How It Works", href: "/how-it-works" },
+      { label: "How Scoring Works", href: "/scoring" },
+      { label: "Pricing", href: "/pricing" },
     ],
   },
   {
     label: "Company",
     links: [
       { label: "About", href: "/about" },
-      { label: "How It Works", href: "/how-it-works" },
-      { label: "How Scoring Works", href: "/scoring" },
-      { label: "Pricing", href: "/pricing" },
       { label: "Contact", href: "/contact" },
     ],
   },

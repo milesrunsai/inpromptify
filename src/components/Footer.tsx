@@ -10,9 +10,9 @@ export default function Footer() {
             <h4 className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-3">Product</h4>
             <ul className="space-y-2 text-[13px]">
               <li><Link href="/how-it-works" className="text-gray-500 hover:text-gray-300 transition-colors">How It Works</Link></li>
+              <li><Link href="/scoring" className="text-gray-500 hover:text-gray-300 transition-colors">How Scoring Works</Link></li>
               <li><Link href="/pricing" className="text-gray-500 hover:text-gray-300 transition-colors">Pricing</Link></li>
-              <li><Link href="/leaderboard" className="text-gray-500 hover:text-gray-300 transition-colors">Leaderboard</Link></li>
-              <li><Link href="/test/demo" className="text-gray-500 hover:text-gray-300 transition-colors">Demo</Link></li>
+              <li><Link href="/test/demo" className="text-gray-500 hover:text-gray-300 transition-colors">Try the Demo</Link></li>
             </ul>
           </div>
           {/* Company */}
