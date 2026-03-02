@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
+import LinkedIn from "next-auth/providers/linkedin";
 import Credentials from "next-auth/providers/credentials";
 import { getSql } from "./db";
 import bcrypt from "bcryptjs";
@@ -9,6 +10,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    LinkedIn({
+      clientId: process.env.LINKEDIN_CLIENT_ID!,
+      clientSecret: process.env.LINKEDIN_CLIENT_SECRET!,
     }),
     Credentials({
       name: "Email",
@@ -51,22 +56,38 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     async signIn({ user, account }) {
-      if (account?.provider === "google" && user.email) {
+      if ((account?.provider === "google" || account?.provider === "linkedin") && user.email) {
         const sql = getSql();
+        const idColumn = account.provider === "google" ? "google_id" : "linkedin_id";
+        
         // Check if user exists
-        const existing = await sql`SELECT id, google_id FROM users WHERE email = ${user.email}`;
+        const existing = await sql`SELECT id, google_id, linkedin_id FROM users WHERE email = ${user.email}`;
         if (existing.length === 0) {
-          // Auto-create account for Google users
-          await sql`
-            INSERT INTO users (name, email, google_id, avatar_url)
-            VALUES (${user.name || "User"}, ${user.email}, ${account.providerAccountId}, ${user.image || null})
-          `;
-        } else if (!existing[0].google_id) {
-          // Link Google to existing account
-          await sql`
-            UPDATE users SET google_id = ${account.providerAccountId}, avatar_url = COALESCE(avatar_url, ${user.image || null})
-            WHERE email = ${user.email}
-          `;
+          // Auto-create account for OAuth users
+          if (account.provider === "google") {
+            await sql`
+              INSERT INTO users (name, email, google_id, avatar_url)
+              VALUES (${user.name || "User"}, ${user.email}, ${account.providerAccountId}, ${user.image || null})
+            `;
+          } else {
+            await sql`
+              INSERT INTO users (name, email, linkedin_id, avatar_url)
+              VALUES (${user.name || "User"}, ${user.email}, ${account.providerAccountId}, ${user.image || null})
+            `;
+          }
+        } else if (!existing[0][idColumn]) {
+          // Link OAuth to existing account
+          if (account.provider === "google") {
+            await sql`
+              UPDATE users SET google_id = ${account.providerAccountId}, avatar_url = COALESCE(avatar_url, ${user.image || null})
+              WHERE email = ${user.email}
+            `;
+          } else {
+            await sql`
+              UPDATE users SET linkedin_id = ${account.providerAccountId}, avatar_url = COALESCE(avatar_url, ${user.image || null})
+              WHERE email = ${user.email}
+            `;
+          }
         }
       }
       return true;

@@ -31,6 +31,7 @@ export async function ensureSchema() {
     ALTER TABLE users ADD COLUMN IF NOT EXISTS linkedin_url VARCHAR(500);
     ALTER TABLE users ADD COLUMN IF NOT EXISTS skills_tags TEXT;
     ALTER TABLE users ADD COLUMN IF NOT EXISTS account_type VARCHAR(50) DEFAULT 'employer';
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS linkedin_id VARCHAR(255);
   EXCEPTION WHEN OTHERS THEN NULL;
   END $$`;
 
