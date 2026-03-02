@@ -78,7 +78,7 @@ export default function TestDetailPage() {
   if (loading) return <div className="p-6 lg:p-8 text-gray-400 text-sm">Loading...</div>;
   if (error || !test) return (
     <div className="p-6 lg:p-8">
-      <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-md px-4 py-3">{error || "Test not found"}</div>
+      <div className="text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-md px-4 py-3">{error || "Test not found"}</div>
       <Link href="/dashboard/tests" className="text-sm text-[#6366F1] mt-4 inline-block">← Back to My Tests</Link>
     </div>
   );
@@ -112,7 +112,7 @@ export default function TestDetailPage() {
         <div className="flex items-center gap-3 mt-2 flex-wrap">
           <h1 className="text-xl font-bold text-gray-900">{test.title}</h1>
           <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
-            test.status === "active" ? "bg-emerald-50 text-emerald-700" : test.status === "archived" ? "bg-gray-100 text-gray-400" : "bg-gray-100 text-gray-500"
+            test.status === "active" ? "bg-emerald-500/10 text-emerald-400" : test.status === "archived" ? "bg-gray-100 text-gray-400" : "bg-gray-100 text-gray-500"
           }`}>
             {test.status.charAt(0).toUpperCase() + test.status.slice(1)}
           </span>
@@ -141,14 +141,14 @@ export default function TestDetailPage() {
             disabled={toggling}
             className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
               test.status === "active"
-                ? "border border-gray-200 text-gray-700 hover:bg-gray-50"
+                ? "border border-white/[0.08] text-gray-400 hover:bg-white/[0.04]"
                 : "bg-[#10B981] hover:bg-[#059669] text-white"
             }`}
           >
             {toggling ? "Updating..." : test.status === "active" ? "Unpublish" : "Publish"}
           </button>
           {test.status === "active" && (
-            <button onClick={copyLink} className="px-4 py-2 rounded-md text-sm font-medium border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors">
+            <button onClick={copyLink} className="px-4 py-2 rounded-md text-sm font-medium border border-white/[0.08] text-gray-400 hover:bg-white/[0.04] transition-colors">
               {copied ? "Copied!" : "Copy Share Link"}
             </button>
           )}
@@ -164,7 +164,7 @@ export default function TestDetailPage() {
           { label: "Model", value: test.model === "gpt-4o" ? "GPT-4o" : test.model === "claude" ? "Claude" : "Gemini" },
           { label: "Time Limit", value: `${test.time_limit_minutes}m` },
         ].map((stat) => (
-          <div key={stat.label} className="bg-white rounded-lg border border-gray-200 p-3.5">
+          <div key={stat.label} className="bg-[#0C1120] rounded-lg border border-white/[0.06] p-3.5">
             <div className="text-xs text-gray-400 mb-0.5">{stat.label}</div>
             <div className="text-lg font-bold text-gray-900">{stat.value}</div>
           </div>
@@ -173,25 +173,25 @@ export default function TestDetailPage() {
 
       {/* Test Details */}
       <div className="grid md:grid-cols-2 gap-4 mb-8">
-        <div className="bg-white rounded-lg border border-gray-200 p-5">
+        <div className="bg-[#0C1120] rounded-lg border border-white/[0.06] p-5">
           <h3 className="text-sm font-semibold text-gray-900 mb-3">Test Configuration</h3>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between"><span className="text-gray-500">Type</span><span className="text-gray-900 capitalize">{test.test_type}</span></div>
             <div className="flex justify-between"><span className="text-gray-500">Difficulty</span><span className="text-gray-900 capitalize">{test.difficulty}</span></div>
-            <div className="flex justify-between"><span className="text-gray-500">Max Attempts</span><span className="text-gray-900">{test.max_attempts}</span></div>
-            <div className="flex justify-between"><span className="text-gray-500">Token Budget</span><span className="text-gray-900">{test.token_budget.toLocaleString()}</span></div>
+            <div className="flex justify-between"><span className="text-gray-500">Max Attempts</span><span className="text-white">{test.max_attempts}</span></div>
+            <div className="flex justify-between"><span className="text-gray-500">Token Budget</span><span className="text-white">{test.token_budget.toLocaleString()}</span></div>
             <div className="flex justify-between"><span className="text-gray-500">Visibility</span><span className="text-gray-900 capitalize">{test.visibility}</span></div>
             <div className="flex justify-between"><span className="text-gray-500">Listing</span><span className="text-gray-900 capitalize">{test.listing_type}</span></div>
-            <div className="flex justify-between"><span className="text-gray-500">Created</span><span className="text-gray-900">{new Date(test.created_at).toLocaleDateString()}</span></div>
+            <div className="flex justify-between"><span className="text-gray-500">Created</span><span className="text-white">{new Date(test.created_at).toLocaleDateString()}</span></div>
           </div>
         </div>
-        <div className="bg-white rounded-lg border border-gray-200 p-5">
+        <div className="bg-[#0C1120] rounded-lg border border-white/[0.06] p-5">
           <h3 className="text-sm font-semibold text-gray-900 mb-3">Scoring Weights</h3>
           <div className="space-y-3">
             {(["accuracy", "efficiency", "speed"] as const).map((key) => (
               <div key={key} className="flex items-center gap-3">
                 <span className="text-sm text-gray-500 w-20 capitalize">{key}</span>
-                <div className="flex-1 bg-gray-100 rounded h-3 overflow-hidden">
+                <div className="flex-1 bg-white/[0.06] rounded h-3 overflow-hidden">
                   <div className="bg-[#6366F1] h-full rounded" style={{ width: `${weights[key]}%` }} />
                 </div>
                 <span className="text-sm font-mono text-gray-600 w-10 text-right">{weights[key]}%</span>
@@ -202,14 +202,14 @@ export default function TestDetailPage() {
       </div>
 
       {test.task_prompt && (
-        <div className="bg-white rounded-lg border border-gray-200 p-5 mb-4">
+        <div className="bg-[#0C1120] rounded-lg border border-white/[0.06] p-5 mb-4">
           <h3 className="text-sm font-semibold text-gray-900 mb-2">Task Prompt</h3>
           <p className="text-sm text-gray-700 whitespace-pre-wrap">{test.task_prompt}</p>
         </div>
       )}
 
       {test.expected_outcomes && (
-        <div className="bg-white rounded-lg border border-gray-200 p-5 mb-4">
+        <div className="bg-[#0C1120] rounded-lg border border-white/[0.06] p-5 mb-4">
           <h3 className="text-sm font-semibold text-gray-900 mb-2">Expected Outcomes</h3>
           <p className="text-sm text-gray-700 whitespace-pre-wrap">{test.expected_outcomes}</p>
         </div>
@@ -225,7 +225,7 @@ export default function TestDetailPage() {
               type="text"
               readOnly
               value={`${typeof window !== "undefined" ? window.location.origin : ""}/test/${test.id}`}
-              className="flex-1 bg-white border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-600 font-mono"
+              className="flex-1 bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2 text-sm text-gray-600 font-mono"
             />
             <button onClick={copyLink} className="bg-[#6366F1] hover:bg-[#4F46E5] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors shrink-0">
               {copied ? "Copied!" : "Copy"}
@@ -234,8 +234,8 @@ export default function TestDetailPage() {
         </div>
       )}
 
-      <div className="bg-white rounded-lg border border-gray-200">
-        <div className="px-5 py-3.5 border-b border-gray-200">
+      <div className="bg-[#0C1120] rounded-lg border border-white/[0.06]">
+        <div className="px-5 py-3.5 border-b border-white/[0.06]">
           <h2 className="text-sm font-semibold text-gray-900">Candidate Results</h2>
         </div>
         <div className="px-5 py-10 text-center text-gray-400 text-sm">

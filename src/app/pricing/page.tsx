@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Link from "next/link";
@@ -89,6 +90,8 @@ const plans = [
 ];
 
 export default function PricingPage() {
+  const { data: session } = useSession();
+  const isLoggedIn = !!session?.user;
   const [annual, setAnnual] = useState(false);
 
   const getPrice = (monthlyPrice: number) => {
@@ -164,7 +167,7 @@ export default function PricingPage() {
                 </ul>
 
                 <Link
-                  href={plan.name === "Enterprise" ? "/contact" : "/signup"}
+                  href={plan.name === "Enterprise" ? "/contact" : isLoggedIn ? "/dashboard/billing" : "/signup"}
                   className={`block text-center py-2 px-4 rounded-md text-sm font-medium transition-colors ${
                     plan.highlight
                       ? "bg-indigo-600 text-white hover:bg-indigo-500"

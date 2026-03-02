@@ -13,9 +13,6 @@ interface LeaderboardEntry {
   testsCompleted: number;
   avgTokens?: number;
   avgAttempts?: number;
-  avgEfficiency?: number;
-  avgSpeed?: number;
-  avgAccuracy?: number;
 }
 
 const fallbackData: LeaderboardEntry[] = [
@@ -46,20 +43,20 @@ export default function LeaderboardPage() {
   return (
     <>
       <Nav />
-      <main className="min-h-screen bg-white">
+      <main className="min-h-screen bg-[#0A0F1C]">
         <div className="max-w-4xl mx-auto px-5 sm:px-6 py-16">
           <div className="mb-10">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Leaderboard</h1>
+            <h1 className="text-3xl font-bold text-white mb-2">Leaderboard</h1>
             <p className="text-sm text-gray-500 max-w-lg">
               Ranked by Prompt Score. Fewer tokens, fewer attempts, better results.
               Scores update as candidates complete new assessments.
             </p>
           </div>
 
-          <div className="border border-gray-200 rounded-lg overflow-hidden">
+          <div className="border border-white/[0.06] rounded-lg overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-200 bg-gray-50/80">
+                <tr className="border-b border-white/[0.06] bg-[#0C1120]">
                   <th className="text-left py-3 px-4 font-medium text-gray-500 w-14">Rank</th>
                   <th className="text-left py-3 px-4 font-medium text-gray-500">Name</th>
                   <th className="text-center py-3 px-4 font-medium text-gray-500">Score</th>
@@ -70,16 +67,16 @@ export default function LeaderboardPage() {
               </thead>
               <tbody>
                 {data.map((person) => (
-                  <tr key={person.rank} className="border-b border-gray-100 last:border-0 hover:bg-gray-50/50 transition-colors">
+                  <tr key={person.rank} className="border-b border-white/[0.04] last:border-0 hover:bg-white/[0.02] transition-colors">
                     <td className="py-3 px-4">
                       <span className={`text-sm font-mono ${
-                        person.rank <= 3 ? "font-bold text-gray-900" : "text-gray-400"
+                        person.rank <= 3 ? "font-bold text-white" : "text-gray-500"
                       }`}>
                         {person.rank}
                       </span>
                     </td>
                     <td className="py-3 px-4">
-                      <Link href={`/profile/${person.rank}`} className="font-medium text-gray-900 hover:text-[#6366F1] transition-colors">
+                      <Link href={`/profile/${person.rank}`} className="font-medium text-white hover:text-indigo-400 transition-colors">
                         {person.name}
                       </Link>
                     </td>
@@ -96,9 +93,9 @@ export default function LeaderboardPage() {
           </div>
 
           <div className="mt-8">
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-gray-500">
               Want to see your name here?{" "}
-              <Link href="/signup" className="text-[#6366F1] hover:text-[#4F46E5] font-medium">
+              <Link href="/explore" className="text-indigo-400 hover:text-indigo-300 font-medium">
                 Take a test
               </Link>
             </p>

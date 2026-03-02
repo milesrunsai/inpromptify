@@ -40,17 +40,17 @@ export default function JobsPage() {
   return (
     <>
       <Nav />
-      <main className="min-h-screen bg-gray-50">
+      <main className="min-h-screen bg-[#0A0F1C]">
         <div className="max-w-4xl mx-auto px-5 sm:px-6 py-14">
           <div className="mb-10">
-            <h1 className="text-2xl font-bold text-gray-900">Open Roles</h1>
+            <h1 className="text-2xl font-bold text-white">Open Roles</h1>
             <p className="text-sm text-gray-500 mt-1">Apply by completing a prompting assessment</p>
           </div>
 
           {loading ? (
             <div className="text-center py-16 text-gray-400 text-sm">Loading jobs...</div>
           ) : !hasContent ? (
-            <div className="bg-white rounded-lg border border-gray-200 px-5 py-16 text-center">
+            <div className="bg-[#0C1120] rounded-lg border border-white/[0.06] px-5 py-16 text-center">
               <div className="text-3xl mb-3">💼</div>
               <p className="text-gray-400 text-sm mb-2">No open roles at the moment</p>
               <p className="text-xs text-gray-300">Check back soon — employers are adding new listings regularly</p>
@@ -59,7 +59,7 @@ export default function JobsPage() {
             <div className="space-y-4">
               {/* Tests with listing_type=job */}
               {testJobs.map((test) => (
-                <div key={`test-${test.id}`} className="bg-white rounded-lg border border-gray-200 p-6 hover:border-gray-300 transition-all">
+                <div key={`test-${test.id}`} className="bg-[#0C1120] rounded-lg border border-white/[0.06] p-6 hover:border-white/[0.12] transition-all">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-4 flex-1 min-w-0">
                       <div className="w-14 h-14 shrink-0 hidden sm:block">
@@ -78,7 +78,7 @@ export default function JobsPage() {
                         )}
                       </div>
                       <div className="min-w-0">
-                        <h2 className="text-lg font-semibold text-gray-900">{test.title}</h2>
+                        <h2 className="text-lg font-semibold text-white">{test.title}</h2>
                         {test.company_name && <p className="text-sm text-[#6366F1] font-medium mt-0.5">{test.company_name}</p>}
                         {test.description && <p className="text-sm text-gray-500 mt-2 line-clamp-2">{test.description}</p>}
                         <div className="flex flex-wrap gap-3 mt-3 text-xs text-gray-400">
@@ -101,10 +101,10 @@ export default function JobsPage() {
 
               {/* Legacy jobs from jobs table */}
               {legacyJobs.map((job) => (
-                <div key={`job-${job.id}`} className="bg-white rounded-lg border border-gray-200 p-6 hover:border-gray-300 transition-all">
+                <div key={`job-${job.id}`} className="bg-[#0C1120] rounded-lg border border-white/[0.06] p-6 hover:border-white/[0.12] transition-all">
                   <div className="flex items-start justify-between">
                     <div className="flex-1 min-w-0">
-                      <h2 className="text-lg font-semibold text-gray-900">{job.title}</h2>
+                      <h2 className="text-lg font-semibold text-white">{job.title}</h2>
                       <p className="text-sm text-[#6366F1] font-medium mt-0.5">{job.company}</p>
                       {job.description && <p className="text-sm text-gray-500 mt-2 line-clamp-2">{job.description}</p>}
                       <div className="flex flex-wrap gap-3 mt-3 text-xs text-gray-400">

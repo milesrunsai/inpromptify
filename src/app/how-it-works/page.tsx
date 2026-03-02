@@ -6,12 +6,12 @@ export default function HowItWorksPage() {
   return (
     <>
       <Nav />
-      <main>
+      <main className="bg-[#0A0F1C] min-h-screen">
         {/* Header */}
-        <section className="noise-bg bg-gray-50 border-b border-gray-200/60">
+        <section className="border-b border-white/[0.06]">
           <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How InpromptiFy works</h1>
-            <p className="text-gray-600 text-base max-w-xl">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">How InpromptiFy works</h1>
+            <p className="text-gray-400 text-base max-w-xl">
               Two sides of the same coin: you create an assessment, candidates take it in a
               sandboxed AI environment, and both of you get useful data out the other end.
             </p>
@@ -19,10 +19,10 @@ export default function HowItWorksPage() {
         </section>
 
         {/* For Test Creators */}
-        <section className="bg-white border-b border-gray-200/60">
+        <section className="border-b border-white/[0.06]">
           <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20">
-            <p className="text-sm font-medium text-[#6366F1] mb-3 uppercase tracking-wide">For test creators</p>
-            <h2 className="text-2xl font-bold text-gray-900 mb-10">Set up an assessment in under five minutes</h2>
+            <p className="text-sm font-medium text-indigo-400 mb-3 uppercase tracking-wide">For test creators</p>
+            <h2 className="text-2xl font-bold text-white mb-10">Set up an assessment in under five minutes</h2>
 
             <div className="space-y-12">
               {[
@@ -46,14 +46,14 @@ export default function HowItWorksPage() {
                 },
               ].map((item) => (
                 <div key={item.step} className="flex gap-6 items-start">
-                  <div className="w-8 h-8 bg-gray-900 text-white rounded-md flex items-center justify-center font-bold text-sm shrink-0">{item.step}</div>
+                  <div className="w-8 h-8 bg-indigo-600 text-white rounded-md flex items-center justify-center font-bold text-sm shrink-0">{item.step}</div>
                   <div>
-                    <h3 className="text-base font-semibold text-gray-900 mb-2">{item.title}</h3>
-                    <p className="text-sm text-gray-600 mb-4 leading-relaxed">{item.description}</p>
+                    <h3 className="text-base font-semibold text-white mb-2">{item.title}</h3>
+                    <p className="text-sm text-gray-400 mb-4 leading-relaxed">{item.description}</p>
                     <ul className="space-y-1.5">
                       {item.details.map((d) => (
                         <li key={d} className="flex items-start gap-2 text-sm text-gray-500">
-                          <span className="text-gray-300 mt-1.5 shrink-0">&mdash;</span>
+                          <span className="text-gray-600 mt-1.5 shrink-0">&mdash;</span>
                           {d}
                         </li>
                       ))}
@@ -66,10 +66,10 @@ export default function HowItWorksPage() {
         </section>
 
         {/* For Test Takers */}
-        <section className="noise-bg bg-gray-50 border-b border-gray-200/60">
+        <section className="border-b border-white/[0.06] bg-[#0C1120]">
           <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20">
-            <p className="text-sm font-medium text-[#10B981] mb-3 uppercase tracking-wide">For test takers</p>
-            <h2 className="text-2xl font-bold text-gray-900 mb-10">Prove your skills, not describe them</h2>
+            <p className="text-sm font-medium text-emerald-400 mb-3 uppercase tracking-wide">For test takers</p>
+            <h2 className="text-2xl font-bold text-white mb-10">Prove your skills, not describe them</h2>
 
             <div className="space-y-12">
               {[
@@ -90,10 +90,10 @@ export default function HowItWorksPage() {
                 },
               ].map((item) => (
                 <div key={item.step} className="flex gap-6 items-start">
-                  <div className="w-8 h-8 bg-[#10B981] text-white rounded-md flex items-center justify-center font-bold text-sm shrink-0">{item.step}</div>
+                  <div className="w-8 h-8 bg-emerald-500 text-white rounded-md flex items-center justify-center font-bold text-sm shrink-0">{item.step}</div>
                   <div>
-                    <h3 className="text-base font-semibold text-gray-900 mb-2">{item.title}</h3>
-                    <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
+                    <h3 className="text-base font-semibold text-white mb-2">{item.title}</h3>
+                    <p className="text-sm text-gray-400 leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               ))}
@@ -102,10 +102,10 @@ export default function HowItWorksPage() {
         </section>
 
         {/* The Prompt Score */}
-        <section className="bg-white border-b border-gray-200/60">
+        <section className="border-b border-white/[0.06]">
           <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20">
-            <h2 className="text-2xl font-bold text-gray-900 mb-3">The Prompt Score</h2>
-            <p className="text-sm text-gray-600 mb-10 max-w-xl">
+            <h2 className="text-2xl font-bold text-white mb-3">The Prompt Score</h2>
+            <p className="text-sm text-gray-400 mb-10 max-w-xl">
               A composite metric from 0 to 100 that measures how effectively someone uses AI to accomplish a task.
               Five weighted dimensions:
             </p>
@@ -119,9 +119,9 @@ export default function HowItWorksPage() {
                 { name: "Iteration Intelligence", weight: "15%", desc: "Did they improve between attempts? Strategic refinement scores higher than random retries." },
               ].map((metric) => (
                 <div key={metric.name} className="flex gap-4 items-start">
-                  <span className="text-xs font-mono font-bold text-gray-400 w-10 shrink-0 mt-0.5 text-right">{metric.weight}</span>
+                  <span className="text-xs font-mono font-bold text-gray-500 w-10 shrink-0 mt-0.5 text-right">{metric.weight}</span>
                   <div>
-                    <h3 className="text-sm font-semibold text-gray-900 mb-0.5">{metric.name}</h3>
+                    <h3 className="text-sm font-semibold text-white mb-0.5">{metric.name}</h3>
                     <p className="text-sm text-gray-500 leading-relaxed">{metric.desc}</p>
                   </div>
                 </div>
@@ -131,15 +131,15 @@ export default function HowItWorksPage() {
         </section>
 
         {/* CTA */}
-        <section className="bg-gray-950 noise-bg">
+        <section>
           <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20">
             <h2 className="text-2xl font-bold text-white mb-4">Ready to try it?</h2>
             <p className="text-gray-400 mb-8">Create your first assessment in under five minutes, or take a sample test to see the candidate experience.</p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <Link href="/signup" className="inline-flex items-center justify-center bg-[#6366F1] hover:bg-[#4F46E5] text-white px-6 py-3 rounded-md font-medium text-sm transition-colors">
+              <Link href="/signup" className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-md font-medium text-sm transition-colors">
                 Sign up free
               </Link>
-              <Link href="/test/test-001" className="inline-flex items-center justify-center border border-gray-700 text-gray-300 hover:text-white hover:border-gray-500 px-6 py-3 rounded-md font-medium text-sm transition-colors">
+              <Link href="/test/demo" className="inline-flex items-center justify-center border border-white/[0.08] text-gray-300 hover:text-white hover:border-white/[0.16] px-6 py-3 rounded-md font-medium text-sm transition-colors">
                 Try a sample test
               </Link>
             </div>

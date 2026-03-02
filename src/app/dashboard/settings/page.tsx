@@ -44,7 +44,7 @@ export default function SettingsPage() {
             </div>
             <div>
               <label className={ds.inputLabel}>Role</label>
-              <select className={`${ds.input} bg-white`}>
+              <select className={`${ds.input} bg-[#0C1120]`}>
                 <option>Employer</option>
                 <option>Educator</option>
                 <option>Individual</option>

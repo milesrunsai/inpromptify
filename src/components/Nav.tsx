@@ -46,7 +46,9 @@ export default function Nav({ transparent = false }: { transparent?: boolean }) 
     return () => document.removeEventListener("mousedown", onClick);
   }, []);
 
-  const isDark = transparent;
+  // Always dark — entire site uses dark theme
+  const isDark = true;
+  void transparent;
 
   return (
     <nav

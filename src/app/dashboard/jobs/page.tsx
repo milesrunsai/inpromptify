@@ -114,7 +114,7 @@ export default function DashboardJobsPage() {
             </div>
             <div>
               <label className="block text-xs font-medium text-gray-500 mb-1">Linked Test</label>
-              <select value={form.testId} onChange={e => setForm(p => ({ ...p, testId: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent bg-white">
+              <select value={form.testId} onChange={e => setForm(p => ({ ...p, testId: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent bg-[#0C1120]">
                 <option value="">None</option>
                 {tests.map(t => <option key={t.id} value={t.id}>{t.title}</option>)}
               </select>
@@ -149,7 +149,7 @@ export default function DashboardJobsPage() {
                     <span>{new Date(job.created_at).toLocaleDateString()}</span>
                   </div>
                 </div>
-                <span className={`text-[11px] font-medium px-1.5 py-0.5 rounded ${job.is_active ? "bg-emerald-50 text-emerald-700" : "bg-white/[0.04] text-gray-500"}`}>
+                <span className={`text-[11px] font-medium px-1.5 py-0.5 rounded ${job.is_active ? "bg-emerald-500/10 text-emerald-400" : "bg-white/[0.04] text-gray-500"}`}>
                   {job.is_active ? "Active" : "Inactive"}
                 </span>
               </div>
