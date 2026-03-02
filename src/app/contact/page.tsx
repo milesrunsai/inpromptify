@@ -70,9 +70,34 @@ export default function ContactPage() {
   const monthlyTotal = baseCost + seatCost + testCost + addOnCost;
   const finalMonthly = annual ? monthlyTotal * (1 - PRICING.annualDiscount) : monthlyTotal;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    setSubmitError("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          addOns,
+          annual,
+          estimatedMonthly: Math.round(finalMonthly),
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to submit");
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const inputClass = "w-full px-3 py-2 border border-white/[0.08] rounded-md text-sm bg-white/[0.04] text-white placeholder-gray-600 focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/40 focus:outline-none";
@@ -159,8 +184,12 @@ export default function ContactPage() {
                     <textarea rows={3} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} placeholder="Custom requirements, integrations, compliance needs..." className={inputClass} />
                   </div>
 
-                  <button type="submit" className="w-full bg-indigo-600 text-white py-2.5 px-4 rounded-md text-sm font-medium hover:bg-indigo-500 transition-colors">
-                    Request Enterprise Quote
+                  {submitError && (
+                    <div className="text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-md px-3 py-2">{submitError}</div>
+                  )}
+
+                  <button type="submit" disabled={submitting} className="w-full bg-indigo-600 text-white py-2.5 px-4 rounded-md text-sm font-medium hover:bg-indigo-500 disabled:opacity-50 transition-colors">
+                    {submitting ? "Submitting..." : "Request Enterprise Quote"}
                   </button>
                 </form>
               )}
