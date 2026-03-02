@@ -190,8 +190,18 @@ export default function CreateTestPage() {
   };
 
   const goNext = () => {
-    if (step === 0 && !aiSuggested && !form.title.trim() && !form.taskPrompt.trim()) {
-      setFieldErrors({ title: "Describe what you want to test first" }); return;
+    if (step === 0) {
+      // If they used AI or template, go straight to next step
+      if (aiSuggested) { setStep(1); return; }
+      // If they typed a description but didn't use AI, carry it forward as the description and go to manual config
+      if (aiDescription.trim()) {
+        setForm((prev) => ({ ...prev, description: aiDescription.trim() }));
+        setStep(1);
+        return;
+      }
+      // Nothing entered at all — let them skip to manual anyway
+      setStep(1);
+      return;
     }
     if (validateStep(step)) setStep(step + 1);
   };
@@ -574,7 +584,9 @@ export default function CreateTestPage() {
         <div className="flex justify-between mt-8 pt-6 border-t border-white/[0.06]">
           <button onClick={() => setStep(Math.max(0, step - 1))} className={step === 0 ? "invisible" : ds.btnSecondary}>Back</button>
           <div className="flex gap-2.5">
-            {step < steps.length - 1 ? (
+            {step === 0 && !aiSuggested ? (
+              <button onClick={goNext} className={ds.btnSecondary}>Skip — build manually</button>
+            ) : step < steps.length - 1 ? (
               <button onClick={goNext} className={ds.btnPrimary}>Continue</button>
             ) : (
               <>
