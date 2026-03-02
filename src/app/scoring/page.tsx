@@ -4,7 +4,109 @@ import Link from "next/link";
 
 export const metadata = {
   title: "How Scoring Works — InpromptiFy",
-  description: "A detailed explanation of the PromptScore methodology: five dimensions, scoring mechanics, anti-gaming measures, and validation approach.",
+  description: "Understand the PromptScore methodology: 5 weighted dimensions that measure AI proficiency objectively.",
+};
+
+const dimensions = [
+  {
+    name: "Prompt Quality",
+    weight: 25,
+    color: "indigo",
+    description: "How well-constructed are your prompts? We analyze clarity, specificity, structure, formatting instructions, constraints, and context-setting.",
+    highScore: [
+      "Clear, structured instructions with numbered steps",
+      "Explicit constraints (word count, tone, what to avoid)",
+      "Role/persona setting for the AI",
+      "Audience awareness baked into the prompt",
+    ],
+    lowScore: [
+      "Vague, one-line prompts with no structure",
+      "No constraints or formatting guidance",
+      "Missing context about who the output is for",
+      "Copy-pasting the same prompt repeatedly",
+    ],
+    antiGaming: "We analyze linguistic patterns, not just length. A 500-word prompt full of filler scores lower than a precise 100-word prompt with clear structure.",
+  },
+  {
+    name: "Efficiency",
+    weight: 25,
+    color: "emerald",
+    description: "How economically do you use your resources? Measured by attempts used vs. allowed and tokens consumed vs. budget.",
+    highScore: [
+      "Achieving the goal in 1-2 attempts",
+      "Using less than 50% of the token budget",
+      "Getting it right the first time",
+    ],
+    lowScore: [
+      "Using all available attempts",
+      "Burning through the entire token budget",
+      "Repeating similar prompts without meaningful changes",
+    ],
+    antiGaming: "Using fewer attempts only helps if the output quality is good. A single bad prompt scores lower than two well-crafted iterations.",
+  },
+  {
+    name: "Speed",
+    weight: 15,
+    color: "amber",
+    description: "How quickly do you complete the task? Faster completion (with quality maintained) indicates confidence and fluency with AI tools.",
+    highScore: [
+      "Completing in 20-50% of the allotted time",
+      "Quick, decisive prompting without long pauses",
+      "Finishing with significant time remaining",
+    ],
+    lowScore: [
+      "Using 90-100% of available time",
+      "Long pauses suggesting uncertainty",
+      "Running out the clock",
+    ],
+    antiGaming: "Completing in under 15% of the time triggers a review flag. Suspiciously fast completions are capped to prevent gaming.",
+  },
+  {
+    name: "Response Quality",
+    weight: 20,
+    color: "blue",
+    description: "How good is the AI output you elicited? We evaluate the final response against the task requirements, expected keywords, structure, and constraints.",
+    highScore: [
+      "Response covers all required elements",
+      "Proper structure (headings, lists, sections as needed)",
+      "Matches the expected tone and audience",
+      "Contains relevant domain-specific content",
+    ],
+    lowScore: [
+      "Response misses key requirements",
+      "No structure or formatting",
+      "Wrong tone for the audience",
+      "Generic output that could apply to any task",
+    ],
+    antiGaming: "We evaluate the best (final) response, not just the first. This rewards smart iteration — improving your output across attempts.",
+  },
+  {
+    name: "Iteration Intelligence",
+    weight: 15,
+    color: "purple",
+    description: "When you iterate, do you improve? We track whether subsequent prompts build on AI feedback, introduce new requirements, and produce better results.",
+    highScore: [
+      "Each prompt meaningfully different from the last",
+      "Referencing AI output ('change X to Y', 'instead of...')",
+      "Introducing new vocabulary and requirements",
+      "Responses improving in quality across attempts",
+    ],
+    lowScore: [
+      "Repeating the same prompt verbatim",
+      "Random changes without clear direction",
+      "No reference to what the AI previously produced",
+      "Response quality staying flat or declining",
+    ],
+    antiGaming: "Single-attempt completions receive a neutral score (60) for this dimension — you're not penalized for getting it right the first time.",
+  },
+];
+
+const colorMap: Record<string, { bg: string; text: string; border: string; bar: string }> = {
+  indigo: { bg: "bg-indigo-500/10", text: "text-indigo-400", border: "border-indigo-500/20", bar: "bg-indigo-500" },
+  emerald: { bg: "bg-emerald-500/10", text: "text-emerald-400", border: "border-emerald-500/20", bar: "bg-emerald-500" },
+  amber: { bg: "bg-amber-500/10", text: "text-amber-400", border: "border-amber-500/20", bar: "bg-amber-500" },
+  blue: { bg: "bg-blue-500/10", text: "text-blue-400", border: "border-blue-500/20", bar: "bg-blue-500" },
+  purple: { bg: "bg-purple-500/10", text: "text-purple-400", border: "border-purple-500/20", bar: "bg-purple-500" },
 };
 
 export default function ScoringPage() {
@@ -12,311 +114,159 @@ export default function ScoringPage() {
     <>
       <Nav />
       <main className="bg-[#0A0F1C] min-h-screen">
-        <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-24">
-          <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Methodology</p>
-          <h1 className="text-3xl font-bold text-white mb-4 tracking-tight">How PromptScore works</h1>
-          <p className="text-base text-gray-500 leading-relaxed mb-14 max-w-xl">
-            PromptScore is a composite metric (0-100) that measures how effectively someone uses AI to accomplish a task. Here is exactly how it is calculated, why those dimensions matter, and what we do to keep it fair.
+        {/* Header */}
+        <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">How Scoring Works</h1>
+          <p className="text-gray-400 max-w-xl mb-3">
+            Every PromptScore is calculated from 5 weighted dimensions that together measure
+            how effectively someone uses AI to accomplish a task. No black boxes — here is exactly
+            what we measure and why.
           </p>
+          <p className="text-sm text-gray-500">
+            Methodology based on research into AI-assisted productivity from
+            Harvard Business School, Wharton, and enterprise prompting benchmarks.
+          </p>
+        </div>
 
-          {/* ─── The Five Dimensions ─── */}
-          <section className="mb-16">
-            <h2 className="text-xl font-bold text-white mb-6">The five scoring dimensions</h2>
-            <p className="text-sm text-gray-500 mb-8 leading-relaxed">
-              Every assessment produces a score across five independent dimensions. Each dimension measures a different aspect of AI proficiency. The final PromptScore is a weighted composite of all five.
-            </p>
-
-            <div className="space-y-6">
+        {/* Score Scale */}
+        <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 pb-12">
+          <div className="bg-[#0C1120] rounded-lg border border-white/[0.06] p-6">
+            <h2 className="text-sm font-semibold text-white mb-4">Score Scale</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
               {[
-                {
-                  name: "Prompt Quality",
-                  weight: "25%",
-                  what: "How well-structured, specific, and clear is the prompt itself?",
-                  why: "A good prompt includes constraints, context, formatting instructions, and clear success criteria. This reduces back-and-forth and gets better results on the first attempt.",
-                  how: "We evaluate prompt length, structural elements (role framing, constraints, examples), specificity of instructions, and whether the prompt addresses edge cases. Scored via deterministic heuristics plus LLM-as-judge evaluation.",
-                },
-                {
-                  name: "Efficiency",
-                  weight: "25%",
-                  what: "How many tokens were consumed relative to the budget?",
-                  why: "In production, tokens cost money. An employee who achieves the same output with 40% fewer tokens saves the company real money at scale. Efficiency is the most directly measurable dimension.",
-                  how: "Token usage is tracked precisely for every prompt and response. Score = (budget - tokens_used) / budget, with diminishing returns for extreme under-usage (which may indicate insufficient effort).",
-                },
-                {
-                  name: "Speed",
-                  weight: "15%",
-                  what: "How quickly did the candidate complete the task?",
-                  why: "Speed combined with quality indicates confidence and familiarity with AI tools. In a work context, faster completion means higher throughput.",
-                  how: "Measured as wall-clock time from assessment start to final submission. Scored on a curve relative to the time limit. Penalized only at extremes — we are measuring preparedness, not rushing.",
-                },
-                {
-                  name: "Response Quality",
-                  weight: "20%",
-                  what: "Does the AI output actually satisfy the task requirements?",
-                  why: "The ultimate measure: did the candidate get the AI to produce a useful result? A great prompt that produces a poor output still fails.",
-                  how: "Evaluated against the test creator's success criteria using keyword matching, structural analysis, and LLM-as-judge scoring. Custom criteria (rubrics, tone, length) are evaluated separately and factored in.",
-                },
-                {
-                  name: "Iteration Intelligence",
-                  weight: "15%",
-                  what: "Did the candidate improve strategically between attempts?",
-                  why: "Good prompt engineers do not retry randomly. They diagnose what went wrong, adjust their prompt structure, and converge toward better output. This is the dimension that separates skilled users from lucky ones.",
-                  how: "We analyze the delta between consecutive prompts: what changed, whether the changes addressed identifiable issues in the previous output, and whether output quality improved. Random re-rolls score poorly. Strategic refinement scores well.",
-                },
-              ].map((dim) => (
-                <div key={dim.name} className="bg-[#0C1120] border border-white/[0.06] rounded-xl p-6">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-base font-semibold text-white">{dim.name}</h3>
-                    <span className="text-[12px] font-mono text-indigo-400/80 bg-indigo-500/[0.08] px-2.5 py-0.5 rounded">{dim.weight}</span>
-                  </div>
-                  <div className="space-y-3 text-sm">
-                    <div>
-                      <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">What it measures</span>
-                      <p className="text-gray-400 mt-0.5">{dim.what}</p>
+                { grade: "S", range: "95-100", label: "Exceptional", color: "text-indigo-400 bg-indigo-500/10 border-indigo-500/20" },
+                { grade: "A", range: "80-94", label: "Strong Hire", color: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20" },
+                { grade: "B", range: "65-79", label: "Hire", color: "text-blue-400 bg-blue-500/10 border-blue-500/20" },
+                { grade: "C", range: "50-64", label: "Consider", color: "text-amber-400 bg-amber-500/10 border-amber-500/20" },
+                { grade: "D", range: "35-49", label: "Below Avg", color: "text-orange-400 bg-orange-500/10 border-orange-500/20" },
+                { grade: "F", range: "0-34", label: "Not Ready", color: "text-red-400 bg-red-500/10 border-red-500/20" },
+              ].map((g) => (
+                <div key={g.grade} className={`rounded-md border p-3 text-center ${g.color}`}>
+                  <div className="text-2xl font-bold">{g.grade}</div>
+                  <div className="text-[11px] font-mono mt-0.5">{g.range}</div>
+                  <div className="text-[10px] mt-1 opacity-70">{g.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Weight Overview */}
+        <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 pb-12">
+          <div className="bg-[#0C1120] rounded-lg border border-white/[0.06] p-6">
+            <h2 className="text-sm font-semibold text-white mb-4">Dimension Weights</h2>
+            <div className="space-y-3">
+              {dimensions.map((dim) => {
+                const c = colorMap[dim.color];
+                return (
+                  <div key={dim.name} className="flex items-center gap-4">
+                    <span className="text-sm text-gray-400 w-40 shrink-0">{dim.name}</span>
+                    <div className="flex-1 h-3 bg-white/[0.04] rounded-full overflow-hidden">
+                      <div className={`h-full rounded-full ${c.bar}`} style={{ width: `${dim.weight}%` }} />
                     </div>
-                    <div>
-                      <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Why it matters</span>
-                      <p className="text-gray-400 mt-0.5">{dim.why}</p>
+                    <span className="text-sm font-mono text-gray-500 w-10 text-right">{dim.weight}%</span>
+                  </div>
+                );
+              })}
+            </div>
+            <p className="text-xs text-gray-600 mt-4">
+              Weights are calibrated so that efficient, high-quality first prompts score highest.
+              This reflects real-world productivity — the best AI users get great results fast.
+            </p>
+          </div>
+        </div>
+
+        {/* Detailed Dimensions */}
+        <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 pb-16">
+          <h2 className="text-xl font-bold text-white mb-6">The Five Dimensions</h2>
+
+          <div className="space-y-6">
+            {dimensions.map((dim) => {
+              const c = colorMap[dim.color];
+              return (
+                <div key={dim.name} className="bg-[#0C1120] rounded-lg border border-white/[0.06] overflow-hidden">
+                  <div className="p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className={`text-xs font-mono font-bold px-2 py-1 rounded ${c.bg} ${c.text} border ${c.border}`}>
+                        {dim.weight}%
+                      </span>
+                      <h3 className="text-lg font-bold text-white">{dim.name}</h3>
                     </div>
-                    <div>
-                      <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">How we calculate it</span>
-                      <p className="text-gray-400 mt-0.5">{dim.how}</p>
+                    <p className="text-sm text-gray-400 leading-relaxed mb-5">{dim.description}</p>
+
+                    <div className="grid md:grid-cols-2 gap-4 mb-5">
+                      <div>
+                        <h4 className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wider mb-2">High Score Looks Like</h4>
+                        <ul className="space-y-1.5">
+                          {dim.highScore.map((item) => (
+                            <li key={item} className="flex items-start gap-2 text-sm text-gray-400">
+                              <svg className="w-3.5 h-3.5 mt-0.5 text-emerald-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12" /></svg>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="text-[11px] font-semibold text-red-400 uppercase tracking-wider mb-2">Low Score Looks Like</h4>
+                        <ul className="space-y-1.5">
+                          {dim.lowScore.map((item) => (
+                            <li key={item} className="flex items-start gap-2 text-sm text-gray-400">
+                              <svg className="w-3.5 h-3.5 mt-0.5 text-red-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div className="bg-white/[0.02] border border-white/[0.04] rounded-md p-3">
+                      <h4 className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Anti-Gaming</h4>
+                      <p className="text-xs text-gray-500 leading-relaxed">{dim.antiGaming}</p>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </section>
+              );
+            })}
+          </div>
+        </div>
 
-          {/* ─── Score Examples ─── */}
-          <section className="mb-16">
-            <h2 className="text-xl font-bold text-white mb-6">What high vs. low scores look like</h2>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#0C1120] border border-emerald-500/20 rounded-xl p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-2xl font-bold text-emerald-400">87</span>
-                  <span className="text-[11px] font-mono text-emerald-400/60 uppercase">Strong Hire</span>
-                </div>
-                <ul className="space-y-2 text-sm text-gray-400">
-                  <li className="flex items-start gap-2">
-                    <span className="text-emerald-500 mt-1 shrink-0">+</span>
-                    First prompt included clear role framing, constraints, and format instructions
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-emerald-500 mt-1 shrink-0">+</span>
-                    Used 38% of token budget to produce high-quality output
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-emerald-500 mt-1 shrink-0">+</span>
-                    Completed in 2 attempts — second attempt refined formatting only
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-emerald-500 mt-1 shrink-0">+</span>
-                    Finished in 3 minutes 20 seconds (55% of time limit)
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-[#0C1120] border border-red-500/20 rounded-xl p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-2xl font-bold text-red-400">34</span>
-                  <span className="text-[11px] font-mono text-red-400/60 uppercase">Not Recommended</span>
-                </div>
-                <ul className="space-y-2 text-sm text-gray-400">
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-500 mt-1 shrink-0">-</span>
-                    Vague initial prompt: &quot;write me something about marketing&quot;
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-500 mt-1 shrink-0">-</span>
-                    Used 94% of token budget across 7 attempts
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-500 mt-1 shrink-0">-</span>
-                    No strategic improvement between attempts — mostly re-rolls with minor wording changes
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-500 mt-1 shrink-0">-</span>
-                    Final output partially satisfied criteria but missed key requirements
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          {/* ─── Anti-Gaming ─── */}
-          <section className="mb-16">
-            <h2 className="text-xl font-bold text-white mb-4">Test integrity and anti-gaming</h2>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">
-              PromptScore is designed to be hard to game. The assessment measures real behavior under real constraints, not memorized patterns.
+        {/* Custom Criteria */}
+        <div className="border-t border-white/[0.06]">
+          <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-16">
+            <h2 className="text-xl font-bold text-white mb-3">Custom Scoring Criteria</h2>
+            <p className="text-sm text-gray-400 mb-6 max-w-xl">
+              Employers can add custom criteria on top of the standard 5 dimensions. When custom criteria
+              are used, the final score blends standard dimensions (50%) with custom criteria (50%).
             </p>
-
-            <div className="space-y-4">
+            <div className="grid sm:grid-cols-2 gap-4">
               {[
-                {
-                  title: "Sandboxed environment",
-                  desc: "Candidates interact with the AI in a controlled sandbox. They cannot paste pre-written prompts from external sources, and the environment logs all interactions including paste events and tab switches.",
-                },
-                {
-                  title: "Dynamic tasks",
-                  desc: "Test creators define the task. There is no fixed question bank to memorize. Each assessment can have unique criteria, making it impractical to prepare canned responses.",
-                },
-                {
-                  title: "Multi-dimensional scoring",
-                  desc: "Gaming one dimension (e.g., speed) typically hurts another (e.g., quality or iteration intelligence). The composite score rewards balanced performance, not min-maxing.",
-                },
-                {
-                  title: "Behavioral signals",
-                  desc: "We track paste events, tab switches, typing patterns, and time between interactions. These are logged as integrity signals and available to test creators in the results dashboard. They do not block candidates, but they flag anomalies.",
-                },
-                {
-                  title: "LLM-as-judge evaluation",
-                  desc: "Response quality is evaluated by a separate LLM call against the test criteria. This is harder to game than keyword matching alone, because the judge evaluates semantic quality, not just surface-level patterns.",
-                },
-                {
-                  title: "Meta-prompting detection",
-                  desc: "We detect attempts to instruct the AI to generate the prompt itself (e.g., 'write me the perfect prompt for this task'). These patterns are flagged and penalized in the prompt quality dimension.",
-                },
-              ].map((item) => (
-                <div key={item.title} className="flex gap-4 items-start">
-                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
-                  <div>
-                    <span className="text-sm font-semibold text-white">{item.title}</span>
-                    <p className="text-sm text-gray-500 mt-0.5 leading-relaxed">{item.desc}</p>
-                  </div>
+                { type: "Keyword", desc: "Must-include and must-not-include terms in the output" },
+                { type: "Tone", desc: "Professional, casual, technical, or creative tone matching" },
+                { type: "Length", desc: "Word count within a specified min/max range" },
+                { type: "Rubric", desc: "Free-form criteria matched against response content" },
+              ].map((c) => (
+                <div key={c.type} className="bg-[#0C1120] border border-white/[0.06] rounded-lg p-4">
+                  <h3 className="text-sm font-semibold text-white mb-1">{c.type}</h3>
+                  <p className="text-xs text-gray-500">{c.desc}</p>
                 </div>
               ))}
             </div>
-          </section>
+          </div>
+        </div>
 
-          {/* ─── Consistency ─── */}
-          <section className="mb-16">
-            <h2 className="text-xl font-bold text-white mb-4">Scoring consistency</h2>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">
-              For a score to be useful in hiring decisions, it needs to be consistent and reproducible.
-            </p>
-
-            <div className="space-y-4">
-              {[
-                {
-                  title: "Deterministic components",
-                  desc: "Three of five dimensions (efficiency, speed, iteration count) are calculated from objective, logged data. There is no subjectivity in how many tokens were used or how long the task took.",
-                },
-                {
-                  title: "Hybrid evaluation",
-                  desc: "Prompt quality and response quality use a combination of deterministic heuristics (structure detection, keyword matching, length analysis) and LLM-as-judge evaluation. The deterministic layer anchors the score; the LLM layer adds semantic understanding.",
-                },
-                {
-                  title: "Audit trail",
-                  desc: "Every score comes with a full audit trail visible in the results page. Test creators can see exactly how each dimension was scored and why. This makes scores explainable and disputable.",
-                },
-                {
-                  title: "Same inputs, same score",
-                  desc: "The deterministic components always produce identical scores for identical inputs. The LLM evaluation component has a temperature of 0 and uses structured output to minimize variance. We are actively collecting data on inter-evaluation consistency.",
-                },
-              ].map((item) => (
-                <div key={item.title} className="flex gap-4 items-start">
-                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
-                  <div>
-                    <span className="text-sm font-semibold text-white">{item.title}</span>
-                    <p className="text-sm text-gray-500 mt-0.5 leading-relaxed">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
+        {/* CTA */}
+        <div className="border-t border-white/[0.06]">
+          <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-16 text-center">
+            <h2 className="text-xl font-bold text-white mb-3">See it in action</h2>
+            <p className="text-sm text-gray-400 mb-6">Try a free demo assessment and get your PromptScore with a full breakdown.</p>
+            <div className="flex justify-center gap-3">
+              <Link href="/test/demo" className="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-md text-sm font-medium transition-colors">
+                Take the Demo
+              </Link>
+              <Link href="/signup" className="bg-white/[0.04] border border-white/[0.08] hover:border-white/[0.14] text-gray-400 px-6 py-3 rounded-md text-sm font-medium transition-colors">
+                Create Account
+              </Link>
             </div>
-          </section>
-
-          {/* ─── Validation ─── */}
-          <section className="mb-16">
-            <h2 className="text-xl font-bold text-white mb-4">Validation and what we are working on</h2>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">
-              We are honest about where we are. PromptScore is a new metric. Here is what we know and what we are actively researching.
-            </p>
-
-            <div className="bg-[#0C1120] border border-white/[0.06] rounded-xl p-6 space-y-5">
-              <div>
-                <span className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wider">What we know</span>
-                <ul className="mt-2 space-y-2 text-sm text-gray-400">
-                  <li className="flex items-start gap-2">
-                    <span className="text-emerald-500 mt-1 shrink-0">&#10003;</span>
-                    The scoring dimensions are grounded in published research on prompt engineering effectiveness (Harvard/Wharton 10x variation study, Sequoia AI spend analysis)
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-emerald-500 mt-1 shrink-0">&#10003;</span>
-                    Token efficiency and iteration count are objective, reproducible measurements
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-emerald-500 mt-1 shrink-0">&#10003;</span>
-                    The multi-dimensional approach prevents gaming and provides actionable detail (not just a single number)
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-emerald-500 mt-1 shrink-0">&#10003;</span>
-                    Early users report the score aligns with their subjective assessment of candidate AI skills
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <span className="text-[11px] font-semibold text-amber-400 uppercase tracking-wider">What we are researching</span>
-                <ul className="mt-2 space-y-2 text-sm text-gray-400">
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-500 mt-1 shrink-0">&#8594;</span>
-                    Correlation between PromptScore and on-the-job AI productivity (tracking with early customers)
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-500 mt-1 shrink-0">&#8594;</span>
-                    Inter-evaluation consistency of the LLM-as-judge component (test-retest reliability)
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-500 mt-1 shrink-0">&#8594;</span>
-                    Optimal dimension weights across different role types (sales vs engineering vs creative)
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-500 mt-1 shrink-0">&#8594;</span>
-                    Benchmark data for industry-specific scoring norms
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-gray-600 mt-4">
-              We will publish validation results as our dataset grows. If you are interested in participating in our validation research, contact us at <a href="mailto:hello@inpromptify.com" className="text-indigo-400 hover:text-indigo-300">hello@inpromptify.com</a>.
-            </p>
-          </section>
-
-          {/* ─── Letter Grades ─── */}
-          <section className="mb-16">
-            <h2 className="text-xl font-bold text-white mb-6">Score ranges and hire recommendations</h2>
-
-            <div className="bg-[#0C1120] border border-white/[0.06] rounded-xl overflow-hidden">
-              {[
-                { range: "80-100", grade: "A", label: "Strong Hire", color: "text-emerald-400", desc: "Demonstrates advanced AI proficiency. Efficient, strategic, and produces high-quality output consistently." },
-                { range: "65-79", grade: "B", label: "Hire", color: "text-blue-400", desc: "Solid AI skills. Some room for optimization but capable of productive AI-assisted work." },
-                { range: "50-64", grade: "C", label: "Consider", color: "text-amber-400", desc: "Adequate skills with notable gaps. Would benefit from AI training before taking on AI-heavy roles." },
-                { range: "0-49", grade: "D/F", label: "Not Recommended", color: "text-red-400", desc: "Significant skill gaps. Inefficient prompting, poor iteration strategy, or inability to produce quality output under constraints." },
-              ].map((band, i) => (
-                <div key={band.range} className={`flex items-start gap-5 px-6 py-5 ${i < 3 ? "border-b border-white/[0.04]" : ""}`}>
-                  <div className="w-16 shrink-0">
-                    <span className="text-[12px] font-mono text-gray-600">{band.range}</span>
-                    <span className={`block text-lg font-bold ${band.color}`}>{band.grade}</span>
-                  </div>
-                  <div>
-                    <span className={`text-sm font-semibold ${band.color}`}>{band.label}</span>
-                    <p className="text-sm text-gray-500 mt-0.5">{band.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* CTA */}
-          <div className="pt-10 border-t border-white/[0.06] flex flex-col sm:flex-row gap-3">
-            <Link href="/signup?plan=team-free" className="inline-flex items-center justify-center text-white bg-indigo-600 hover:bg-indigo-500 px-6 py-2.5 rounded-md text-sm font-medium transition-colors">
-              Try It Free
-            </Link>
-            <Link href="/test/demo" className="inline-flex items-center justify-center text-gray-400 hover:text-gray-200 px-6 py-2.5 rounded-md text-sm transition-colors border border-white/[0.06] hover:border-white/[0.12]">
-              Take a Demo Assessment
-            </Link>
           </div>
         </div>
       </main>

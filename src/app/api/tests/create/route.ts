@@ -3,7 +3,7 @@ import { getSql } from "@/lib/db";
 import { ensureSchema } from "@/lib/schema";
 import { NextResponse } from "next/server";
 
-const VALID_TEST_TYPES = ["email", "code", "data", "creative", "custom"];
+const VALID_TEST_TYPES = ["email", "code", "data", "creative", "custom", "legal", "support", "research", "translation", "technical", "marketing", "sales", "analysis"];
 const VALID_DIFFICULTIES = ["beginner", "intermediate", "advanced", "expert"];
 const VALID_VISIBILITIES = ["public", "private"];
 const VALID_LISTING_TYPES = ["job", "test", "casual"];
