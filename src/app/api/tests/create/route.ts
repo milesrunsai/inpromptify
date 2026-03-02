@@ -71,6 +71,7 @@ export async function POST(request: Request) {
     return NextResponse.json(rows[0], { status: 201 });
   } catch (e) {
     console.error("Create test error:", e);
-    return NextResponse.json({ error: "Failed to create test" }, { status: 500 });
+    const message = e instanceof Error ? e.message : "Unknown error";
+    return NextResponse.json({ error: `Failed to create test: ${message}` }, { status: 500 });
   }
 }

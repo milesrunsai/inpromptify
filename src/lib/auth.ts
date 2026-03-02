@@ -54,7 +54,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (account?.provider === "google" && user.email) {
         const sql = getSql();
         // Check if user exists
-        const existing = await sql`SELECT id FROM users WHERE email = ${user.email}`;
+        const existing = await sql`SELECT id, google_id FROM users WHERE email = ${user.email}`;
         if (existing.length === 0) {
           // Auto-create account for Google users
           await sql`
@@ -81,6 +81,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           token.role = rows[0].role as string;
           token.plan = rows[0].plan as string;
           token.promptScore = rows[0].prompt_score as number | null;
+
+          // Auto-grant admin role + business plan to admin email
+          const ADMIN_EMAILS = ["inpromptyou@gmail.com"];
+          if (ADMIN_EMAILS.includes(token.email!)) {
+            if (rows[0].role !== "admin" || rows[0].plan !== "business") {
+              await sql`UPDATE users SET role = 'admin', plan = 'business' WHERE id = ${rows[0].id}`;
+            }
+            token.role = "admin";
+            token.plan = "business";
+          }
         }
       }
       return token;
