@@ -71,13 +71,13 @@ interface AnthropicResponse {
 // Model configuration
 const MODELS = {
   "claude-haiku": {
-    id: "claude-3-5-haiku-latest",
+    id: "claude-haiku-4-5",
     name: "Claude Haiku",
-    costPer1kInput: 0.00025,
-    costPer1kOutput: 0.00125,
+    costPer1kInput: 0.001,
+    costPer1kOutput: 0.005,
   },
   "claude-sonnet": {
-    id: "claude-sonnet-4-20250514",
+    id: "claude-sonnet-4-6",
     name: "Claude Sonnet",
     costPer1kInput: 0.003,
     costPer1kOutput: 0.015,
