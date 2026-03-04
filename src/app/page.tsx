@@ -205,10 +205,10 @@ export default function HomePage() {
                 </p>
                 <div className="grid grid-cols-2 gap-3 mb-6">
                   {[
-                    { score: "80-100", label: "Strong Hire", color: "text-emerald-400 border-emerald-500/20" },
-                    { score: "65-79", label: "Hire", color: "text-blue-400 border-blue-500/20" },
-                    { score: "50-64", label: "Consider", color: "text-amber-400 border-amber-500/20" },
-                    { score: "0-49", label: "Not Recommended", color: "text-red-400 border-red-500/20" },
+                    { score: "80-100", label: "Strong Hire", color: "text-indigo-300 border-indigo-400/30 bg-indigo-500/[0.08]" },
+                    { score: "65-79", label: "Hire", color: "text-indigo-400 border-indigo-500/20 bg-indigo-500/[0.05]" },
+                    { score: "50-64", label: "Consider", color: "text-indigo-400/70 border-indigo-500/15 bg-indigo-500/[0.03]" },
+                    { score: "0-49", label: "Not Recommended", color: "text-indigo-500/50 border-indigo-500/10 bg-indigo-500/[0.02]" },
                   ].map((band) => (
                     <div key={band.score} className={`border rounded-lg px-3 py-2 ${band.color}`}>
                       <span className="text-[12px] font-mono block">{band.score}</span>
