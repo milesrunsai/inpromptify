@@ -60,6 +60,51 @@ export async function GET() {
       ORDER BY avg_score DESC
     `;
 
+    // Dimension averages for weakness analysis
+    const dimensionAvgs = await sql`
+      SELECT
+        ROUND(AVG(ta.accuracy))::int as avg_prompt_quality,
+        ROUND(AVG(ta.efficiency))::int as avg_efficiency,
+        ROUND(AVG(ta.speed))::int as avg_speed,
+        ROUND(AVG(ta.score))::int as avg_response_quality,
+        ROUND(AVG(LEAST(ta.score, 100)))::int as avg_iteration_iq
+      FROM test_attempts ta
+      JOIN tests t ON ta.test_id = t.id
+      WHERE t.user_id = ${Number(userId)} AND ta.status = 'completed'
+    `;
+
+    // Per-person score history for skill decay tracking (last 6 months)
+    const scoreHistory = await sql`
+      SELECT
+        ta.candidate_email as email,
+        ta.candidate_name as name,
+        ta.score::int as score,
+        ta.completed_at as completed_at
+      FROM test_attempts ta
+      JOIN tests t ON ta.test_id = t.id
+      WHERE t.user_id = ${Number(userId)}
+        AND ta.status = 'completed'
+        AND ta.completed_at >= NOW() - INTERVAL '6 months'
+      ORDER BY ta.completed_at ASC
+    `;
+
+    // Per-person dimension breakdown for heatmap
+    const personDimensions = await sql`
+      SELECT
+        ta.candidate_name as name,
+        ta.candidate_email as email,
+        ROUND(AVG(ta.accuracy))::int as prompt_quality,
+        ROUND(AVG(ta.efficiency))::int as efficiency,
+        ROUND(AVG(ta.speed))::int as speed,
+        ROUND(AVG(ta.score))::int as response_quality,
+        MAX(ta.completed_at) as last_assessed
+      FROM test_attempts ta
+      JOIN tests t ON ta.test_id = t.id
+      WHERE t.user_id = ${Number(userId)} AND ta.status = 'completed'
+      GROUP BY ta.candidate_email, ta.candidate_name
+      ORDER BY ta.candidate_name
+    `;
+
     // Estimated savings
     const avgTokensPerPerson = Number(avgRow.avg_tokens) || 0;
     const optimalTokens = Math.round(avgTokensPerPerson * 0.4); // assume 60% waste
@@ -80,6 +125,9 @@ export async function GET() {
       },
       distribution,
       people,
+      dimensions: dimensionAvgs[0] || { avg_prompt_quality: 0, avg_efficiency: 0, avg_speed: 0, avg_response_quality: 0, avg_iteration_iq: 0 },
+      scoreHistory,
+      personDimensions,
     });
   } catch (e) {
     console.error("Analytics error:", e);
