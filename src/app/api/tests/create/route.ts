@@ -30,6 +30,14 @@ export async function POST(request: Request) {
       customCriteria,
     } = body;
 
+    // Generate slug from title
+    const baseSlug = (title || "test").trim().toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .substring(0, 80);
+    const slug = `${baseSlug}-${Date.now().toString(36)}`;
+
     // Validation
     const errors: string[] = [];
     if (!title?.trim()) errors.push("Title is required");
@@ -52,10 +60,10 @@ export async function POST(request: Request) {
 
     const sql = getSql();
     const rows = await sql`
-      INSERT INTO tests (user_id, title, description, task_prompt, expected_outcomes, test_type, difficulty,
+      INSERT INTO tests (user_id, slug, title, description, task_prompt, expected_outcomes, test_type, difficulty,
                          time_limit_minutes, max_attempts, token_budget, model, scoring_weights, custom_criteria, status,
                          cover_image, visibility, listing_type, company_name, location, salary_range)
-      VALUES (${Number(userId)}, ${title.trim()}, ${description?.trim() || ""}, ${taskPrompt.trim()},
+      VALUES (${Number(userId)}, ${slug}, ${title.trim()}, ${description?.trim() || ""}, ${taskPrompt.trim()},
               ${expectedOutcomes?.trim() || ""}, ${testType || "custom"}, ${difficulty || "intermediate"},
               ${timeLimitMinutes || 15}, ${maxAttempts || 5}, ${tokenBudget || 2000}, ${model || "gpt-4o"},
               ${JSON.stringify(scoringWeights || { accuracy: 40, efficiency: 30, speed: 30 })},
@@ -63,7 +71,7 @@ export async function POST(request: Request) {
               ${status || "draft"},
               ${coverImage?.trim() || null}, ${visibility || "private"}, ${listingType || "test"},
               ${companyName?.trim() || null}, ${location?.trim() || null}, ${salaryRange?.trim() || null})
-      RETURNING id, title, description, task_prompt, expected_outcomes, test_type, difficulty,
+      RETURNING id, slug, title, description, task_prompt, expected_outcomes, test_type, difficulty,
                 time_limit_minutes, max_attempts, token_budget, model, scoring_weights, custom_criteria, status,
                 cover_image, visibility, listing_type, company_name, location, salary_range, created_at
     `;
