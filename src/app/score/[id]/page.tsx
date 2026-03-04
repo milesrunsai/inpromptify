@@ -34,6 +34,7 @@ export default function PublicScorePage({ params }: { params: Promise<{ id: stri
   const [data, setData] = useState<ScoreData | null>(null);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
+  const [creatingBadge, setCreatingBadge] = useState(false);
 
   useEffect(() => {
     fetch(`/api/score/${id}`)
@@ -137,6 +138,49 @@ export default function PublicScorePage({ params }: { params: Promise<{ id: stri
               <div className="text-sm font-semibold text-white">{s.value}</div>
             </div>
           ))}
+        </div>
+
+        {/* Verified Badge CTA */}
+        <div className="bg-gradient-to-r from-emerald-600/[0.08] to-indigo-600/[0.04] rounded-xl border border-emerald-500/[0.12] p-6 mb-6">
+          <h3 className="text-sm font-semibold text-white mb-1">Get Your Verified Credential</h3>
+          <p className="text-[13px] text-gray-500 mb-4">Create a permanent, shareable verification page with your PromptScore, certification badge, and dimension breakdown.</p>
+          <button
+            onClick={async () => {
+              if (!data || creatingBadge) return;
+              setCreatingBadge(true);
+              try {
+                const res = await fetch("/api/verify/create", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    userName: data.candidateName,
+                    score: data.score,
+                    letterGrade: data.grade,
+                    percentile: data.percentile,
+                    dimensions: {
+                      promptQuality: data.dimensions.pq,
+                      efficiency: data.dimensions.eff,
+                      speed: data.dimensions.spd,
+                      responseQuality: data.dimensions.rq,
+                      iterationIQ: data.dimensions.iq,
+                    },
+                  }),
+                });
+                const result = await res.json();
+                if (result.hash) {
+                  window.location.href = `/verify/${result.hash}`;
+                }
+              } catch {
+                alert("Failed to create verification. Please try again.");
+              } finally {
+                setCreatingBadge(false);
+              }
+            }}
+            disabled={creatingBadge}
+            className="bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white text-[13px] font-medium px-5 py-2.5 rounded-md transition-colors"
+          >
+            {creatingBadge ? "Creating..." : "Get Shareable Verified Badge"}
+          </button>
         </div>
 
         {/* Share / Actions */}

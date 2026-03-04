@@ -10,6 +10,8 @@ const menuGroups = [
     links: [
       { label: "How It Works", href: "/how-it-works" },
       { label: "How Scoring Works", href: "/scoring" },
+      { label: "Certifications", href: "/certifications" },
+      { label: "AI Quiz (Free)", href: "/quiz" },
       { label: "Pricing", href: "/pricing" },
     ],
   },

@@ -164,4 +164,17 @@ export async function ensureSchema() {
       created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
     )
   `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS score_verifications (
+      id SERIAL PRIMARY KEY,
+      hash VARCHAR(64) UNIQUE NOT NULL,
+      user_name VARCHAR(255) NOT NULL,
+      score INTEGER NOT NULL,
+      letter_grade VARCHAR(10) NOT NULL,
+      percentile INTEGER NOT NULL,
+      dimensions JSONB NOT NULL,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    )
+  `;
 }
