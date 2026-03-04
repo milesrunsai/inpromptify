@@ -4,11 +4,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "InpromptiFy — AI Proficiency Assessment",
-  description: "Measure how your team uses AI. Score prompting efficiency across 5 dimensions, identify skill gaps, and prove ROI on AI tools. Free for teams up to 25.",
+  description: "Screen candidates for AI proficiency before you hire. Give them a real task, score their prompting across 5 dimensions, and get a clear 0-100 PromptScore. Free to start.",
   metadataBase: new URL("https://inpromptify.com"),
   openGraph: {
     title: "InpromptiFy — AI Proficiency Assessment",
-    description: "Measure how your team uses AI. Score prompting efficiency, identify skill gaps, and prove ROI on AI tools.",
+    description: "Screen candidates for AI proficiency before you hire. Real tasks, real scoring, clear results.",
     url: "https://inpromptify.com",
     siteName: "InpromptiFy",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "InpromptiFy — AI Proficiency Assessment" }],

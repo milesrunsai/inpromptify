@@ -11,8 +11,11 @@ export default function Footer() {
             <ul className="space-y-2 text-[13px]">
               <li><Link href="/how-it-works" className="text-gray-500 hover:text-gray-300 transition-colors">How It Works</Link></li>
               <li><Link href="/scoring" className="text-gray-500 hover:text-gray-300 transition-colors">How Scoring Works</Link></li>
+              <li><Link href="/certifications" className="text-gray-500 hover:text-gray-300 transition-colors">Certifications</Link></li>
+              <li><Link href="/integrations" className="text-gray-500 hover:text-gray-300 transition-colors">Integrations</Link></li>
               <li><Link href="/pricing" className="text-gray-500 hover:text-gray-300 transition-colors">Pricing</Link></li>
               <li><Link href="/test/demo" className="text-gray-500 hover:text-gray-300 transition-colors">Try the Demo</Link></li>
+              <li><Link href="/quiz" className="text-gray-500 hover:text-gray-300 transition-colors">AI Quiz (Free)</Link></li>
             </ul>
           </div>
           {/* Company */}

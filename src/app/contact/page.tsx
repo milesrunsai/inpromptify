@@ -108,7 +108,7 @@ export default function ContactPage() {
       <main className="bg-[#0A0F1C] min-h-screen">
         <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20">
           <div className="max-w-2xl mb-12">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Enterprise</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Contact</h1>
             <p className="text-gray-400">
               Custom pricing for organizations that need scale, security, and control. 
               Configure your plan below and we&apos;ll get back within 24 hours.

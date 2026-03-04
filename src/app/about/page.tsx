@@ -54,17 +54,17 @@ export default function AboutPage() {
                 InpromptiFy is an Australian company, founded in 2026. We are a small, technical team building tools for the era where AI proficiency is a core job skill.
               </p>
               <p>
-                The platform is in early access. We are working directly with early customers to refine the scoring methodology and build the features that matter most for hiring and workforce development.
+                The platform is in early access. We are working directly with early customers to refine the scoring methodology and build the features that matter most for hiring.
               </p>
             </section>
 
             <section>
-              <h2 className="text-lg font-semibold text-white mb-3">Early access</h2>
+              <h2 className="text-lg font-semibold text-white mb-3">Getting started</h2>
               <p className="mb-3">
-                We are currently offering free team assessments to the first 100 companies. This includes full access to the platform, scoring, analytics, and PDF reports.
+                InpromptiFy is free to start. The Starter plan includes 3 assessments per month with full scoring and analytics — no credit card required. Upgrade when your hiring pipeline demands it.
               </p>
               <p>
-                If you want to evaluate your team's AI skills or use InpromptiFy for hiring, reach out or sign up directly.
+                If you want to screen candidates for AI proficiency or benchmark your team, sign up and create your first assessment in minutes.
               </p>
             </section>
 
@@ -80,8 +80,8 @@ export default function AboutPage() {
           </div>
 
           <div className="mt-14 pt-10 border-t border-white/[0.06] flex flex-col sm:flex-row gap-3">
-            <Link href="/signup?plan=team-free" className="inline-flex items-center justify-center text-white bg-indigo-600 hover:bg-indigo-500 px-6 py-2.5 rounded-md text-sm font-medium transition-colors">
-              Assess Your Team Free
+            <Link href="/signup" className="inline-flex items-center justify-center text-white bg-indigo-600 hover:bg-indigo-500 px-6 py-2.5 rounded-md text-sm font-medium transition-colors">
+              Create Your First Assessment
             </Link>
             <Link href="/scoring" className="inline-flex items-center justify-center text-gray-400 hover:text-gray-200 px-6 py-2.5 rounded-md text-sm transition-colors border border-white/[0.06] hover:border-white/[0.12]">
               How Scoring Works

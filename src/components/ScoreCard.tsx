@@ -198,7 +198,7 @@ export default function ScoreCard({ result, testName }: ScoreCardProps) {
   }, []);
 
   const handleShare = async () => {
-    const text = `I scored ${result.promptScore}/100 (Grade: ${result.letterGrade}) on ${testName || "InpromptiFy"}! 🧠\n\nBetter than ${result.percentile}% of candidates.\n\nTest your AI prompting skills → InpromptiFy.ai`;
+    const text = `I scored ${result.promptScore}/100 (Grade: ${result.letterGrade}) on ${testName || "InpromptiFy"}!\n\nBetter than ${result.percentile}% of candidates.\n\nTest your AI prompting skills → inpromptify.com`;
 
     if (navigator.share) {
       try {

@@ -29,7 +29,7 @@ export default function HomePage() {
                 Give candidates a real-world AI task. Get a clear score on how effectively they use AI at work. Five minutes to set up. No resumes, no self-reporting, no guessing.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 animate-fade-in-up-delay-3">
-                <Link href="/signup?plan=team-free" className="inline-flex items-center justify-center text-white bg-indigo-600 hover:bg-indigo-500 px-6 py-2.5 rounded-md text-sm font-medium transition-colors">
+                <Link href="/signup" className="inline-flex items-center justify-center text-white bg-indigo-600 hover:bg-indigo-500 px-6 py-2.5 rounded-md text-sm font-medium transition-colors">
                   Create Your First Assessment
                 </Link>
                 <Link href="/test/demo" className="inline-flex items-center justify-center text-gray-400 hover:text-gray-200 px-6 py-2.5 rounded-md text-sm transition-colors border border-white/[0.06] hover:border-white/[0.12]">
@@ -65,9 +65,9 @@ export default function HomePage() {
                 <UsageCounter />
               </div>
               <span className="hidden sm:block h-4 w-px bg-white/[0.06]" />
-              <span className="text-sm text-gray-500">Free for the first 100 companies</span>
-              <Link href="/signup?plan=team-free" className="text-sm text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
-                Claim your spot
+              <span className="text-sm text-gray-500">Start free — 3 assessments/month, no card required</span>
+              <Link href="/signup" className="text-sm text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
+                Get started
               </Link>
             </div>
           </div>
@@ -399,10 +399,10 @@ export default function HomePage() {
               <span className="text-gray-500">Start measuring it.</span>
             </h2>
             <p className="text-sm text-gray-500 mb-8 max-w-md mx-auto">
-              The gap between good and bad AI usage is 10x. A 5-minute assessment shows you who is on which side. Free for teams up to 25.
+              The gap between good and bad AI usage is 10x. A 5-minute assessment shows you who is on which side. Start free — no credit card required.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Link href="/signup?plan=team-free" className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors">
+              <Link href="/signup" className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors">
                 Create Your First Assessment
               </Link>
               <Link href="/contact" className="inline-flex items-center justify-center text-gray-400 hover:text-gray-200 px-6 py-2.5 rounded-md text-sm transition-colors border border-white/[0.06] hover:border-white/[0.12]">
