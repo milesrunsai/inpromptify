@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { useIntegrity } from "@/hooks/useIntegrity";
+import type { IntegrityReport } from "@/lib/integrity";
 
 interface Message {
   role: "user" | "assistant";
@@ -67,8 +69,10 @@ export default function DemoTestPage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedModel, setSelectedModel] = useState("claude-haiku");
   const [stageStartTime, setStageStartTime] = useState(0);
+  const [integrityReports, setIntegrityReports] = useState<IntegrityReport[]>([]);
   const chatRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval>>(undefined);
+  const integrity = useIntegrity();
 
   const stage = STAGES[currentStage];
   const attemptsUsed = messages.filter((m) => m.role === "user").length;
@@ -104,8 +108,14 @@ export default function DemoTestPage() {
     const newResults = [...stageResults, result];
     setStageResults(newResults);
 
+    // Capture integrity report for this stage
+    const userPrompts = messages.filter(m => m.role === "user").map(m => m.content);
+    const aiResponses = messages.filter(m => m.role === "assistant").map(m => m.content);
+    const report = integrity.getReport(userPrompts, aiResponses);
+    setIntegrityReports(prev => [...prev, report]);
+    integrity.reset();
+
     if (currentStage < STAGES.length - 1) {
-      // Move to next stage
       const nextStage = currentStage + 1;
       setCurrentStage(nextStage);
       setMessages([]);
@@ -114,11 +124,10 @@ export default function DemoTestPage() {
       setStageStartTime(Date.now());
       setError(null);
     } else {
-      // All stages complete
       setPhase("results");
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentStage, messages, tokensUsed, timeLeft, stageResults, attemptsUsed, stage.timeLimitMinutes]);
+  }, [currentStage, messages, tokensUsed, timeLeft, stageResults, attemptsUsed, stage.timeLimitMinutes, integrity]);
 
   const startAssessment = () => {
     setPhase("sandbox");
@@ -338,6 +347,64 @@ export default function DemoTestPage() {
                 </div>
               </div>
 
+              {/* Integrity & Dependency */}
+              {integrityReports.length > 0 && (() => {
+                const avgIntegrity = Math.round(integrityReports.reduce((s, r) => s + r.integrityScore, 0) / integrityReports.length);
+                const avgDependency = Math.round(integrityReports.reduce((s, r) => s + r.dependencyScore, 0) / integrityReports.length);
+                const totalPastes = integrityReports.reduce((s, r) => s + r.pasteCount, 0);
+                const totalTabSwitches = integrityReports.reduce((s, r) => s + r.tabSwitchCount, 0);
+                const allFlags = [...new Set(integrityReports.flatMap(r => r.flags))];
+                const integrityColor = avgIntegrity >= 80 ? "text-indigo-300" : avgIntegrity >= 50 ? "text-indigo-400" : "text-indigo-500/60";
+                const dependencyColor = avgDependency <= 20 ? "text-indigo-300" : avgDependency <= 50 ? "text-indigo-400" : "text-indigo-500/60";
+
+                return (
+                  <div className="border-t border-white/[0.06] pt-6 mt-6">
+                    <h3 className="text-sm font-semibold text-gray-400 mb-4">Integrity Analysis</h3>
+                    <div className="grid grid-cols-2 gap-4 mb-4">
+                      <div className="bg-white/[0.02] rounded-lg p-4 text-center">
+                        <span className={`text-3xl font-bold ${integrityColor}`}>{avgIntegrity}</span>
+                        <span className="text-lg text-gray-600">/100</span>
+                        <p className="text-[11px] text-gray-500 mt-1">Integrity Score</p>
+                        <p className="text-[10px] text-gray-600 mt-0.5">Higher = more trusted</p>
+                      </div>
+                      <div className="bg-white/[0.02] rounded-lg p-4 text-center">
+                        <span className={`text-3xl font-bold ${dependencyColor}`}>{avgDependency}</span>
+                        <span className="text-lg text-gray-600">/100</span>
+                        <p className="text-[11px] text-gray-500 mt-1">AI Dependency Score</p>
+                        <p className="text-[10px] text-gray-600 mt-0.5">Lower = more independent</p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-2 mb-4">
+                      <div className="bg-white/[0.02] rounded-lg p-3 text-center">
+                        <span className="text-sm font-mono text-white">{totalPastes}</span>
+                        <p className="text-[10px] text-gray-600">Paste events</p>
+                      </div>
+                      <div className="bg-white/[0.02] rounded-lg p-3 text-center">
+                        <span className="text-sm font-mono text-white">{totalTabSwitches}</span>
+                        <p className="text-[10px] text-gray-600">Tab switches</p>
+                      </div>
+                      <div className="bg-white/[0.02] rounded-lg p-3 text-center">
+                        <span className="text-sm font-mono text-white">{Math.round(integrityReports.reduce((s, r) => s + r.typingNaturalness, 0) / integrityReports.length)}</span>
+                        <p className="text-[10px] text-gray-600">Typing score</p>
+                      </div>
+                      <div className="bg-white/[0.02] rounded-lg p-3 text-center">
+                        <span className="text-sm font-mono text-white">{Math.round(integrityReports.reduce((s, r) => s + r.aiLikenessScore, 0) / integrityReports.length)}</span>
+                        <p className="text-[10px] text-gray-600">AI likeness</p>
+                      </div>
+                    </div>
+                    {allFlags.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5">
+                        {allFlags.map(flag => (
+                          <span key={flag} className="text-[10px] font-mono text-indigo-400/60 bg-indigo-500/[0.06] border border-indigo-500/10 px-2 py-0.5 rounded">
+                            {flag.replace(/_/g, " ")}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+
               <div className="border-t border-white/[0.06] pt-6 mt-6 text-center text-[12px] text-gray-600">
                 Model: {AVAILABLE_MODELS.find(m => m.id === selectedModel)?.name || selectedModel} | Total tokens: {totalTokens} | Time: {formatTime(totalTime)}
               </div>
@@ -467,8 +534,8 @@ export default function DemoTestPage() {
           <input
             type="text"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleSend()}
+            onChange={(e) => { setInput(e.target.value); integrity.onInputChange(e.target.value); }}
+            onKeyDown={(e) => { integrity.onKeyDown(e); if (e.key === "Enter" && !e.shiftKey) handleSend(); }}
             disabled={sending || attemptsLeft <= 0}
             placeholder={attemptsLeft <= 0 ? `No attempts left — click "${currentStage < STAGES.length - 1 ? "Next Task" : "Finish"}"` : "Type your prompt... (Enter to send)"}
             className="flex-1 bg-[#0C1120] border border-white/[0.06] rounded-md px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 focus:border-indigo-500/30 disabled:opacity-50"
