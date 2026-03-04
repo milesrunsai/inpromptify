@@ -62,7 +62,7 @@ export default function HomePage() {
           <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28 w-full">
             <div className="max-w-2xl mb-12">
               <p className="text-[13px] font-mono text-indigo-400/80 mb-4 animate-fade-in-up">
-                // for hiring managers
+                // for business and enterprise
               </p>
               <h1 className="text-4xl sm:text-5xl md:text-[3.5rem] font-bold text-white tracking-tight leading-[1.08] mb-5 animate-fade-in-up-delay-1">
                 Screen AI capability{" "}
