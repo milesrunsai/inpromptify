@@ -13,7 +13,7 @@ export default function HomePage() {
       <main className="bg-[#0A0F1C]">
         {/* ─── Hero ─── */}
         <section className="relative min-h-[calc(100vh-56px)] flex items-center overflow-hidden -mt-14 pt-14">
-          <div className="absolute inset-0 dot-grid opacity-30" />
+          
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[500px] rounded-full bg-indigo-500/[0.06] blur-[120px]" />
 
           <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28 w-full">
@@ -392,7 +392,7 @@ export default function HomePage() {
 
         {/* ─── Final CTA ─── */}
         <section className="relative">
-          <div className="absolute inset-0 dot-grid opacity-15" />
+          
           <div className="relative max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28 text-center">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight">
               Stop guessing who can use AI.{" "}

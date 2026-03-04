@@ -33,7 +33,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-[#0A0F1C] flex flex-col relative overflow-hidden">
       {/* Background effects */}
-      <div className="absolute inset-0 dot-grid opacity-20" />
+      
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-indigo-500/[0.06] blur-[120px] animate-pulse-glow" />
 
       <div className="relative z-10 flex-1 flex items-center justify-center px-5 py-12">
