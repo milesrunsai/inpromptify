@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 
 interface Message {
@@ -8,29 +8,71 @@ interface Message {
   content: string;
 }
 
-const DEMO_TASK = {
-  name: "Write a Marketing Email",
-  model: "Claude Haiku",
-  description: "Craft a compelling product launch email for a B2B SaaS tool targeting enterprise CTOs. The email should drive demo bookings while maintaining a professional tone.",
-  taskDescription: "Write a product launch announcement email for 'CloudSync Pro', a new enterprise data synchronization platform. Target audience: CTOs at companies with 500+ employees. Goal: Drive demo bookings. Include subject line, preview text, and full email body.",
-  maxAttempts: 3,
-  timeLimitMinutes: 5,
-  tokenBudget: 2000,
-};
+interface StageResult {
+  messages: Message[];
+  tokensUsed: number;
+  timeSpent: number;
+  attemptsUsed: number;
+}
+
+const STAGES = [
+  {
+    id: "email",
+    name: "Email Writing",
+    icon: "01",
+    description: "Write a product launch announcement email for 'CloudSync Pro', a new enterprise data synchronization platform. Target audience: CTOs at companies with 500+ employees. Goal: Drive demo bookings. Include subject line, preview text, and full email body.",
+    tip: "Be specific about tone, audience, format, and constraints. Efficient prompts that get great results in fewer attempts score higher.",
+    maxAttempts: 3,
+    timeLimitMinutes: 5,
+    tokenBudget: 2000,
+  },
+  {
+    id: "data",
+    name: "Data Analysis",
+    icon: "02",
+    description: "You have a dataset of 10,000 e-commerce transactions from Q4 2025. Columns: order_id, date, customer_segment (enterprise/SMB/consumer), product_category, revenue, region, return_rate. Use AI to write a complete analysis that identifies the top 3 revenue growth opportunities and the biggest risk area. Include specific metrics you would look for.",
+    tip: "Structure your analysis request clearly. Ask for specific metrics, comparisons, and actionable recommendations.",
+    maxAttempts: 3,
+    timeLimitMinutes: 5,
+    tokenBudget: 2000,
+  },
+  {
+    id: "agent",
+    name: "Agent Design",
+    icon: "03",
+    description: "Design an AI agent workflow for a customer support team (200 tickets/day). The agent should triage incoming tickets, attempt to resolve common issues (password resets, billing questions, feature how-tos), and know when to escalate to a human. Define: the workflow steps, safety guardrails, escalation rules, and success metrics.",
+    tip: "Think about what could go wrong. Good agent design includes error handling, safety limits, and human oversight.",
+    maxAttempts: 3,
+    timeLimitMinutes: 5,
+    tokenBudget: 2000,
+  },
+];
+
+const AVAILABLE_MODELS = [
+  { id: "claude-haiku", name: "Claude Haiku", provider: "Anthropic", badge: "Fast" },
+  { id: "claude-sonnet", name: "Claude Sonnet", provider: "Anthropic", badge: "Powerful" },
+  { id: "gpt-4o-mini", name: "GPT-4o Mini", provider: "OpenAI", badge: "Fast" },
+  { id: "gpt-4o", name: "GPT-4o", provider: "OpenAI", badge: "Powerful" },
+];
 
 export default function DemoTestPage() {
   const [phase, setPhase] = useState<"intro" | "sandbox" | "results">("intro");
+  const [currentStage, setCurrentStage] = useState(0);
+  const [stageResults, setStageResults] = useState<StageResult[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(DEMO_TASK.timeLimitMinutes * 60);
+  const [timeLeft, setTimeLeft] = useState(STAGES[0].timeLimitMinutes * 60);
   const [tokensUsed, setTokensUsed] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [selectedModel, setSelectedModel] = useState("claude-haiku");
+  const [stageStartTime, setStageStartTime] = useState(0);
   const chatRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval>>(undefined);
 
+  const stage = STAGES[currentStage];
   const attemptsUsed = messages.filter((m) => m.role === "user").length;
-  const attemptsLeft = DEMO_TASK.maxAttempts - attemptsUsed;
+  const attemptsLeft = stage.maxAttempts - attemptsUsed;
 
   useEffect(() => {
     if (phase === "sandbox" && timeLeft > 0) {
@@ -38,7 +80,7 @@ export default function DemoTestPage() {
         setTimeLeft((t) => {
           if (t <= 1) {
             clearInterval(timerRef.current);
-            setPhase("results");
+            finishStage();
             return 0;
           }
           return t - 1;
@@ -46,6 +88,7 @@ export default function DemoTestPage() {
       }, 1000);
       return () => clearInterval(timerRef.current);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, timeLeft]);
 
   useEffect(() => {
@@ -53,6 +96,34 @@ export default function DemoTestPage() {
   }, [messages]);
 
   const formatTime = (s: number) => `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, "0")}`;
+
+  const finishStage = useCallback(() => {
+    clearInterval(timerRef.current);
+    const timeSpent = (stage.timeLimitMinutes * 60) - timeLeft;
+    const result: StageResult = { messages: [...messages], tokensUsed, timeSpent, attemptsUsed };
+    const newResults = [...stageResults, result];
+    setStageResults(newResults);
+
+    if (currentStage < STAGES.length - 1) {
+      // Move to next stage
+      const nextStage = currentStage + 1;
+      setCurrentStage(nextStage);
+      setMessages([]);
+      setTokensUsed(0);
+      setTimeLeft(STAGES[nextStage].timeLimitMinutes * 60);
+      setStageStartTime(Date.now());
+      setError(null);
+    } else {
+      // All stages complete
+      setPhase("results");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentStage, messages, tokensUsed, timeLeft, stageResults, attemptsUsed, stage.timeLimitMinutes]);
+
+  const startAssessment = () => {
+    setPhase("sandbox");
+    setStageStartTime(Date.now());
+  };
 
   const handleSend = async () => {
     if (!input.trim() || sending || attemptsLeft <= 0) return;
@@ -65,270 +136,350 @@ export default function DemoTestPage() {
     setMessages(newMessages);
 
     try {
-      // Call the real API (uses Claude Haiku for demo — cheap and fast)
       const res = await fetch("/api/test/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           testId: "demo",
           prompt,
-          model: "claude-haiku",
-          taskDescription: DEMO_TASK.taskDescription,
-          conversationHistory: messages.map(m => ({ role: m.role, content: m.content })),
+          model: selectedModel,
+          taskDescription: stage.description,
+          conversationHistory: messages.map((m) => ({ role: m.role, content: m.content })),
         }),
       });
 
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Failed to get response");
-      }
-
       const data = await res.json();
-      setTokensUsed((t) => t + (data.tokensUsed?.total || 0));
-      setMessages([...newMessages, { role: "assistant", content: data.response }]);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+
+      if (data.error && !data.response) {
+        setError(data.error);
+        setMessages(messages); // revert
+      } else {
+        if (data.error) setError(data.error);
+        setMessages([...newMessages, { role: "assistant", content: data.response }]);
+        setTokensUsed((prev) => prev + (data.tokensUsed?.total || 0));
+      }
+    } catch {
+      setError("Failed to connect. Please try again.");
+      setMessages(messages);
     } finally {
       setSending(false);
     }
   };
 
-  const score = Math.min(100, 45 + attemptsUsed * 15 + Math.floor(Math.random() * 10));
-
-  if (phase === "results") {
-    return (
-      <div className="min-h-screen bg-[#0A0F1C] flex items-center justify-center p-5">
-        <div className="max-w-md w-full animate-fade-in-up">
-          <div className="bg-[#0C1120] rounded-xl border border-white/[0.06] p-8 text-center mb-5 shadow-2xl shadow-black/20">
-            <h1 className="text-xl font-bold text-white mb-2">Demo Complete</h1>
-            <p className="text-sm text-gray-500 mb-6">Here is how you performed on the sample test</p>
-
-            <div className="w-24 h-24 rounded-full bg-indigo-500/10 ring-2 ring-indigo-500/30 flex items-center justify-center text-3xl font-bold text-indigo-400 mx-auto mb-2">
-              {score}
-            </div>
-            <p className="text-xs text-gray-600 mb-6">PromptScore (Demo)</p>
-
-            <div className="grid grid-cols-3 gap-3 mb-6 text-center">
-              {[
-                { value: attemptsUsed, label: "Prompts" },
-                { value: tokensUsed.toLocaleString(), label: "Tokens" },
-                { value: formatTime(DEMO_TASK.timeLimitMinutes * 60 - timeLeft), label: "Time" },
-              ].map((s) => (
-                <div key={s.label} className="bg-white/[0.03] rounded-lg border border-white/[0.04] p-3">
-                  <div className="text-lg font-bold text-white">{s.value}</div>
-                  <div className="text-[10px] text-gray-600">{s.label}</div>
-                </div>
-              ))}
-            </div>
-
-            <div className="bg-indigo-500/[0.06] rounded-lg border border-indigo-500/[0.12] p-4 mb-6 text-left">
-              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-2">What the full version includes</p>
-              <ul className="space-y-1.5">
-                {[
-                  "5-dimension scoring with detailed breakdowns",
-                  "Strengths, weaknesses, and improvement plan",
-                  "Comparison against other candidates",
-                  "Downloadable PDF report",
-                  "Team-wide analytics and benchmarks",
-                ].map((item) => (
-                  <li key={item} className="text-[13px] text-gray-400 flex items-start gap-2">
-                    <span className="mt-1.5 w-1 h-1 rounded-full bg-indigo-500 shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <Link href="/signup" className="bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 rounded-md text-sm font-medium transition-all hover:shadow-lg hover:shadow-indigo-500/20 text-center">
-                Create Free Account
-              </Link>
-              <Link href="/" className="text-gray-500 hover:text-gray-300 py-2 text-sm transition-colors text-center">
-                Back to Home
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (phase === "intro") {
-    return (
-      <div className="min-h-screen bg-[#0A0F1C] flex items-center justify-center p-5 relative overflow-hidden">
-        <div className="absolute inset-0 dot-grid opacity-20" />
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-indigo-500/[0.06] blur-[120px]" />
-        
-        <div className="max-w-md w-full relative z-10 animate-fade-in-up">
-          <div className="text-center mb-6">
-            <Link href="/" className="inline-flex items-center gap-0 group">
-              <span className="inline-flex items-center gap-2"><img src="/logo.png" alt="InpromptiFy" width={24} height={24} /><span className="font-semibold text-white text-lg">InpromptiFy</span></span>
-            </Link>
-          </div>
-
-          <div className="bg-[#0C1120] rounded-xl border border-white/[0.06] p-8 shadow-2xl shadow-black/20">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="text-[10px] font-mono text-indigo-400/70 uppercase tracking-wider">Live Demo</span>
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            </div>
-
-            <h1 className="text-xl font-bold text-white mb-2">{DEMO_TASK.name}</h1>
-            <p className="text-sm text-gray-400 leading-relaxed mb-6">{DEMO_TASK.description}</p>
-
-            <div className="grid grid-cols-3 gap-3 mb-6">
-              {[
-                { label: "Time", value: `${DEMO_TASK.timeLimitMinutes}m` },
-                { label: "Attempts", value: `${DEMO_TASK.maxAttempts}` },
-                { label: "Tokens", value: DEMO_TASK.tokenBudget.toLocaleString() },
-              ].map((d) => (
-                <div key={d.label} className="bg-white/[0.03] rounded-lg p-3 text-center border border-white/[0.04]">
-                  <div className="text-[10px] text-gray-600 uppercase tracking-wider mb-1">{d.label}</div>
-                  <div className="text-sm font-semibold text-white">{d.value}</div>
-                </div>
-              ))}
-            </div>
-
-            <div className="bg-white/[0.02] rounded-lg p-3 border border-white/[0.04] mb-6">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] text-gray-600 uppercase tracking-wider">Model</span>
-              </div>
-              <p className="text-sm text-gray-400">{DEMO_TASK.model} — real AI responses, not simulated</p>
-            </div>
-
-            <button
-              onClick={() => setPhase("sandbox")}
-              className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-md text-sm font-medium transition-all hover:shadow-lg hover:shadow-indigo-500/20"
-            >
-              Start Demo
-            </button>
-            <p className="text-[11px] text-gray-700 text-center mt-3">No account required. Takes about 3 minutes.</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Sandbox
   const timeCritical = timeLeft <= 30;
   const timeWarning = timeLeft <= 60;
 
-  return (
-    <div className="h-screen flex flex-col bg-[#0A0F1C]">
-      {/* Top Bar */}
-      <div className="bg-[#0C1120] border-b border-white/[0.06] px-4 py-2.5 flex items-center justify-between shrink-0">
-        <div className="flex items-center gap-3">
-          <Link href="/" className="font-mono text-sm text-white">
-            <img src="/logo.png" alt="InpromptiFy" width={18} height={18} className="inline-block" />
-          </Link>
-          <span className="text-xs text-white/10">|</span>
-          <span className="text-sm font-medium text-white">{DEMO_TASK.name}</span>
-          <span className="text-[10px] font-mono text-emerald-400/70 bg-emerald-500/10 px-2 py-0.5 rounded-full">LIVE</span>
+  // Intro
+  if (phase === "intro") {
+    return (
+      <div className="bg-[#0A0F1C] min-h-screen flex flex-col">
+        <div className="flex items-center gap-3 px-6 py-4 border-b border-white/[0.06]">
+          <Link href="/" className="text-sm font-bold text-white hover:text-indigo-300 transition-colors">InpromptiFy</Link>
         </div>
-        <div className="flex items-center gap-5">
-          <div className="text-center hidden sm:block">
-            <div className="text-[10px] text-gray-600 uppercase tracking-wide">Attempts</div>
-            <div className={`text-sm font-mono font-bold ${attemptsLeft <= 1 ? "text-red-400" : "text-white"}`}>{attemptsUsed}/{DEMO_TASK.maxAttempts}</div>
+        <div className="flex-1 flex items-center justify-center px-5">
+          <div className="max-w-2xl w-full">
+            <div className="text-center mb-8">
+              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Live Demo</p>
+              <h1 className="text-3xl font-bold text-white tracking-tight mb-3">AI Proficiency Assessment</h1>
+              <p className="text-sm text-gray-500 max-w-md mx-auto">
+                Complete 3 real-world AI tasks. Your prompting skill, efficiency, and iteration strategy
+                are scored across 5 dimensions to produce your PromptScore.
+              </p>
+            </div>
+
+            {/* Stages Preview */}
+            <div className="space-y-3 mb-8">
+              {STAGES.map((s, i) => (
+                <div key={s.id} className="bg-[#0C1120] border border-white/[0.06] rounded-lg px-5 py-3 flex items-center gap-4">
+                  <span className="text-[11px] font-mono text-indigo-400/60 w-6">{s.icon}</span>
+                  <div className="flex-1">
+                    <span className="text-sm text-white font-medium">{s.name}</span>
+                    <span className="text-[11px] text-gray-600 ml-2">{s.maxAttempts} attempts, {s.timeLimitMinutes} min</span>
+                  </div>
+                  <span className="text-[11px] text-gray-600">{i === 0 ? "Email" : i === 1 ? "Analysis" : "Agent Design"}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Model Selection */}
+            <div className="bg-[#0C1120] border border-white/[0.06] rounded-lg p-5 mb-8">
+              <h3 className="text-sm font-semibold text-white mb-3">Choose your AI model</h3>
+              <p className="text-[12px] text-gray-500 mb-4">All models are real — your score reflects how well you prompt, regardless of model choice.</p>
+              <div className="grid grid-cols-2 gap-2">
+                {AVAILABLE_MODELS.map((m) => (
+                  <button
+                    key={m.id}
+                    onClick={() => setSelectedModel(m.id)}
+                    className={`text-left border rounded-lg px-4 py-3 transition-all ${
+                      selectedModel === m.id
+                        ? "border-indigo-500/40 bg-indigo-500/[0.06]"
+                        : "border-white/[0.06] hover:border-white/[0.12]"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-white font-medium">{m.name}</span>
+                      <span className="text-[10px] text-indigo-400/60 bg-indigo-500/10 px-1.5 py-0.5 rounded">{m.badge}</span>
+                    </div>
+                    <span className="text-[11px] text-gray-500">{m.provider}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="text-center">
+              <button
+                onClick={startAssessment}
+                className="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-3 rounded-md text-sm font-medium transition-colors"
+              >
+                Start Assessment
+              </button>
+              <p className="text-[11px] text-gray-600 mt-3">No account required. Takes about 10-15 minutes.</p>
+            </div>
           </div>
-          <div className="text-center hidden sm:block">
-            <div className="text-[10px] text-gray-600 uppercase tracking-wide">Tokens</div>
-            <div className="text-sm font-mono font-bold text-white">{tokensUsed.toLocaleString()}</div>
+        </div>
+      </div>
+    );
+  }
+
+  // Results
+  if (phase === "results") {
+    const allResults = stageResults;
+    const totalTokens = allResults.reduce((sum, r) => sum + r.tokensUsed, 0);
+    const totalTime = allResults.reduce((sum, r) => sum + r.timeSpent, 0);
+    const totalAttempts = allResults.reduce((sum, r) => sum + r.attemptsUsed, 0);
+    const maxAttempts = STAGES.reduce((sum, s) => sum + s.maxAttempts, 0);
+    const maxTokens = STAGES.reduce((sum, s) => sum + s.tokenBudget, 0);
+    const maxTime = STAGES.reduce((sum, s) => sum + s.timeLimitMinutes * 60, 0);
+
+    // Calculate dimension scores
+    const efficiencyScore = Math.round(Math.max(0, Math.min(100,
+      (1 - totalAttempts / maxAttempts) * 50 + (1 - totalTokens / maxTokens) * 50
+    )));
+    const speedScore = Math.round(Math.max(0, Math.min(100,
+      (1 - totalTime / maxTime) * 100
+    )));
+    const completionScore = Math.round((allResults.filter(r => r.attemptsUsed > 0).length / STAGES.length) * 100);
+    const promptScore = Math.round((efficiencyScore * 0.25 + speedScore * 0.15 + completionScore * 0.60) * 1.1);
+    const overallScore = Math.min(100, Math.max(0, promptScore));
+    const grade = overallScore >= 90 ? "A+" : overallScore >= 80 ? "A" : overallScore >= 70 ? "B" : overallScore >= 60 ? "C" : overallScore >= 50 ? "D" : "F";
+
+    return (
+      <div className="bg-[#0A0F1C] min-h-screen flex flex-col">
+        <div className="flex items-center gap-3 px-6 py-4 border-b border-white/[0.06]">
+          <Link href="/" className="text-sm font-bold text-white hover:text-indigo-300 transition-colors">InpromptiFy</Link>
+          <span className="text-gray-600">|</span>
+          <span className="text-sm text-gray-400">Assessment Complete</span>
+        </div>
+        <div className="flex-1 overflow-y-auto px-5 py-8">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-10">
+              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Your Results</p>
+              <h1 className="text-4xl font-bold text-white tracking-tight mb-2">PromptScore</h1>
+            </div>
+
+            {/* Big Score */}
+            <div className="bg-[#0C1120] border border-white/[0.06] rounded-xl p-8 mb-6">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-8 mb-8">
+                <div className="text-center">
+                  <span className="text-7xl font-bold text-indigo-300">{overallScore}</span>
+                  <span className="text-2xl text-gray-600">/100</span>
+                </div>
+                <div className="flex items-center gap-6">
+                  <div className="border border-indigo-500/20 bg-indigo-500/[0.06] rounded-xl px-6 py-4 text-center">
+                    <span className="text-3xl font-bold text-indigo-300">{grade}</span>
+                    <p className="text-[11px] text-gray-500 mt-1">Grade</p>
+                  </div>
+                  <div className="text-center">
+                    <span className="text-xl font-bold text-white">{STAGES.length}/{STAGES.length}</span>
+                    <p className="text-[11px] text-gray-500 mt-1">Tasks completed</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Dimension Bars */}
+              <div className="space-y-3 mb-6">
+                {[
+                  { label: "Task Completion", score: completionScore },
+                  { label: "Efficiency", score: efficiencyScore },
+                  { label: "Speed", score: speedScore },
+                ].map((dim) => (
+                  <div key={dim.label}>
+                    <div className="flex justify-between text-[12px] mb-1">
+                      <span className="text-gray-400">{dim.label}</span>
+                      <span className="text-gray-500 font-mono">{dim.score}/100</span>
+                    </div>
+                    <div className="h-2 bg-white/[0.04] rounded-full overflow-hidden">
+                      <div className="h-full bg-indigo-500 rounded-full transition-all" style={{ width: `${dim.score}%` }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Stage Breakdown */}
+              <div className="border-t border-white/[0.06] pt-6">
+                <h3 className="text-sm font-semibold text-gray-400 mb-3">Per-Task Breakdown</h3>
+                <div className="space-y-2">
+                  {STAGES.map((s, i) => {
+                    const r = allResults[i];
+                    return (
+                      <div key={s.id} className="flex items-center justify-between bg-white/[0.02] rounded-lg px-4 py-2.5">
+                        <div className="flex items-center gap-3">
+                          <span className="text-[11px] font-mono text-indigo-400/60">{s.icon}</span>
+                          <span className="text-sm text-white">{s.name}</span>
+                        </div>
+                        <div className="flex items-center gap-4 text-[12px] text-gray-500 font-mono">
+                          <span>{r?.attemptsUsed || 0}/{s.maxAttempts} attempts</span>
+                          <span>{r?.tokensUsed || 0} tokens</span>
+                          <span>{r ? formatTime(r.timeSpent) : "—"}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="border-t border-white/[0.06] pt-6 mt-6 text-center text-[12px] text-gray-600">
+                Model: {AVAILABLE_MODELS.find(m => m.id === selectedModel)?.name || selectedModel} | Total tokens: {totalTokens} | Time: {formatTime(totalTime)}
+              </div>
+            </div>
+
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
+              <Link href="/signup" className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors">
+                Sign Up for Full Assessment
+              </Link>
+              <Link href="/certifications" className="inline-flex items-center justify-center text-gray-400 hover:text-gray-200 px-6 py-2.5 rounded-md text-sm transition-colors border border-white/[0.06] hover:border-white/[0.12]">
+                View Certifications
+              </Link>
+            </div>
+            <p className="text-center text-[12px] text-gray-600">
+              This is a demo assessment. Full assessments include all 5 scoring dimensions with detailed AI analysis.
+            </p>
           </div>
-          <div className="text-center">
-            <div className="text-[10px] text-gray-600 uppercase tracking-wide">Time</div>
-            <div className={`text-sm font-mono font-bold ${timeCritical ? "text-red-400 animate-pulse" : timeWarning ? "text-red-400" : "text-white"}`}>{formatTime(timeLeft)}</div>
+        </div>
+      </div>
+    );
+  }
+
+  // Sandbox (active test)
+  return (
+    <div className="bg-[#0A0F1C] min-h-screen flex flex-col">
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06] bg-[#0A0F1C]/95 backdrop-blur-xl">
+        <div className="flex items-center gap-3">
+          <Link href="/" className="text-sm font-bold text-white hover:text-indigo-300 transition-colors">InpromptiFy</Link>
+          <span className="text-gray-600">|</span>
+          <span className="text-sm text-white font-medium">{stage.name}</span>
+          <span className="text-[10px] font-mono text-indigo-400/70 bg-indigo-500/10 px-2 py-0.5 rounded-full">LIVE</span>
+        </div>
+
+        <div className="flex items-center gap-4 text-[13px]">
+          {/* Stage Progress */}
+          <div className="flex items-center gap-1.5">
+            {STAGES.map((_, i) => (
+              <div
+                key={i}
+                className={`w-2 h-2 rounded-full ${
+                  i < currentStage ? "bg-indigo-400" : i === currentStage ? "bg-indigo-500 animate-pulse" : "bg-white/[0.08]"
+                }`}
+              />
+            ))}
+            <span className="text-gray-500 ml-1 text-[11px]">{currentStage + 1}/{STAGES.length}</span>
           </div>
+
+          <div className="h-4 w-px bg-white/[0.08]" />
+
+          <div className="text-gray-500">Attempts <span className={`font-mono font-bold ${attemptsLeft <= 1 ? "text-indigo-300 animate-pulse" : "text-white"}`}>{attemptsUsed}/{stage.maxAttempts}</span></div>
+          <div className="text-gray-500">Tokens <span className="font-mono font-bold text-white">{tokensUsed}</span></div>
+          <div className="text-gray-500">Time <span className={`font-mono font-bold ${timeCritical ? "text-indigo-300 animate-pulse" : timeWarning ? "text-indigo-400" : "text-white"}`}>{formatTime(timeLeft)}</span></div>
+
           <button
-            onClick={() => messages.length > 0 ? setPhase("results") : undefined}
-            disabled={messages.length === 0}
-            className="bg-emerald-600 hover:bg-emerald-500 disabled:bg-white/[0.04] disabled:text-gray-600 text-white px-4 py-1.5 rounded-md text-sm font-medium transition-colors"
+            onClick={finishStage}
+            disabled={attemptsUsed === 0}
+            className="bg-indigo-600 hover:bg-indigo-500 disabled:bg-white/[0.04] disabled:text-gray-600 text-white px-3 py-1.5 rounded-md text-[12px] font-medium transition-colors"
           >
-            Finish Demo
+            {currentStage < STAGES.length - 1 ? "Next Task" : "Finish"}
           </button>
         </div>
       </div>
 
-      <div className="flex-1 flex overflow-hidden">
-        {/* Task Panel */}
-        <div className="hidden md:block w-[360px] shrink-0 bg-[#0C1120] border-r border-white/[0.06] overflow-y-auto">
-          <div className="p-5">
-            <h2 className="text-sm font-semibold text-white mb-3">Task Description</h2>
-            <p className="text-sm text-gray-400 leading-relaxed mb-5">{DEMO_TASK.taskDescription}</p>
-            <div className="p-3 bg-indigo-500/[0.06] rounded-md border border-indigo-500/[0.12]">
-              <p className="text-xs text-indigo-400/80 leading-relaxed">
-                <strong>Tip:</strong> Be specific about tone, audience, format, and constraints. Efficient prompts that get great results in fewer attempts score higher.
-              </p>
+      {/* Chat Area */}
+      <div ref={chatRef} className="flex-1 overflow-y-auto px-4 py-4">
+        <div className="max-w-3xl mx-auto space-y-4">
+          {/* Task Description */}
+          <div className="bg-indigo-500/[0.04] border border-indigo-500/10 rounded-lg p-5 mb-2">
+            <h2 className="text-sm font-semibold text-indigo-300 mb-2">Task: {stage.name}</h2>
+            <p className="text-sm text-gray-400 leading-relaxed mb-3">{stage.description}</p>
+            <p className="text-[12px] text-gray-500 italic"><strong className="text-gray-400">Tip:</strong> {stage.tip}</p>
+          </div>
+
+          {messages.length === 0 && (
+            <div className="text-center py-8">
+              <h3 className="text-sm font-semibold text-white mb-1">Ready to begin</h3>
+              <p className="text-[12px] text-gray-500">Type your first prompt. This is a live AI — real responses, real scoring.</p>
             </div>
-          </div>
-        </div>
+          )}
 
-        {/* Chat */}
-        <div className="flex-1 flex flex-col">
-          <div ref={chatRef} className="flex-1 overflow-y-auto p-5 space-y-3">
-            {messages.length === 0 && (
-              <div className="flex items-center justify-center h-full">
-                <div className="text-center max-w-xs">
-                  <div className="w-12 h-12 rounded-full bg-indigo-500/10 flex items-center justify-center mx-auto mb-3">
-                    <svg className="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-sm font-medium text-white mb-1">Ready to begin</h3>
-                  <p className="text-xs text-gray-600">Type your first prompt. This is a live AI — real responses, real scoring.</p>
+          {messages.map((msg, i) => (
+            <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div className={`max-w-[85%] rounded-lg px-4 py-3 ${
+                msg.role === "user"
+                  ? "bg-indigo-600/20 border border-indigo-500/20"
+                  : "bg-[#0C1120] border border-white/[0.06]"
+              }`}>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-[10px] font-semibold text-gray-500">
+                    {msg.role === "user" ? "You" : AVAILABLE_MODELS.find(m => m.id === selectedModel)?.name || "AI"}
+                  </span>
                 </div>
+                <div className="text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">{msg.content}</div>
               </div>
-            )}
-            {messages.map((msg, i) => (
-              <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                <div className={`max-w-[80%] rounded-lg px-4 py-2.5 ${msg.role === "user" ? "bg-indigo-600 text-white" : "bg-[#0C1120] border border-white/[0.06] text-gray-300"}`}>
-                  {msg.role === "assistant" && <span className="text-[10px] font-medium text-gray-600 block mb-1">{DEMO_TASK.model}</span>}
-                  <div className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</div>
-                </div>
-              </div>
-            ))}
-            {sending && (
-              <div className="flex justify-start">
-                <div className="bg-[#0C1120] border border-white/[0.06] rounded-lg px-4 py-2.5">
-                  <span className="text-[10px] font-medium text-gray-600 block mb-1">{DEMO_TASK.model}</span>
+            </div>
+          ))}
+
+          {sending && (
+            <div className="flex justify-start">
+              <div className="bg-[#0C1120] border border-white/[0.06] rounded-lg px-4 py-3">
+                <div className="flex items-center gap-2">
                   <div className="flex gap-1">
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                    <span className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <span className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <span className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
                   </div>
+                  <span className="text-[11px] text-gray-500">Thinking...</span>
                 </div>
               </div>
-            )}
-            {error && (
-              <div className="flex justify-center">
-                <div className="bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg px-4 py-2 text-sm">
-                  {error}
-                  <button onClick={() => setError(null)} className="ml-2 text-red-500 hover:text-red-400">x</button>
-                </div>
-              </div>
-            )}
-          </div>
+            </div>
+          )}
 
-          <div className="border-t border-white/[0.06] bg-[#0C1120] p-3">
-            {attemptsLeft <= 0 ? (
-              <div className="text-center py-2">
-                <p className="text-sm text-gray-500">All attempts used. Click &quot;Finish Demo&quot; to see your results.</p>
-              </div>
-            ) : (
-              <div className="flex gap-2 items-end">
-                <textarea
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); } }}
-                  placeholder="Type your prompt... (Enter to send)"
-                  disabled={sending}
-                  rows={1}
-                  className="flex-1 bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/40 disabled:opacity-40 resize-none"
-                />
-                <button onClick={handleSend} disabled={!input.trim() || sending || attemptsLeft <= 0} className="bg-indigo-600 hover:bg-indigo-500 disabled:bg-white/[0.04] disabled:text-gray-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors shrink-0">
-                  {sending ? <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg> : "Send"}
-                </button>
-              </div>
-            )}
-          </div>
+          {error && (
+            <div className="bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 rounded-lg px-4 py-2 text-sm">
+              {error}
+              <button onClick={() => setError(null)} className="ml-2 text-indigo-400 hover:text-indigo-300">dismiss</button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Input */}
+      <div className="border-t border-white/[0.06] bg-[#0A0F1C] px-4 py-3">
+        <div className="max-w-3xl mx-auto flex gap-3">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleSend()}
+            disabled={sending || attemptsLeft <= 0}
+            placeholder={attemptsLeft <= 0 ? `No attempts left — click "${currentStage < STAGES.length - 1 ? "Next Task" : "Finish"}"` : "Type your prompt... (Enter to send)"}
+            className="flex-1 bg-[#0C1120] border border-white/[0.06] rounded-md px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 focus:border-indigo-500/30 disabled:opacity-50"
+          />
+          <button
+            onClick={handleSend}
+            disabled={sending || !input.trim() || attemptsLeft <= 0}
+            className="bg-indigo-600 hover:bg-indigo-500 disabled:bg-white/[0.04] disabled:text-gray-600 text-white px-4 py-2.5 rounded-md text-sm font-medium transition-colors"
+          >
+            Send
+          </button>
         </div>
       </div>
     </div>

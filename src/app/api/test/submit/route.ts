@@ -73,18 +73,90 @@ const MODELS = {
   "claude-haiku": {
     id: "claude-haiku-4-5",
     name: "Claude Haiku",
+    provider: "anthropic" as const,
     costPer1kInput: 0.001,
     costPer1kOutput: 0.005,
   },
   "claude-sonnet": {
     id: "claude-sonnet-4-6",
     name: "Claude Sonnet",
+    provider: "anthropic" as const,
     costPer1kInput: 0.003,
     costPer1kOutput: 0.015,
+  },
+  "gpt-4o-mini": {
+    id: "gpt-4o-mini",
+    name: "GPT-4o Mini",
+    provider: "openai" as const,
+    costPer1kInput: 0.00015,
+    costPer1kOutput: 0.0006,
+  },
+  "gpt-4o": {
+    id: "gpt-4o",
+    name: "GPT-4o",
+    provider: "openai" as const,
+    costPer1kInput: 0.0025,
+    costPer1kOutput: 0.01,
   },
 } as const;
 
 type ModelKey = keyof typeof MODELS;
+
+async function callOpenAI(
+  prompt: string,
+  taskDescription: string,
+  model: ModelKey = "gpt-4o-mini",
+  conversationHistory: AnthropicMessage[] = []
+): Promise<{ response: string; inputTokens: number; outputTokens: number; modelUsed: string }> {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    throw new Error("OPENAI_API_KEY not configured");
+  }
+
+  const modelConfig = MODELS[model];
+
+  const systemPrompt = `You are an AI assistant being used in a prompting skill assessment platform called InpromptiFy. The candidate has been given the following task:
+
+---
+${taskDescription}
+---
+
+Respond naturally and helpfully to their prompts. Your response quality will be used to evaluate how well the candidate prompted you. Be thorough but concise. Do not mention that this is a test or assessment.`;
+
+  const messages = [
+    { role: "system" as const, content: systemPrompt },
+    ...conversationHistory.map(m => ({ role: m.role as "user" | "assistant", content: m.content })),
+    { role: "user" as const, content: prompt },
+  ];
+
+  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model: modelConfig.id,
+      max_tokens: 1500,
+      messages,
+    }),
+  });
+
+  if (!res.ok) {
+    const error = await res.text();
+    console.error("OpenAI API error:", error);
+    throw new Error(`OpenAI API error: ${res.status}`);
+  }
+
+  const data = await res.json();
+
+  return {
+    response: data.choices?.[0]?.message?.content || "No response generated.",
+    inputTokens: data.usage?.prompt_tokens || 0,
+    outputTokens: data.usage?.completion_tokens || 0,
+    modelUsed: modelConfig.name,
+  };
+}
 
 async function callClaude(
   prompt: string,
@@ -170,13 +242,35 @@ export async function POST(request: NextRequest) {
 
     // Determine model — default to haiku (cheapest)
     const selectedModel: ModelKey = (model && model in MODELS) ? model as ModelKey : "claude-haiku";
+    const modelConfig = MODELS[selectedModel] || MODELS["claude-haiku"];
 
-    const result = await callClaude(
-      prompt,
-      taskDescription || "Complete the given task as effectively as possible.",
-      selectedModel,
-      conversationHistory || []
-    );
+    // Route to the right provider
+    let result;
+    if (modelConfig.provider === "openai") {
+      if (!process.env.OPENAI_API_KEY) {
+        // Fallback to Claude if no OpenAI key configured
+        result = await callClaude(
+          prompt,
+          taskDescription || "Complete the given task as effectively as possible.",
+          "claude-haiku",
+          conversationHistory || []
+        );
+      } else {
+        result = await callOpenAI(
+          prompt,
+          taskDescription || "Complete the given task as effectively as possible.",
+          selectedModel,
+          conversationHistory || []
+        );
+      }
+    } else {
+      result = await callClaude(
+        prompt,
+        taskDescription || "Complete the given task as effectively as possible.",
+        selectedModel,
+        conversationHistory || []
+      );
+    }
 
     return NextResponse.json({
       response: result.response,
