@@ -13,8 +13,51 @@ export default function HomePage() {
       <main className="bg-[#0A0F1C]">
         {/* ─── Hero ─── */}
         <section className="relative min-h-[calc(100vh-56px)] flex items-center overflow-hidden -mt-14 pt-14">
-          
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[500px] rounded-full bg-indigo-500/[0.06] blur-[120px]" />
+          <div className="absolute inset-0 dot-grid opacity-30" />
+
+          {/* Lightning bolt 1 — right side */}
+          <svg className="absolute top-[8%] right-[12%] w-[280px] h-[500px] pointer-events-none" style={{ animation: "lightning-flash 8s ease-in-out infinite" }} viewBox="0 0 280 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M140 0 L160 180 L200 170 L100 350 L130 330 L60 500" stroke="url(#lg1)" strokeWidth="2" strokeLinecap="round" fill="none" />
+            <path d="M140 0 L160 180 L200 170 L100 350 L130 330 L60 500" stroke="url(#lg1)" strokeWidth="6" strokeLinecap="round" fill="none" opacity="0.3" filter="blur(4px)" />
+            <path d="M160 180 L220 200 L180 260" stroke="url(#lg1)" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+            <defs>
+              <linearGradient id="lg1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#a78bfa" stopOpacity="0.9" />
+                <stop offset="50%" stopColor="#7c3aed" stopOpacity="0.7" />
+                <stop offset="100%" stopColor="#6d28d9" stopOpacity="0.3" />
+              </linearGradient>
+            </defs>
+          </svg>
+
+          {/* Lightning bolt 2 — left side, smaller */}
+          <svg className="absolute top-[15%] left-[8%] w-[180px] h-[350px] pointer-events-none" style={{ animation: "lightning-flash-2 12s ease-in-out infinite" }} viewBox="0 0 180 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M90 0 L100 120 L140 115 L50 230 L75 220 L30 350" stroke="url(#lg2)" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+            <path d="M90 0 L100 120 L140 115 L50 230 L75 220 L30 350" stroke="url(#lg2)" strokeWidth="5" strokeLinecap="round" fill="none" opacity="0.25" filter="blur(3px)" />
+            <path d="M100 120 L130 140 L115 170" stroke="url(#lg2)" strokeWidth="1" strokeLinecap="round" fill="none" />
+            <defs>
+              <linearGradient id="lg2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#c4b5fd" stopOpacity="0.7" />
+                <stop offset="50%" stopColor="#8b5cf6" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="#7c3aed" stopOpacity="0.2" />
+              </linearGradient>
+            </defs>
+          </svg>
+
+          {/* Lightning bolt 3 — center-right, subtle */}
+          <svg className="absolute top-[25%] right-[30%] w-[120px] h-[250px] pointer-events-none" style={{ animation: "lightning-flash-3 10s ease-in-out infinite" }} viewBox="0 0 120 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M60 0 L70 90 L95 85 L35 170 L50 160 L20 250" stroke="url(#lg3)" strokeWidth="1" strokeLinecap="round" fill="none" />
+            <path d="M60 0 L70 90 L95 85 L35 170 L50 160 L20 250" stroke="url(#lg3)" strokeWidth="4" strokeLinecap="round" fill="none" opacity="0.2" filter="blur(3px)" />
+            <defs>
+              <linearGradient id="lg3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#a78bfa" stopOpacity="0.6" />
+                <stop offset="100%" stopColor="#7c3aed" stopOpacity="0.15" />
+              </linearGradient>
+            </defs>
+          </svg>
+
+          {/* Subtle purple ambient glow behind lightning */}
+          <div className="absolute top-[10%] right-[15%] w-[300px] h-[300px] rounded-full bg-purple-600/[0.04] blur-[80px] pointer-events-none" />
+          <div className="absolute top-[20%] left-[10%] w-[200px] h-[200px] rounded-full bg-violet-500/[0.03] blur-[60px] pointer-events-none" />
 
           <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28 w-full">
             <div className="max-w-2xl mb-12">
@@ -392,7 +435,7 @@ export default function HomePage() {
 
         {/* ─── Final CTA ─── */}
         <section className="relative">
-          
+          <div className="absolute inset-0 dot-grid opacity-15" />
           <div className="relative max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28 text-center">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight">
               Stop guessing who can use AI.{" "}

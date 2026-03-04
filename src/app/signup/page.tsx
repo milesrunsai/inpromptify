@@ -43,9 +43,7 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-[#0A0F1C] flex flex-col relative overflow-hidden">
       {/* Background effects */}
-      
-      <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full bg-indigo-500/[0.05] blur-[120px] animate-pulse-glow" />
-      <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[300px] rounded-full bg-violet-500/[0.04] blur-[100px]" />
+      <div className="absolute inset-0 dot-grid opacity-20" />
 
       <div className="relative z-10 flex-1 flex">
         {/* Left side - value prop */}
