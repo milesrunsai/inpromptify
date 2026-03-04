@@ -31,13 +31,14 @@ export async function generateMetadata({ params }: VerifyPageProps): Promise<Met
 
   const tier = getCertTier(data.score);
   const tierLabel = tier ? ` | ${tier.charAt(0).toUpperCase() + tier.slice(1)} Certified` : "";
+  const ord = (n: number) => { const s = ["th","st","nd","rd"]; const v = n % 100; return n + (s[(v-20)%10] || s[v] || s[0]); };
 
   return {
     title: `${data.user_name} — PromptScore ${data.score}/100${tierLabel} | InpromptiFy`,
-    description: `${data.user_name} scored ${data.score}/100 (${data.letter_grade}, ${data.percentile}th percentile) on the InpromptiFy AI Proficiency Assessment.${tierLabel ? ` ${tierLabel}.` : ""}`,
+    description: `${data.user_name} scored ${data.score}/100 (${data.letter_grade}, ${ord(data.percentile)} percentile) on the InpromptiFy AI Proficiency Assessment.${tierLabel ? ` ${tierLabel}.` : ""}`,
     openGraph: {
       title: `${data.user_name} — PromptScore ${data.score}/100${tierLabel}`,
-      description: `Verified AI Proficiency Score: ${data.score}/100 (${data.letter_grade}). ${data.percentile}th percentile.`,
+      description: `Verified AI Proficiency Score: ${data.score}/100 (${data.letter_grade}). ${ord(data.percentile)} percentile.`,
       url: `https://inpromptify.com/verify/${hash}`,
       siteName: "InpromptiFy",
       type: "website",
@@ -72,9 +73,14 @@ export default async function VerifyPage({ params }: VerifyPageProps) {
   const dims = typeof data.dimensions === "string" ? JSON.parse(data.dimensions) : data.dimensions;
   const scoreColor = data.score >= 80 ? "text-emerald-400" : data.score >= 65 ? "text-blue-400" : data.score >= 50 ? "text-amber-400" : "text-red-400";
   const dateStr = new Date(data.created_at).toLocaleDateString("en-AU", { year: "numeric", month: "long", day: "numeric" });
+  const ordinal = (n: number) => {
+    const s = ["th", "st", "nd", "rd"];
+    const v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+  };
   const shareUrl = `https://inpromptify.com/verify/${hash}`;
   const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
-  const twitterText = `I scored ${data.score}/100 on the InpromptiFy AI Proficiency Assessment (${data.letter_grade}, ${data.percentile}th percentile). What's your PromptScore?`;
+  const twitterText = `I scored ${data.score}/100 on the InpromptiFy AI Proficiency Assessment (${data.letter_grade}, ${ordinal(data.percentile)} percentile). What's your PromptScore?`;
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterText)}&url=${encodeURIComponent(shareUrl)}`;
 
   // Radar chart dimensions
@@ -117,7 +123,7 @@ export default async function VerifyPage({ params }: VerifyPageProps) {
                   </div>
                   <div className="h-8 w-px bg-white/[0.06]" />
                   <div className="text-center">
-                    <span className="text-2xl font-bold text-white">{data.percentile}th</span>
+                    <span className="text-2xl font-bold text-white">{ordinal(data.percentile)}</span>
                     <p className="text-[11px] text-gray-600">Percentile</p>
                   </div>
                 </div>
