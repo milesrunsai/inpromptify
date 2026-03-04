@@ -122,7 +122,7 @@ export default function CertificationsPage() {
             <h2 className="text-lg font-bold text-white mb-6 text-center">How This Is Different</h2>
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <h3 className="text-sm font-semibold text-red-400/80 mb-3 uppercase tracking-wider">Other certifications</h3>
+                <h3 className="text-sm font-semibold text-indigo-500/60 mb-3 uppercase tracking-wider">Other certifications</h3>
                 <ul className="space-y-2 text-sm text-gray-500">
                   {[
                     "Multiple choice quizzes — easily gamed",
@@ -132,14 +132,14 @@ export default function CertificationsPage() {
                     "Static — pass once, credential lasts forever",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-2">
-                      <span className="text-red-500/60 mt-0.5 shrink-0">&times;</span>
+                      <span className="text-indigo-500/40 mt-0.5 shrink-0">&times;</span>
                       {item}
                     </li>
                   ))}
                 </ul>
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-emerald-400/80 mb-3 uppercase tracking-wider">InpromptiFy Certifications</h3>
+                <h3 className="text-sm font-semibold text-indigo-300 mb-3 uppercase tracking-wider">InpromptiFy Certifications</h3>
                 <ul className="space-y-2 text-sm text-gray-500">
                   {[
                     "Live task performance — real AI, real work",
@@ -149,7 +149,7 @@ export default function CertificationsPage() {
                     "Verifiable — employers click through to full score breakdown",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-2">
-                      <span className="text-emerald-500/80 mt-0.5 shrink-0">&#10003;</span>
+                      <span className="text-indigo-400 mt-0.5 shrink-0">&#10003;</span>
                       {item}
                     </li>
                   ))}

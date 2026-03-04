@@ -68,7 +68,7 @@ export default function HowItWorksPage() {
         {/* For Test Takers */}
         <section className="border-b border-white/[0.06] bg-[#0C1120]">
           <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20">
-            <p className="text-sm font-medium text-emerald-400 mb-3 uppercase tracking-wide">For test takers</p>
+            <p className="text-sm font-medium text-violet-400 mb-3 uppercase tracking-wide">For test takers</p>
             <h2 className="text-2xl font-bold text-white mb-10">Prove your skills, not describe them</h2>
 
             <div className="space-y-12">
@@ -90,7 +90,7 @@ export default function HowItWorksPage() {
                 },
               ].map((item) => (
                 <div key={item.step} className="flex gap-6 items-start">
-                  <div className="w-8 h-8 bg-emerald-500 text-white rounded-md flex items-center justify-center font-bold text-sm shrink-0">{item.step}</div>
+                  <div className="w-8 h-8 bg-violet-500 text-white rounded-md flex items-center justify-center font-bold text-sm shrink-0">{item.step}</div>
                   <div>
                     <h3 className="text-base font-semibold text-white mb-2">{item.title}</h3>
                     <p className="text-sm text-gray-400 leading-relaxed">{item.description}</p>

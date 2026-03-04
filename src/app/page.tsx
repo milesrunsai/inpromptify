@@ -61,7 +61,7 @@ export default function HomePage() {
           <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-6">
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" />
                 <UsageCounter />
               </div>
               <span className="hidden sm:block h-4 w-px bg-white/[0.06]" />
@@ -283,8 +283,8 @@ export default function HomePage() {
               </h2>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-[#0C1120] border border-red-500/10 rounded-xl p-6">
-                <h3 className="text-sm font-semibold text-red-400/80 mb-4 uppercase tracking-wider">Without InpromptiFy</h3>
+              <div className="bg-[#0C1120] border border-indigo-500/10 rounded-xl p-6">
+                <h3 className="text-sm font-semibold text-indigo-500/60 mb-4 uppercase tracking-wider">Without InpromptiFy</h3>
                 <ul className="space-y-3 text-sm text-gray-500">
                   {[
                     "Resume says 'proficient with ChatGPT' — no way to verify",
@@ -294,14 +294,14 @@ export default function HomePage() {
                     "Paying for AI tools nobody uses effectively",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-2">
-                      <span className="text-red-500/60 mt-0.5 shrink-0">&times;</span>
+                      <span className="text-indigo-500/40 mt-0.5 shrink-0">&times;</span>
                       {item}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="bg-[#0C1120] border border-emerald-500/10 rounded-xl p-6">
-                <h3 className="text-sm font-semibold text-emerald-400/80 mb-4 uppercase tracking-wider">With InpromptiFy</h3>
+              <div className="bg-[#0C1120] border border-indigo-400/20 rounded-xl p-6">
+                <h3 className="text-sm font-semibold text-indigo-300 mb-4 uppercase tracking-wider">With InpromptiFy</h3>
                 <ul className="space-y-3 text-sm text-gray-500">
                   {[
                     "Candidate completes a real AI task in 5-10 minutes",
@@ -311,7 +311,7 @@ export default function HomePage() {
                     "Know who will actually use AI effectively on day one",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-2">
-                      <span className="text-emerald-500/80 mt-0.5 shrink-0">&#10003;</span>
+                      <span className="text-indigo-400 mt-0.5 shrink-0">&#10003;</span>
                       {item}
                     </li>
                   ))}

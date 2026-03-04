@@ -22,10 +22,10 @@ interface PublicTest {
 }
 
 const DIFFICULTY_COLORS: Record<string, string> = {
-  beginner: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
-  intermediate: "text-amber-400 bg-amber-500/10 border-amber-500/20",
-  advanced: "text-orange-400 bg-orange-500/10 border-orange-500/20",
-  expert: "text-red-400 bg-red-500/10 border-red-500/20",
+  beginner: "text-indigo-300 bg-indigo-500/[0.08] border-indigo-400/20",
+  intermediate: "text-indigo-400 bg-indigo-500/[0.06] border-indigo-500/15",
+  advanced: "text-violet-400 bg-violet-500/[0.06] border-violet-500/15",
+  expert: "text-purple-400 bg-purple-500/[0.06] border-purple-500/15",
 };
 
 export default function ExplorePage() {

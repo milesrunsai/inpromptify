@@ -30,7 +30,7 @@ const dimensions = [
   {
     name: "Efficiency",
     weight: 25,
-    color: "emerald",
+    color: "violet",
     description: "How economically do you use your resources? Measured by attempts used vs. allowed and tokens consumed vs. budget.",
     highScore: [
       "Achieving the goal in 1-2 attempts",
@@ -47,7 +47,7 @@ const dimensions = [
   {
     name: "Speed",
     weight: 15,
-    color: "amber",
+    color: "fuchsia",
     description: "How quickly do you complete the task? Faster completion (with quality maintained) indicates confidence and fluency with AI tools.",
     highScore: [
       "Completing in 20-50% of the allotted time",
@@ -64,7 +64,7 @@ const dimensions = [
   {
     name: "Response Quality",
     weight: 20,
-    color: "blue",
+    color: "slate",
     description: "How good is the AI output you elicited? We evaluate the final response against the task requirements, expected keywords, structure, and constraints.",
     highScore: [
       "Response covers all required elements",
@@ -103,10 +103,10 @@ const dimensions = [
 
 const colorMap: Record<string, { bg: string; text: string; border: string; bar: string }> = {
   indigo: { bg: "bg-indigo-500/10", text: "text-indigo-400", border: "border-indigo-500/20", bar: "bg-indigo-500" },
-  emerald: { bg: "bg-emerald-500/10", text: "text-emerald-400", border: "border-emerald-500/20", bar: "bg-emerald-500" },
-  amber: { bg: "bg-amber-500/10", text: "text-amber-400", border: "border-amber-500/20", bar: "bg-amber-500" },
-  blue: { bg: "bg-blue-500/10", text: "text-blue-400", border: "border-blue-500/20", bar: "bg-blue-500" },
+  violet: { bg: "bg-violet-500/10", text: "text-violet-400", border: "border-violet-500/20", bar: "bg-violet-500" },
   purple: { bg: "bg-purple-500/10", text: "text-purple-400", border: "border-purple-500/20", bar: "bg-purple-500" },
+  fuchsia: { bg: "bg-fuchsia-500/10", text: "text-fuchsia-400", border: "border-fuchsia-500/20", bar: "bg-fuchsia-500" },
+  slate: { bg: "bg-indigo-400/10", text: "text-indigo-300", border: "border-indigo-400/20", bar: "bg-indigo-400" },
 };
 
 export default function ScoringPage() {
@@ -134,12 +134,12 @@ export default function ScoringPage() {
             <h2 className="text-sm font-semibold text-white mb-4">Score Scale</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
               {[
-                { grade: "S", range: "95-100", label: "Exceptional", color: "text-indigo-400 bg-indigo-500/10 border-indigo-500/20" },
-                { grade: "A", range: "80-94", label: "Strong Hire", color: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20" },
-                { grade: "B", range: "65-79", label: "Hire", color: "text-blue-400 bg-blue-500/10 border-blue-500/20" },
-                { grade: "C", range: "50-64", label: "Consider", color: "text-amber-400 bg-amber-500/10 border-amber-500/20" },
-                { grade: "D", range: "35-49", label: "Below Avg", color: "text-orange-400 bg-orange-500/10 border-orange-500/20" },
-                { grade: "F", range: "0-34", label: "Not Ready", color: "text-red-400 bg-red-500/10 border-red-500/20" },
+                { grade: "S", range: "95-100", label: "Exceptional", color: "text-indigo-200 bg-indigo-400/15 border-indigo-300/30" },
+                { grade: "A", range: "80-94", label: "Strong Hire", color: "text-indigo-300 bg-indigo-500/[0.1] border-indigo-400/25" },
+                { grade: "B", range: "65-79", label: "Hire", color: "text-indigo-400 bg-indigo-500/[0.07] border-indigo-500/20" },
+                { grade: "C", range: "50-64", label: "Consider", color: "text-indigo-400/70 bg-indigo-500/[0.04] border-indigo-500/15" },
+                { grade: "D", range: "35-49", label: "Below Avg", color: "text-indigo-500/50 bg-indigo-500/[0.03] border-indigo-500/10" },
+                { grade: "F", range: "0-34", label: "Not Ready", color: "text-indigo-600/50 bg-indigo-600/[0.02] border-indigo-600/10" },
               ].map((g) => (
                 <div key={g.grade} className={`rounded-md border p-3 text-center ${g.color}`}>
                   <div className="text-2xl font-bold">{g.grade}</div>
@@ -196,22 +196,22 @@ export default function ScoringPage() {
 
                     <div className="grid md:grid-cols-2 gap-4 mb-5">
                       <div>
-                        <h4 className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wider mb-2">High Score Looks Like</h4>
+                        <h4 className="text-[11px] font-semibold text-indigo-300 uppercase tracking-wider mb-2">High Score Looks Like</h4>
                         <ul className="space-y-1.5">
                           {dim.highScore.map((item) => (
                             <li key={item} className="flex items-start gap-2 text-sm text-gray-400">
-                              <svg className="w-3.5 h-3.5 mt-0.5 text-emerald-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12" /></svg>
+                              <svg className="w-3.5 h-3.5 mt-0.5 text-indigo-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12" /></svg>
                               {item}
                             </li>
                           ))}
                         </ul>
                       </div>
                       <div>
-                        <h4 className="text-[11px] font-semibold text-red-400 uppercase tracking-wider mb-2">Low Score Looks Like</h4>
+                        <h4 className="text-[11px] font-semibold text-indigo-500/60 uppercase tracking-wider mb-2">Low Score Looks Like</h4>
                         <ul className="space-y-1.5">
                           {dim.lowScore.map((item) => (
                             <li key={item} className="flex items-start gap-2 text-sm text-gray-400">
-                              <svg className="w-3.5 h-3.5 mt-0.5 text-red-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                              <svg className="w-3.5 h-3.5 mt-0.5 text-indigo-500/50 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
                               {item}
                             </li>
                           ))}

@@ -126,7 +126,7 @@ export default function PricingPage() {
             </button>
             <span className={`text-sm font-medium ${annual ? "text-white" : "text-gray-500"}`}>
               Annual
-              <span className="ml-1.5 text-xs text-emerald-400 font-medium">Save 20%</span>
+              <span className="ml-1.5 text-xs text-indigo-400 font-medium">Save 20%</span>
             </span>
           </div>
 
@@ -159,7 +159,7 @@ export default function PricingPage() {
                 <ul className="space-y-2.5 mb-6 flex-1">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2 text-sm text-gray-400">
-                      <svg className="w-4 h-4 mt-0.5 shrink-0 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <svg className="w-4 h-4 mt-0.5 shrink-0 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <polyline points="20 6 9 17 4 12" />
                       </svg>
                       {feature}
@@ -230,27 +230,27 @@ export default function PricingPage() {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-400">Live AI sandbox assessments</span>
-                    <span className="text-emerald-400 text-[12px]">Included</span>
+                    <span className="text-indigo-400 text-[12px]">Included</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-400">5-dimension scoring engine</span>
-                    <span className="text-emerald-400 text-[12px]">Included</span>
+                    <span className="text-indigo-400 text-[12px]">Included</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-400">Anti-cheat + integrity</span>
-                    <span className="text-emerald-400 text-[12px]">Included</span>
+                    <span className="text-indigo-400 text-[12px]">Included</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-400">Team analytics + heatmap</span>
-                    <span className="text-emerald-400 text-[12px]">Included</span>
+                    <span className="text-indigo-400 text-[12px]">Included</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-400">Certifications + badges</span>
-                    <span className="text-emerald-400 text-[12px]">Included</span>
+                    <span className="text-indigo-400 text-[12px]">Included</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-400">LinkedIn verification export</span>
-                    <span className="text-emerald-400 text-[12px]">Included</span>
+                    <span className="text-indigo-400 text-[12px]">Included</span>
                   </div>
                 </div>
                 <div className="border-t border-indigo-500/20 pt-4">
@@ -291,15 +291,15 @@ export default function PricingPage() {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">AI sandbox environment</span>
-                    <span className="text-red-400 text-[12px]">Not available</span>
+                    <span className="text-indigo-600/40 text-[12px]">Not available</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">Anti-cheat monitoring</span>
-                    <span className="text-red-400 text-[12px]">Not available</span>
+                    <span className="text-indigo-600/40 text-[12px]">Not available</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">Live AI proficiency scoring</span>
-                    <span className="text-red-400 text-[12px]">Not available</span>
+                    <span className="text-indigo-600/40 text-[12px]">Not available</span>
                   </div>
                 </div>
                 <div className="border-t border-white/[0.06] pt-4">
@@ -322,11 +322,11 @@ export default function PricingPage() {
               const savingsPct = Math.round((savings / competitorCost) * 100);
               return savings > 0 ? (
                 <div className="max-w-4xl mx-auto mt-6">
-                  <div className="bg-emerald-500/[0.06] border border-emerald-500/20 rounded-xl p-5 flex items-center justify-between">
+                  <div className="bg-indigo-500/[0.06] border border-indigo-500/20 rounded-xl p-5 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <img src="/logo.png" alt="InpromptiFy" width={24} height={24} className="rounded" />
                       <div>
-                        <p className="text-sm font-semibold text-emerald-400">
+                        <p className="text-sm font-semibold text-indigo-400">
                           You save ${savings.toLocaleString()}/year ({savingsPct}%) with InpromptiFy
                         </p>
                         <p className="text-[12px] text-gray-500">
@@ -336,7 +336,7 @@ export default function PricingPage() {
                     </div>
                     <Link
                       href="/signup"
-                      className="shrink-0 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium px-5 py-2 rounded-md transition-colors"
+                      className="shrink-0 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium px-5 py-2 rounded-md transition-colors"
                     >
                       Get Started
                     </Link>
@@ -379,8 +379,8 @@ export default function PricingPage() {
                       { feature: "API access", us: true, tg: true, hv: true, li: "partial" },
                     ].map((row) => {
                       const cell = (val: boolean | string) => {
-                        if (val === true) return <span className="text-emerald-400">&#10003;</span>;
-                        if (val === "partial") return <span className="text-amber-400 text-[11px]">Partial</span>;
+                        if (val === true) return <span className="text-indigo-400">&#10003;</span>;
+                        if (val === "partial") return <span className="text-indigo-400/60 text-[11px]">Partial</span>;
                         return <span className="text-gray-600">&mdash;</span>;
                       };
                       return (
