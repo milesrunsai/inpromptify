@@ -10,11 +10,21 @@ interface Message {
   content: string;
 }
 
+interface StageEvaluation {
+  score: number;
+  relevance: number;
+  specificity: number;
+  structure: number;
+  effectiveness: number;
+  reasoning: string;
+}
+
 interface StageResult {
   messages: Message[];
   tokensUsed: number;
   timeSpent: number;
   attemptsUsed: number;
+  evaluation?: StageEvaluation;
 }
 
 const STAGES = [
@@ -101,16 +111,30 @@ export default function DemoTestPage() {
 
   const formatTime = (s: number) => `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, "0")}`;
 
-  const finishStage = useCallback(() => {
+  const finishStage = useCallback(async () => {
     clearInterval(timerRef.current);
     const timeSpent = (stage.timeLimitMinutes * 60) - timeLeft;
-    const result: StageResult = { messages: [...messages], tokensUsed, timeSpent, attemptsUsed };
+    const userPrompts = messages.filter(m => m.role === "user").map(m => m.content);
+    const aiResponses = messages.filter(m => m.role === "assistant").map(m => m.content);
+
+    // Evaluate prompt quality via AI
+    let evaluation: StageEvaluation = { score: 0, relevance: 0, specificity: 0, structure: 0, effectiveness: 0, reasoning: "Not evaluated" };
+    if (userPrompts.length > 0) {
+      try {
+        const evalRes = await fetch("/api/test/evaluate-stage", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ taskDescription: stage.description, userPrompts, aiResponses }),
+        });
+        if (evalRes.ok) evaluation = await evalRes.json();
+      } catch { /* keep default */ }
+    }
+
+    const result: StageResult = { messages: [...messages], tokensUsed, timeSpent, attemptsUsed, evaluation };
     const newResults = [...stageResults, result];
     setStageResults(newResults);
 
     // Capture integrity report for this stage
-    const userPrompts = messages.filter(m => m.role === "user").map(m => m.content);
-    const aiResponses = messages.filter(m => m.role === "assistant").map(m => m.content);
     const report = integrity.getReport(userPrompts, aiResponses);
     setIntegrityReports(prev => [...prev, report]);
     integrity.reset();
@@ -261,6 +285,9 @@ export default function DemoTestPage() {
     const maxTime = STAGES.reduce((sum, s) => sum + s.timeLimitMinutes * 60, 0);
 
     // Calculate dimension scores
+    const promptQualityScore = allResults.length > 0
+      ? Math.round(allResults.reduce((sum, r) => sum + (r.evaluation?.score || 0), 0) / allResults.length)
+      : 0;
     const efficiencyScore = Math.round(Math.max(0, Math.min(100,
       (1 - totalAttempts / maxAttempts) * 50 + (1 - totalTokens / maxTokens) * 50
     )));
@@ -268,8 +295,22 @@ export default function DemoTestPage() {
       (1 - totalTime / maxTime) * 100
     )));
     const completionScore = Math.round((allResults.filter(r => r.attemptsUsed > 0).length / STAGES.length) * 100);
-    const promptScore = Math.round((efficiencyScore * 0.25 + speedScore * 0.15 + completionScore * 0.60) * 1.1);
-    const overallScore = Math.min(100, Math.max(0, promptScore));
+
+    // Integrity penalty: low integrity directly reduces score
+    const avgIntegrity = integrityReports.length > 0
+      ? integrityReports.reduce((s, r) => s + r.integrityScore, 0) / integrityReports.length
+      : 100;
+    const integrityMultiplier = Math.max(0.3, avgIntegrity / 100); // 30%-100% of score preserved
+
+    // PromptScore: prompt quality is the PRIMARY driver (40%), completion (25%), efficiency (20%), speed (15%)
+    // Then multiplied by integrity
+    const rawScore = Math.round(
+      promptQualityScore * 0.40 +
+      completionScore * 0.25 +
+      efficiencyScore * 0.20 +
+      speedScore * 0.15
+    );
+    const overallScore = Math.min(100, Math.max(0, Math.round(rawScore * integrityMultiplier)));
     const grade = overallScore >= 90 ? "A+" : overallScore >= 80 ? "A" : overallScore >= 70 ? "B" : overallScore >= 60 ? "C" : overallScore >= 50 ? "D" : "F";
 
     return (
@@ -308,6 +349,7 @@ export default function DemoTestPage() {
               {/* Dimension Bars */}
               <div className="space-y-3 mb-6">
                 {[
+                  { label: "Prompt Quality", score: promptQualityScore },
                   { label: "Task Completion", score: completionScore },
                   { label: "Efficiency", score: efficiencyScore },
                   { label: "Speed", score: speedScore },
@@ -331,16 +373,24 @@ export default function DemoTestPage() {
                   {STAGES.map((s, i) => {
                     const r = allResults[i];
                     return (
-                      <div key={s.id} className="flex items-center justify-between bg-white/[0.02] rounded-lg px-4 py-2.5">
+                      <div key={s.id} className="bg-white/[0.02] rounded-lg px-4 py-2.5">
+                        <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           <span className="text-[11px] font-mono text-indigo-400/60">{s.icon}</span>
                           <span className="text-sm text-white">{s.name}</span>
                         </div>
                         <div className="flex items-center gap-4 text-[12px] text-gray-500 font-mono">
+                          <span className={`font-semibold ${(r?.evaluation?.score || 0) >= 70 ? "text-indigo-300" : (r?.evaluation?.score || 0) >= 40 ? "text-indigo-400" : "text-indigo-500/60"}`}>
+                            {r?.evaluation?.score ?? "—"}/100
+                          </span>
                           <span>{r?.attemptsUsed || 0}/{s.maxAttempts} attempts</span>
                           <span>{r?.tokensUsed || 0} tokens</span>
                           <span>{r ? formatTime(r.timeSpent) : "—"}</span>
                         </div>
+                        </div>
+                        {r?.evaluation?.reasoning && (
+                          <p className="text-[10px] text-gray-600 mt-1 pl-7">{r.evaluation.reasoning}</p>
+                        )}
                       </div>
                     );
                   })}
