@@ -61,21 +61,44 @@ export async function POST(request: Request) {
     const sql = getSql();
     const uid = Number(userId);
     const titleTrimmed = title.trim();
+    const taskPromptTrimmed = taskPrompt.trim();
+    const descTrimmed = description?.trim() || "";
+    const expectedTrimmed = expectedOutcomes?.trim() || "";
+
+    // DB columns: name (NOT NULL), task_description (NOT NULL), creator_id (NOT NULL), expected_outcome
+    // Also populate the newer aliases: title, task_prompt, expected_outcomes, user_id
     const rows = await sql`
-      INSERT INTO tests (user_id, creator_id, slug, name, title, description, task_prompt, expected_outcomes, test_type, difficulty,
-                         time_limit_minutes, max_attempts, token_budget, model, scoring_weights, custom_criteria, status,
-                         cover_image, visibility, listing_type, company_name, location, salary_range)
-      VALUES (${uid}, ${uid}, ${slug}, ${titleTrimmed}, ${titleTrimmed}, ${description?.trim() || ""}, ${taskPrompt.trim()},
-              ${expectedOutcomes?.trim() || ""}, ${testType || "custom"}, ${difficulty || "intermediate"},
-              ${timeLimitMinutes || 15}, ${maxAttempts || 5}, ${tokenBudget || 2000}, ${model || "gpt-4o"},
-              ${JSON.stringify(scoringWeights || { accuracy: 40, efficiency: 30, speed: 30 })},
-              ${customCriteria && customCriteria.length > 0 ? JSON.stringify(customCriteria) : null},
-              ${status || "draft"},
-              ${coverImage?.trim() || null}, ${visibility || "private"}, ${listingType || "test"},
-              ${companyName?.trim() || null}, ${location?.trim() || null}, ${salaryRange?.trim() || null})
-      RETURNING id, slug, title, description, task_prompt, expected_outcomes, test_type, difficulty,
-                time_limit_minutes, max_attempts, token_budget, model, scoring_weights, custom_criteria, status,
-                cover_image, visibility, listing_type, company_name, location, salary_range, created_at
+      INSERT INTO tests (
+        creator_id, user_id, slug,
+        name, title,
+        description,
+        task_description, task_prompt,
+        expected_outcome, expected_outcomes,
+        test_type, difficulty,
+        time_limit_minutes, max_attempts, token_budget, model,
+        scoring_weights, custom_criteria, status,
+        cover_image, visibility, listing_type,
+        company_name, location, salary_range
+      )
+      VALUES (
+        ${uid}, ${uid}, ${slug},
+        ${titleTrimmed}, ${titleTrimmed},
+        ${descTrimmed},
+        ${taskPromptTrimmed}, ${taskPromptTrimmed},
+        ${expectedTrimmed}, ${expectedTrimmed},
+        ${testType || "custom"}, ${difficulty || "intermediate"},
+        ${timeLimitMinutes || 15}, ${maxAttempts || 5}, ${tokenBudget || 2000}, ${model || "gpt-4o"},
+        ${JSON.stringify(scoringWeights || { accuracy: 40, efficiency: 30, speed: 30 })},
+        ${customCriteria && customCriteria.length > 0 ? JSON.stringify(customCriteria) : null},
+        ${status || "draft"},
+        ${coverImage?.trim() || null}, ${visibility || "private"}, ${listingType || "test"},
+        ${companyName?.trim() || null}, ${location?.trim() || null}, ${salaryRange?.trim() || null}
+      )
+      RETURNING id, slug, name as title, description, task_description as task_prompt,
+                expected_outcome as expected_outcomes, test_type, difficulty,
+                time_limit_minutes, max_attempts, token_budget, model, scoring_weights,
+                custom_criteria, status, cover_image, visibility, listing_type,
+                company_name, location, salary_range, created_at
     `;
 
     return NextResponse.json(rows[0], { status: 201 });
