@@ -69,6 +69,7 @@ export async function ensureSchema() {
   // Add ALL columns if they don't exist (safe for existing DBs)
   await sql`DO $$ BEGIN
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS user_id INTEGER REFERENCES users(id) ON DELETE CASCADE;
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS creator_id INTEGER REFERENCES users(id) ON DELETE CASCADE;
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS slug VARCHAR(255);
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS title VARCHAR(500);
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS description TEXT;
