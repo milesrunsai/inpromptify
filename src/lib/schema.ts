@@ -66,10 +66,22 @@ export async function ensureSchema() {
     )
   `;
 
-  // Add new columns if they don't exist (safe for existing DBs)
+  // Add ALL columns if they don't exist (safe for existing DBs)
   await sql`DO $$ BEGIN
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS user_id INTEGER REFERENCES users(id) ON DELETE CASCADE;
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS title VARCHAR(500);
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS description TEXT;
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS task_prompt TEXT;
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS expected_outcomes TEXT;
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS test_type VARCHAR(50) DEFAULT 'custom';
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS difficulty VARCHAR(20) DEFAULT 'intermediate';
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS time_limit_minutes INTEGER DEFAULT 15;
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS max_attempts INTEGER DEFAULT 5;
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS token_budget INTEGER DEFAULT 2000;
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS model VARCHAR(100) DEFAULT 'gpt-4o';
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS scoring_weights JSONB DEFAULT '{"accuracy": 40, "efficiency": 30, "speed": 30}';
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS custom_criteria JSONB;
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS status VARCHAR(20) DEFAULT 'draft';
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS cover_image TEXT;
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS visibility VARCHAR(20) DEFAULT 'private';
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS listing_type VARCHAR(20) DEFAULT 'test';
@@ -79,6 +91,8 @@ export async function ensureSchema() {
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS candidates_count INTEGER DEFAULT 0;
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS avg_score NUMERIC(5,2) DEFAULT 0;
     ALTER TABLE tests ADD COLUMN IF NOT EXISTS completion_rate NUMERIC(5,2) DEFAULT 0;
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW();
+    ALTER TABLE tests ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW();
   EXCEPTION WHEN OTHERS THEN NULL;
   END $$`;
 
