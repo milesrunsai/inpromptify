@@ -93,6 +93,7 @@ export default function PricingPage() {
   const { data: session } = useSession();
   const isLoggedIn = !!session?.user;
   const [annual, setAnnual] = useState(false);
+  const [teamSize, setTeamSize] = useState(20);
 
   const getPrice = (monthlyPrice: number) => {
     if (monthlyPrice === -1) return "Custom";
@@ -178,6 +179,224 @@ export default function PricingPage() {
                 </Link>
               </div>
             ))}
+          </div>
+
+          {/* Competitor Stack Comparison */}
+          <div className="mt-20 mb-20">
+            <div className="text-center mb-10">
+              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Compare</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-3">
+                InpromptiFy vs. The Competitor Stack
+              </h2>
+              <p className="text-sm text-gray-500 max-w-lg mx-auto">
+                See what it actually costs to get the same AI proficiency testing by stitching together multiple tools.
+              </p>
+            </div>
+
+            {/* Team Size Slider */}
+            <div className="max-w-md mx-auto mb-10">
+              <label className="block text-sm text-gray-400 mb-2 text-center">
+                Team size: <span className="text-white font-semibold">{teamSize} people</span>
+              </label>
+              <input
+                type="range"
+                min={5}
+                max={200}
+                value={teamSize}
+                onChange={(e) => setTeamSize(Number(e.target.value))}
+                className="w-full h-1.5 bg-white/[0.08] rounded-full appearance-none cursor-pointer accent-indigo-500"
+              />
+              <div className="flex justify-between text-[11px] text-gray-600 mt-1">
+                <span>5</span>
+                <span>200</span>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {/* InpromptiFy Side */}
+              <div className="bg-indigo-600/[0.06] border-2 border-indigo-500/30 rounded-xl p-7">
+                <div className="flex items-center gap-3 mb-6">
+                  <img src="/logo.png" alt="InpromptiFy" width={28} height={28} className="rounded" />
+                  <h3 className="text-lg font-bold text-white">InpromptiFy</h3>
+                </div>
+                <div className="space-y-3 mb-6">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">
+                      {teamSize <= 10 ? "Professional" : teamSize <= 50 ? "Team" : "Business"} Plan
+                    </span>
+                    <span className="text-white font-mono">
+                      ${teamSize <= 10 ? (annual ? 39 : 49) : teamSize <= 50 ? (annual ? 159 : 199) : (annual ? 479 : 599)}/mo
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Live AI sandbox assessments</span>
+                    <span className="text-emerald-400 text-[12px]">Included</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">5-dimension scoring engine</span>
+                    <span className="text-emerald-400 text-[12px]">Included</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Anti-cheat + integrity</span>
+                    <span className="text-emerald-400 text-[12px]">Included</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Team analytics + heatmap</span>
+                    <span className="text-emerald-400 text-[12px]">Included</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Certifications + badges</span>
+                    <span className="text-emerald-400 text-[12px]">Included</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">LinkedIn verification export</span>
+                    <span className="text-emerald-400 text-[12px]">Included</span>
+                  </div>
+                </div>
+                <div className="border-t border-indigo-500/20 pt-4">
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-sm text-gray-400">Total annual cost</span>
+                    <span className="text-2xl font-bold text-white">
+                      ${((teamSize <= 10 ? (annual ? 39 : 49) : teamSize <= 50 ? (annual ? 159 : 199) : (annual ? 479 : 599)) * 12).toLocaleString()}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-gray-600 text-right">/year</p>
+                </div>
+              </div>
+
+              {/* Competitor Stack Side */}
+              <div className="bg-[#0C1120] border border-white/[0.06] rounded-xl p-7">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-7 h-7 rounded bg-white/[0.06] flex items-center justify-center">
+                    <span className="text-[11px] text-gray-500 font-mono">+</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-400">Competitor Stack</h3>
+                </div>
+                <div className="space-y-3 mb-6">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">TestGorilla (skills testing)</span>
+                    <span className="text-gray-400 font-mono">${Math.round(75 * (teamSize / 10))}/mo</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">HireVue (video + assessment)</span>
+                    <span className="text-gray-400 font-mono">$200/mo</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">LinkedIn Verified Skills</span>
+                    <span className="text-gray-500 text-[12px]">$0 (no scoring)</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Custom integration dev</span>
+                    <span className="text-gray-400 font-mono">~$5,000</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">AI sandbox environment</span>
+                    <span className="text-red-400 text-[12px]">Not available</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Anti-cheat monitoring</span>
+                    <span className="text-red-400 text-[12px]">Not available</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Live AI proficiency scoring</span>
+                    <span className="text-red-400 text-[12px]">Not available</span>
+                  </div>
+                </div>
+                <div className="border-t border-white/[0.06] pt-4">
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-sm text-gray-500">Total annual cost</span>
+                    <span className="text-2xl font-bold text-gray-400">
+                      ${((Math.round(75 * (teamSize / 10)) + 200) * 12 + 5000).toLocaleString()}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-gray-600 text-right">/year + gaps</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Savings callout */}
+            {(() => {
+              const inpromptifyCost = (teamSize <= 10 ? (annual ? 39 : 49) : teamSize <= 50 ? (annual ? 159 : 199) : (annual ? 479 : 599)) * 12;
+              const competitorCost = (Math.round(75 * (teamSize / 10)) + 200) * 12 + 5000;
+              const savings = competitorCost - inpromptifyCost;
+              const savingsPct = Math.round((savings / competitorCost) * 100);
+              return savings > 0 ? (
+                <div className="max-w-4xl mx-auto mt-6">
+                  <div className="bg-emerald-500/[0.06] border border-emerald-500/20 rounded-xl p-5 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <img src="/logo.png" alt="InpromptiFy" width={24} height={24} className="rounded" />
+                      <div>
+                        <p className="text-sm font-semibold text-emerald-400">
+                          You save ${savings.toLocaleString()}/year ({savingsPct}%) with InpromptiFy
+                        </p>
+                        <p className="text-[12px] text-gray-500">
+                          Plus you get live AI sandbox testing that no competitor stack offers.
+                        </p>
+                      </div>
+                    </div>
+                    <Link
+                      href="/signup"
+                      className="shrink-0 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium px-5 py-2 rounded-md transition-colors"
+                    >
+                      Get Started
+                    </Link>
+                  </div>
+                </div>
+              ) : null;
+            })()}
+
+            {/* Feature comparison table */}
+            <div className="max-w-4xl mx-auto mt-12">
+              <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4 text-center">Feature Comparison</h3>
+              <div className="bg-[#0C1120] border border-white/[0.06] rounded-xl overflow-hidden">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-white/[0.06]">
+                      <th className="text-left text-[11px] text-gray-500 uppercase tracking-wider px-5 py-3">Capability</th>
+                      <th className="text-center text-[11px] text-indigo-400 uppercase tracking-wider px-5 py-3">
+                        <span className="flex items-center justify-center gap-1.5">
+                          <img src="/logo.png" alt="" width={14} height={14} className="rounded" />
+                          InpromptiFy
+                        </span>
+                      </th>
+                      <th className="text-center text-[11px] text-gray-500 uppercase tracking-wider px-5 py-3">TestGorilla</th>
+                      <th className="text-center text-[11px] text-gray-500 uppercase tracking-wider px-5 py-3">HireVue</th>
+                      <th className="text-center text-[11px] text-gray-500 uppercase tracking-wider px-5 py-3">LinkedIn</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { feature: "Live AI sandbox testing", us: true, tg: false, hv: false, li: false },
+                      { feature: "Real-time prompt scoring", us: true, tg: false, hv: false, li: false },
+                      { feature: "5-dimension AI proficiency score", us: true, tg: false, hv: false, li: false },
+                      { feature: "Anti-cheat + integrity tracking", us: true, tg: "partial", hv: "partial", li: false },
+                      { feature: "Custom role-based assessments", us: true, tg: true, hv: true, li: false },
+                      { feature: "Team analytics + heatmap", us: true, tg: true, hv: true, li: false },
+                      { feature: "Certification badges", us: true, tg: false, hv: false, li: "partial" },
+                      { feature: "LinkedIn verification export", us: true, tg: false, hv: false, li: true },
+                      { feature: "Skill decay tracking", us: true, tg: false, hv: false, li: false },
+                      { feature: "Agent operations testing", us: true, tg: false, hv: false, li: false },
+                      { feature: "API access", us: true, tg: true, hv: true, li: "partial" },
+                    ].map((row) => {
+                      const cell = (val: boolean | string) => {
+                        if (val === true) return <span className="text-emerald-400">&#10003;</span>;
+                        if (val === "partial") return <span className="text-amber-400 text-[11px]">Partial</span>;
+                        return <span className="text-gray-600">&mdash;</span>;
+                      };
+                      return (
+                        <tr key={row.feature} className="border-b border-white/[0.03]">
+                          <td className="text-[13px] text-gray-400 px-5 py-2.5">{row.feature}</td>
+                          <td className="text-center px-5 py-2.5">{cell(row.us)}</td>
+                          <td className="text-center px-5 py-2.5">{cell(row.tg)}</td>
+                          <td className="text-center px-5 py-2.5">{cell(row.hv)}</td>
+                          <td className="text-center px-5 py-2.5">{cell(row.li)}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
 
           {/* FAQ */}
