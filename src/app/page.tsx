@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ScorePreview from "@/components/home/ScorePreview";
@@ -145,6 +146,44 @@ export default function HomePage() {
                   <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ─── Product Preview ─── */}
+        <section className="relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-indigo-500/[0.02] to-transparent" />
+          <div className="relative max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
+            <div className="text-center mb-14">
+              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">See It In Action</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-3">
+                Built for clarity. Designed for speed.
+              </h2>
+              <p className="text-sm text-gray-500 max-w-md mx-auto">
+                A clean dashboard that gives you everything you need — assessments, candidates, and analytics — in one view.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+              <div className="group relative rounded-xl overflow-hidden border border-white/[0.06] bg-[#0C1120] shadow-2xl shadow-indigo-500/[0.03] transition-all hover:border-white/[0.12]">
+                <Image
+                  src="/images/dashboard-preview-1.jpg"
+                  alt="InpromptiFy dashboard showing assessment creation and team onboarding"
+                  width={800}
+                  height={500}
+                  className="w-full h-auto"
+                  priority={false}
+                />
+              </div>
+              <div className="group relative rounded-xl overflow-hidden border border-white/[0.06] bg-[#0C1120] shadow-2xl shadow-indigo-500/[0.03] transition-all hover:border-white/[0.12]">
+                <Image
+                  src="/images/dashboard-preview-2.jpg"
+                  alt="InpromptiFy dashboard overview with test management and analytics"
+                  width={800}
+                  height={500}
+                  className="w-full h-auto"
+                  priority={false}
+                />
+              </div>
             </div>
           </div>
         </section>

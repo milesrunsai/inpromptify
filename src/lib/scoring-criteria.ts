@@ -209,6 +209,45 @@ export const CREATIVE_WRITING_CRITERIA: ScoringCriteria = {
   idealMaxAttempts: 3,
 };
 
+export const AGENT_OPS_CRITERIA: ScoringCriteria = {
+  testType: "agent-ops",
+  name: "Agent Operations",
+  description: "Criteria for evaluating agent design, supervision, and workflow orchestration skills",
+  weights: { ...DEFAULT_WEIGHTS, promptQuality: 0.35, responseQuality: 0.25, iterationIQ: 0.10, efficiency: 0.15, speed: 0.15 },
+  keywords: [
+    { pattern: "step|workflow|pipeline|sequence|phase", points: 5, target: "prompt", label: "Defined workflow steps" },
+    { pattern: "tool|function|action|capability|API", points: 5, target: "prompt", label: "Specified agent tools/capabilities" },
+    { pattern: "escalat|human|review|approval|handoff", points: 5, target: "prompt", label: "Escalation/human-in-the-loop" },
+    { pattern: "guard|safety|check|validat|verify|constraint", points: 5, target: "prompt", label: "Safety guardrails" },
+    { pattern: "error|fail|fallback|retry|exception|edge case", points: 5, target: "prompt", label: "Error handling defined" },
+    { pattern: "memory|context|state|persist|history", points: 4, target: "prompt", label: "State/memory management" },
+    { pattern: "cost|budget|token|rate limit|efficient", points: 3, target: "prompt", label: "Cost awareness" },
+    { pattern: "test|evaluat|benchmark|metric|measure|QA", points: 4, target: "prompt", label: "Testing/evaluation strategy" },
+    { pattern: "instruct|system prompt|persona|role", points: 4, target: "prompt", label: "Agent instructions/role defined" },
+    { pattern: "loop|iteration|feedback|improve|learn", points: 3, target: "prompt", label: "Feedback loop design" },
+    // Response quality
+    { pattern: "step|workflow|pipeline", points: 4, target: "response", label: "Contains workflow structure" },
+    { pattern: "if |when |condition|trigger|decision", points: 3, target: "response", label: "Conditional logic present" },
+    { pattern: "escalat|human|review", points: 3, target: "response", label: "Escalation path defined" },
+    { pattern: "error|fail|fallback|retry", points: 3, target: "response", label: "Error handling in output" },
+    { pattern: "guardrail|safety|check|constraint", points: 3, target: "response", label: "Safety measures included" },
+  ],
+  structures: [
+    { type: "numbered_list", points: 6, target: "response", required: true, label: "Step-by-step workflow" },
+    { type: "headers", points: 5, target: "response", required: true, label: "Well-organized sections" },
+    { type: "bullet_list", points: 3, target: "response", required: false, label: "Detailed sub-steps" },
+    { type: "code_block", points: 3, target: "response", required: false, label: "Config/code examples" },
+  ],
+  constraints: [
+    { description: "Escalation rules defined", promptIndicator: "escalat|human|handoff|review|approval", responseIndicator: "escalat|human|handoff|review|approval", points: 5 },
+    { description: "Error handling specified", promptIndicator: "error|fail|fallback|retry|exception", responseIndicator: "error|fail|fallback|retry|exception", points: 5 },
+    { description: "Safety guardrails included", promptIndicator: "guard|safety|check|limit|restrict|constraint", responseIndicator: "guard|safety|check|limit|restrict|constraint", points: 5 },
+  ],
+  minPromptLength: 50,
+  idealPromptLengthRange: [100, 600],
+  idealMaxAttempts: 4,
+};
+
 /** Default/generic criteria when no specific test type matches */
 export const GENERIC_CRITERIA: ScoringCriteria = {
   testType: "generic",
@@ -243,6 +282,7 @@ const CRITERIA_MAP: Record<string, ScoringCriteria> = {
   "code-generation": CODE_GENERATION_CRITERIA,
   "data-analysis": DATA_ANALYSIS_CRITERIA,
   "creative-writing": CREATIVE_WRITING_CRITERIA,
+  "agent-ops": AGENT_OPS_CRITERIA,
   "generic": GENERIC_CRITERIA,
 };
 
@@ -270,6 +310,9 @@ export function getCriteria(testType?: string, taskDescription?: string): Scorin
     }
     if (lower.includes("creative") || lower.includes("story") || lower.includes("blog") || lower.includes("article") || lower.includes("copy")) {
       return CREATIVE_WRITING_CRITERIA;
+    }
+    if (lower.includes("agent") || lower.includes("workflow") || lower.includes("orchestrat") || lower.includes("automat") || lower.includes("guardrail") || lower.includes("escalat")) {
+      return AGENT_OPS_CRITERIA;
     }
   }
 

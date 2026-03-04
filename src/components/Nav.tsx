@@ -54,12 +54,8 @@ export default function Nav({ transparent = false }: { transparent?: boolean }) 
     <nav
       className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? isDark
-            ? "bg-[#0A0F1C]/95 backdrop-blur-xl shadow-lg shadow-black/20"
-            : "bg-white/95 backdrop-blur-xl shadow-sm"
-          : isDark
-            ? "bg-transparent"
-            : "bg-white/80 backdrop-blur-md"
+          ? "bg-[#0A0F1C]/95 backdrop-blur-xl shadow-lg shadow-black/20"
+          : "bg-[#0A0F1C]/80 backdrop-blur-md"
       }`}
     >
       <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">

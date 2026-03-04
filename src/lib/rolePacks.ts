@@ -220,4 +220,85 @@ Use the AI to draft a response, then refine it to sound genuine (not corporate/r
       { id: "rp-c5", name: "Response Length", description: "Under 250 words — concise and respectful of customer's time", type: "length", weight: 15, config: { maxWords: 250 } },
     ],
   },
+  {
+    id: "agent-support",
+    label: "Agent Ops: Support",
+    desc: "Design an AI agent to handle customer support tickets",
+    title: "Design a Customer Support Agent Workflow",
+    description: "Tests ability to design, configure, and supervise an AI agent that handles customer support tickets safely and effectively.",
+    taskPrompt: `You are an AI Operations Lead at a SaaS company (5,000 customers, ~200 support tickets/day). Your manager wants you to design an AI agent that handles Tier 1 support tickets automatically.
+
+The agent will have access to:
+- Customer database (account info, plan, history)
+- Knowledge base (200+ articles)
+- Ticketing system (read/write)
+- Billing system (read-only, can issue credits up to $50)
+
+Design a complete agent workflow that:
+1. Triages incoming tickets by category and urgency
+2. Attempts to resolve common issues (password resets, billing questions, feature how-tos)
+3. Knows when to escalate to a human (and what info to hand off)
+4. Includes safety guardrails (what the agent must NEVER do)
+5. Has error handling for when the knowledge base doesn't have an answer
+6. Includes QA checks to verify response quality before sending
+7. Defines success metrics to measure agent performance
+
+Use the AI to build this workflow step by step. Think about what could go wrong and how to prevent it.`,
+    expectedOutcomes: "A complete agent workflow with triage logic, resolution paths for common issues, clear escalation rules, safety guardrails (no account deletion, no refunds over $50, no sharing other customer data), error handling, QA checks, and measurable success metrics.",
+    difficulty: "advanced",
+    timeLimitMinutes: 20,
+    maxAttempts: 5,
+    tokenBudget: 3500,
+    model: "claude-haiku",
+    testType: "agent-ops",
+    scoringWeights: { accuracy: 45, efficiency: 25, speed: 30 },
+    customCriteria: [
+      { id: "rp-ao1", name: "Triage Logic", description: "Defines clear categorization and priority rules for incoming tickets", type: "rubric", weight: 20, config: {} },
+      { id: "rp-ao2", name: "Safety Guardrails", description: "Specifies what the agent must never do (data access limits, action limits, tone rules)", type: "keyword", weight: 20, config: { mustInclude: ["never", "must not", "limit", "restrict"], mustNotInclude: [] } },
+      { id: "rp-ao3", name: "Escalation Rules", description: "Clear criteria for when to hand off to a human with context", type: "keyword", weight: 20, config: { mustInclude: ["escalat", "human", "handoff"], mustNotInclude: [] } },
+      { id: "rp-ao4", name: "Error Handling", description: "Covers scenarios where the agent can't resolve the issue", type: "keyword", weight: 20, config: { mustInclude: ["error", "fallback", "unknown"], mustNotInclude: [] } },
+      { id: "rp-ao5", name: "Success Metrics", description: "Defines measurable KPIs for agent performance", type: "keyword", weight: 20, config: { mustInclude: ["metric", "rate", "time", "score", "measure"], mustNotInclude: [] } },
+    ],
+  },
+  {
+    id: "agent-research",
+    label: "Agent Ops: Research",
+    desc: "Build a research agent workflow with tools and verification",
+    title: "Design a Research Agent with Verification",
+    description: "Tests ability to design a multi-step research agent that gathers information, cross-references sources, and produces verified reports.",
+    taskPrompt: `You are building an AI research agent for a consulting firm. Analysts currently spend 4-6 hours researching each client's competitive landscape before strategy meetings. You need to design an agent that cuts this to under 30 minutes.
+
+The agent will have access to:
+- Web search API
+- Company database (Crunchbase-style)
+- News aggregator API
+- Internal past-reports database
+- Document generation tool
+
+Design the agent workflow to:
+1. Accept a company name and research brief as input
+2. Gather competitive intelligence from multiple sources
+3. Cross-reference and verify claims (no hallucinated data)
+4. Identify gaps in information and flag them
+5. Generate a structured competitive analysis report
+6. Include confidence scores for each finding
+7. Flag anything that needs human verification before the report goes to the client
+
+Think about: How does the agent avoid hallucination? What happens when sources conflict? How do you ensure the output is reliable enough for a client-facing deliverable?`,
+    expectedOutcomes: "A multi-step research workflow with source verification, conflict resolution between sources, confidence scoring, structured output format, human review gates for client-facing content, and clear handling of information gaps.",
+    difficulty: "advanced",
+    timeLimitMinutes: 20,
+    maxAttempts: 5,
+    tokenBudget: 3500,
+    model: "claude-haiku",
+    testType: "agent-ops",
+    scoringWeights: { accuracy: 45, efficiency: 25, speed: 30 },
+    customCriteria: [
+      { id: "rp-ar1", name: "Multi-Source Strategy", description: "Uses multiple sources and cross-references findings", type: "keyword", weight: 20, config: { mustInclude: ["source", "cross-reference", "verify", "compare"], mustNotInclude: [] } },
+      { id: "rp-ar2", name: "Anti-Hallucination", description: "Includes mechanisms to prevent or detect fabricated information", type: "keyword", weight: 25, config: { mustInclude: ["hallucin", "verify", "confidence", "source", "cite"], mustNotInclude: [] } },
+      { id: "rp-ar3", name: "Information Gaps", description: "Identifies and flags missing or uncertain information", type: "keyword", weight: 20, config: { mustInclude: ["gap", "missing", "unknown", "uncertain", "flag"], mustNotInclude: [] } },
+      { id: "rp-ar4", name: "Human Review Gate", description: "Includes human verification step before client delivery", type: "keyword", weight: 20, config: { mustInclude: ["human", "review", "approval", "verify"], mustNotInclude: [] } },
+      { id: "rp-ar5", name: "Structured Output", description: "Defines a clear report format with sections and confidence levels", type: "rubric", weight: 15, config: {} },
+    ],
+  },
 ];

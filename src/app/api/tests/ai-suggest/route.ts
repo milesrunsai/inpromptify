@@ -100,6 +100,7 @@ function generateHeuristicSuggestion(descLower: string, descOriginal: string) {
   else if (/research|summar|literature|review/i.test(descLower)) category = "research";
   else if (/medical|clinical|patient|health|diagnos/i.test(descLower)) category = "medical";
   else if (/technical|documentation|manual|spec/i.test(descLower)) category = "technical";
+  else if (/agent|workflow|orchestrat|automat|guardrail|escalat|supervisor/i.test(descLower)) category = "agent-ops";
 
   const templates: Record<string, {
     title: string;
@@ -278,6 +279,23 @@ function generateHeuristicSuggestion(descLower: string, descOriginal: string) {
         { name: "Structure", description: "Well-organized with headers and sections", type: "rubric", weight: 20, config: {} },
         { name: "Technical Tone", description: "Precise technical language", type: "tone", weight: 15, config: { tone: "technical" } },
         { name: "Examples", description: "Includes relevant examples or illustrations", type: "rubric", weight: 10, config: {} },
+      ],
+      suggestedModel: "gpt-4o",
+    },
+    "agent-ops": {
+      title: "Agent Operations Assessment",
+      taskPrompt: `Design and configure an AI agent workflow for the following scenario:\n\n${descOriginal}\n\nYour prompts should demonstrate your ability to:\n- Decompose the business process into clear agent steps\n- Define the tools and capabilities the agent needs\n- Set up safety guardrails and constraints\n- Design escalation rules (when to hand off to a human)\n- Handle errors, edge cases, and failures gracefully\n- Define success metrics and QA checks\n\nShow how you would instruct, supervise, and improve an AI agent to reliably perform this workflow.`,
+      expectedOutcomes: "• Clear workflow decomposition into agent-executable steps\n• Well-defined tools/capabilities for the agent\n• Safety guardrails and constraints\n• Escalation paths to humans when needed\n• Error handling and fallback logic\n• Success metrics and QA verification\n• Cost-aware design",
+      timeLimitMinutes: 20,
+      maxAttempts: 5,
+      difficulty: "advanced",
+      scoringWeights: { accuracy: 45, efficiency: 25, speed: 30 },
+      customCriteria: [
+        { name: "Workflow Decomposition", description: "Breaks the process into clear, logical agent steps with proper sequencing", type: "rubric", weight: 25, config: {} },
+        { name: "Safety & Guardrails", description: "Defines constraints, limits, and safety checks to prevent agent errors", type: "keyword", weight: 20, config: { mustInclude: ["guardrail", "check", "limit", "safety", "constraint", "verify"], mustNotInclude: [] } },
+        { name: "Escalation Design", description: "Specifies when and how the agent should escalate to a human", type: "keyword", weight: 20, config: { mustInclude: ["escalat", "human", "review", "handoff", "approval"], mustNotInclude: [] } },
+        { name: "Error Handling", description: "Covers failure modes, retries, and fallback behavior", type: "keyword", weight: 20, config: { mustInclude: ["error", "fail", "retry", "fallback"], mustNotInclude: [] } },
+        { name: "QA & Metrics", description: "Defines how to measure agent success and verify quality", type: "keyword", weight: 15, config: { mustInclude: ["metric", "test", "measure", "quality", "verify"], mustNotInclude: [] } },
       ],
       suggestedModel: "gpt-4o",
     },
