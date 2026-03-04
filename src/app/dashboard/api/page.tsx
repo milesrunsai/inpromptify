@@ -80,8 +80,8 @@ export default function ApiPage() {
           </button>
         </div>
         {generatedKey && (
-          <div className="mt-4 bg-amber-50 border border-amber-200 rounded-md p-3">
-            <p className="text-xs text-amber-700 font-medium mb-1">⚠️ Copy this key now — it won&apos;t be shown again</p>
+          <div className="mt-4 bg-indigo-500/10 border border-indigo-500/20 rounded-md p-3">
+            <p className="text-xs text-indigo-300 font-medium mb-1">Copy this key now — it won&apos;t be shown again</p>
             <code className="text-sm font-mono text-white break-all">{generatedKey}</code>
           </div>
         )}
@@ -126,34 +126,54 @@ export default function ApiPage() {
             <div className="space-y-4">
               <div className="bg-white/[0.02] rounded-md p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[10px] font-bold bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded">POST</span>
+                  <span className="text-[10px] font-bold text-indigo-300 bg-indigo-500/10 px-1.5 py-0.5 rounded">POST</span>
                   <code className="text-sm text-white">/api/v1/tests/create</code>
                 </div>
                 <p className="text-xs text-gray-500 mb-2">Create a test programmatically</p>
-                <pre className="text-xs text-gray-400 overflow-x-auto">{`curl -X POST https://inpromptify.ai/api/v1/tests/create \\
+                <pre className="text-xs text-gray-400 overflow-x-auto">{`curl -X POST https://inpromptify.com/api/v1/tests/create \\
   -H "Authorization: Bearer sk-inp-..." \\
   -H "Content-Type: application/json" \\
   -d '{"title":"Email Test","taskPrompt":"Write a marketing email","maxAttempts":5}'`}</pre>
               </div>
               <div className="bg-white/[0.02] rounded-md p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[10px] font-bold bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">GET</span>
+                  <span className="text-[10px] font-bold text-violet-400 bg-violet-500/10 px-1.5 py-0.5 rounded">GET</span>
                   <code className="text-sm text-white">/api/v1/tests/:id/results</code>
                 </div>
                 <p className="text-xs text-gray-500 mb-2">Get test results for a specific test</p>
-                <pre className="text-xs text-gray-400 overflow-x-auto">{`curl https://inpromptify.ai/api/v1/tests/123/results \\
+                <pre className="text-xs text-gray-400 overflow-x-auto">{`curl https://inpromptify.com/api/v1/tests/123/results \\
   -H "Authorization: Bearer sk-inp-..."`}</pre>
               </div>
               <div className="bg-white/[0.02] rounded-md p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[10px] font-bold bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded">POST</span>
+                  <span className="text-[10px] font-bold text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded">POST</span>
                   <code className="text-sm text-white">/api/v1/tests/:id/invite</code>
                 </div>
                 <p className="text-xs text-gray-500 mb-2">Send a test invitation email</p>
-                <pre className="text-xs text-gray-400 overflow-x-auto">{`curl -X POST https://inpromptify.ai/api/v1/tests/123/invite \\
+                <pre className="text-xs text-gray-400 overflow-x-auto">{`curl -X POST https://inpromptify.com/api/v1/tests/123/invite \\
   -H "Authorization: Bearer sk-inp-..." \\
   -H "Content-Type: application/json" \\
   -d '{"email":"candidate@example.com","name":"Jane"}'`}</pre>
+              </div>
+              <div className="bg-white/[0.02] rounded-md p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[10px] font-bold text-indigo-300 bg-indigo-500/10 px-1.5 py-0.5 rounded">POST</span>
+                  <code className="text-sm text-white">/api/v1/webhooks</code>
+                </div>
+                <p className="text-xs text-gray-500 mb-2">Register a webhook for real-time event notifications</p>
+                <pre className="text-xs text-gray-400 overflow-x-auto">{`curl -X POST https://inpromptify.com/api/v1/webhooks \\
+  -H "Authorization: Bearer sk-inp-..." \\
+  -H "Content-Type: application/json" \\
+  -d '{"url":"https://your-app.com/webhook","events":["candidate.scored"]}'`}</pre>
+              </div>
+              <div className="bg-white/[0.02] rounded-md p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[10px] font-bold text-violet-400 bg-violet-500/10 px-1.5 py-0.5 rounded">GET</span>
+                  <code className="text-sm text-white">/api/v1/webhooks</code>
+                </div>
+                <p className="text-xs text-gray-500 mb-2">List your registered webhooks</p>
+                <pre className="text-xs text-gray-400 overflow-x-auto">{`curl https://inpromptify.com/api/v1/webhooks \\
+  -H "Authorization: Bearer sk-inp-..."`}</pre>
               </div>
             </div>
           </div>

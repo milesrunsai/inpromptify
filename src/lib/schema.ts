@@ -166,6 +166,20 @@ export async function ensureSchema() {
   `;
 
   await sql`
+    CREATE TABLE IF NOT EXISTS webhooks (
+      id SERIAL PRIMARY KEY,
+      user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      url TEXT NOT NULL,
+      secret VARCHAR(255) NOT NULL,
+      events TEXT[] DEFAULT ARRAY['test.completed', 'candidate.scored'],
+      is_active BOOLEAN DEFAULT true,
+      last_triggered_at TIMESTAMP WITH TIME ZONE,
+      failure_count INTEGER DEFAULT 0,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    )
+  `;
+
+  await sql`
     CREATE TABLE IF NOT EXISTS score_verifications (
       id SERIAL PRIMARY KEY,
       hash VARCHAR(64) UNIQUE NOT NULL,
