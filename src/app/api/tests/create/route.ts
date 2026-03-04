@@ -60,11 +60,12 @@ export async function POST(request: Request) {
 
     const sql = getSql();
     const uid = Number(userId);
+    const titleTrimmed = title.trim();
     const rows = await sql`
-      INSERT INTO tests (user_id, creator_id, slug, title, description, task_prompt, expected_outcomes, test_type, difficulty,
+      INSERT INTO tests (user_id, creator_id, slug, name, title, description, task_prompt, expected_outcomes, test_type, difficulty,
                          time_limit_minutes, max_attempts, token_budget, model, scoring_weights, custom_criteria, status,
                          cover_image, visibility, listing_type, company_name, location, salary_range)
-      VALUES (${uid}, ${uid}, ${slug}, ${title.trim()}, ${description?.trim() || ""}, ${taskPrompt.trim()},
+      VALUES (${uid}, ${uid}, ${slug}, ${titleTrimmed}, ${titleTrimmed}, ${description?.trim() || ""}, ${taskPrompt.trim()},
               ${expectedOutcomes?.trim() || ""}, ${testType || "custom"}, ${difficulty || "intermediate"},
               ${timeLimitMinutes || 15}, ${maxAttempts || 5}, ${tokenBudget || 2000}, ${model || "gpt-4o"},
               ${JSON.stringify(scoringWeights || { accuracy: 40, efficiency: 30, speed: 30 })},
