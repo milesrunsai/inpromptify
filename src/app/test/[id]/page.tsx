@@ -32,19 +32,19 @@ export default function TestLandingPage({ params }: { params: Promise<{ id: stri
   const [formError, setFormError] = useState("");
 
   useEffect(() => {
-    fetch(`/api/tests/${id}`)
+    fetch(`/api/tests/${encodeURIComponent(id)}`)
       .then((r) => {
         if (!r.ok) throw new Error("Test not found");
         return r.json();
       })
       .then((d) => {
-        if (d && d.title) {
+        if (d && (d.title || d.name)) {
           setTest({
             id: d.id?.toString() || id,
-            title: d.title,
+            title: d.title || d.name,
             description: d.description || "",
             model: d.model || "gpt-4o",
-            task_prompt: d.task_prompt || "",
+            task_prompt: d.task_prompt || d.task_description || "",
             max_attempts: d.max_attempts || 5,
             time_limit_minutes: d.time_limit_minutes || 15,
             token_budget: d.token_budget || 2000,

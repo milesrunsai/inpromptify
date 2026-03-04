@@ -15,13 +15,17 @@ export async function GET() {
     }
 
     const sql = getSql();
+    const uid = Number(userId);
     const tests = await sql`
-      SELECT id, title, description, task_prompt, expected_outcomes, test_type, difficulty,
+      SELECT id, slug, COALESCE(title, name) as title, description,
+             COALESCE(task_prompt, task_description) as task_prompt,
+             COALESCE(expected_outcomes, expected_outcome) as expected_outcomes,
+             test_type, difficulty,
              time_limit_minutes, max_attempts, token_budget, model, scoring_weights, status,
              cover_image, visibility, listing_type, company_name, location, salary_range,
              candidates_count, avg_score, completion_rate, created_at, updated_at
       FROM tests
-      WHERE user_id = ${Number(userId)}
+      WHERE user_id = ${uid} OR creator_id = ${uid}
       ORDER BY created_at DESC
     `;
 

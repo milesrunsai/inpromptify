@@ -7,6 +7,7 @@ import TestThumbnail from "@/components/TestThumbnail";
 
 interface DbTest {
   id: number;
+  slug: string;
   title: string;
   description: string;
   test_type: string;
@@ -57,9 +58,9 @@ export default function MyTestsPage() {
     archived: tests.filter((t) => t.status === "archived").length,
   };
 
-  const copyLink = (id: number) => {
-    navigator.clipboard.writeText(`${window.location.origin}/test/${id}`);
-    setCopiedId(id);
+  const copyLink = (test: DbTest) => {
+    navigator.clipboard.writeText(`${window.location.origin}/test/${test.slug || test.id}`);
+    setCopiedId(test.id);
     setTimeout(() => setCopiedId(null), 2000);
   };
 
@@ -250,7 +251,7 @@ export default function MyTestsPage() {
                         {test.status === "active" ? "Unpublish" : "Publish"}
                       </button>
                       {test.status === "active" && (
-                        <button onClick={() => copyLink(test.id)}
+                        <button onClick={() => copyLink(test)}
                           className="px-2 py-1 text-[11px] font-medium text-gray-500 hover:text-blue-600 rounded hover:bg-blue-50 transition-colors"
                           title="Copy share link">
                           {copiedId === test.id ? "Copied!" : "Share"}

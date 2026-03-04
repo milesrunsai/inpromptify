@@ -7,6 +7,7 @@ import TestThumbnail from "@/components/TestThumbnail";
 
 interface TestDetail {
   id: number;
+  slug: string;
   title: string;
   description: string;
   task_prompt: string;
@@ -69,7 +70,7 @@ export default function TestDetailPage() {
   };
 
   const copyLink = () => {
-    const url = `${window.location.origin}/test/${test?.id}`;
+    const url = `${window.location.origin}/test/${test?.slug || test?.id}`;
     navigator.clipboard.writeText(url);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -224,7 +225,7 @@ export default function TestDetailPage() {
             <input
               type="text"
               readOnly
-              value={`${typeof window !== "undefined" ? window.location.origin : ""}/test/${test.id}`}
+              value={`${typeof window !== "undefined" ? window.location.origin : ""}/test/${test.slug || test.id}`}
               className="flex-1 bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2 text-sm text-gray-600 font-mono"
             />
             <button onClick={copyLink} className="bg-[#6366F1] hover:bg-[#4F46E5] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors shrink-0">

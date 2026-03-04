@@ -2,7 +2,8 @@ import { auth } from "@/lib/auth";
 import { getSql } from "@/lib/db";
 import { NextResponse } from "next/server";
 
-const ALL_COLUMNS = `id, user_id, title, description, task_prompt, expected_outcomes, test_type, difficulty,
+const ALL_COLUMNS = `id, slug, user_id, creator_id, name, title, description, task_description, task_prompt,
+             expected_outcome, expected_outcomes, test_type, difficulty,
              time_limit_minutes, max_attempts, token_budget, model, scoring_weights, custom_criteria, status,
              cover_image, visibility, listing_type, company_name, location, salary_range,
              candidates_count, avg_score, completion_rate, created_at, updated_at`;
@@ -13,20 +14,13 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const testId = Number(id);
-
-    if (isNaN(testId)) {
-      return NextResponse.json({ error: "Invalid test ID" }, { status: 400 });
-    }
-
     const sql = getSql();
+    const isNumeric = /^\d+$/.test(id);
 
-    // Public access for active tests (guest mode)
-    const publicRows = await sql`
-      SELECT ${sql.unsafe(ALL_COLUMNS)}
-      FROM tests
-      WHERE id = ${testId} AND status = 'active'
-    `;
+    // Public access for active tests (guest mode) — lookup by slug or id
+    const publicRows = isNumeric
+      ? await sql`SELECT ${sql.unsafe(ALL_COLUMNS)} FROM tests WHERE id = ${Number(id)} AND status = 'active'`
+      : await sql`SELECT ${sql.unsafe(ALL_COLUMNS)} FROM tests WHERE slug = ${id} AND status = 'active'`;
 
     if (publicRows.length > 0) {
       return NextResponse.json(publicRows[0]);
@@ -39,11 +33,9 @@ export async function GET(
     }
 
     const userId = (session.user as Record<string, unknown>).id;
-    const rows = await sql`
-      SELECT ${sql.unsafe(ALL_COLUMNS)}
-      FROM tests
-      WHERE id = ${testId} AND user_id = ${Number(userId)}
-    `;
+    const rows = isNumeric
+      ? await sql`SELECT ${sql.unsafe(ALL_COLUMNS)} FROM tests WHERE id = ${Number(id)} AND (user_id = ${Number(userId)} OR creator_id = ${Number(userId)})`
+      : await sql`SELECT ${sql.unsafe(ALL_COLUMNS)} FROM tests WHERE slug = ${id} AND (user_id = ${Number(userId)} OR creator_id = ${Number(userId)})`;
 
     if (rows.length === 0) {
       return NextResponse.json({ error: "Test not found" }, { status: 404 });
