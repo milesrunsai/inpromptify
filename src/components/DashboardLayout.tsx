@@ -56,9 +56,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const allTabs = [...primaryTabs, ...secondaryTabs];
 
   return (
-    <div className="min-h-screen bg-[#0A0F1C]">
+    <div className="min-h-screen bg-[#0a0a0f]">
       {/* Top navigation bar */}
-      <header className="sticky top-0 z-40 bg-[#0A0F1C] border-b border-white/[0.06]">
+      <header className="sticky top-0 z-40 bg-[#0a0a0f] border-b border-white/[0.06]">
         {/* Primary bar */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-14">
@@ -90,7 +90,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="flex items-center gap-2">
               <Link
                 href="/dashboard/create"
-                className="hidden sm:inline-flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors"
+                className="hidden sm:inline-flex items-center gap-1.5 bg-orange-500 hover:bg-orange-400 text-white px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
                 New Test
@@ -98,7 +98,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
               {/* Plan badge */}
               {plan !== "free" && (
-                <span className="hidden sm:inline-flex text-[11px] font-medium text-indigo-400 bg-indigo-500/10 px-2 py-1 rounded capitalize">
+                <span className="hidden sm:inline-flex text-[11px] font-medium text-orange-400 bg-orange-500/10 px-2 py-1 rounded capitalize">
                   {plan}
                 </span>
               )}
@@ -126,7 +126,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
                   className="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-white/[0.03] transition-colors"
                 >
-                  <div className="w-7 h-7 rounded-full bg-indigo-600 flex items-center justify-center text-white text-[11px] font-medium shrink-0">
+                  <div className="w-7 h-7 rounded-full bg-orange-500 flex items-center justify-center text-white text-[11px] font-medium shrink-0">
                     {initials}
                   </div>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-600 hidden sm:block"><path d="M6 9l6 6 6-6" /></svg>
@@ -199,7 +199,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               ))}
               <Link
                 href="/dashboard/create"
-                className="block px-3 py-2.5 rounded-md text-sm font-medium text-indigo-400 hover:text-indigo-300"
+                className="block px-3 py-2.5 rounded-md text-sm font-medium text-orange-400 hover:text-orange-300"
               >
                 + New Test
               </Link>

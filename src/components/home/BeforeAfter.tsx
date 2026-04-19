@@ -61,7 +61,7 @@ export default function BeforeAfter() {
         </ul>
         <div className="mt-6 pt-4 border-t border-white/[0.04]">
           <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-indigo-400">~5</span>
+            <span className="text-2xl font-bold text-orange-400">~5</span>
             <span className="text-[11px] text-gray-500">min per candidate</span>
           </div>
         </div>

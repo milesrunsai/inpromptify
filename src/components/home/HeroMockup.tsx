@@ -31,7 +31,7 @@ export default function HeroMockup() {
         <div className="space-y-3 mb-4">
           {/* User message */}
           <div className="flex justify-end">
-            <div className="bg-indigo-600/90 text-white rounded-lg rounded-br-sm px-3.5 py-2.5 text-[12px] max-w-[75%] leading-relaxed">
+            <div className="bg-orange-500/90 text-white rounded-lg rounded-br-sm px-3.5 py-2.5 text-[12px] max-w-[75%] leading-relaxed">
               Write a compelling product launch email for CloudSync Pro targeting enterprise CTOs.
               Focus on data synchronization pain points and include a clear CTA.
             </div>
@@ -55,7 +55,7 @@ export default function HeroMockup() {
           <div className="flex-1 bg-white/[0.03] rounded-md px-3 py-2 text-[12px] text-gray-600 border border-white/[0.04]">
             Refine the subject line to be more specific…
           </div>
-          <div className="bg-indigo-600 text-white px-3 py-2 rounded-md text-[11px] font-medium shrink-0">
+          <div className="bg-orange-500 text-white px-3 py-2 rounded-md text-[11px] font-medium shrink-0">
             Send
           </div>
         </div>

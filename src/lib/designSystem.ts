@@ -27,12 +27,12 @@ export const ds = {
   },
   
   // Buttons
-  btnPrimary: "inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md px-4 py-2 text-[13px] font-medium transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/20",
+  btnPrimary: "inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white rounded-md px-4 py-2 text-[13px] font-medium transition-all duration-200 hover:shadow-lg hover:shadow-orange-500/20",
   btnSecondary: "inline-flex items-center gap-2 bg-white/[0.04] border border-white/[0.08] hover:border-white/[0.14] rounded-md px-4 py-2 text-[13px] font-medium text-gray-400 transition-all duration-200",
   btnGhost: "inline-flex items-center gap-2 text-[13px] font-medium text-gray-500 hover:text-gray-300 transition-colors duration-200",
   
   // Inputs
-  input: "w-full bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2 text-[13px] text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500/40 transition-all duration-200",
+  input: "w-full bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2 text-[13px] text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500/40 transition-all duration-200",
   inputLabel: "block text-[12px] font-medium text-gray-400 mb-1.5 tracking-[0.02em]",
   inputError: "text-[11px] text-red-400 mt-1",
   
@@ -42,7 +42,7 @@ export const ds = {
   tableCellMuted: "px-5 py-3 text-[13px] text-gray-500",
   
   // Sidebar
-  sidebarBg: "bg-[#0A0F1C]",
+  sidebarBg: "bg-[#0a0a0f]",
   sidebarItem: "flex items-center gap-2.5 px-3 py-2 text-[13px] transition-all duration-200 rounded-md",
   sidebarItemActive: "text-white bg-white/[0.06]",
   sidebarItemInactive: "text-gray-500 hover:text-gray-300 hover:bg-white/[0.03]",

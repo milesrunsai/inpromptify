@@ -61,7 +61,7 @@ export default function PublicScorePage({ params }: { params: Promise<{ id: stri
   if (loading) {
     return (
       <div className="min-h-screen bg-[#0A0F1C] flex items-center justify-center">
-        <div className="animate-spin w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full" />
+        <div className="animate-spin w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full" />
       </div>
     );
   }
@@ -72,7 +72,7 @@ export default function PublicScorePage({ params }: { params: Promise<{ id: stri
         <div className="text-center">
           <h1 className="text-lg font-bold text-white mb-2">Score Not Found</h1>
           <p className="text-sm text-gray-500 mb-6">This score may not exist or hasn't been made public yet.</p>
-          <Link href="/" className="text-sm text-indigo-400 hover:text-indigo-300 font-medium">Back to InpromptiFy</Link>
+          <Link href="/" className="text-sm text-orange-400 hover:text-orange-300 font-medium">Back to InpromptiFy</Link>
         </div>
       </div>
     );
@@ -90,7 +90,7 @@ export default function PublicScorePage({ params }: { params: Promise<{ id: stri
           </Link>
           <div className="flex items-center gap-3">
             <span className="text-[11px] text-gray-600 uppercase tracking-wider">Verified PromptScore</span>
-            <Link href="/test/demo" className="text-[12px] font-medium text-indigo-400 hover:text-indigo-300 transition-colors">Get Yours</Link>
+            <Link href="/test/demo" className="text-[12px] font-medium text-orange-400 hover:text-orange-300 transition-colors">Get Yours</Link>
           </div>
         </div>
       </div>
@@ -184,11 +184,11 @@ export default function PublicScorePage({ params }: { params: Promise<{ id: stri
         </div>
 
         {/* Share / Actions */}
-        <div className="bg-gradient-to-r from-indigo-600/[0.08] to-violet-600/[0.04] rounded-xl border border-indigo-500/[0.12] p-6 mb-6">
+        <div className="bg-gradient-to-r from-indigo-600/[0.08] to-violet-600/[0.04] rounded-xl border border-orange-500/[0.12] p-6 mb-6">
           <h3 className="text-sm font-semibold text-white mb-1">Share Your PromptScore</h3>
           <p className="text-[13px] text-gray-500 mb-4">Add it to your resume, LinkedIn, or portfolio to prove your AI proficiency.</p>
           <div className="flex flex-wrap gap-2">
-            <button onClick={handleShare} className="bg-indigo-600 hover:bg-indigo-500 text-white text-[13px] font-medium px-5 py-2.5 rounded-md transition-colors">
+            <button onClick={handleShare} className="bg-orange-500 hover:bg-orange-400 text-white text-[13px] font-medium px-5 py-2.5 rounded-md transition-colors">
               {copied ? "Link Copied" : "Copy Share Link"}
             </button>
             <a
@@ -226,7 +226,7 @@ export default function PublicScorePage({ params }: { params: Promise<{ id: stri
           <h3 className="text-lg font-bold text-white mb-2">What's your PromptScore?</h3>
           <p className="text-[13px] text-gray-500 mb-5">Take a free AI proficiency assessment and find out where you rank.</p>
           <div className="flex items-center justify-center gap-3">
-            <Link href="/test/demo" className="bg-indigo-600 hover:bg-indigo-500 text-white text-[13px] font-medium px-6 py-3 rounded-md transition-colors">
+            <Link href="/test/demo" className="bg-orange-500 hover:bg-orange-400 text-white text-[13px] font-medium px-6 py-3 rounded-md transition-colors">
               Take the Assessment
             </Link>
             <Link href="/explore" className="bg-white/[0.04] border border-white/[0.08] hover:border-white/[0.14] text-gray-400 text-[13px] font-medium px-6 py-3 rounded-md transition-colors">

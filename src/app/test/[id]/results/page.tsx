@@ -49,7 +49,7 @@ function AttemptTimeline({ messages }: { messages: StoredMessage[] }) {
             {isExpanded && (
               <div className="border-t border-white/[0.06] px-4 py-3 space-y-3">
                 <div>
-                  <span className="text-[10px] font-semibold text-indigo-400 uppercase tracking-wide">Your Prompt</span>
+                  <span className="text-[10px] font-semibold text-orange-400 uppercase tracking-wide">Your Prompt</span>
                   <p className="text-sm text-gray-300 mt-1 whitespace-pre-wrap leading-relaxed">{pair.prompt.content}</p>
                 </div>
                 {pair.response && (
@@ -156,7 +156,7 @@ export default function TestResultsPage({ params }: { params: Promise<{ id: stri
     return (
       <div className="min-h-screen bg-[#0A0F1C] flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full mx-auto mb-3" />
+          <div className="animate-spin w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full mx-auto mb-3" />
           <p className="text-sm text-gray-500">Calculating your score...</p>
         </div>
       </div>
@@ -168,7 +168,7 @@ export default function TestResultsPage({ params }: { params: Promise<{ id: stri
       <div className="min-h-screen bg-[#0A0F1C] flex items-center justify-center">
         <div className="text-center">
           <p className="text-gray-500 text-sm mb-4">No results found for this test session.</p>
-          <Link href="/" className="text-sm text-indigo-400 hover:text-indigo-300 font-medium">Back to Home</Link>
+          <Link href="/" className="text-sm text-orange-400 hover:text-orange-300 font-medium">Back to Home</Link>
         </div>
       </div>
     );
@@ -197,14 +197,14 @@ export default function TestResultsPage({ params }: { params: Promise<{ id: stri
 
       {/* Guest signup prompt */}
       {showSignupPrompt && (
-        <div className="bg-indigo-500/[0.06] border-b border-indigo-500/[0.1]">
+        <div className="bg-orange-400/[0.06] border-b border-orange-500/[0.1]">
           <div className="max-w-3xl mx-auto px-5 py-4 flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-indigo-400">Create an account to save your PromptScore</p>
+              <p className="text-sm font-medium text-orange-400">Create an account to save your PromptScore</p>
               <p className="text-xs text-gray-600 mt-0.5">Appear on the leaderboard and track your progress</p>
             </div>
             <div className="flex items-center gap-2">
-              <Link href={`/signup?link=${id}`} className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">Sign Up</Link>
+              <Link href={`/signup?link=${id}`} className="bg-orange-500 hover:bg-orange-400 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">Sign Up</Link>
               <button onClick={() => setShowSignupPrompt(false)} className="text-gray-600 hover:text-gray-400 text-sm px-2">Dismiss</button>
             </div>
           </div>
@@ -228,7 +228,7 @@ export default function TestResultsPage({ params }: { params: Promise<{ id: stri
       <div className="bg-[#0C1120] border-b border-white/[0.06]">
         <div className="max-w-3xl mx-auto px-5 flex gap-0">
           {([{ key: "overview", label: "Overview" }, { key: "journey", label: "Your Journey" }, { key: "comparison", label: "Comparison" }] as const).map((tab) => (
-            <button key={tab.key} onClick={() => setActiveTab(tab.key)} className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === tab.key ? "border-indigo-500 text-indigo-400" : "border-transparent text-gray-600 hover:text-gray-400"}`}>{tab.label}</button>
+            <button key={tab.key} onClick={() => setActiveTab(tab.key)} className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === tab.key ? "border-orange-500 text-orange-400" : "border-transparent text-gray-600 hover:text-gray-400"}`}>{tab.label}</button>
           ))}
         </div>
       </div>
@@ -323,11 +323,11 @@ export default function TestResultsPage({ params }: { params: Promise<{ id: stri
                         )}
                         {d.suggestions.length > 0 && (
                           <div>
-                            <span className="text-[10px] font-semibold text-indigo-400 uppercase tracking-wider">Suggestions</span>
+                            <span className="text-[10px] font-semibold text-orange-400 uppercase tracking-wider">Suggestions</span>
                             <ul className="mt-1 space-y-0.5">
                               {d.suggestions.map((s, i) => (
                                 <li key={i} className="text-[12px] text-gray-400 flex items-start gap-2">
-                                  <span className="text-indigo-400 shrink-0">-</span>
+                                  <span className="text-orange-400 shrink-0">-</span>
                                   {s}
                                 </li>
                               ))}
@@ -385,7 +385,7 @@ export default function TestResultsPage({ params }: { params: Promise<{ id: stri
           <div className="space-y-6">
             <div className="bg-[#0C1120] rounded-lg border border-white/[0.06] p-5 text-center">
               <p className="text-xs text-gray-600 uppercase tracking-wide mb-2">Your Percentile</p>
-              <div className="text-5xl font-bold text-indigo-400 mb-1">{result.percentile}<span className="text-lg text-gray-600 font-normal">th</span></div>
+              <div className="text-5xl font-bold text-orange-400 mb-1">{result.percentile}<span className="text-lg text-gray-600 font-normal">th</span></div>
               <p className="text-sm text-gray-500">You scored higher than {result.percentile}% of all candidates</p>
             </div>
             <div className="bg-[#0C1120] rounded-lg border border-white/[0.06] p-5">
@@ -421,7 +421,7 @@ export default function TestResultsPage({ params }: { params: Promise<{ id: stri
                 URL.revokeObjectURL(url);
               }
             }}
-            className="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2.5 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-1.5"
+            className="bg-orange-500 hover:bg-orange-400 text-white px-3 py-2.5 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-1.5"
           >
             Download PDF
           </button>

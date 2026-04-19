@@ -22,8 +22,8 @@ interface PublicTest {
 }
 
 const DIFFICULTY_COLORS: Record<string, string> = {
-  beginner: "text-indigo-300 bg-indigo-500/[0.08] border-indigo-400/20",
-  intermediate: "text-indigo-400 bg-indigo-500/[0.06] border-indigo-500/15",
+  beginner: "text-orange-300 bg-orange-400/[0.08] border-orange-400/20",
+  intermediate: "text-orange-400 bg-orange-400/[0.06] border-orange-500/15",
   advanced: "text-violet-400 bg-violet-500/[0.06] border-violet-500/15",
   expert: "text-purple-400 bg-purple-500/[0.06] border-purple-500/15",
 };
@@ -67,9 +67,9 @@ export default function ExplorePage() {
             <div className="flex items-center gap-3">
               <Link href="/test/demo" className="text-[13px] text-gray-400 hover:text-white transition-colors">Try Demo</Link>
               {isLoggedIn ? (
-                <Link href="/dashboard" className="text-[13px] font-medium text-white bg-indigo-600 hover:bg-indigo-500 px-4 py-1.5 rounded-md transition-colors">Dashboard</Link>
+                <Link href="/dashboard" className="text-[13px] font-medium text-white bg-orange-500 hover:bg-orange-400 px-4 py-1.5 rounded-md transition-colors">Dashboard</Link>
               ) : (
-                <Link href="/login" className="text-[13px] font-medium text-indigo-400 hover:text-indigo-300 transition-colors">Sign In</Link>
+                <Link href="/login" className="text-[13px] font-medium text-orange-400 hover:text-orange-300 transition-colors">Sign In</Link>
               )}
             </div>
           </div>
@@ -85,7 +85,7 @@ export default function ExplorePage() {
             <span className="text-[11px] text-gray-500 uppercase tracking-wider mr-1">Difficulty:</span>
             {["all", "beginner", "intermediate", "advanced", "expert"].map((d) => (
               <button key={d} onClick={() => setFilter(d)}
-                className={`px-3 py-1.5 rounded-md text-[12px] font-medium border transition-all ${filter === d ? "border-indigo-500/40 bg-indigo-500/10 text-indigo-400" : "border-white/[0.06] text-gray-500 hover:text-gray-300"}`}>
+                className={`px-3 py-1.5 rounded-md text-[12px] font-medium border transition-all ${filter === d ? "border-orange-500/40 bg-orange-400/10 text-orange-400" : "border-white/[0.06] text-gray-500 hover:text-gray-300"}`}>
                 {d === "all" ? "All" : d.charAt(0).toUpperCase() + d.slice(1)}
               </button>
             ))}
@@ -94,7 +94,7 @@ export default function ExplorePage() {
             <span className="text-[11px] text-gray-500 uppercase tracking-wider mr-1">Sort:</span>
             {[{ value: "newest", label: "Newest" }, { value: "popular", label: "Most Popular" }, { value: "score", label: "Highest Avg Score" }].map((s) => (
               <button key={s.value} onClick={() => setSort(s.value)}
-                className={`px-3 py-1.5 rounded-md text-[12px] font-medium border transition-all ${sort === s.value ? "border-indigo-500/40 bg-indigo-500/10 text-indigo-400" : "border-white/[0.06] text-gray-500 hover:text-gray-300"}`}>
+                className={`px-3 py-1.5 rounded-md text-[12px] font-medium border transition-all ${sort === s.value ? "border-orange-500/40 bg-orange-400/10 text-orange-400" : "border-white/[0.06] text-gray-500 hover:text-gray-300"}`}>
                 {s.label}
               </button>
             ))}
@@ -103,7 +103,7 @@ export default function ExplorePage() {
 
         {loading ? (
           <div className="text-center py-20">
-            <div className="animate-spin w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full mx-auto mb-3" />
+            <div className="animate-spin w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full mx-auto mb-3" />
             <p className="text-sm text-gray-500">Loading assessments...</p>
           </div>
         ) : filtered.length === 0 ? (
@@ -116,7 +116,7 @@ export default function ExplorePage() {
             <h2 className="text-lg font-semibold text-white mb-1">No public tests yet</h2>
             <p className="text-sm text-gray-500 mb-6 max-w-md mx-auto">Be the first to create a public assessment. Or try the demo to see how it works.</p>
             <div className="flex items-center justify-center gap-3">
-              <Link href="/test/demo" className="bg-indigo-600 hover:bg-indigo-500 text-white text-[13px] font-medium px-5 py-2.5 rounded-md transition-colors">Try Demo</Link>
+              <Link href="/test/demo" className="bg-orange-500 hover:bg-orange-400 text-white text-[13px] font-medium px-5 py-2.5 rounded-md transition-colors">Try Demo</Link>
               <Link href="/signup" className="bg-white/[0.04] border border-white/[0.08] hover:border-white/[0.14] text-gray-400 text-[13px] font-medium px-5 py-2.5 rounded-md transition-colors">Create Account</Link>
             </div>
           </div>
@@ -127,7 +127,7 @@ export default function ExplorePage() {
                 className="group bg-[#0C1120] border border-white/[0.06] rounded-lg p-5 hover:border-white/[0.12] transition-all duration-200 hover:shadow-lg hover:shadow-black/20 flex flex-col">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-[15px] font-semibold text-white group-hover:text-indigo-400 transition-colors truncate">{test.title}</h3>
+                    <h3 className="text-[15px] font-semibold text-white group-hover:text-orange-400 transition-colors truncate">{test.title}</h3>
                     {test.company_name && <p className="text-[11px] text-gray-600 mt-0.5">{test.company_name}</p>}
                   </div>
                   <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full border capitalize shrink-0 ml-2 ${DIFFICULTY_COLORS[test.difficulty] || "text-gray-400 bg-white/[0.04] border-white/[0.08]"}`}>
@@ -145,7 +145,7 @@ export default function ExplorePage() {
                   </div>
                   <div className="flex items-center gap-3">
                     {test.candidates_count > 0 && <span>{test.candidates_count} taken</span>}
-                    {test.avg_score > 0 && <span className="text-indigo-400">avg {Math.round(test.avg_score)}</span>}
+                    {test.avg_score > 0 && <span className="text-orange-400">avg {Math.round(test.avg_score)}</span>}
                   </div>
                 </div>
               </Link>

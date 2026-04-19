@@ -56,13 +56,13 @@ export default function PublicListingPage({ title, subtitle, listingType, emptyI
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search tests..."
-            className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
+            className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-orange-400"
           />
         </div>
         <select
           value={difficulty}
           onChange={(e) => setDifficulty(e.target.value)}
-          className="border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
+          className="border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-orange-400"
         >
           <option value="">All Difficulties</option>
           {DIFFICULTIES.filter(Boolean).map((d) => (
@@ -72,7 +72,7 @@ export default function PublicListingPage({ title, subtitle, listingType, emptyI
         <select
           value={sort}
           onChange={(e) => setSort(e.target.value)}
-          className="border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
+          className="border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-orange-400"
         >
           {SORT_OPTIONS.map((s) => (
             <option key={s.value} value={s.value}>{s.label}</option>

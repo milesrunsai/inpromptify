@@ -1,91 +1,77 @@
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import CountUpStats from "@/components/landing/CountUpStats";
+import ScrollRevealProvider from "@/components/landing/ScrollRevealProvider";
 
 export const metadata = {
-  title: "About — InpromptiFy",
-  description: "InpromptiFy is an AI proficiency assessment platform built in Australia. We help companies measure how effectively their teams use AI.",
+  title: "About -- InpromptiFy",
+  description: "InpromptiFy is an AI proficiency assessment platform. We help companies measure how effectively their teams use AI.",
 };
 
 export default function AboutPage() {
   return (
     <>
       <Nav />
-      <main className="bg-[#0A0F1C] min-h-screen">
-        <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-24">
-          <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">About</p>
-          <h1 className="text-3xl font-bold text-white mb-4 tracking-tight">Building the standard for AI proficiency</h1>
-          <p className="text-base text-gray-500 leading-relaxed mb-12 max-w-xl">
-            InpromptiFy is an AI skills assessment platform. We help companies measure, benchmark, and improve how their teams use AI tools.
-          </p>
-
-          <div className="space-y-10 text-[15px] text-gray-400 leading-relaxed">
-            <section>
-              <h2 className="text-lg font-semibold text-white mb-3">The problem we solve</h2>
-              <p className="mb-3">
-                Organizations are spending billions on AI tools, but most have no way to measure whether their people can actually use them effectively. Research from Harvard and Wharton shows a 10x variation in prompt effectiveness between users performing the same task. That gap translates directly into wasted tokens, wasted time, and missed value.
-              </p>
-              <p>
-                InpromptiFy gives companies a standardized way to assess AI proficiency across their workforce. Create an assessment in 30 seconds, send it to your team, and get scored results with actionable breakdowns.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-lg font-semibold text-white mb-3">What we believe</h2>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <span className="mt-2 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
-                  <span><strong className="text-white">AI skill is measurable.</strong> Prompting is not a soft skill. It is a concrete, observable behavior with quantifiable outcomes: token usage, output quality, iteration count, speed.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-2 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
-                  <span><strong className="text-white">Efficiency matters as much as output.</strong> Two people can get the same result. The one who does it in fewer tokens and fewer attempts is more valuable. We measure that.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-2 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
-                  <span><strong className="text-white">Real tasks, real models.</strong> Assessments run in a sandboxed environment with real LLMs. No multiple choice. No self-reporting. Candidates solve actual tasks under real constraints.</span>
-                </li>
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="text-lg font-semibold text-white mb-3">Company</h2>
-              <p className="mb-3">
-                InpromptiFy is an Australian company, founded in 2026. We are a small, technical team building tools for the era where AI proficiency is a core job skill.
-              </p>
-              <p>
-                The platform is in early access. We are working directly with early customers to refine the scoring methodology and build the features that matter most for hiring.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-lg font-semibold text-white mb-3">Getting started</h2>
-              <p className="mb-3">
-                InpromptiFy is free to start. The Starter plan includes 3 assessments per month with full scoring and analytics — no credit card required. Upgrade when your hiring pipeline demands it.
-              </p>
-              <p>
-                If you want to screen candidates for AI proficiency or benchmark your team, sign up and create your first assessment in minutes.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-lg font-semibold text-white mb-3">Contact</h2>
-              <p>
-                General inquiries: <a href="mailto:hello@inpromptify.com" className="text-indigo-400 hover:text-indigo-300 transition-colors">hello@inpromptify.com</a>
-              </p>
-              <p className="mt-1">
-                Security: <a href="mailto:security@inpromptify.com" className="text-indigo-400 hover:text-indigo-300 transition-colors">security@inpromptify.com</a>
-              </p>
-            </section>
+      <ScrollRevealProvider />
+      <main className="bg-[#0a0a0f] min-h-screen">
+        <div className="max-w-7xl mx-auto px-6 pt-28 pb-16">
+          <div className="max-w-2xl">
+            <span className="section-label">[ About ]</span>
+            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mt-2 text-white">
+              Measuring AI proficiency,{" "}
+              <span className="gradient-text">accurately</span>
+            </h1>
+            <p className="text-lg text-gray-400 mt-6 leading-relaxed">
+              InpromptiFy was built on a simple observation: as AI transforms every
+              industry, there&apos;s no reliable way to measure how well people actually
+              use these tools. We&apos;re changing that.
+            </p>
           </div>
 
-          <div className="mt-14 pt-10 border-t border-white/[0.06] flex flex-col sm:flex-row gap-3">
-            <Link href="/signup" className="inline-flex items-center justify-center text-white bg-indigo-600 hover:bg-indigo-500 px-6 py-2.5 rounded-md text-sm font-medium transition-colors">
-              Create Your First Assessment
-            </Link>
-            <Link href="/scoring" className="inline-flex items-center justify-center text-gray-400 hover:text-gray-200 px-6 py-2.5 rounded-md text-sm transition-colors border border-white/[0.06] hover:border-white/[0.12]">
-              How Scoring Works
-            </Link>
+          <div className="grid md:grid-cols-3 gap-4 mt-16">
+            {[
+              {
+                title: "Our Mission",
+                text: "To create the global standard for AI proficiency measurement. We believe that accurate assessment drives better learning, smarter hiring, and more effective teams.",
+              },
+              {
+                title: "Our Approach",
+                text: "We combine psychometric science with modern AI to build assessments that are adaptive, fair, and genuinely useful. No trivia questions -- only real-world skill validation.",
+              },
+              {
+                title: "Our Team",
+                text: "We're a team of assessment scientists, AI engineers, and product builders. Based in Australia, serving teams worldwide.",
+              },
+            ].map((card) => (
+              <div
+                key={card.title}
+                className="glass-strong p-6 rounded-2xl hover:border-orange-500/10 transition-all duration-300"
+              >
+                <h3 className="text-base font-semibold mb-3 text-white">{card.title}</h3>
+                <p className="text-sm text-gray-400 leading-relaxed">{card.text}</p>
+              </div>
+            ))}
+          </div>
+
+          <CountUpStats />
+
+          <div className="mt-16 pt-10 border-t border-white/[0.06]">
+            <h2 className="text-lg font-semibold text-white mb-6">Contact</h2>
+            <p className="text-sm text-gray-400">
+              General inquiries:{" "}
+              <a href="mailto:hello@inpromptify.com" className="text-orange-400 hover:text-orange-300 transition-colors">
+                hello@inpromptify.com
+              </a>
+            </p>
+            <div className="mt-8 flex flex-col sm:flex-row gap-3">
+              <Link href="/signup" className="glow-btn px-6 py-2.5 text-sm text-center">
+                Create Your First Assessment
+              </Link>
+              <Link href="/scoring" className="ghost-btn px-6 py-2.5 text-sm text-center">
+                How Scoring Works
+              </Link>
+            </div>
           </div>
         </div>
       </main>

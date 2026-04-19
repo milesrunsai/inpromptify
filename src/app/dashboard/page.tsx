@@ -22,7 +22,7 @@ interface CandidateRow {
   completedAt: string;
 }
 
-function Sparkline({ data, color = "#6366f1", width = 60, height = 20 }: { data: number[]; color?: string; width?: number; height?: number }) {
+function Sparkline({ data, color = "#f97316", width = 60, height = 20 }: { data: number[]; color?: string; width?: number; height?: number }) {
   const d = sparklinePath(data, width, height);
   return (
     <svg width={width} height={height} className="overflow-visible">
@@ -83,7 +83,7 @@ export default function DashboardHome() {
       {/* Getting Started — only for new users */}
       {!hasData && !loading && (
         <div className="mb-10 animate-fade-in-up">
-          <div className="bg-gradient-to-br from-indigo-600/10 to-violet-600/5 rounded-xl border border-indigo-500/20 p-8">
+          <div className="bg-gradient-to-br from-orange-500/10 to-orange-400/5 rounded-xl border border-orange-500/20 p-8">
             <h2 className="text-xl font-bold text-white mb-2">Get started with InpromptiFy</h2>
             <p className="text-sm text-gray-400 mb-8 max-w-lg">
               Set up your first assessment in under a minute. Measure how efficiently your team uses AI.
@@ -95,10 +95,10 @@ export default function DashboardHome() {
                 { step: "03", title: "Analyze Results", desc: "Get PromptScores with cost analytics. See who prompts efficiently and where money is being wasted.", cta: "Try Demo", href: "/test/demo", primary: false },
               ].map((item) => (
                 <div key={item.step} className="bg-[#0C1120] rounded-lg border border-white/[0.06] p-5 flex flex-col">
-                  <span className="text-[11px] font-mono text-indigo-400/60 mb-3">{item.step}</span>
+                  <span className="text-[11px] font-mono text-orange-400/60 mb-3">{item.step}</span>
                   <h3 className="text-sm font-semibold text-white mb-2">{item.title}</h3>
                   <p className="text-[13px] text-gray-500 leading-relaxed mb-4 flex-1">{item.desc}</p>
-                  <Link href={item.href} className={`text-[13px] font-medium px-4 py-2 rounded-md text-center transition-all ${item.primary ? "bg-indigo-600 hover:bg-indigo-500 text-white" : "bg-white/[0.04] hover:bg-white/[0.08] text-gray-400 border border-white/[0.06]"}`}>
+                  <Link href={item.href} className={`text-[13px] font-medium px-4 py-2 rounded-md text-center transition-all ${item.primary ? "bg-orange-500 hover:bg-orange-400 text-white" : "bg-white/[0.04] hover:bg-white/[0.08] text-gray-400 border border-white/[0.06]"}`}>
                     {item.cta}
                   </Link>
                 </div>
@@ -114,7 +114,7 @@ export default function DashboardHome() {
           <div key={stat.label} className={`${ds.card} p-4`}>
             <div className="flex items-start justify-between mb-3">
               <span className={ds.sectionLabel}>{stat.label}</span>
-              {stat.trend && <Sparkline data={stat.trend} color="#6366f1" />}
+              {stat.trend && <Sparkline data={stat.trend} color="#f97316" />}
             </div>
             <div className="flex items-end gap-3">
               {stat.isScore ? (
@@ -139,13 +139,13 @@ export default function DashboardHome() {
         <div className="flex items-center justify-between mb-4">
           <h2 className={ds.sectionTitle}>Recent Results</h2>
           {recentResults.length > 0 && (
-            <Link href="/dashboard/candidates" className="text-[12px] text-indigo-400 hover:text-indigo-300 font-medium transition-colors">View all</Link>
+            <Link href="/dashboard/candidates" className="text-[12px] text-orange-400 hover:text-orange-300 font-medium transition-colors">View all</Link>
           )}
         </div>
 
         {loading ? (
           <div className={`${ds.card} p-8 text-center`}>
-            <div className="animate-spin w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full mx-auto mb-3" />
+            <div className="animate-spin w-6 h-6 border-2 border-orange-500 border-t-transparent rounded-full mx-auto mb-3" />
             <p className="text-sm text-gray-500">Loading...</p>
           </div>
         ) : recentResults.length === 0 ? (
@@ -205,12 +205,12 @@ export default function DashboardHome() {
 
       {/* Upgrade Card (shown when user has some activity) */}
       {hasData && (
-        <div className="bg-gradient-to-r from-indigo-600/[0.08] to-violet-600/[0.04] rounded-xl border border-indigo-500/[0.12] p-6 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-orange-500/[0.08] to-orange-400/[0.04] rounded-xl border border-orange-500/[0.12] p-6 flex items-center justify-between">
           <div>
             <h3 className="text-sm font-semibold text-white mb-1">Unlock more assessments</h3>
             <p className="text-[13px] text-gray-500">Free plan: 5 tests, 25 candidates/month. Pro gives you unlimited everything.</p>
           </div>
-          <Link href="/dashboard/billing" className="shrink-0 ml-6 bg-indigo-600 hover:bg-indigo-500 text-white text-[13px] font-medium px-5 py-2.5 rounded-md transition-colors">
+          <Link href="/dashboard/billing" className="shrink-0 ml-6 bg-orange-500 hover:bg-orange-400 text-white text-[13px] font-medium px-5 py-2.5 rounded-md transition-colors">
             View Plans
           </Link>
         </div>

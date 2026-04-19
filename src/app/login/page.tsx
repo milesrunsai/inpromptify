@@ -31,23 +31,25 @@ export default function LoginPage() {
   const handleLinkedInLogin = () => { signIn("linkedin", { callbackUrl: "/dashboard" }); };
 
   return (
-    <div className="min-h-screen bg-[#0A0F1C] flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-[#0a0a0f] flex flex-col relative overflow-hidden">
       {/* Background effects */}
-      <div className="absolute inset-0 dot-grid opacity-20" />
+      <div className="absolute inset-0 dot-pattern opacity-20" />
 
       <div className="relative z-10 flex-1 flex items-center justify-center px-5 py-12">
         <div className="w-full max-w-sm animate-fade-in-up">
           {/* Logo */}
           <div className="text-center mb-8">
             <Link href="/" className="inline-flex items-center gap-0 group mb-6">
-              <span className="inline-flex items-center gap-2"><img src="/logo.png" alt="InpromptiFy" width={24} height={24} /><span className="font-semibold text-white text-lg">InpromptiFy</span></span>
+              <span className="text-lg font-bold tracking-tight text-white">
+                Inprompti<span className="gradient-text">Fy</span>
+              </span>
             </Link>
             <h1 className="text-2xl font-bold text-white mt-4">Welcome back</h1>
             <p className="text-gray-500 text-sm mt-2">Log in to your account</p>
           </div>
 
           {/* Card */}
-          <div className="bg-[#0C1120] rounded-xl border border-white/[0.06] p-6 shadow-2xl shadow-black/20">
+          <div className="bg-white/[0.03] rounded-xl border border-white/[0.06] p-6 shadow-2xl shadow-black/20">
             {/* OAuth buttons */}
             <div className="space-y-2.5 mb-5">
               <button
@@ -75,7 +77,7 @@ export default function LoginPage() {
 
             <div className="relative mb-5">
               <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/[0.06]" /></div>
-              <div className="relative flex justify-center text-xs"><span className="bg-[#0C1120] px-3 text-gray-600">or</span></div>
+              <div className="relative flex justify-center text-xs"><span className="bg-[#0a0a0f] px-3 text-gray-600">or</span></div>
             </div>
 
             {error && (
@@ -92,7 +94,7 @@ export default function LoginPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/40 transition-all"
+                  className="w-full bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 transition-all"
                   placeholder="you@company.com"
                 />
               </div>
@@ -103,14 +105,14 @@ export default function LoginPage() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/40 transition-all"
+                  className="w-full bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 transition-all"
                   placeholder="Your password"
                 />
               </div>
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 text-white py-2.5 rounded-md text-sm font-medium transition-all hover:shadow-lg hover:shadow-indigo-500/20 mt-1"
+                className="w-full bg-gradient-to-r from-orange-500 to-amber-500 disabled:opacity-60 text-white py-2.5 rounded-md text-sm font-medium transition-all hover:shadow-lg hover:shadow-orange-500/20 mt-1"
               >
                 {loading ? "Logging in..." : "Log in"}
               </button>
@@ -119,7 +121,7 @@ export default function LoginPage() {
 
           <p className="text-center text-sm text-gray-600 mt-6">
             Don&apos;t have an account?{" "}
-            <Link href="/signup" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">Sign up</Link>
+            <Link href="/signup" className="text-orange-400 hover:text-orange-300 font-medium transition-colors">Sign up</Link>
           </p>
         </div>
       </div>

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState, useRef } from "react";
 
@@ -36,10 +36,10 @@ export default function ScorePreview() {
   }, [visible]);
 
   const breakdowns = [
-    { label: "Output Quality", value: 92, color: "bg-indigo-500" },
-    { label: "Efficiency", value: 84, color: "bg-violet-500" },
-    { label: "Iteration Strategy", value: 88, color: "bg-indigo-400" },
-    { label: "Token Economy", value: 79, color: "bg-violet-400" },
+    { label: "Output Quality", value: 92, color: "bg-orange-400" },
+    { label: "Efficiency", value: 84, color: "bg-orange-400" },
+    { label: "Iteration Strategy", value: 88, color: "bg-orange-400" },
+    { label: "Token Economy", value: 79, color: "bg-orange-300" },
   ];
 
   return (
@@ -47,7 +47,7 @@ export default function ScorePreview() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <p className="text-[11px] text-gray-600 font-mono uppercase tracking-wider mb-1">PromptScore</p>
-          <p className="text-[11px] text-gray-600">Sarah Chen — Marketing Email Task</p>
+          <p className="text-[11px] text-gray-600">Sarah Chen � Marketing Email Task</p>
         </div>
         <div className="text-right">
           <span className="text-4xl font-bold text-white tabular-nums">{score}</span>
@@ -73,7 +73,7 @@ export default function ScorePreview() {
       </div>
 
       <div className="mt-5 pt-4 border-t border-white/[0.04] flex items-center justify-between text-[11px]">
-        <span className="text-gray-600 font-mono">3 attempts · 847 tokens · 6:12</span>
+        <span className="text-gray-600 font-mono">3 attempts � 847 tokens � 6:12</span>
         <span className="text-emerald-500 font-medium">Top 15%</span>
       </div>
     </div>

@@ -207,12 +207,12 @@ export default function DemoTestPage() {
     return (
       <div className="bg-[#0A0F1C] min-h-screen flex flex-col">
         <div className="flex items-center gap-3 px-6 py-4 border-b border-white/[0.06]">
-          <Link href="/" className="text-sm font-bold text-white hover:text-indigo-300 transition-colors">InpromptiFy</Link>
+          <Link href="/" className="text-sm font-bold text-white hover:text-orange-300 transition-colors">InpromptiFy</Link>
         </div>
         <div className="flex-1 flex items-center justify-center px-5">
           <div className="max-w-2xl w-full">
             <div className="text-center mb-8">
-              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Live Demo</p>
+              <p className="text-[11px] font-mono text-orange-400/70 uppercase tracking-wider mb-3">Live Demo</p>
               <h1 className="text-3xl font-bold text-white tracking-tight mb-3">AI Proficiency Assessment</h1>
               <p className="text-sm text-gray-500 max-w-md mx-auto">
                 Complete 3 real-world AI tasks. Your prompting skill, efficiency, and iteration strategy
@@ -224,7 +224,7 @@ export default function DemoTestPage() {
             <div className="space-y-3 mb-8">
               {STAGES.map((s, i) => (
                 <div key={s.id} className="bg-[#0C1120] border border-white/[0.06] rounded-lg px-5 py-3 flex items-center gap-4">
-                  <span className="text-[11px] font-mono text-indigo-400/60 w-6">{s.icon}</span>
+                  <span className="text-[11px] font-mono text-orange-400/60 w-6">{s.icon}</span>
                   <div className="flex-1">
                     <span className="text-sm text-white font-medium">{s.name}</span>
                     <span className="text-[11px] text-gray-600 ml-2">{s.maxAttempts} attempts, {s.timeLimitMinutes} min</span>
@@ -245,13 +245,13 @@ export default function DemoTestPage() {
                     onClick={() => setSelectedModel(m.id)}
                     className={`text-left border rounded-lg px-4 py-3 transition-all ${
                       selectedModel === m.id
-                        ? "border-indigo-500/40 bg-indigo-500/[0.06]"
+                        ? "border-orange-500/40 bg-orange-400/[0.06]"
                         : "border-white/[0.06] hover:border-white/[0.12]"
                     }`}
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-white font-medium">{m.name}</span>
-                      <span className="text-[10px] text-indigo-400/60 bg-indigo-500/10 px-1.5 py-0.5 rounded">{m.badge}</span>
+                      <span className="text-[10px] text-orange-400/60 bg-orange-400/10 px-1.5 py-0.5 rounded">{m.badge}</span>
                     </div>
                     <span className="text-[11px] text-gray-500">{m.provider}</span>
                   </button>
@@ -262,7 +262,7 @@ export default function DemoTestPage() {
             <div className="text-center">
               <button
                 onClick={startAssessment}
-                className="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-3 rounded-md text-sm font-medium transition-colors"
+                className="bg-orange-500 hover:bg-orange-400 text-white px-8 py-3 rounded-md text-sm font-medium transition-colors"
               >
                 Start Assessment
               </button>
@@ -316,14 +316,14 @@ export default function DemoTestPage() {
     return (
       <div className="bg-[#0A0F1C] min-h-screen flex flex-col">
         <div className="flex items-center gap-3 px-6 py-4 border-b border-white/[0.06]">
-          <Link href="/" className="text-sm font-bold text-white hover:text-indigo-300 transition-colors">InpromptiFy</Link>
+          <Link href="/" className="text-sm font-bold text-white hover:text-orange-300 transition-colors">InpromptiFy</Link>
           <span className="text-gray-600">|</span>
           <span className="text-sm text-gray-400">Assessment Complete</span>
         </div>
         <div className="flex-1 overflow-y-auto px-5 py-8">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-10">
-              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Your Results</p>
+              <p className="text-[11px] font-mono text-orange-400/70 uppercase tracking-wider mb-3">Your Results</p>
               <h1 className="text-4xl font-bold text-white tracking-tight mb-2">PromptScore</h1>
             </div>
 
@@ -331,12 +331,12 @@ export default function DemoTestPage() {
             <div className="bg-[#0C1120] border border-white/[0.06] rounded-xl p-8 mb-6">
               <div className="flex flex-col sm:flex-row items-center justify-center gap-8 mb-8">
                 <div className="text-center">
-                  <span className="text-7xl font-bold text-indigo-300">{overallScore}</span>
+                  <span className="text-7xl font-bold text-orange-300">{overallScore}</span>
                   <span className="text-2xl text-gray-600">/100</span>
                 </div>
                 <div className="flex items-center gap-6">
-                  <div className="border border-indigo-500/20 bg-indigo-500/[0.06] rounded-xl px-6 py-4 text-center">
-                    <span className="text-3xl font-bold text-indigo-300">{grade}</span>
+                  <div className="border border-orange-500/20 bg-orange-400/[0.06] rounded-xl px-6 py-4 text-center">
+                    <span className="text-3xl font-bold text-orange-300">{grade}</span>
                     <p className="text-[11px] text-gray-500 mt-1">Grade</p>
                   </div>
                   <div className="text-center">
@@ -360,7 +360,7 @@ export default function DemoTestPage() {
                       <span className="text-gray-500 font-mono">{dim.score}/100</span>
                     </div>
                     <div className="h-2 bg-white/[0.04] rounded-full overflow-hidden">
-                      <div className="h-full bg-indigo-500 rounded-full transition-all" style={{ width: `${dim.score}%` }} />
+                      <div className="h-full bg-orange-400 rounded-full transition-all" style={{ width: `${dim.score}%` }} />
                     </div>
                   </div>
                 ))}
@@ -376,11 +376,11 @@ export default function DemoTestPage() {
                       <div key={s.id} className="bg-white/[0.02] rounded-lg px-4 py-2.5">
                         <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <span className="text-[11px] font-mono text-indigo-400/60">{s.icon}</span>
+                          <span className="text-[11px] font-mono text-orange-400/60">{s.icon}</span>
                           <span className="text-sm text-white">{s.name}</span>
                         </div>
                         <div className="flex items-center gap-4 text-[12px] text-gray-500 font-mono">
-                          <span className={`font-semibold ${(r?.evaluation?.score || 0) >= 70 ? "text-indigo-300" : (r?.evaluation?.score || 0) >= 40 ? "text-indigo-400" : "text-indigo-500/60"}`}>
+                          <span className={`font-semibold ${(r?.evaluation?.score || 0) >= 70 ? "text-orange-300" : (r?.evaluation?.score || 0) >= 40 ? "text-orange-400" : "text-orange-500/60"}`}>
                             {r?.evaluation?.score ?? "—"}/100
                           </span>
                           <span>{r?.attemptsUsed || 0}/{s.maxAttempts} attempts</span>
@@ -404,8 +404,8 @@ export default function DemoTestPage() {
                 const totalPastes = integrityReports.reduce((s, r) => s + r.pasteCount, 0);
                 const totalTabSwitches = integrityReports.reduce((s, r) => s + r.tabSwitchCount, 0);
                 const allFlags = [...new Set(integrityReports.flatMap(r => r.flags))];
-                const integrityColor = avgIntegrity >= 80 ? "text-indigo-300" : avgIntegrity >= 50 ? "text-indigo-400" : "text-indigo-500/60";
-                const dependencyColor = avgDependency <= 20 ? "text-indigo-300" : avgDependency <= 50 ? "text-indigo-400" : "text-indigo-500/60";
+                const integrityColor = avgIntegrity >= 80 ? "text-orange-300" : avgIntegrity >= 50 ? "text-orange-400" : "text-orange-500/60";
+                const dependencyColor = avgDependency <= 20 ? "text-orange-300" : avgDependency <= 50 ? "text-orange-400" : "text-orange-500/60";
 
                 return (
                   <div className="border-t border-white/[0.06] pt-6 mt-6">
@@ -445,7 +445,7 @@ export default function DemoTestPage() {
                     {allFlags.length > 0 && (
                       <div className="flex flex-wrap gap-1.5">
                         {allFlags.map(flag => (
-                          <span key={flag} className="text-[10px] font-mono text-indigo-400/60 bg-indigo-500/[0.06] border border-indigo-500/10 px-2 py-0.5 rounded">
+                          <span key={flag} className="text-[10px] font-mono text-orange-400/60 bg-orange-400/[0.06] border border-orange-500/10 px-2 py-0.5 rounded">
                             {flag.replace(/_/g, " ")}
                           </span>
                         ))}
@@ -462,7 +462,7 @@ export default function DemoTestPage() {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
-              <Link href="/signup" className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors">
+              <Link href="/signup" className="inline-flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors">
                 Sign Up for Full Assessment
               </Link>
               <Link href="/certifications" className="inline-flex items-center justify-center text-gray-400 hover:text-gray-200 px-6 py-2.5 rounded-md text-sm transition-colors border border-white/[0.06] hover:border-white/[0.12]">
@@ -484,10 +484,10 @@ export default function DemoTestPage() {
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06] bg-[#0A0F1C]/95 backdrop-blur-xl">
         <div className="flex items-center gap-3">
-          <Link href="/" className="text-sm font-bold text-white hover:text-indigo-300 transition-colors">InpromptiFy</Link>
+          <Link href="/" className="text-sm font-bold text-white hover:text-orange-300 transition-colors">InpromptiFy</Link>
           <span className="text-gray-600">|</span>
           <span className="text-sm text-white font-medium">{stage.name}</span>
-          <span className="text-[10px] font-mono text-indigo-400/70 bg-indigo-500/10 px-2 py-0.5 rounded-full">LIVE</span>
+          <span className="text-[10px] font-mono text-orange-400/70 bg-orange-400/10 px-2 py-0.5 rounded-full">LIVE</span>
         </div>
 
         <div className="flex items-center gap-4 text-[13px]">
@@ -497,7 +497,7 @@ export default function DemoTestPage() {
               <div
                 key={i}
                 className={`w-2 h-2 rounded-full ${
-                  i < currentStage ? "bg-indigo-400" : i === currentStage ? "bg-indigo-500 animate-pulse" : "bg-white/[0.08]"
+                  i < currentStage ? "bg-orange-400" : i === currentStage ? "bg-orange-400 animate-pulse" : "bg-white/[0.08]"
                 }`}
               />
             ))}
@@ -506,14 +506,14 @@ export default function DemoTestPage() {
 
           <div className="h-4 w-px bg-white/[0.08]" />
 
-          <div className="text-gray-500">Attempts <span className={`font-mono font-bold ${attemptsLeft <= 1 ? "text-indigo-300 animate-pulse" : "text-white"}`}>{attemptsUsed}/{stage.maxAttempts}</span></div>
+          <div className="text-gray-500">Attempts <span className={`font-mono font-bold ${attemptsLeft <= 1 ? "text-orange-300 animate-pulse" : "text-white"}`}>{attemptsUsed}/{stage.maxAttempts}</span></div>
           <div className="text-gray-500">Tokens <span className="font-mono font-bold text-white">{tokensUsed}</span></div>
-          <div className="text-gray-500">Time <span className={`font-mono font-bold ${timeCritical ? "text-indigo-300 animate-pulse" : timeWarning ? "text-indigo-400" : "text-white"}`}>{formatTime(timeLeft)}</span></div>
+          <div className="text-gray-500">Time <span className={`font-mono font-bold ${timeCritical ? "text-orange-300 animate-pulse" : timeWarning ? "text-orange-400" : "text-white"}`}>{formatTime(timeLeft)}</span></div>
 
           <button
             onClick={finishStage}
             disabled={attemptsUsed === 0}
-            className="bg-indigo-600 hover:bg-indigo-500 disabled:bg-white/[0.04] disabled:text-gray-600 text-white px-3 py-1.5 rounded-md text-[12px] font-medium transition-colors"
+            className="bg-orange-500 hover:bg-orange-400 disabled:bg-white/[0.04] disabled:text-gray-600 text-white px-3 py-1.5 rounded-md text-[12px] font-medium transition-colors"
           >
             {currentStage < STAGES.length - 1 ? "Next Task" : "Finish"}
           </button>
@@ -524,8 +524,8 @@ export default function DemoTestPage() {
       <div ref={chatRef} className="flex-1 overflow-y-auto px-4 py-4">
         <div className="max-w-3xl mx-auto space-y-4">
           {/* Task Description */}
-          <div className="bg-indigo-500/[0.04] border border-indigo-500/10 rounded-lg p-5 mb-2">
-            <h2 className="text-sm font-semibold text-indigo-300 mb-2">Task: {stage.name}</h2>
+          <div className="bg-orange-400/[0.04] border border-orange-500/10 rounded-lg p-5 mb-2">
+            <h2 className="text-sm font-semibold text-orange-300 mb-2">Task: {stage.name}</h2>
             <p className="text-sm text-gray-400 leading-relaxed mb-3">{stage.description}</p>
             <p className="text-[12px] text-gray-500 italic"><strong className="text-gray-400">Tip:</strong> {stage.tip}</p>
           </div>
@@ -541,7 +541,7 @@ export default function DemoTestPage() {
             <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
               <div className={`max-w-[85%] rounded-lg px-4 py-3 ${
                 msg.role === "user"
-                  ? "bg-indigo-600/20 border border-indigo-500/20"
+                  ? "bg-orange-500/20 border border-orange-500/20"
                   : "bg-[#0C1120] border border-white/[0.06]"
               }`}>
                 <div className="flex items-center gap-2 mb-1">
@@ -559,9 +559,9 @@ export default function DemoTestPage() {
               <div className="bg-[#0C1120] border border-white/[0.06] rounded-lg px-4 py-3">
                 <div className="flex items-center gap-2">
                   <div className="flex gap-1">
-                    <span className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                    <span className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                    <span className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                    <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
                   </div>
                   <span className="text-[11px] text-gray-500">Thinking...</span>
                 </div>
@@ -570,9 +570,9 @@ export default function DemoTestPage() {
           )}
 
           {error && (
-            <div className="bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 rounded-lg px-4 py-2 text-sm">
+            <div className="bg-orange-400/10 border border-orange-500/20 text-orange-300 rounded-lg px-4 py-2 text-sm">
               {error}
-              <button onClick={() => setError(null)} className="ml-2 text-indigo-400 hover:text-indigo-300">dismiss</button>
+              <button onClick={() => setError(null)} className="ml-2 text-orange-400 hover:text-orange-300">dismiss</button>
             </div>
           )}
         </div>
@@ -588,12 +588,12 @@ export default function DemoTestPage() {
             onKeyDown={(e) => { integrity.onKeyDown(e); if (e.key === "Enter" && !e.shiftKey) handleSend(); }}
             disabled={sending || attemptsLeft <= 0}
             placeholder={attemptsLeft <= 0 ? `No attempts left — click "${currentStage < STAGES.length - 1 ? "Next Task" : "Finish"}"` : "Type your prompt... (Enter to send)"}
-            className="flex-1 bg-[#0C1120] border border-white/[0.06] rounded-md px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 focus:border-indigo-500/30 disabled:opacity-50"
+            className="flex-1 bg-[#0C1120] border border-white/[0.06] rounded-md px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 focus:border-orange-500/30 disabled:opacity-50"
           />
           <button
             onClick={handleSend}
             disabled={sending || !input.trim() || attemptsLeft <= 0}
-            className="bg-indigo-600 hover:bg-indigo-500 disabled:bg-white/[0.04] disabled:text-gray-600 text-white px-4 py-2.5 rounded-md text-sm font-medium transition-colors"
+            className="bg-orange-500 hover:bg-orange-400 disabled:bg-white/[0.04] disabled:text-gray-600 text-white px-4 py-2.5 rounded-md text-sm font-medium transition-colors"
           >
             Send
           </button>

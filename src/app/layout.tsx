@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     description: "Screen candidates for AI proficiency before you hire. Real tasks, real scoring, clear results.",
     url: "https://inpromptify.com",
     siteName: "InpromptiFy",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "InpromptiFy — AI Proficiency Assessment" }],
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "InpromptiFy — AI Proficiency Assessment" }],
     locale: "en_US",
     type: "website",
   },
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "InpromptiFy — AI Proficiency Assessment",
     description: "Measure how your team uses AI. Score prompting efficiency, identify skill gaps, and prove ROI.",
-    images: ["/og-image.png"],
+    images: ["/og-image.jpg"],
   },
   icons: {
     icon: [

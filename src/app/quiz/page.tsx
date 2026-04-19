@@ -51,7 +51,7 @@ export default function QuizPage() {
         <main className="bg-[#0A0F1C] min-h-screen">
           <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
             <div className="text-center mb-12">
-              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Free Assessment</p>
+              <p className="text-[11px] font-mono text-orange-400/70 uppercase tracking-wider mb-3">Free Assessment</p>
               <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4">
                 AI Fundamentals Quiz
               </h1>
@@ -82,7 +82,7 @@ export default function QuizPage() {
                 <ul className="grid grid-cols-2 gap-1 text-[13px]">
                   {["Prompt Engineering", "Model Selection", "Hallucination Awareness", "Ethical AI Use", "Chain-of-Thought", "RAG Concepts", "Few-Shot Prompting", "AI Limitations", "Temperature & Parameters", "When NOT to Use AI"].map((t) => (
                     <li key={t} className="flex items-center gap-1.5">
-                      <span className="w-1 h-1 rounded-full bg-indigo-500/60 shrink-0" />
+                      <span className="w-1 h-1 rounded-full bg-orange-400/60 shrink-0" />
                       {t}
                     </li>
                   ))}
@@ -91,7 +91,7 @@ export default function QuizPage() {
 
               <button
                 onClick={() => setStarted(true)}
-                className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-3 rounded-md text-sm font-medium transition-colors"
+                className="inline-flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white px-8 py-3 rounded-md text-sm font-medium transition-colors"
               >
                 Start Quiz
               </button>
@@ -104,8 +104,8 @@ export default function QuizPage() {
   }
 
   if (finished) {
-    const scoreColor = score >= 8 ? "text-indigo-300" : score >= 6 ? "text-indigo-400" : score >= 4 ? "text-indigo-400/70" : "text-indigo-500/50";
-    const gradeColor = score >= 8 ? "border-indigo-400/30 bg-indigo-500/[0.08]" : score >= 6 ? "border-indigo-500/25 bg-indigo-500/[0.06]" : score >= 4 ? "border-indigo-500/15 bg-indigo-500/[0.04]" : "border-indigo-600/10 bg-indigo-600/[0.02]";
+    const scoreColor = score >= 8 ? "text-orange-300" : score >= 6 ? "text-orange-400" : score >= 4 ? "text-orange-400/70" : "text-orange-500/50";
+    const gradeColor = score >= 8 ? "border-orange-400/30 bg-orange-400/[0.08]" : score >= 6 ? "border-orange-500/25 bg-orange-400/[0.06]" : score >= 4 ? "border-orange-500/15 bg-orange-400/[0.04]" : "border-indigo-600/10 bg-orange-500/[0.02]";
 
     return (
       <>
@@ -113,7 +113,7 @@ export default function QuizPage() {
         <main className="bg-[#0A0F1C] min-h-screen">
           <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
             <div className="text-center mb-8">
-              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Your Results</p>
+              <p className="text-[11px] font-mono text-orange-400/70 uppercase tracking-wider mb-3">Your Results</p>
               <h1 className="text-3xl font-bold text-white tracking-tight">
                 AI Fundamentals Score
               </h1>
@@ -152,7 +152,7 @@ export default function QuizPage() {
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <Link
                     href="/test/demo"
-                    className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors"
+                    className="inline-flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors"
                   >
                     Take the Full PromptScore Assessment
                   </Link>
@@ -181,18 +181,18 @@ export default function QuizPage() {
                 return (
                   <div key={q.id} className="bg-[#0C1120] border border-white/[0.06] rounded-lg p-5">
                     <div className="flex items-start gap-3 mb-2">
-                      <span className={`text-sm font-mono mt-0.5 ${isCorrect ? "text-indigo-300" : "text-indigo-500/50"}`}>
+                      <span className={`text-sm font-mono mt-0.5 ${isCorrect ? "text-orange-300" : "text-orange-500/50"}`}>
                         {isCorrect ? "✓" : "✗"}
                       </span>
                       <div>
                         <p className="text-sm text-white mb-1">{q.question}</p>
                         <p className="text-[12px] text-gray-600">
-                          Your answer: <span className={isCorrect ? "text-indigo-300" : "text-indigo-500/50"}>
+                          Your answer: <span className={isCorrect ? "text-orange-300" : "text-orange-500/50"}>
                             {answers[i] !== null ? q.options[answers[i]!] : "Not answered"}
                           </span>
                         </p>
                         {!isCorrect && (
-                          <p className="text-[12px] text-indigo-400/70 mt-0.5">
+                          <p className="text-[12px] text-orange-400/70 mt-0.5">
                             Correct: {q.options[q.correctIndex]}
                           </p>
                         )}
@@ -227,18 +227,18 @@ export default function QuizPage() {
               </span>
               <div className="w-32 h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-indigo-500 rounded-full transition-all duration-300"
+                  className="h-full bg-orange-400 rounded-full transition-all duration-300"
                   style={{ width: `${((currentQ + 1) / QUIZ_QUESTIONS.length) * 100}%` }}
                 />
               </div>
             </div>
-            <span className={`text-sm font-mono ${timeLeft <= 60 ? "text-indigo-300 animate-pulse" : "text-gray-500"}`}>
+            <span className={`text-sm font-mono ${timeLeft <= 60 ? "text-orange-300 animate-pulse" : "text-gray-500"}`}>
               {minutes}:{seconds.toString().padStart(2, "0")}
             </span>
           </div>
 
           {/* Category */}
-          <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">{q.category}</p>
+          <p className="text-[11px] font-mono text-orange-400/70 uppercase tracking-wider mb-3">{q.category}</p>
 
           {/* Question */}
           <h2 className="text-lg md:text-xl font-semibold text-white mb-6 leading-relaxed">
@@ -251,14 +251,14 @@ export default function QuizPage() {
               let optStyle = "border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.02]";
               if (showExplanation) {
                 if (i === q.correctIndex) {
-                  optStyle = "border-indigo-400/40 bg-indigo-500/[0.06]";
+                  optStyle = "border-orange-400/40 bg-orange-400/[0.06]";
                 } else if (i === selected && i !== q.correctIndex) {
-                  optStyle = "border-indigo-600/30 bg-indigo-600/[0.04]";
+                  optStyle = "border-indigo-600/30 bg-orange-500/[0.04]";
                 } else {
                   optStyle = "border-white/[0.04] opacity-50";
                 }
               } else if (selected === i) {
-                optStyle = "border-indigo-500/40 bg-indigo-500/[0.06]";
+                optStyle = "border-orange-500/40 bg-orange-400/[0.06]";
               }
 
               return (
@@ -269,7 +269,7 @@ export default function QuizPage() {
                   className={`w-full text-left border rounded-lg px-5 py-3.5 text-sm transition-all ${optStyle}`}
                 >
                   <span className="text-gray-500 font-mono mr-3">{String.fromCharCode(65 + i)}.</span>
-                  <span className={showExplanation && i === q.correctIndex ? "text-indigo-300" : "text-gray-300"}>
+                  <span className={showExplanation && i === q.correctIndex ? "text-orange-300" : "text-gray-300"}>
                     {opt}
                   </span>
                 </button>
@@ -285,7 +285,7 @@ export default function QuizPage() {
               </div>
               <button
                 onClick={nextQuestion}
-                className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors"
+                className="inline-flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors"
               >
                 {currentQ < QUIZ_QUESTIONS.length - 1 ? "Next Question" : "See Results"}
               </button>

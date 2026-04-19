@@ -100,7 +100,7 @@ export default function ContactPage() {
     }
   };
 
-  const inputClass = "w-full px-3 py-2 border border-white/[0.08] rounded-md text-sm bg-white/[0.04] text-white placeholder-gray-600 focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/40 focus:outline-none";
+  const inputClass = "w-full px-3 py-2 border border-white/[0.08] rounded-md text-sm bg-white/[0.04] text-white placeholder-gray-600 focus:ring-2 focus:ring-indigo-500/40 focus:border-orange-500/40 focus:outline-none";
 
   return (
     <>
@@ -171,7 +171,7 @@ export default function ContactPage() {
                     <div className="space-y-2">
                       {(Object.keys(PRICING.addOns) as AddOnKey[]).map((key) => (
                         <label key={key} className="flex items-center gap-3 cursor-pointer">
-                          <input type="checkbox" checked={addOns[key]} onChange={() => setAddOns({ ...addOns, [key]: !addOns[key] })} className="w-4 h-4 rounded border-white/[0.12] bg-white/[0.04] text-indigo-600 focus:ring-indigo-500" />
+                          <input type="checkbox" checked={addOns[key]} onChange={() => setAddOns({ ...addOns, [key]: !addOns[key] })} className="w-4 h-4 rounded border-white/[0.12] bg-white/[0.04] text-orange-500 focus:ring-indigo-500" />
                           <span className="text-sm text-gray-400">{PRICING.addOns[key].label}</span>
                           <span className="text-xs text-gray-600 ml-auto">${PRICING.addOns[key].price}/mo</span>
                         </label>
@@ -188,7 +188,7 @@ export default function ContactPage() {
                     <div className="text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-md px-3 py-2">{submitError}</div>
                   )}
 
-                  <button type="submit" disabled={submitting} className="w-full bg-indigo-600 text-white py-2.5 px-4 rounded-md text-sm font-medium hover:bg-indigo-500 disabled:opacity-50 transition-colors">
+                  <button type="submit" disabled={submitting} className="w-full bg-orange-500 text-white py-2.5 px-4 rounded-md text-sm font-medium hover:bg-orange-400 disabled:opacity-50 transition-colors">
                     {submitting ? "Submitting..." : "Request Enterprise Quote"}
                   </button>
                 </form>
@@ -202,7 +202,7 @@ export default function ContactPage() {
                   <h2 className="text-sm font-semibold text-white">Estimated pricing</h2>
                   <div className="flex items-center gap-2">
                     <span className={`text-xs ${!annual ? "text-white font-medium" : "text-gray-500"}`}>Monthly</span>
-                    <button onClick={() => setAnnual(!annual)} className={`relative w-8 h-4 rounded-full transition-colors ${annual ? "bg-indigo-600" : "bg-white/[0.12]"}`}>
+                    <button onClick={() => setAnnual(!annual)} className={`relative w-8 h-4 rounded-full transition-colors ${annual ? "bg-orange-500" : "bg-white/[0.12]"}`}>
                       <span className={`absolute top-0.5 left-0.5 w-3 h-3 bg-white rounded-full transition-transform shadow-sm ${annual ? "translate-x-4" : ""}`} />
                     </button>
                     <span className={`text-xs ${annual ? "text-white font-medium" : "text-gray-500"}`}>
@@ -260,12 +260,12 @@ export default function ContactPage() {
                   <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Volume discounts</h3>
                   <div className="space-y-1">
                     {PRICING.testTiers.slice(0, -1).map((tier, i) => (
-                      <div key={i} className={`flex justify-between text-xs ${tests <= tier.upTo && (i === 0 || tests > (PRICING.testTiers[i - 1]?.upTo || 0)) ? "text-indigo-400 font-medium" : "text-gray-600"}`}>
+                      <div key={i} className={`flex justify-between text-xs ${tests <= tier.upTo && (i === 0 || tests > (PRICING.testTiers[i - 1]?.upTo || 0)) ? "text-orange-400 font-medium" : "text-gray-600"}`}>
                         <span>Up to {tier.upTo.toLocaleString()} tests</span>
                         <span>${tier.perTest.toFixed(2)}/test</span>
                       </div>
                     ))}
-                    <div className={`flex justify-between text-xs ${tests > 25000 ? "text-indigo-400 font-medium" : "text-gray-600"}`}>
+                    <div className={`flex justify-between text-xs ${tests > 25000 ? "text-orange-400 font-medium" : "text-gray-600"}`}>
                       <span>25,000+ tests</span>
                       <span>$0.15/test</span>
                     </div>

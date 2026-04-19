@@ -56,7 +56,7 @@ export default function CertificationsPage() {
         <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
           {/* Header */}
           <div className="text-center mb-16">
-            <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Certifications</p>
+            <p className="text-[11px] font-mono text-orange-400/70 uppercase tracking-wider mb-3">Certifications</p>
             <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4">
               Prove your AI proficiency. Get certified.
             </h1>
@@ -102,7 +102,7 @@ export default function CertificationsPage() {
                       <ul className="space-y-1">
                         {tier.skills.map((skill) => (
                           <li key={skill} className="flex items-start gap-2 text-[13px] text-gray-500">
-                            <span className="text-indigo-400/60 mt-0.5 shrink-0">&#10003;</span>
+                            <span className="text-orange-400/60 mt-0.5 shrink-0">&#10003;</span>
                             {skill}
                           </li>
                         ))}
@@ -122,7 +122,7 @@ export default function CertificationsPage() {
             <h2 className="text-lg font-bold text-white mb-6 text-center">How This Is Different</h2>
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <h3 className="text-sm font-semibold text-indigo-500/60 mb-3 uppercase tracking-wider">Other certifications</h3>
+                <h3 className="text-sm font-semibold text-orange-500/60 mb-3 uppercase tracking-wider">Other certifications</h3>
                 <ul className="space-y-2 text-sm text-gray-500">
                   {[
                     "Multiple choice quizzes — easily gamed",
@@ -132,14 +132,14 @@ export default function CertificationsPage() {
                     "Static — pass once, credential lasts forever",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-2">
-                      <span className="text-indigo-500/40 mt-0.5 shrink-0">&times;</span>
+                      <span className="text-orange-500/40 mt-0.5 shrink-0">&times;</span>
                       {item}
                     </li>
                   ))}
                 </ul>
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-indigo-300 mb-3 uppercase tracking-wider">InpromptiFy Certifications</h3>
+                <h3 className="text-sm font-semibold text-orange-300 mb-3 uppercase tracking-wider">InpromptiFy Certifications</h3>
                 <ul className="space-y-2 text-sm text-gray-500">
                   {[
                     "Live task performance — real AI, real work",
@@ -149,7 +149,7 @@ export default function CertificationsPage() {
                     "Verifiable — employers click through to full score breakdown",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-2">
-                      <span className="text-indigo-400 mt-0.5 shrink-0">&#10003;</span>
+                      <span className="text-orange-400 mt-0.5 shrink-0">&#10003;</span>
                       {item}
                     </li>
                   ))}
@@ -167,7 +167,7 @@ export default function CertificationsPage() {
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 href="/test/demo"
-                className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors"
+                className="inline-flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors"
               >
                 Take the Assessment
               </Link>

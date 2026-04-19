@@ -100,7 +100,7 @@ export default async function VerifyPage({ params }: VerifyPageProps) {
         <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
           {/* Header */}
           <div className="text-center mb-10">
-            <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Verified Score</p>
+            <p className="text-[11px] font-mono text-orange-400/70 uppercase tracking-wider mb-3">Verified Score</p>
             <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-2">
               {data.user_name}
             </h1>
@@ -140,7 +140,7 @@ export default async function VerifyPage({ params }: VerifyPageProps) {
                   </div>
                   <div className="h-2 bg-white/[0.04] rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-indigo-500 rounded-full transition-all"
+                      className="h-full bg-orange-400 rounded-full transition-all"
                       style={{ width: `${Math.min(dimValues[i], 100)}%` }}
                     />
                   </div>
@@ -193,7 +193,7 @@ export default async function VerifyPage({ params }: VerifyPageProps) {
             <p className="text-sm text-gray-500 mb-4">Want to get your own PromptScore?</p>
             <a
               href="/test/demo"
-              className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors"
+              className="inline-flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors"
             >
               Take the Assessment
             </a>

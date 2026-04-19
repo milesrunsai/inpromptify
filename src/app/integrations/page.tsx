@@ -50,7 +50,7 @@ const INTEGRATIONS = [
 ];
 
 const STATUS_STYLES: Record<string, { label: string; style: string }> = {
-  api: { label: "API Ready", style: "text-indigo-300 bg-indigo-500/[0.08] border-indigo-400/20" },
+  api: { label: "API Ready", style: "text-orange-300 bg-orange-400/[0.08] border-orange-400/20" },
   webhook: { label: "Via Webhooks", style: "text-violet-400 bg-violet-500/[0.06] border-violet-500/15" },
   coming: { label: "Coming Soon", style: "text-gray-500 bg-white/[0.03] border-white/[0.06]" },
 };
@@ -63,7 +63,7 @@ export default function IntegrationsPage() {
         <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
           {/* Header */}
           <div className="text-center mb-16">
-            <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">Integrations</p>
+            <p className="text-[11px] font-mono text-orange-400/70 uppercase tracking-wider mb-3">Integrations</p>
             <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4">
               Connect InpromptiFy to your hiring stack
             </h1>
@@ -132,7 +132,7 @@ export default function IntegrationsPage() {
             <div className="space-y-6">
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[10px] font-bold text-indigo-300 bg-indigo-500/10 px-1.5 py-0.5 rounded">1. CREATE</span>
+                  <span className="text-[10px] font-bold text-orange-300 bg-orange-400/10 px-1.5 py-0.5 rounded">1. CREATE</span>
                   <code className="text-sm text-white">POST /api/v1/tests/create</code>
                 </div>
                 <pre className="bg-white/[0.02] rounded-md p-3 text-[12px] text-gray-400 overflow-x-auto">{`curl -X POST https://inpromptify.com/api/v1/tests/create \\
@@ -199,7 +199,7 @@ export default function IntegrationsPage() {
                 { event: "test.completed", desc: "Fired when all invited candidates have completed an assessment" },
               ].map((evt) => (
                 <div key={evt.event} className="flex items-start gap-4 bg-white/[0.02] rounded-lg px-4 py-3">
-                  <code className="text-[12px] font-mono text-indigo-400 shrink-0 mt-0.5">{evt.event}</code>
+                  <code className="text-[12px] font-mono text-orange-400 shrink-0 mt-0.5">{evt.event}</code>
                   <p className="text-[13px] text-gray-500">{evt.desc}</p>
                 </div>
               ))}
@@ -227,7 +227,7 @@ if (signature === request.headers["x-inpromptify-signature"].replace("sha256=", 
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 href="/signup"
-                className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors"
+                className="inline-flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors"
               >
                 Get API Access
               </Link>

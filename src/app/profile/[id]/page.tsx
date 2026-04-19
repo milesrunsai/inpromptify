@@ -30,15 +30,15 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
       .finally(() => setLoading(false));
   }, [id]);
 
-  const scoreColor = (s: number) => s >= 80 ? "text-emerald-400" : s >= 65 ? "text-indigo-400" : s >= 50 ? "text-amber-400" : "text-red-400";
-  const scoreBg = (s: number) => s >= 80 ? "bg-emerald-500" : s >= 65 ? "bg-indigo-500" : s >= 50 ? "bg-amber-500" : "bg-red-500";
+  const scoreColor = (s: number) => s >= 80 ? "text-emerald-400" : s >= 65 ? "text-orange-400" : s >= 50 ? "text-amber-400" : "text-red-400";
+  const scoreBg = (s: number) => s >= 80 ? "bg-emerald-500" : s >= 65 ? "bg-orange-400" : s >= 50 ? "bg-amber-500" : "bg-red-500";
 
   if (loading) {
     return (
       <>
         <Nav transparent />
         <main className="min-h-screen bg-[#0A0F1C] flex items-center justify-center">
-          <div className="animate-spin w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full" />
+          <div className="animate-spin w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full" />
         </main>
       </>
     );
@@ -51,7 +51,7 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
         <main className="min-h-screen bg-[#0A0F1C] flex items-center justify-center">
           <div className="text-center">
             <p className="text-gray-500 text-sm mb-4">Profile not found</p>
-            <Link href="/" className="text-sm text-indigo-400 font-medium">Back to Home</Link>
+            <Link href="/" className="text-sm text-orange-400 font-medium">Back to Home</Link>
           </div>
         </main>
       </>
@@ -74,7 +74,7 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
               {profile.avatar_url ? (
                 <img src={profile.avatar_url} alt={profile.name} className="w-16 h-16 rounded-full object-cover" />
               ) : (
-                <div className="w-16 h-16 rounded-full bg-indigo-600 flex items-center justify-center text-xl font-bold text-white">
+                <div className="w-16 h-16 rounded-full bg-orange-500 flex items-center justify-center text-xl font-bold text-white">
                   {profile.name.charAt(0)}
                 </div>
               )}
@@ -83,14 +83,14 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
                 {profile.bio && <p className="text-sm text-gray-400 mt-1">{profile.bio}</p>}
                 <p className="text-xs text-gray-600 mt-1">Member since {new Date(profile.created_at).toLocaleDateString("en-US", { month: "long", year: "numeric" })}</p>
                 {profile.linkedin_url && (
-                  <a href={profile.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-xs text-indigo-400 hover:text-indigo-300 font-medium mt-1 inline-block">LinkedIn</a>
+                  <a href={profile.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-xs text-orange-400 hover:text-orange-300 font-medium mt-1 inline-block">LinkedIn</a>
                 )}
               </div>
             </div>
 
             {profile.prompt_score != null && profile.prompt_score > 0 && (
               <div className="text-center">
-                <div className={`w-20 h-20 rounded-full border-[3px] flex flex-col items-center justify-center ${profile.prompt_score >= 80 ? "border-emerald-500" : profile.prompt_score >= 65 ? "border-indigo-500" : profile.prompt_score >= 50 ? "border-amber-500" : "border-red-500"}`}>
+                <div className={`w-20 h-20 rounded-full border-[3px] flex flex-col items-center justify-center ${profile.prompt_score >= 80 ? "border-emerald-500" : profile.prompt_score >= 65 ? "border-orange-500" : profile.prompt_score >= 50 ? "border-amber-500" : "border-red-500"}`}>
                   <span className={`text-2xl font-extrabold ${scoreColor(profile.prompt_score)}`}>{profile.prompt_score}</span>
                   <span className={`text-[10px] font-semibold ${scoreColor(profile.prompt_score)}`}>{grade}</span>
                 </div>
@@ -138,7 +138,7 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
                     <tr key={i} className="border-b border-white/[0.03] last:border-0 hover:bg-white/[0.02]">
                       <td className="py-2.5 px-5 font-medium text-white">
                         {test.attemptId ? (
-                          <Link href={`/score/${test.attemptId}`} className="hover:text-indigo-400 transition-colors">{test.testName}</Link>
+                          <Link href={`/score/${test.attemptId}`} className="hover:text-orange-400 transition-colors">{test.testName}</Link>
                         ) : test.testName}
                       </td>
                       <td className="py-2.5 px-4 text-center">
@@ -158,7 +158,7 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
           )}
 
           {/* Verified badge CTA */}
-          <div className="mt-10 bg-gradient-to-r from-indigo-600/[0.06] to-violet-600/[0.03] rounded-xl border border-indigo-500/[0.1] p-6 text-center">
+          <div className="mt-10 bg-gradient-to-r from-indigo-600/[0.06] to-violet-600/[0.03] rounded-xl border border-orange-500/[0.1] p-6 text-center">
             <h3 className="text-sm font-semibold text-white mb-1">Verified AI Proficiency</h3>
             <p className="text-[13px] text-gray-500 mb-0.5">PromptScore assessments are timed, sandboxed, and monitored.</p>
             <p className="text-[11px] text-gray-600">Scores cannot be faked or self-reported.</p>

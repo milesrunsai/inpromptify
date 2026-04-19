@@ -275,7 +275,7 @@ export default function TestSandboxPage({
         <div className="h-screen flex items-center justify-center bg-[#0A0F1C]">
           <div className="text-center">
             <p className="text-red-400 text-sm mb-4">{error}</p>
-            <Link href="/" className="text-sm text-indigo-400">Back to Home</Link>
+            <Link href="/" className="text-sm text-orange-400">Back to Home</Link>
           </div>
         </div>
       );
@@ -322,7 +322,7 @@ export default function TestSandboxPage({
                 { name: "Iteration IQ", weight: "15%", desc: "How effectively you refine and improve between attempts." },
               ].map((d) => (
                 <div key={d.name} className="flex items-start gap-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.04]">
-                  <span className="text-[12px] font-mono text-indigo-400 shrink-0 w-10 text-right">{d.weight}</span>
+                  <span className="text-[12px] font-mono text-orange-400 shrink-0 w-10 text-right">{d.weight}</span>
                   <div>
                     <span className="text-[13px] font-medium text-white">{d.name}</span>
                     <p className="text-[12px] text-gray-500 mt-0.5">{d.desc}</p>
@@ -348,7 +348,7 @@ export default function TestSandboxPage({
           </div>
 
           <div className="text-center">
-            <button onClick={startTest} className="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-3 rounded-lg text-sm font-semibold transition-colors">
+            <button onClick={startTest} className="bg-orange-500 hover:bg-orange-400 text-white px-8 py-3 rounded-lg text-sm font-semibold transition-colors">
               Start Assessment
             </button>
             <p className="text-[11px] text-gray-600 mt-3">Timer begins when you click start.</p>
@@ -371,7 +371,7 @@ export default function TestSandboxPage({
             <span className="text-sm font-medium text-white truncate">{test.title}</span>
             <span className="text-xs text-gray-600 ml-2">{modelLabel}</span>
           </div>
-          <button onClick={() => setShowMobileTask(!showMobileTask)} className="md:hidden text-xs text-indigo-400 font-medium px-2 py-1 rounded border border-indigo-500/20 hover:bg-indigo-500/10">
+          <button onClick={() => setShowMobileTask(!showMobileTask)} className="md:hidden text-xs text-orange-400 font-medium px-2 py-1 rounded border border-orange-500/20 hover:bg-orange-400/10">
             {showMobileTask ? "Chat" : "Task"}
           </button>
         </div>
@@ -440,8 +440,8 @@ export default function TestSandboxPage({
                 <p className="text-sm text-gray-500 leading-relaxed mb-5">{test.expected_outcomes}</p>
               </>
             )}
-            <div className="mt-5 p-3 bg-indigo-500/[0.06] rounded-md border border-indigo-500/[0.12]">
-              <p className="text-xs text-indigo-400/80 leading-relaxed">
+            <div className="mt-5 p-3 bg-orange-400/[0.06] rounded-md border border-orange-500/[0.12]">
+              <p className="text-xs text-orange-400/80 leading-relaxed">
                 <strong>Tip:</strong> Write clear, specific prompts. Include context about your target audience, desired format, and constraints. Quality over quantity — fewer well-crafted prompts score higher.
               </p>
             </div>
@@ -454,8 +454,8 @@ export default function TestSandboxPage({
             {messages.length === 0 && (
               <div className="flex items-center justify-center h-full">
                 <div className="text-center max-w-xs">
-                  <div className="w-12 h-12 rounded-full bg-indigo-500/10 flex items-center justify-center mx-auto mb-3">
-                    <svg className="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <div className="w-12 h-12 rounded-full bg-orange-400/10 flex items-center justify-center mx-auto mb-3">
+                    <svg className="w-6 h-6 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
                     </svg>
                   </div>
@@ -466,7 +466,7 @@ export default function TestSandboxPage({
             )}
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                <div className={`max-w-[85%] sm:max-w-[80%] rounded-lg px-4 py-2.5 ${msg.role === "user" ? "bg-indigo-600 text-white" : "bg-[#0C1120] border border-white/[0.06] text-gray-300"}`}>
+                <div className={`max-w-[85%] sm:max-w-[80%] rounded-lg px-4 py-2.5 ${msg.role === "user" ? "bg-orange-500 text-white" : "bg-[#0C1120] border border-white/[0.06] text-gray-300"}`}>
                   {msg.role === "assistant" && <span className="text-[10px] font-medium text-gray-600 block mb-1">{modelLabel}</span>}
                   <div className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</div>
                 </div>
@@ -517,9 +517,9 @@ export default function TestSandboxPage({
                   placeholder={sandboxState === "submitting" ? "Scoring in progress..." : "Type your prompt... (Enter to send, Shift+Enter for new line)"}
                   disabled={isDisabled || isTyping}
                   rows={1}
-                  className="flex-1 bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/40 disabled:opacity-40 resize-none"
+                  className="flex-1 bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-orange-500/40 disabled:opacity-40 resize-none"
                 />
-                <button onClick={sendMessage} disabled={!input.trim() || isTyping || isDisabled} className="bg-indigo-600 hover:bg-indigo-500 disabled:bg-white/[0.04] disabled:text-gray-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors shrink-0">
+                <button onClick={sendMessage} disabled={!input.trim() || isTyping || isDisabled} className="bg-orange-500 hover:bg-orange-400 disabled:bg-white/[0.04] disabled:text-gray-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors shrink-0">
                   {isTyping ? <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg> : "Send"}
                 </button>
               </div>

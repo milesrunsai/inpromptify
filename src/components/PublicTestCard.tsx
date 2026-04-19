@@ -56,7 +56,7 @@ export default function PublicTestCard({ test }: { test: PublicTest }) {
             )}
           </div>
 
-          <h3 className="text-[15px] font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors line-clamp-1">
+          <h3 className="text-[15px] font-semibold text-gray-900 mb-1 group-hover:text-orange-500 transition-colors line-clamp-1">
             {test.title}
           </h3>
 
@@ -65,7 +65,7 @@ export default function PublicTestCard({ test }: { test: PublicTest }) {
           )}
 
           {test.listing_type === "job" && test.company_name && (
-            <div className="text-[11px] text-indigo-600 font-medium mb-2">
+            <div className="text-[11px] text-orange-500 font-medium mb-2">
               {test.company_name}
               {test.location && <span className="text-gray-400 font-normal"> · {test.location}</span>}
               {test.salary_range && <span className="text-gray-400 font-normal"> · {test.salary_range}</span>}

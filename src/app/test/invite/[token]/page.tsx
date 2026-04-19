@@ -76,7 +76,7 @@ export default function InvitePage({ params }: { params: Promise<{ token: string
           </div>
           <h1 className="text-lg font-bold text-white mb-2">Invalid Invite</h1>
           <p className="text-sm text-gray-500 mb-6">{error}</p>
-          <Link href="/" className="text-sm text-indigo-400 hover:text-indigo-300 font-medium">Go to InpromptiFy</Link>
+          <Link href="/" className="text-sm text-orange-400 hover:text-orange-300 font-medium">Go to InpromptiFy</Link>
         </div>
       </div>
     );
@@ -100,7 +100,7 @@ export default function InvitePage({ params }: { params: Promise<{ token: string
           {/* Invite Card */}
           <div className="bg-[#0C1120] rounded-xl border border-white/[0.06] p-8 shadow-2xl shadow-black/20">
             <div className="text-center mb-6">
-              <p className="text-[11px] font-mono text-indigo-400/70 uppercase tracking-wider mb-3">AI Skills Assessment</p>
+              <p className="text-[11px] font-mono text-orange-400/70 uppercase tracking-wider mb-3">AI Skills Assessment</p>
               <h1 className="text-xl font-bold text-white mb-2">{invite.title}</h1>
               {invite.description && (
                 <p className="text-sm text-gray-500 leading-relaxed">{invite.description}</p>
@@ -135,7 +135,7 @@ export default function InvitePage({ params }: { params: Promise<{ token: string
                   type="text"
                   value={name}
                   onChange={(e) => { setName(e.target.value); setError(""); }}
-                  className="w-full bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/40 transition-all"
+                  className="w-full bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-orange-500/40 transition-all"
                   placeholder="Jane Doe"
                 />
               </div>
@@ -145,7 +145,7 @@ export default function InvitePage({ params }: { params: Promise<{ token: string
                   type="email"
                   value={email}
                   onChange={(e) => { setEmail(e.target.value); setError(""); }}
-                  className="w-full bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/40 transition-all"
+                  className="w-full bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-orange-500/40 transition-all"
                   placeholder="you@company.com"
                 />
               </div>
@@ -154,7 +154,7 @@ export default function InvitePage({ params }: { params: Promise<{ token: string
             <button
               onClick={handleStart}
               disabled={starting}
-              className="w-full bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 text-white py-3 rounded-md text-sm font-medium transition-all hover:shadow-lg hover:shadow-indigo-500/20"
+              className="w-full bg-orange-500 hover:bg-orange-400 disabled:opacity-60 text-white py-3 rounded-md text-sm font-medium transition-all hover:shadow-lg hover:shadow-orange-500/20"
             >
               {starting ? "Starting..." : "Begin Assessment"}
             </button>

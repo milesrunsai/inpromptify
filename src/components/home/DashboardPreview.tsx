@@ -1,4 +1,4 @@
-﻿export default function DashboardPreview() {
+export default function DashboardPreview() {
   const candidates = [
     { rank: 1, name: "Sarah Chen", score: 87, attempts: 3, tokens: 847, time: "6:12", badge: "Top 15%" },
     { rank: 2, name: "Marcus Rivera", score: 82, attempts: 4, tokens: 1203, time: "8:45", badge: "Top 25%" },
@@ -17,7 +17,7 @@
         </div>
         <div className="flex items-center gap-2 text-[11px] text-gray-600">
           <span className="hidden sm:inline">Sort by: Score</span>
-          <span className="text-gray-700">▾</span>
+          <span className="text-gray-700">?</span>
         </div>
       </div>
 
@@ -37,12 +37,12 @@
         <div
           key={c.rank}
           className={`grid grid-cols-[2rem_1fr_4rem] sm:grid-cols-[2rem_1fr_4rem_4rem_4.5rem_4rem_5rem] gap-3 px-5 py-2.5 text-[12px] items-center border-b border-white/[0.02] last:border-0 ${
-            c.rank === 1 ? "bg-indigo-600/[0.04]" : "hover:bg-white/[0.01]"
+            c.rank === 1 ? "bg-orange-500/[0.04]" : "hover:bg-white/[0.01]"
           } transition-colors`}
         >
           <span className="text-gray-600 font-mono text-[11px]">{c.rank}</span>
           <span className="text-gray-300 font-medium truncate">{c.name}</span>
-          <span className={`text-right font-mono font-medium ${c.score >= 80 ? "text-indigo-400" : c.score >= 70 ? "text-gray-300" : "text-gray-500"}`}>
+          <span className={`text-right font-mono font-medium ${c.score >= 80 ? "text-orange-400" : c.score >= 70 ? "text-gray-300" : "text-gray-500"}`}>
             {c.score}
           </span>
           <span className="hidden sm:block text-right text-gray-500 font-mono">{c.attempts}</span>

@@ -84,14 +84,14 @@ export default function TestLandingPage({ params }: { params: Promise<{ id: stri
       <div className="min-h-screen bg-[#0A0F1C] flex items-center justify-center">
         <div className="text-center">
           <p className="text-gray-500 text-sm mb-4">{error || "Test not found"}</p>
-          <Link href="/" className="text-sm text-indigo-400 hover:text-indigo-300 font-medium">Back to Home</Link>
+          <Link href="/" className="text-sm text-orange-400 hover:text-orange-300 font-medium">Back to Home</Link>
         </div>
       </div>
     );
   }
 
   const modelLabel = test.model === "gpt-4o" ? "GPT-4o" : test.model === "claude" ? "Claude" : test.model === "gemini" ? "Gemini" : test.model;
-  const inputClass = "w-full border border-white/[0.08] rounded-md px-3 py-2 text-sm bg-white/[0.04] text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/40";
+  const inputClass = "w-full border border-white/[0.08] rounded-md px-3 py-2 text-sm bg-white/[0.04] text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-orange-500/40";
 
   return (
     <div className="min-h-screen bg-[#0A0F1C]">
@@ -181,7 +181,7 @@ export default function TestLandingPage({ params }: { params: Promise<{ id: stri
               <label htmlFor="email" className="block text-xs font-medium text-gray-500 mb-1">Email Address *</label>
               <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputClass} placeholder="you@example.com" />
             </div>
-            <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-center py-2.5 rounded-md text-sm font-medium transition-colors">
+            <button type="submit" className="w-full bg-orange-500 hover:bg-orange-400 text-white text-center py-2.5 rounded-md text-sm font-medium transition-colors">
               Start Test
             </button>
           </form>

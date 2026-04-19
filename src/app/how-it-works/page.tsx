@@ -21,7 +21,7 @@ export default function HowItWorksPage() {
         {/* For Test Creators */}
         <section className="border-b border-white/[0.06]">
           <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20">
-            <p className="text-sm font-medium text-indigo-400 mb-3 uppercase tracking-wide">For test creators</p>
+            <p className="text-sm font-medium text-orange-400 mb-3 uppercase tracking-wide">For test creators</p>
             <h2 className="text-2xl font-bold text-white mb-10">Set up an assessment in under five minutes</h2>
 
             <div className="space-y-12">
@@ -46,7 +46,7 @@ export default function HowItWorksPage() {
                 },
               ].map((item) => (
                 <div key={item.step} className="flex gap-6 items-start">
-                  <div className="w-8 h-8 bg-indigo-600 text-white rounded-md flex items-center justify-center font-bold text-sm shrink-0">{item.step}</div>
+                  <div className="w-8 h-8 bg-orange-500 text-white rounded-md flex items-center justify-center font-bold text-sm shrink-0">{item.step}</div>
                   <div>
                     <h3 className="text-base font-semibold text-white mb-2">{item.title}</h3>
                     <p className="text-sm text-gray-400 mb-4 leading-relaxed">{item.description}</p>
@@ -136,7 +136,7 @@ export default function HowItWorksPage() {
             <h2 className="text-2xl font-bold text-white mb-4">Ready to try it?</h2>
             <p className="text-gray-400 mb-8">Create your first assessment in under five minutes, or take a sample test to see the candidate experience.</p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <Link href="/signup" className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-md font-medium text-sm transition-colors">
+              <Link href="/signup" className="inline-flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white px-6 py-3 rounded-md font-medium text-sm transition-colors">
                 Sign up free
               </Link>
               <Link href="/test/demo" className="inline-flex items-center justify-center border border-white/[0.08] text-gray-300 hover:text-white hover:border-white/[0.16] px-6 py-3 rounded-md font-medium text-sm transition-colors">
