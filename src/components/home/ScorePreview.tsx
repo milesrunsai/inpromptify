@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState, useRef } from "react";
 
@@ -47,7 +47,7 @@ export default function ScorePreview() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <p className="text-[11px] text-gray-600 font-mono uppercase tracking-wider mb-1">PromptScore</p>
-          <p className="text-[11px] text-gray-600">Sarah Chen · Marketing Email Task</p>
+          <p className="text-[11px] text-gray-600">Sarah Chen — Marketing Email Task</p>
         </div>
         <div className="text-right">
           <span className="text-4xl font-bold text-white tabular-nums">{score}</span>

@@ -1,4 +1,4 @@
-export default function DashboardPreview() {
+﻿export default function DashboardPreview() {
   const candidates = [
     { rank: 1, name: "Sarah Chen", score: 87, attempts: 3, tokens: 847, time: "6:12", badge: "Top 15%" },
     { rank: 2, name: "Marcus Rivera", score: 82, attempts: 4, tokens: 1203, time: "8:45", badge: "Top 25%" },
@@ -17,7 +17,7 @@ export default function DashboardPreview() {
         </div>
         <div className="flex items-center gap-2 text-[11px] text-gray-600">
           <span className="hidden sm:inline">Sort by: Score</span>
-          <span className="text-gray-700">↓</span>
+          <span className="text-gray-700">▾</span>
         </div>
       </div>
 
