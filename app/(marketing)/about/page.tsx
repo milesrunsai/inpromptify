@@ -212,29 +212,57 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Origin */}
-        <div className="mt-24 max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white">
-            Built in Australia. Bootstrapped. No VC pressure.
-          </h2>
-          <div className="mt-6 space-y-4 text-gray-400 leading-relaxed">
-            <p>
-              InpromptiFy was started by a 19-year-old Australian entrepreneur who watched the
-              AI revolution unfold and noticed something everyone else missed: companies were
-              adopting AI tools at record speed, but nobody was measuring whether their people
-              could actually use them.
-            </p>
-            <p>
-              The statistics were alarming. AI was taking over tasks across every industry. But
-              the jobs being replaced were not the ones where people used AI well. They were the
-              ones where people did not know how to use it at all. The divide between AI-proficient
-              and AI-illiterate workers was growing faster than any training program could close it.
-            </p>
-            <p>
-              InpromptiFy exists to close that gap. Not with another course or certification mill,
-              but with a rigorous, adaptive assessment engine that tells you exactly where your
-              team stands and what they need to improve.
-            </p>
+        {/* Founder */}
+        <div className="mt-24">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="relative aspect-[3/4] max-w-sm mx-auto lg:mx-0 rounded-2xl overflow-hidden">
+              <img
+                src="/miles.jpg"
+                alt="Miles Cass, Founder of InpromptiFy"
+                className="w-full h-full object-cover rounded-2xl"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <h3 className="text-lg font-bold text-white">Miles Cass</h3>
+                <p className="text-sm text-gray-400">Founder and CEO</p>
+                <p className="text-xs text-white/30 mt-1">Perth, Western Australia</p>
+              </div>
+            </div>
+            <div>
+              <span className="section-label">[ The Founder ]</span>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mt-2">
+                Built by someone who lives in AI.
+              </h2>
+              <div className="mt-6 space-y-4 text-gray-400 leading-relaxed">
+                <p>
+                  I am Miles Cass from Perth, Western Australia. I spend 17 hours a day on my
+                  computer building with AI. Not browsing. Not scrolling. Building.
+                </p>
+                <p>
+                  I started using AI in high school and went full time the day I graduated at 18.
+                  While my mates were figuring out uni applications, I was deep in prompt
+                  engineering, testing every model that launched, breaking things, learning what
+                  actually works and what is just hype.
+                </p>
+                <p>
+                  The idea for InpromptiFy came from watching the gap widen. Companies were spending
+                  massive budgets on AI tools, but their employees could barely write a decent prompt.
+                  Older workers were stuck on ChatGPT because nobody showed them there were better
+                  options for their specific tasks. New hires claimed "AI proficiency" on their
+                  resumes with nothing to back it up.
+                </p>
+                <p>
+                  I am building InpromptiFy to change that. To measure, test, compare, and benchmark
+                  AI proficiency across every industry. To set the standard that tells employers
+                  exactly how capable their team is with AI. And to make sure the next generation of
+                  employees does not just use AI, but uses it well.
+                </p>
+                <p>
+                  No VC money. No board meetings. No one telling me to water it down. Just relentless
+                  focus on building the most accurate AI proficiency assessment on the market.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
