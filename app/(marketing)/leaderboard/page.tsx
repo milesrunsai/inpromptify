@@ -51,7 +51,7 @@ export default function LeaderboardPage() {
   }, [timeRange]);
 
   return (
-    <div className="min-h-screen pt-24 pb-16">
+    <div className="min-h-screen pt-24 pb-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="text-center mb-12">
@@ -91,7 +91,7 @@ export default function LeaderboardPage() {
           ].map((stat) => (
             <div key={stat.label} className="bg-white/[0.03] border border-white/[0.08] rounded-xl p-4 text-center">
               <div className="text-2xl font-bold gradient-text">{stat.value}</div>
-              <div className="text-xs text-white/40 mt-1">{stat.label}</div>
+              <div className="text-xs sm:text-sm text-white/40 mt-1">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -120,8 +120,8 @@ export default function LeaderboardPage() {
           </div>
         ) : (
           <div className="space-y-2">
-            {/* Header row */}
-            <div className="grid grid-cols-12 gap-4 px-4 py-2 text-xs text-white/40 uppercase tracking-wider">
+            {/* Header row — hidden on mobile */}
+            <div className="hidden sm:grid grid-cols-12 gap-4 px-4 py-2 text-xs text-white/40 uppercase tracking-wider">
               <div className="col-span-1">Rank</div>
               <div className="col-span-4">User</div>
               <div className="col-span-2">Score</div>
@@ -132,28 +132,49 @@ export default function LeaderboardPage() {
             {entries.map((entry) => (
               <div
                 key={`${entry.rank}-${entry.name}`}
-                className="bg-white/[0.03] border border-white/[0.08] rounded-xl grid grid-cols-12 gap-4 px-4 py-4 items-center hover:border-orange-500/10 transition-all"
+                className="bg-white/[0.03] border border-white/[0.08] rounded-xl hover:border-orange-500/10 transition-all"
               >
-                <div className="col-span-1">
-                  <span className={`inline-flex items-center justify-center w-8 h-8 rounded-lg border text-sm font-bold ${getRankBadge(entry.rank)}`}>
+                {/* Desktop: grid row */}
+                <div className="hidden sm:grid grid-cols-12 gap-4 px-4 py-4 items-center">
+                  <div className="col-span-1">
+                    <span className={`inline-flex items-center justify-center w-8 h-8 rounded-lg border text-sm font-bold ${getRankBadge(entry.rank)}`}>
+                      {entry.rank}
+                    </span>
+                  </div>
+                  <div className="col-span-4">
+                    <span className="text-sm font-medium text-white">{entry.name}</span>
+                    <span className="block text-xs text-white/40">{entry.role}</span>
+                  </div>
+                  <div className="col-span-2">
+                    <span className={`text-lg font-bold tabular-nums ${getScoreColor(entry.score)}`}>
+                      {entry.score}
+                    </span>
+                    <span className="text-xs text-white/40"> / 100</span>
+                  </div>
+                  <div className="col-span-2">
+                    <span className="text-xs text-white/50">{getScoreLabel(entry.score)}</span>
+                  </div>
+                  <div className="col-span-3">
+                    <span className="text-xs text-white/40">{entry.date}</span>
+                  </div>
+                </div>
+                {/* Mobile: card layout */}
+                <div className="sm:hidden flex items-center gap-3 px-4 py-4">
+                  <span className={`inline-flex items-center justify-center w-8 h-8 rounded-lg border text-sm font-bold flex-shrink-0 ${getRankBadge(entry.rank)}`}>
                     {entry.rank}
                   </span>
-                </div>
-                <div className="col-span-4">
-                  <span className="text-sm font-medium text-white">{entry.name}</span>
-                  <span className="block text-xs text-white/40">{entry.role}</span>
-                </div>
-                <div className="col-span-2">
-                  <span className={`text-lg font-bold tabular-nums ${getScoreColor(entry.score)}`}>
-                    {entry.score}
-                  </span>
-                  <span className="text-xs text-white/40"> / 100</span>
-                </div>
-                <div className="col-span-2">
-                  <span className="text-xs text-white/50">{getScoreLabel(entry.score)}</span>
-                </div>
-                <div className="col-span-3">
-                  <span className="text-xs text-white/40">{entry.date}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-white truncate">{entry.name}</span>
+                      <span className={`text-lg font-bold tabular-nums flex-shrink-0 ml-2 ${getScoreColor(entry.score)}`}>
+                        {entry.score}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between mt-0.5">
+                      <span className="text-xs text-white/40">{entry.role}</span>
+                      <span className="text-xs text-white/50">{getScoreLabel(entry.score)}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}

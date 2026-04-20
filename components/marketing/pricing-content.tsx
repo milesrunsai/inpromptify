@@ -135,7 +135,7 @@ export function PricingContent() {
   const plans = category === 'jobseekers' ? jobSeekerPlans : businessPlans
 
   return (
-    <div className="min-h-screen pt-24 pb-16">
+    <div className="min-h-screen pt-24 pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center max-w-xl mx-auto">
           <span className="section-label">[ Pricing ]</span>
