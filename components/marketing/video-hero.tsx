@@ -44,7 +44,7 @@ export function VideoHero() {
         className="h-full w-full object-cover mix-blend-screen"
       >
         <source
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_3CVjpU5MqL28kt1M6PyOAXhNcyX/hf_20260420_033355_d2d70c02-2cf9-437b-8cd0-e210a60ba6c9.mp4"
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_3CVjpU5MqL28kt1M6PyOAXhNcyX/hf_20260420_060720_7b600b45-de92-47e3-b11c-619fab9fc4c5.mp4"
           type="video/mp4"
         />
       </video>

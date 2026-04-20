@@ -1,18 +1,26 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const navigation = [
   { name: "Features", href: "/features" },
-  { name: "Solutions", href: "/pricing" },
   { name: "Plans", href: "/pricing" },
-  { name: "Learning", href: "/developers" },
+  { name: "Developers", href: "/developers" },
+  { name: "Integrations", href: "/integrations" },
 ];
 
 export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl">
-      <div className="flex w-full items-center justify-between py-5 px-8">
-        <Link href="/" className="text-2xl font-bold tracking-tight text-primary">
-          IF
+      <div className="flex w-full items-center justify-between py-4 px-8">
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/logo.png"
+            alt="InpromptiFy"
+            width={48}
+            height={48}
+            className="h-10 w-auto"
+            priority
+          />
         </Link>
         <nav className="hidden items-center gap-1 md:flex">
           {navigation.map((item) => (
@@ -32,7 +40,6 @@ export function Header() {
           Sign Up
         </Link>
       </div>
-      <div className="h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent" />
     </header>
   );
 }
