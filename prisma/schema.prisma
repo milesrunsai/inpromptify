@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id            String         @id @default(cuid())
+  name          String
+  slug          String         @unique
+  clerkOrgId    String         @unique
+  members       Membership[]
+  assessments   Assessment[]
+  subscriptions Subscription[]
+  createdAt     DateTime       @default(now())
+}
+
+model Membership {
+  id     String       @id @default(cuid())
+  org    Organization @relation(fields: [orgId], references: [id])
+  orgId  String
+  user   User         @relation(fields: [userId], references: [id])
+  userId String
+  role   Role         @default(MEMBER)
+}
+
+model User {
+  id          String       @id @default(cuid())
+  clerkUserId String       @unique
+  email       String       @unique
+  memberships Membership[]
+}
+
+model Assessment {
+  id              String           @id @default(cuid())
+  org             Organization     @relation(fields: [orgId], references: [id])
+  orgId           String
+  candidateEmail  String
+  status          AssessmentStatus
+  score           Int?
+  dimensionScores Json?
+  responses       Json
+  completedAt     DateTime?
+  createdAt       DateTime         @default(now())
+}
+
+model Subscription {
+  id          String       @id @default(cuid())
+  org         Organization @relation(fields: [orgId], references: [id])
+  orgId       String
+  stripeSubId String       @unique
+  tier        Tier
+  credits     Int
+  status      String
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+enum AssessmentStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum Tier {
+  FREE
+  STARTER
+  BUSINESS
+  ENTERPRISE
+}
