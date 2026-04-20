@@ -38,30 +38,20 @@ function useReveal() {
   return ref
 }
 
-/* ───────────────────────── Social Proof ───────────────────────── */
+/* ───────────────────────── Bold Statement ───────────────────────── */
 
-const companies = [
-  'Anthropic', 'OpenAI', 'Google', 'Meta', 'Microsoft', 'Stripe', 'Vercel', 'Notion',
-]
-
-export function SocialProof() {
+export function BoldStatement() {
   const ref = useReveal()
   return (
-    <section ref={ref} className="relative py-20 section-frame">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <p className="text-center text-xs uppercase tracking-[0.2em] text-white/30 mb-10">
-          Trusted by leading organizations
+    <section ref={ref} className="bg-[#e8e4e0] py-20 px-6">
+      <div className="max-w-5xl mx-auto">
+        <p className="text-2xl sm:text-3xl lg:text-4xl leading-relaxed reveal">
+          <span className="text-gray-400 font-normal">Unlock the potential of </span>
+          <span className="text-gray-900 font-bold">AI proficiency measurement.</span>
+          <br />
+          <span className="text-gray-400 font-normal">InpromptiFy equips businesses to assess, benchmark, and certify their workforce, </span>
+          <span className="text-gray-900 font-bold">redefining how organizations measure AI readiness.</span>
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-12 gap-y-6">
-          {companies.map((name) => (
-            <span
-              key={name}
-              className="text-lg font-semibold text-white/[0.12] tracking-wide select-none"
-            >
-              {name}
-            </span>
-          ))}
-        </div>
       </div>
     </section>
   )

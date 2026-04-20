@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { HeroQuiz } from "@/components/marketing/hero-quiz";
 import {
-  SocialProof,
+  BoldStatement,
   FeaturesSection,
   StatsSection,
   UseCasesSection,
@@ -133,7 +133,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <SocialProof />
+      <BoldStatement />
       <FeaturesSection />
       <StatsSection />
       <UseCasesSection />
