@@ -1,100 +1,75 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Features",
   description:
-    "Adaptive testing, five scoring dimensions, team analytics, and certifications. See how InpromptiFy measures real AI proficiency.",
+    "Adaptive testing, skill mapping, team analytics, and certifications. See how InpromptiFy measures real AI proficiency.",
 };
 
-const dimensions = [
+const categories = [
   {
-    name: "Prompt Quality",
-    description:
-      "Evaluates clarity, specificity, and structure of prompts. Measures whether the candidate can articulate intent in a way that produces reliable AI output.",
-  },
-  {
-    name: "Context Awareness",
-    description:
-      "Assesses the ability to provide relevant background, constraints, and domain context. Tests whether candidates understand how context shapes AI responses.",
-  },
-  {
-    name: "Iteration Strategy",
-    description:
-      "Measures how candidates refine and improve their approach based on initial results. Evaluates debugging instincts and systematic improvement.",
-  },
-  {
-    name: "Output Evaluation",
-    description:
-      "Tests critical assessment of AI-generated content. Can the candidate identify errors, hallucinations, and quality issues in AI output?",
-  },
-  {
-    name: "Tool Orchestration",
-    description:
-      "Evaluates understanding of when and how to use different AI tools. Measures workflow design and multi-tool coordination ability.",
-  },
-];
-
-const capabilities = [
-  {
-    category: "Assessment Engine",
-    items: [
+    label: "Assessment",
+    features: [
       {
-        title: "Adaptive Difficulty",
-        description:
-          "Questions branch based on response quality and confidence signals. The assessment gets harder or easier in real time to precisely locate skill level.",
+        icon: "\u{1F9E0}",
+        title: "Adaptive Testing Engine",
+        desc: "AI-powered difficulty adjustment that finds your exact skill level in half the time.",
       },
       {
-        title: "Time-Aware Scoring",
-        description:
-          "Response time is factored into confidence modeling. Rapid correct answers indicate deeper fluency than slow deliberation.",
+        icon: "\u{1F4CA}",
+        title: "Skill Radar Charts",
+        desc: "Multi-dimensional proficiency visualization across AI competency areas.",
       },
       {
-        title: "Anti-Gaming",
-        description:
-          "Randomized question pools, response pattern analysis, and rate limiting prevent candidates from sharing answers or brute-forcing results.",
+        icon: "\u26A1",
+        title: "Real-time Scoring",
+        desc: "Instant results with detailed breakdowns, percentiles, and improvement suggestions.",
+      },
+      {
+        icon: "\u{1F6E0}\uFE0F",
+        title: "Assessment Builder",
+        desc: "Drag-and-drop editor with AI-assisted question generation and 10K+ question bank.",
       },
     ],
   },
   {
-    category: "Analytics & Reporting",
-    items: [
+    label: "Analytics",
+    features: [
       {
-        title: "Team Dashboard",
-        description:
-          "View aggregate scores across your organization. Identify skill gaps by dimension, department, or role.",
+        icon: "\u{1F465}",
+        title: "Team Dashboards",
+        desc: "Organization-wide analytics, department comparisons, and training ROI tracking.",
       },
       {
-        title: "Individual Reports",
-        description:
-          "Detailed breakdown for each candidate showing performance across all five dimensions with percentile benchmarking.",
-      },
-      {
-        title: "Trend Tracking",
-        description:
-          "Monitor how AI proficiency changes over time. Measure the impact of training programs with before-and-after data.",
+        icon: "\u{1F3C5}",
+        title: "Digital Certifications",
+        desc: "Verifiable badges with unique URLs, LinkedIn integration, and custom branding.",
       },
     ],
   },
   {
-    category: "Enterprise",
-    items: [
+    label: "Security",
+    features: [
       {
-        title: "SSO & SCIM",
-        description:
-          "SAML 2.0 single sign-on and SCIM provisioning for Okta, Azure AD, and Google Workspace. Manage access at scale.",
+        icon: "\u{1F512}",
+        title: "Anti-Cheat & Proctoring",
+        desc: "Browser lockdown, copy-paste detection, and optional AI-powered proctoring.",
+      },
+    ],
+  },
+  {
+    label: "Integration",
+    features: [
+      {
+        icon: "\u{1F517}",
+        title: "API & Webhooks",
+        desc: "RESTful API, real-time webhooks, and SDKs in Python, TypeScript, and Go.",
       },
       {
-        title: "Organization Management",
-        description:
-          "Multi-tenant architecture with role-based access control. Admins manage teams, members take and view assessments.",
-      },
-      {
-        title: "API Access",
-        description:
-          "Full REST API for programmatic assessment creation, score retrieval, and webhook-driven workflows.",
+        icon: "\u{1F393}",
+        title: "LMS Integrations",
+        desc: "Native integrations with Canvas, Moodle, Blackboard, and custom LTI support.",
       },
     ],
   },
@@ -102,117 +77,69 @@ const capabilities = [
 
 export default function FeaturesPage() {
   return (
-    <>
-      {/* Hero */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
-        <div className="mx-auto max-w-3xl text-center">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            What InpromptiFy measures and how
+    <div className="min-h-screen pt-24 pb-16">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-2xl">
+          <span className="section-label">[ Features ]</span>
+          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mt-2">
+            Everything you need to{" "}
+            <span className="gradient-text">assess AI proficiency</span>
           </h1>
-          <p className="mt-4 text-lg text-muted-foreground">
-            A purpose-built assessment engine that adapts to each candidate and
-            scores across five dimensions of AI proficiency. No multiple-choice
-            trivia. No self-reported surveys.
+          <p className="text-lg text-white/40 mt-6 leading-relaxed">
+            From adaptive testing to verifiable certifications, InpromptiFy
+            provides the complete toolkit for measuring and validating AI skills
+            at any scale.
           </p>
         </div>
-      </section>
 
-      {/* Scoring Dimensions */}
-      <section className="border-t border-border/50 bg-card/30">
-        <div className="mx-auto max-w-7xl px-6 py-24">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              Five dimensions of AI fluency
+        {categories.map((cat) => (
+          <div key={cat.label} className="mt-16">
+            <h2 className="text-xs font-medium uppercase tracking-wider text-orange-400/60 mb-6">
+              {cat.label}
             </h2>
-            <p className="mt-4 text-lg text-muted-foreground">
-              Each assessment produces a composite PromptScore plus individual
-              scores across five research-backed dimensions.
-            </p>
-          </div>
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {dimensions.map((dim, i) => (
-              <div
-                key={dim.name}
-                className="rounded-xl border border-border/50 bg-card p-6"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold text-primary">
-                    {i + 1}
-                  </span>
-                  <h3 className="text-lg font-semibold">{dim.name}</h3>
-                </div>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                  {dim.description}
-                </p>
-              </div>
-            ))}
-            {/* Summary card */}
-            <div className="rounded-xl border border-primary/30 bg-gradient-to-br from-primary/5 to-card p-6">
-              <h3 className="text-lg font-semibold text-primary">
-                PromptScore
-              </h3>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                The composite score (0-100) that combines all five dimensions
-                into a single, standardized credential. Shareable on LinkedIn
-                and verifiable by employers.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Capabilities */}
-      {capabilities.map((section) => (
-        <section
-          key={section.category}
-          className="border-t border-border/50"
-        >
-          <div className="mx-auto max-w-7xl px-6 py-16">
-            <h2 className="text-2xl font-bold tracking-tight">
-              {section.category}
-            </h2>
-            <div className="mt-8 grid gap-6 lg:grid-cols-3">
-              {section.items.map((item) => (
-                <div
-                  key={item.title}
-                  className="rounded-xl border border-border/50 bg-card p-6"
-                >
-                  <h3 className="font-semibold">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    {item.description}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {cat.features.map((f) => (
+                <div key={f.title} className="glass-strong p-6 rounded-2xl">
+                  <span className="text-2xl mb-3 block">{f.icon}</span>
+                  <h3 className="text-base font-semibold mb-2">{f.title}</h3>
+                  <p className="text-sm text-white/40 leading-relaxed">
+                    {f.desc}
                   </p>
                 </div>
               ))}
             </div>
           </div>
-        </section>
-      ))}
+        ))}
 
-      {/* CTA */}
-      <section className="border-t border-border/50 bg-card/30">
-        <div className="mx-auto max-w-7xl px-6 py-24">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight">
-              Experience it yourself
+        {/* CTA */}
+        <div className="mt-24 text-center">
+          <div className="glass-strong rounded-2xl p-10 max-w-2xl mx-auto">
+            <h2 className="text-2xl font-bold text-white mb-3">
+              Ready to get started?
             </h2>
-            <p className="mt-4 text-muted-foreground">
-              The 3-minute mini-assessment is free, ungated, and gives you an
-              instant PromptScore. See the adaptive engine in action.
+            <p className="text-sm text-white/40 mb-6">
+              Start measuring AI proficiency across your team today. Free to get
+              started, no credit card required.
             </p>
-            <div className="mt-8">
+            <div className="flex flex-wrap justify-center gap-4">
               <Link
-                href="/assess"
-                className={cn(
-                  buttonVariants({ size: "lg" }),
-                  "h-12 px-8 text-base"
-                )}
+                href="/sign-up"
+                className="glow-btn px-8 py-3 text-sm font-medium inline-block"
               >
-                Take the Assessment
+                Start Free Trial
               </Link>
+              <a
+                href="https://agentmail.to/enterprise"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ghost-btn px-8 py-3 text-sm font-medium inline-block"
+              >
+                Contact Sales
+              </a>
             </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </div>
   );
 }

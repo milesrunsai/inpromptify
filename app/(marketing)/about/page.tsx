@@ -2,56 +2,55 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "The mission behind InpromptiFy — building the standard for AI proficiency measurement.",
+  description:
+    "The mission behind InpromptiFy — building the standard for AI proficiency measurement.",
 };
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-24">
-      <h1 className="text-4xl font-bold tracking-tight text-hero-heading sm:text-5xl">
-        The AI skills gap is real. We are closing it.
-      </h1>
-      <div className="mt-8 space-y-6 text-lg leading-8 text-muted-foreground">
-        <p>
-          The world adopted AI faster than it learned to use it. Companies are hiring for
-          &quot;AI proficiency&quot; with no way to measure it. Resumes lie. Self-assessments
-          are useless. Interview questions test knowledge, not ability.
-        </p>
-        <p>
-          InpromptiFy exists to solve this. We built an adaptive assessment engine that measures
-          how people actually use AI tools — not whether they can define &quot;chain-of-thought
-          prompting&quot; on a quiz, but whether they can deploy it under pressure to produce
-          real results.
-        </p>
-        <p>
-          Our five-dimension scoring system — Prompt Quality, Efficiency, Speed, Response Quality,
-          and Iteration Intelligence — captures the full picture of AI fluency. The result is a
-          single, verifiable credential: the PromptScore.
-        </p>
-        <h2 className="text-2xl font-bold text-hero-heading pt-4">What we believe</h2>
-        <ul className="space-y-3">
-          <li className="flex gap-3">
-            <span className="text-primary font-bold shrink-0">01</span>
-            <span>AI proficiency is the most important skill of the decade. It should be measured like any other competency.</span>
-          </li>
-          <li className="flex gap-3">
-            <span className="text-primary font-bold shrink-0">02</span>
-            <span>Assessment should test applied judgment, not memorized definitions.</span>
-          </li>
-          <li className="flex gap-3">
-            <span className="text-primary font-bold shrink-0">03</span>
-            <span>Enterprise buyers deserve psychometric rigor, not marketing fluff.</span>
-          </li>
-          <li className="flex gap-3">
-            <span className="text-primary font-bold shrink-0">04</span>
-            <span>The question bank must evolve as fast as the AI landscape. Stale tests are worthless.</span>
-          </li>
-        </ul>
-        <h2 className="text-2xl font-bold text-hero-heading pt-4">Built in Australia</h2>
-        <p>
-          InpromptiFy is an independent, bootstrapped company. No VC pressure. No growth-at-all-costs.
-          Just a relentless focus on building the most accurate AI proficiency assessment on the market.
-        </p>
+    <div className="min-h-screen pt-24 pb-16">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-2xl">
+          <span className="section-label">[ About ]</span>
+          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mt-2 text-white">
+            Measuring AI proficiency,{" "}
+            <span className="gradient-text">accurately</span>
+          </h1>
+          <p className="text-lg text-gray-400 mt-6 leading-relaxed">
+            InpromptiFy was built on a simple observation: as AI transforms every
+            industry, there&apos;s no reliable way to measure how well people
+            actually use these tools. We&apos;re changing that.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-4 mt-16">
+          {[
+            {
+              title: "Our Mission",
+              text: "To create the global standard for AI proficiency measurement. We believe that accurate assessment drives better learning, smarter hiring, and more effective teams.",
+            },
+            {
+              title: "Our Approach",
+              text: "We combine psychometric science with modern AI to build assessments that are adaptive, fair, and genuinely useful. No trivia questions — only real-world skill validation.",
+            },
+            {
+              title: "Why We Built This",
+              text: "InpromptiFy was started in Australia by a young entrepreneur who saw firsthand how quickly AI was reshaping the workforce — and how few tools existed to measure whether people were actually keeping up. We're building what the industry needs.",
+            },
+          ].map((card) => (
+            <div
+              key={card.title}
+              className="glass-strong p-6 rounded-2xl hover:border-orange-500/10 transition-all duration-300"
+            >
+              <h3 className="text-base font-semibold mb-3 text-white">
+                {card.title}
+              </h3>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                {card.text}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

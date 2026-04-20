@@ -1,64 +1,76 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 const footerLinks = {
   Product: [
-    { name: "Features", href: "/features" },
-    { name: "Pricing", href: "/pricing" },
-    { name: "Integrations", href: "/integrations" },
-    { name: "Developers", href: "/developers" },
+    { label: 'Features', href: '/features' },
+    { label: 'Pricing', href: '/pricing' },
+    { label: 'Blog', href: '/blog' },
   ],
   Company: [
-    { name: "About", href: "#" },
-    { name: "Blog", href: "#" },
-    { name: "Careers", href: "#" },
-    { name: "Contact", href: "#" },
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: 'https://agentmail.to/enterprise', external: true },
   ],
-  Legal: [
-    { name: "Privacy", href: "#" },
-    { name: "Terms", href: "#" },
-    { name: "Security", href: "#" },
+  Account: [
+    { label: 'Sign In', href: '/sign-in' },
+    { label: 'Sign Up', href: '/sign-up' },
   ],
-};
+}
 
 export function Footer() {
   return (
-    <footer className="border-t border-border/50 bg-background">
-      <div className="mx-auto max-w-7xl px-6 py-16">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-          <div>
-            <Link href="/" className="text-lg font-bold tracking-tight">
-              <span className="text-primary">Inpromptify</span>
+    <footer className="border-t border-white/[0.06]">
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {/* Brand */}
+          <div className="col-span-2 md:col-span-1">
+            <Link href="/" className="flex items-center mb-4">
+              <img src="/logo.png" alt="InpromptiFy" className="h-6 w-auto" />
             </Link>
-            <p className="mt-3 text-sm text-muted-foreground">
-              AI proficiency assessment for hiring and upskilling.
+            <p className="text-sm text-white/40 leading-relaxed">
+              AI-powered proficiency assessment platform for modern teams.
             </p>
           </div>
+
+          {/* Link columns */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h3 className="text-sm font-semibold text-foreground">
+              <h4 className="text-xs font-medium uppercase tracking-wider text-white/30 mb-4">
                 {category}
-              </h3>
-              <ul className="mt-3 space-y-2">
+              </h4>
+              <ul className="space-y-2.5">
                 {links.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                    >
-                      {link.name}
-                    </Link>
+                  <li key={link.label}>
+                    {'external' in link && link.external ? (
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-white/50 hover:text-white transition-colors"
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        className="text-sm text-white/50 hover:text-white transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
             </div>
           ))}
         </div>
-        <div className="mt-12 border-t border-border/50 pt-8">
-          <p className="text-sm text-muted-foreground">
+
+        {/* Bottom bar */}
+        <div className="mt-16 pt-8 border-t border-white/[0.06] flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-white/30">
             &copy; {new Date().getFullYear()} InpromptiFy. All rights reserved.
           </p>
         </div>
       </div>
     </footer>
-  );
+  )
 }
