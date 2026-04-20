@@ -15,6 +15,8 @@ model Organization {
   members       Membership[]
   assessments   Assessment[]
   subscriptions Subscription[]
+  teamInvites   TeamInvite[]
+  apiKeys       ApiKey[]
   createdAt     DateTime       @default(now())
 }
 
@@ -28,10 +30,15 @@ model Membership {
 }
 
 model User {
-  id          String       @id @default(cuid())
-  clerkUserId String       @unique
-  email       String       @unique
-  memberships Membership[]
+  id           String          @id @default(cuid())
+  clerkUserId  String          @unique
+  email        String          @unique
+  name         String?
+  imageUrl     String?
+  memberships  Membership[]
+  chatMessages AiChatMessage[]
+  apiKeys      ApiKey[]
+  createdAt    DateTime        @default(now())
 }
 
 model Assessment {
@@ -44,9 +51,9 @@ model Assessment {
   dimensionScores Json?
   responses       Json[]
   currentTheta    Float            @default(50.0)
-  isPublic        Boolean          @default(true)  // public tests show on leaderboard
+  isPublic        Boolean          @default(true) // public tests show on leaderboard
   visibility      String           @default("public") // public, private, org-only
-  issuedBy        String?          // org that issued the test (null = self-taken)
+  issuedBy        String? // org that issued the test (null = self-taken)
   completedAt     DateTime?
   createdAt       DateTime         @default(now())
 }
@@ -54,10 +61,10 @@ model Assessment {
 model QuestionBank {
   id              String    @id @default(cuid())
   text            String
-  options         Json      // [{id: "A", text: "...", isCorrect: true}, ...]
+  options         Json // [{id: "A", text: "...", isCorrect: true}, ...]
   correctOptionId String
-  difficulty      Int       // 1-100
-  dimensions      Json      // ["promptQuality", "responseQuality"]
+  difficulty      Int // 1-100
+  dimensions      Json // ["promptQuality", "responseQuality"]
   tags            String[]
   maxTimeSeconds  Int
   irtA            Float?
@@ -71,10 +78,10 @@ model QuestionBank {
 model PendingQuestion {
   id              String   @id @default(cuid())
   text            String
-  options         Json     // [{id: "A", text: "...", isCorrect: true}, ...]
+  options         Json // [{id: "A", text: "...", isCorrect: true}, ...]
   correctOptionId String
-  difficulty      Int      // 1-100
-  dimensions      Json     // ["promptQuality", "responseQuality"]
+  difficulty      Int // 1-100
+  dimensions      Json // ["promptQuality", "responseQuality"]
   tags            String[]
   maxTimeSeconds  Int
   source          String   @default("manual") // llm-generated, manual, community
@@ -121,15 +128,57 @@ enum Tier {
   ENTERPRISE
 }
 
+model TeamInvite {
+  id        String       @id @default(cuid())
+  org       Organization @relation(fields: [orgId], references: [id])
+  orgId     String
+  email     String
+  role      Role         @default(MEMBER)
+  invitedBy String
+  status    String       @default("pending") // pending, accepted, expired
+  expiresAt DateTime
+  createdAt DateTime     @default(now())
+
+  @@unique([orgId, email])
+}
+
+model AiChatMessage {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  role      String // user, assistant
+  content   String
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
+
+model ApiKey {
+  id        String       @id @default(cuid())
+  user      User         @relation(fields: [userId], references: [id])
+  userId    String
+  org       Organization @relation(fields: [orgId], references: [id])
+  orgId     String
+  name      String
+  keyHash   String       @unique
+  prefix    String // First 8 chars for display (e.g., "inp_abc1...")
+  lastUsed  DateTime?
+  expiresAt DateTime?
+  isActive  Boolean      @default(true)
+  createdAt DateTime     @default(now())
+
+  @@index([userId])
+}
+
 model DemoBooking {
-  id           String   @id @default(cuid())
-  name         String
-  email        String
-  company      String?
-  teamSize     String?
-  date         DateTime
-  time         String
-  message      String?
-  status       String   @default("pending") // pending, confirmed, cancelled
-  createdAt    DateTime @default(now())
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  company   String?
+  teamSize  String?
+  date      DateTime
+  time      String
+  message   String?
+  status    String   @default("pending") // pending, confirmed, cancelled
+  createdAt DateTime @default(now())
 }

@@ -9,6 +9,7 @@ import {
   Settings,
   ShieldCheck,
   Calendar,
+  Bot,
   Menu,
   X,
 } from "lucide-react";
@@ -16,13 +17,17 @@ import { useState } from "react";
 import { UserButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 
-const navItems = [
+const mainNavItems = [
   { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
   { label: "Assessments", href: "/dashboard/assessments", icon: ClipboardList },
   { label: "Team", href: "/dashboard/team", icon: Users },
+  { label: "AI Assistant", href: "/dashboard/ai-assistant", icon: Bot },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
-  { label: "Admin: Questions", href: "/dashboard/admin/questions", icon: ShieldCheck },
-  { label: "Admin: Bookings", href: "/dashboard/admin/bookings", icon: Calendar },
+];
+
+const adminNavItems = [
+  { label: "Questions", href: "/dashboard/admin/questions", icon: ShieldCheck },
+  { label: "Bookings", href: "/dashboard/admin/bookings", icon: Calendar },
 ];
 
 export function DashboardShell({
@@ -85,11 +90,41 @@ export function DashboardShell({
 
         {/* Nav */}
         <nav className="flex-1 space-y-1 px-2 py-3">
-          {navItems.map((item) => {
+          {mainNavItems.map((item) => {
             const isActive =
               item.href === "/dashboard"
                 ? pathname === "/dashboard"
                 : pathname.startsWith(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                  isActive
+                    ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                    : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                )}
+              >
+                <item.icon className="size-4" />
+                {item.label}
+              </Link>
+            );
+          })}
+
+          {/* Admin separator */}
+          <div className="px-3 pt-4 pb-1">
+            <div className="flex items-center gap-2">
+              <div className="h-px flex-1 bg-sidebar-border" />
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-sidebar-foreground/40">
+                Admin
+              </span>
+              <div className="h-px flex-1 bg-sidebar-border" />
+            </div>
+          </div>
+
+          {adminNavItems.map((item) => {
+            const isActive = pathname.startsWith(item.href);
             return (
               <Link
                 key={item.href}

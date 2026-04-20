@@ -1,3 +1,6 @@
+import { auth, currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { prisma } from "@/lib/db";
 import {
   Card,
   CardContent,
@@ -10,8 +13,85 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
+import { ExternalLink } from "lucide-react";
+import { ApiKeys, type ApiKeyData } from "@/components/dashboard/api-keys";
+import { NotificationPreferences } from "@/components/dashboard/notification-preferences";
 
-export default function SettingsPage() {
+const tierBadgeStyles: Record<string, string> = {
+  FREE: "bg-white/[0.06] text-white/60 border-white/[0.08]",
+  STARTER: "bg-orange-500/15 text-orange-400 border-orange-500/20",
+  BUSINESS: "bg-blue-500/15 text-blue-400 border-blue-500/20",
+  ENTERPRISE: "bg-purple-500/15 text-purple-400 border-purple-500/20",
+};
+
+export default async function SettingsPage() {
+  const { orgId } = await auth();
+  const user = await currentUser();
+  if (!user) redirect("/sign-in");
+
+  let org = null;
+  let subscription = null;
+  let apiKeys: ApiKeyData[] = [];
+  let tier = "FREE";
+  let credits = 5;
+  let assessmentCount = 0;
+
+  if (orgId) {
+    org = await prisma.organization.findUnique({
+      where: { clerkOrgId: orgId },
+      include: {
+        subscriptions: { take: 1, orderBy: { id: "desc" } },
+      },
+    });
+
+    if (org) {
+      subscription = org.subscriptions[0] ?? null;
+      tier = subscription?.tier ?? "FREE";
+      credits = subscription?.credits ?? 5;
+
+      const [dbKeys, count] = await Promise.all([
+        prisma.apiKey.findMany({
+          where: { orgId: org.id, isActive: true },
+          orderBy: { createdAt: "desc" },
+          select: {
+            id: true,
+            name: true,
+            prefix: true,
+            createdAt: true,
+            lastUsed: true,
+          },
+        }),
+        prisma.assessment.count({
+          where: { orgId: org.id },
+        }),
+      ]);
+
+      assessmentCount = count;
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      apiKeys = (dbKeys as any[]).map((k: { id: string; name: string; prefix: string; createdAt: Date; lastUsed: Date | null }) => ({
+        id: k.id,
+        name: k.name,
+        prefix: k.prefix,
+        createdAt: k.createdAt.toLocaleDateString("en-AU", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        }),
+        lastUsed: k.lastUsed
+          ? k.lastUsed.toLocaleDateString("en-AU", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })
+          : null,
+      }));
+    }
+  }
+
+  const tierLabel = tier.charAt(0) + tier.slice(1).toLowerCase();
+  const canCreateApiKeys = tier !== "FREE";
+
   return (
     <div className="space-y-8">
       <div>
@@ -21,7 +101,7 @@ export default function SettingsPage() {
         </p>
       </div>
 
-      {/* Billing card */}
+      {/* Billing & Plan */}
       <Card>
         <CardHeader>
           <CardTitle>Billing & Plan</CardTitle>
@@ -32,48 +112,77 @@ export default function SettingsPage() {
         <CardContent className="space-y-4">
           <div className="flex items-center gap-3">
             <span className="text-sm font-medium">Current Plan</span>
-            <Badge variant="secondary">Free</Badge>
+            <span
+              className={cn(
+                "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold",
+                tierBadgeStyles[tier] ?? tierBadgeStyles.FREE
+              )}
+            >
+              {tierLabel}
+            </span>
           </div>
           <div className="grid gap-4 sm:grid-cols-3">
             <div>
-              <p className="text-sm text-muted-foreground">Credits Used</p>
-              <p className="text-2xl font-bold">0 / 5</p>
+              <p className="text-sm text-muted-foreground">Credits</p>
+              <p className="text-2xl font-bold tabular-nums">{credits}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Assessments</p>
-              <p className="text-2xl font-bold">0</p>
+              <p className="text-2xl font-bold tabular-nums">
+                {assessmentCount}
+              </p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Billing Period</p>
-              <p className="text-2xl font-bold">—</p>
+              <p className="text-2xl font-bold">
+                {subscription ? "Monthly" : "\u2014"}
+              </p>
             </div>
           </div>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="gap-2">
           <Link
             href="/pricing"
             className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
           >
             Upgrade Plan
           </Link>
+          <Link
+            href="/pricing"
+            className={cn(
+              buttonVariants({ variant: "ghost", size: "sm" }),
+              "gap-1.5"
+            )}
+          >
+            Manage Billing
+            <ExternalLink className="size-3" />
+          </Link>
         </CardFooter>
       </Card>
 
-      {/* API Access */}
+      {/* API Keys */}
       <Card>
         <CardHeader>
-          <CardTitle>API Access</CardTitle>
+          <CardTitle>API Keys</CardTitle>
           <CardDescription>
             Manage API keys for integrating InpromptiFy into your workflows.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="rounded-lg border border-border bg-muted/30 p-4">
-            <p className="text-sm text-muted-foreground">
-              API keys are available on Starter plans and above. Upgrade your
-              plan to get started with the API.
-            </p>
-          </div>
+          <ApiKeys keys={apiKeys} canCreate={canCreateApiKeys} />
+        </CardContent>
+      </Card>
+
+      {/* Notification Preferences */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Notification Preferences</CardTitle>
+          <CardDescription>
+            Choose which email notifications you would like to receive.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <NotificationPreferences />
         </CardContent>
       </Card>
 
@@ -82,13 +191,26 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle>Organization</CardTitle>
           <CardDescription>
-            Organization settings are managed through Clerk.
+            Manage your organization settings and membership.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground">
-            Visit your Clerk dashboard to manage organization name, members, and
-            SSO settings.
+        <CardContent className="space-y-3">
+          {org ? (
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-muted-foreground">
+                Organization
+              </span>
+              <span className="text-sm font-medium">{org.name}</span>
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground">
+              No organization found. Create one from the user menu to get
+              started.
+            </p>
+          )}
+          <p className="text-xs text-muted-foreground">
+            Full organization management (members, roles, SSO) is available
+            through the Clerk dashboard.
           </p>
         </CardContent>
       </Card>

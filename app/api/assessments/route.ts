@@ -22,13 +22,33 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Organization not found" }, { status: 404 });
   }
 
-  const assessments = await prisma.assessment.findMany({
-    where: { orgId: org.id },
-    orderBy: { createdAt: "desc" },
-    take: 50,
-  });
+  // Pagination & filtering
+  const page = Math.max(1, parseInt(req.nextUrl.searchParams.get("page") ?? "1", 10));
+  const limit = Math.min(100, Math.max(1, parseInt(req.nextUrl.searchParams.get("limit") ?? "20", 10)));
+  const status = req.nextUrl.searchParams.get("status");
+  const search = req.nextUrl.searchParams.get("search");
 
-  return NextResponse.json({ assessments });
+  const where: Record<string, unknown> = { orgId: org.id };
+  if (status) {
+    where.status = status;
+  }
+  if (search) {
+    where.candidateEmail = { contains: search, mode: "insensitive" };
+  }
+
+  const [assessments, total] = await Promise.all([
+    prisma.assessment.findMany({
+      where,
+      orderBy: { createdAt: "desc" },
+      skip: (page - 1) * limit,
+      take: limit,
+    }),
+    prisma.assessment.count({ where }),
+  ]);
+
+  const totalPages = Math.ceil(total / limit);
+
+  return NextResponse.json({ assessments, total, page, limit, totalPages });
 }
 
 /** POST /api/assessments — create a new assessment invitation */
