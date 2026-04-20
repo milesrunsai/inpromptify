@@ -118,25 +118,25 @@ export function HomepagePricing() {
   const plans = category === 'jobseekers' ? jobSeekerPlans : businessPlans
 
   return (
-    <section className="bg-white py-24">
+    <section className="py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-12">
           <span className="text-xs font-medium uppercase tracking-wider text-orange-500">[ Pricing ]</span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-gray-900">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-white">
             Simple, transparent pricing
           </h2>
-          <p className="text-lg text-gray-500 mt-4 max-w-xl mx-auto">
+          <p className="text-lg text-white/50 mt-4 max-w-xl mx-auto">
             Start free. Upgrade when you need more assessments, analytics, or integrations.
           </p>
 
           {/* Job Seekers / Businesses tab toggle */}
-          <div className="flex items-center justify-center gap-1 mt-8 p-1 rounded-full bg-gray-100 max-w-xs mx-auto">
+          <div className="flex items-center justify-center gap-1 mt-8 p-1 rounded-full bg-white/[0.06] max-w-xs mx-auto">
             <button
               onClick={() => setCategory('jobseekers')}
               className={`flex-1 py-2 px-4 rounded-full text-sm font-medium transition-all ${
                 category === 'jobseekers'
-                  ? 'bg-gray-900 text-white shadow-lg'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'bg-white/[0.12] text-white shadow-lg'
+                  : 'text-white/40 hover:text-white/60'
               }`}
             >
               Job Seekers
@@ -145,8 +145,8 @@ export function HomepagePricing() {
               onClick={() => setCategory('businesses')}
               className={`flex-1 py-2 px-4 rounded-full text-sm font-medium transition-all ${
                 category === 'businesses'
-                  ? 'bg-gray-900 text-white shadow-lg'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'bg-white/[0.12] text-white shadow-lg'
+                  : 'text-white/40 hover:text-white/60'
               }`}
             >
               Businesses
@@ -155,11 +155,11 @@ export function HomepagePricing() {
 
           {/* Monthly / Annual toggle */}
           <div className="flex items-center justify-center gap-3 mt-6">
-            <span className={`text-sm ${!annual ? 'text-gray-900' : 'text-gray-400'}`}>Monthly</span>
+            <span className={`text-sm ${!annual ? 'text-white' : 'text-white/40'}`}>Monthly</span>
             <button
               onClick={() => setAnnual(!annual)}
               className={`relative w-12 h-6 rounded-full transition-colors ${
-                annual ? 'bg-orange-500' : 'bg-gray-300'
+                annual ? 'bg-orange-500' : 'bg-white/20'
               }`}
             >
               <div
@@ -168,7 +168,7 @@ export function HomepagePricing() {
                 }`}
               />
             </button>
-            <span className={`text-sm ${annual ? 'text-gray-900' : 'text-gray-400'}`}>
+            <span className={`text-sm ${annual ? 'text-white' : 'text-white/40'}`}>
               Annual <span className="text-orange-500 text-xs font-medium">Save 20%</span>
             </span>
           </div>
@@ -200,29 +200,29 @@ export function HomepagePricing() {
                 key={tier.name}
                 className={`rounded-2xl p-6 flex flex-col ${
                   tier.highlighted
-                    ? 'bg-gray-900 text-white ring-2 ring-orange-500 shadow-xl shadow-orange-500/10'
-                    : 'bg-gray-50 text-gray-900 border border-gray-200'
+                    ? 'bg-white/[0.06] text-white ring-2 ring-orange-500 shadow-xl shadow-orange-500/10'
+                    : 'bg-white/[0.03] text-white border border-white/[0.08]'
                 }`}
               >
-                <h3 className={`text-lg font-semibold ${tier.highlighted ? 'text-white' : 'text-gray-900'}`}>
+                <h3 className={`text-lg font-semibold ${tier.highlighted ? 'text-white' : 'text-white'}`}>
                   {tier.name}
                 </h3>
                 <div className="mt-4 flex items-baseline gap-1">
-                  <span className={`text-4xl font-bold ${tier.highlighted ? 'text-white' : 'text-gray-900'}`}>
+                  <span className={`text-4xl font-bold ${tier.highlighted ? 'text-white' : 'text-white'}`}>
                     {displayPrice}
                   </span>
                   {displayPeriod && (
-                    <span className={`text-sm ${tier.highlighted ? 'text-gray-400' : 'text-gray-500'}`}>
+                    <span className={`text-sm ${tier.highlighted ? 'text-white/40' : 'text-white/40'}`}>
                       {displayPeriod}
                     </span>
                   )}
                 </div>
-                <p className={`mt-2 text-sm ${tier.highlighted ? 'text-gray-400' : 'text-gray-500'}`}>
+                <p className={`mt-2 text-sm ${tier.highlighted ? 'text-white/40' : 'text-white/50'}`}>
                   {tier.description}
                 </p>
                 <ul className="mt-6 flex-1 space-y-3">
                   {tier.features.map((feature) => (
-                    <li key={feature} className={`flex items-start gap-2 text-sm ${tier.highlighted ? 'text-gray-300' : 'text-gray-600'}`}>
+                    <li key={feature} className={`flex items-start gap-2 text-sm ${tier.highlighted ? 'text-white/70' : 'text-white/60'}`}>
                       <svg className={`mt-0.5 h-4 w-4 shrink-0 ${tier.highlighted ? 'text-orange-400' : 'text-orange-500'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
@@ -236,7 +236,7 @@ export function HomepagePricing() {
                     className={`block w-full text-center rounded-full py-3 text-sm font-medium transition-all ${
                       tier.highlighted
                         ? 'bg-orange-500 text-white hover:bg-orange-600'
-                        : 'bg-gray-900 text-white hover:bg-gray-800'
+                        : 'bg-white/[0.08] text-white hover:bg-white/[0.12]'
                     }`}
                   >
                     {tier.cta}
@@ -247,7 +247,7 @@ export function HomepagePricing() {
           })}
         </div>
 
-        <p className="text-center text-sm text-gray-400 mt-8">
+        <p className="text-center text-sm text-white/30 mt-8">
           Annual billing saves 20%. All prices in USD.
         </p>
       </div>
