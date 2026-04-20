@@ -244,23 +244,54 @@ function TeamAnalyticsViz() {
 
 function CertificationsViz() {
   return (
-    <div className="flex flex-col items-center text-center">
-      <div className="w-48 rounded-xl border border-white/[0.08] bg-white/[0.03] p-5 mb-4">
-        <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path
-              d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.77l-4.94 2.34.94-5.5-4-3.9 5.61-.87L10 1z"
-              stroke="white" strokeWidth="1.5" strokeLinejoin="round"
-            />
-          </svg>
+    <div className="flex flex-col items-center text-center w-full">
+      <div className="w-full max-w-[260px] rounded-xl border border-white/[0.08] bg-white/[0.03] p-5">
+        {/* Logo + Title */}
+        <div className="flex items-center justify-center gap-2 mb-3">
+          <img src="/logo.png" alt="InpromptiFy" className="w-6 h-6 rounded" />
+          <span className="text-[10px] font-mono text-white/40 tracking-wider uppercase">InpromptiFy</span>
         </div>
-        <p className="text-xs font-medium text-white/70">AI Fundamentals</p>
-        <p className="text-[10px] text-white/30 mt-1">Certified Proficient</p>
+        <p className="text-sm font-semibold text-white/90">AI Fundamentals</p>
+        <p className="text-[10px] text-orange-400 font-medium mt-0.5">Certified Proficient</p>
+
+        {/* Score + Rank */}
+        <div className="flex items-center justify-center gap-4 mt-3">
+          <div>
+            <p className="text-lg font-bold text-white/90">82<span className="text-[10px] text-white/40">/100</span></p>
+            <p className="text-[9px] text-white/30">Score</p>
+          </div>
+          <div className="w-px h-8 bg-white/[0.08]" />
+          <div>
+            <p className="text-lg font-bold text-amber-400">#14</p>
+            <p className="text-[9px] text-white/30">Rank</p>
+          </div>
+        </div>
+
+        {/* Strengths + Weaknesses */}
+        <div className="mt-3 pt-3 border-t border-white/[0.08] text-left space-y-2">
+          <div>
+            <p className="text-[9px] font-medium text-emerald-400/80 mb-1">Strengths</p>
+            <div className="flex flex-wrap gap-1">
+              {['Prompting', 'RAG'].map(s => (
+                <span key={s} className="text-[8px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400/70 border border-emerald-500/10">{s}</span>
+              ))}
+            </div>
+          </div>
+          <div>
+            <p className="text-[9px] font-medium text-red-400/80 mb-1">Needs Work</p>
+            <div className="flex flex-wrap gap-1">
+              {['Fine-tuning', 'Safety'].map(s => (
+                <span key={s} className="text-[8px] px-1.5 py-0.5 rounded-full bg-red-500/10 text-red-400/70 border border-red-500/10">{s}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Verification Link */}
         <div className="mt-3 pt-3 border-t border-white/[0.08]">
-          <p className="text-[9px] text-white/20 font-mono">verify.inpromptify.com/c/a1b2c3</p>
+          <p className="text-[8px] text-white/20 font-mono">inpromptify.com/verify/a1b2c3</p>
         </div>
       </div>
-      <span className="text-xs text-white/40">Verifiable digital certificate</span>
     </div>
   )
 }
