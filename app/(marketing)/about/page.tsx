@@ -228,7 +228,7 @@ export default function AboutPage() {
                 <p className="text-xs text-white/40 mt-1">Perth, Western Australia</p>
                 <div className="flex items-center gap-3 mt-2">
                   <a
-                    href="https://x.com/milesdoesai"
+                    href="https://x.com/milesrunsai"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-white/40 hover:text-white transition-colors"
