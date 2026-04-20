@@ -145,7 +145,7 @@ function SkillMapViz() {
         {[1, 0.66, 0.33].map((s) => (
           <div
             key={s}
-            className="absolute border border-white/[0.06] rounded-full"
+            className="absolute border border-white/[0.08] rounded-full"
             style={{
               transform: `scale(${s})`,
               top: `${(1 - s) * 50}%`,
@@ -213,7 +213,7 @@ function CustomAssessmentsViz() {
       {['Multiple Choice', 'Code Challenge', 'Free Response', 'Scenario Based'].map((type, i) => (
         <div
           key={type}
-          className="flex items-center gap-3 px-4 py-3 rounded-lg border border-white/[0.06] bg-white/[0.02]"
+          className="flex items-center gap-3 px-4 py-3 rounded-lg border border-white/[0.08] bg-white/[0.02]"
         >
           <span className="w-8 h-8 rounded-md bg-orange-500/10 flex items-center justify-center text-xs text-orange-400 font-mono">
             {i + 1}
@@ -266,7 +266,7 @@ function CertificationsViz() {
         </div>
         <p className="text-xs font-medium text-white/70">AI Fundamentals</p>
         <p className="text-[10px] text-white/30 mt-1">Certified Proficient</p>
-        <div className="mt-3 pt-3 border-t border-white/[0.06]">
+        <div className="mt-3 pt-3 border-t border-white/[0.08]">
           <p className="text-[9px] text-white/20 font-mono">verify.inpromptify.com/c/a1b2c3</p>
         </div>
       </div>
@@ -511,7 +511,7 @@ function HiringMockup() {
         { name: 'Maya Patel', score: 62, status: 'Review' },
         { name: 'Tom Baker', score: 45, status: 'Fail' },
       ].map((c) => (
-        <div key={c.name} className="flex items-center gap-3 px-4 py-3 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+        <div key={c.name} className="flex items-center gap-3 px-4 py-3 rounded-lg border border-white/[0.08] bg-white/[0.02]">
           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500/20 to-amber-500/20 flex items-center justify-center text-[10px] font-mono text-white/50">
             {c.name.split(' ').map((n) => n[0]).join('')}
           </div>
@@ -567,7 +567,7 @@ function CertificationMockup() {
         </div>
         <p className="text-sm font-medium text-white/80">Certified AI Practitioner</p>
         <p className="text-[11px] text-white/30 mt-1">Level 3 — Advanced</p>
-        <div className="mt-4 pt-3 border-t border-white/[0.06] space-y-1">
+        <div className="mt-4 pt-3 border-t border-white/[0.08] space-y-1">
           <p className="text-[10px] text-white/20 font-mono">ID: CERT-2026-A1B2C3</p>
           <p className="text-[10px] text-white/20 font-mono">Issued: Apr 2026</p>
         </div>
@@ -585,7 +585,7 @@ function EducationMockup() {
           { label: 'Students', value: '248' }, { label: 'Avg Score', value: '73%' },
           { label: 'Completion', value: '91%' }, { label: 'Pass Rate', value: '82%' },
         ].map((stat) => (
-          <div key={stat.label} className="px-4 py-3 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+          <div key={stat.label} className="px-4 py-3 rounded-lg border border-white/[0.08] bg-white/[0.02]">
             <p className="text-lg font-semibold gradient-text">{stat.value}</p>
             <p className="text-[10px] text-white/30 mt-0.5">{stat.label}</p>
           </div>
@@ -609,7 +609,7 @@ export function UseCasesSection() {
         <div className="reveal text-center mb-12">
           <span className="section-label">[ Use Cases ]</span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-white">Use Cases</h2>
-          <p className="text-gray-400 mt-3 max-w-lg mx-auto">
+          <p className="text-gray-300 mt-3 max-w-lg mx-auto">
             From individual skill checks to enterprise-wide proficiency programs
           </p>
         </div>
@@ -633,7 +633,7 @@ export function UseCasesSection() {
         <div className="reveal stagger-2 grid lg:grid-cols-2 gap-12 items-center">
           <div key={active}>
             <h3 className="text-2xl font-semibold mb-4 text-white">{uc.title}</h3>
-            <p className="text-gray-400 leading-relaxed">{uc.description}</p>
+            <p className="text-gray-300 leading-relaxed">{uc.description}</p>
           </div>
           <div className="glass-strong p-8 rounded-2xl min-h-[280px] flex flex-col justify-center">
             <Mockup />
@@ -689,7 +689,7 @@ export function TestimonialsSection() {
                   {t.initials}
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-white/80">{t.name}</p>
+                  <p className="text-sm font-medium text-white">{t.name}</p>
                   <p className="text-xs text-white/30">{t.title}, {t.company}</p>
                 </div>
               </div>
@@ -734,7 +734,7 @@ export function FAQSection() {
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
                 className="w-full flex items-center justify-between px-4 sm:px-6 py-4 text-left hover:bg-white/[0.02] transition-colors"
               >
-                <span className="text-sm font-medium text-white/80">{faq.q}</span>
+                <span className="text-sm font-medium text-white">{faq.q}</span>
                 <svg
                   width="16" height="16" viewBox="0 0 16 16" fill="none"
                   className={`flex-shrink-0 ml-4 text-white/30 transition-transform duration-300 ${openIndex === i ? 'rotate-45' : ''}`}
@@ -744,7 +744,7 @@ export function FAQSection() {
               </button>
               <div className={`accordion-content ${openIndex === i ? 'open' : ''}`}>
                 <div>
-                  <p className="px-4 sm:px-6 pb-4 text-sm text-gray-400 leading-relaxed">{faq.a}</p>
+                  <p className="px-4 sm:px-6 pb-4 text-sm text-gray-300 leading-relaxed">{faq.a}</p>
                 </div>
               </div>
             </div>
@@ -804,7 +804,7 @@ export function CTASection() {
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
             Get started in seconds
           </h2>
-          <p className="text-gray-400 mt-3">Create your first assessment in minutes</p>
+          <p className="text-gray-300 mt-3">Create your first assessment in minutes</p>
           <button className="glow-btn px-8 py-3.5 text-base mt-6">Start for free</button>
         </div>
 

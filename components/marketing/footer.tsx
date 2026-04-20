@@ -14,6 +14,10 @@ const footerLinks = {
     { label: 'Sign In', href: '/sign-in' },
     { label: 'Sign Up', href: '/sign-up' },
   ],
+  Legal: [
+    { label: 'Terms & Conditions', href: '/terms' },
+    { label: 'Privacy Policy', href: '/privacy' },
+  ],
 }
 
 export function Footer() {

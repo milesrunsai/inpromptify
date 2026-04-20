@@ -110,7 +110,7 @@ export function Header() {
                 <Link
                   href={item.href}
                   className={`text-[13px] tracking-wide transition-colors duration-200 ${
-                    pathname === item.href ? "text-white" : "text-white/60 hover:text-white"
+                    pathname === item.href ? "text-white" : "text-white/80 hover:text-white"
                   }`}
                 >
                   {item.name}
@@ -120,7 +120,7 @@ export function Header() {
                   <button
                     onClick={() => setOpenIndex(openIndex === index ? null : index)}
                     onMouseEnter={() => setOpenIndex(index)}
-                    className="text-[13px] tracking-wide transition-colors duration-200 flex items-center gap-1 text-white/60 hover:text-white"
+                    className="text-[13px] tracking-wide transition-colors duration-200 flex items-center gap-1 text-white/80 hover:text-white"
                   >
                     {item.name}
                     <svg
@@ -144,7 +144,7 @@ export function Header() {
                           key={subItem.name}
                           href={subItem.href}
                           onClick={() => setOpenIndex(null)}
-                          className="block px-4 py-2 text-[13px] text-white/60 hover:text-white hover:bg-white/[0.04] transition-colors"
+                          className="block px-4 py-2 text-[13px] text-white/70 hover:text-white hover:bg-white/[0.04] transition-colors"
                         >
                           {subItem.name}
                         </Link>
@@ -161,13 +161,13 @@ export function Header() {
         <div className="hidden md:flex items-center gap-3">
           <Link
             href="/contact"
-            className="text-[13px] text-white/60 hover:text-white transition-colors px-4 py-2"
+            className="text-[13px] text-white/80 hover:text-white transition-colors px-4 py-2"
           >
             Book a Demo
           </Link>
           <Link
             href="/sign-in"
-            className="text-[13px] text-white/60 hover:text-white transition-colors px-4 py-2"
+            className="text-[13px] text-white/80 hover:text-white transition-colors px-4 py-2"
           >
             Sign In
           </Link>
