@@ -190,6 +190,89 @@ export default function PricingPage() {
         </div>
       </section>
 
+      {/* Feature Comparison Matrix */}
+      <section className="border-t border-border/50">
+        <div className="mx-auto max-w-5xl px-6 py-16">
+          <h2 className="text-2xl font-bold tracking-tight text-center">
+            Compare plans
+          </h2>
+          <p className="mt-3 text-center text-muted-foreground">
+            See exactly what&apos;s included in every plan.
+          </p>
+
+          <div className="mt-10 overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border/50">
+                  <th className="py-3 pr-4 text-left font-medium text-muted-foreground">
+                    Feature
+                  </th>
+                  {["Free", "Starter", "Business", "Enterprise"].map((plan) => (
+                    <th
+                      key={plan}
+                      className="px-4 py-3 text-center font-semibold"
+                    >
+                      {plan}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border/30">
+                {[
+                  { feature: "Assessments / month", values: ["5", "50", "500", "Unlimited"] },
+                  { feature: "Admin seats", values: ["1", "5", "25", "Unlimited"] },
+                  { feature: "Adaptive engine", values: [true, true, true, true] },
+                  { feature: "5-dimension scoring", values: ["Basic", true, true, true] },
+                  { feature: "PromptScore credential", values: [true, true, true, true] },
+                  { feature: "Team dashboard", values: [false, true, true, true] },
+                  { feature: "API access", values: [false, true, true, true] },
+                  { feature: "Zapier / Make", values: [false, true, true, true] },
+                  { feature: "ATS integrations", values: [false, false, true, true] },
+                  { feature: "Custom templates", values: [false, false, true, true] },
+                  { feature: "Role-based assessments", values: [false, false, true, true] },
+                  { feature: "Anti-cheat proctoring", values: [false, true, true, true] },
+                  { feature: "SSO (SAML 2.0)", values: [false, false, true, true] },
+                  { feature: "SCIM provisioning", values: [false, false, false, true] },
+                  { feature: "Custom scoring models", values: [false, false, false, true] },
+                  { feature: "Dedicated CSM", values: [false, false, false, true] },
+                  { feature: "SLA guarantee", values: [false, false, false, true] },
+                  { feature: "Overage rate", values: ["—", "$25/ea", "$15/ea", "N/A"] },
+                ].map((row) => (
+                  <tr key={row.feature}>
+                    <td className="py-3 pr-4 text-muted-foreground">
+                      {row.feature}
+                    </td>
+                    {row.values.map((val, i) => (
+                      <td key={i} className="px-4 py-3 text-center">
+                        {val === true ? (
+                          <svg
+                            className="mx-auto h-4 w-4 text-primary"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                        ) : val === false ? (
+                          <span className="text-muted-foreground/40">—</span>
+                        ) : (
+                          <span className="text-muted-foreground">{val}</span>
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="border-t border-border/50">
         <div className="mx-auto max-w-3xl px-6 py-16">

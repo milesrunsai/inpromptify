@@ -23,6 +23,8 @@ import {
   type Question,
 } from "@/lib/assessment-engine";
 import { QUESTION_POOL } from "@/lib/question-bank";
+import { createIntegrityTracker, type IntegritySignals } from "@/lib/anti-cheat";
+import { seededShuffle } from "@/lib/shuffle";
 import Link from "next/link";
 import {
   RadarChart,
@@ -161,12 +163,16 @@ export function AssessmentFlow() {
   const [email, setEmail] = useState("");
   const [state, setState] = useState<AssessmentState>(createInitialState());
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
+  const [shuffledOptions, setShuffledOptions] = useState<Question["options"]>([]);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [integritySignals, setIntegritySignals] = useState<IntegritySignals | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const questionStartTime = useRef<number>(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const trackerRef = useRef<ReturnType<typeof createIntegrityTracker> | null>(null);
 
   const startTimer = useCallback((seconds: number) => {
     setTimeLeft(seconds);
@@ -183,7 +189,7 @@ export function AssessmentFlow() {
   }, []);
 
   const loadNextQuestion = useCallback(
-    (currentState: AssessmentState) => {
+    (currentState: AssessmentState, userEmail: string) => {
       const next = selectNextQuestion(
         currentState.currentTheta,
         currentState.attemptedIds,
@@ -191,11 +197,17 @@ export function AssessmentFlow() {
         QUESTION_POOL
       );
       if (!next || shouldTerminate(currentState)) {
+        // Stop integrity tracker and capture signals
+        if (trackerRef.current) {
+          setIntegritySignals(trackerRef.current.getSignals());
+          trackerRef.current.stop();
+        }
         setPhase("results");
         if (timerRef.current) clearInterval(timerRef.current);
         return;
       }
       setCurrentQuestion(next);
+      setShuffledOptions(seededShuffle(next.options, userEmail + next.id));
       setSelectedOption(null);
       questionStartTime.current = Date.now();
       startTimer(next.maxTimeSeconds);
@@ -210,7 +222,10 @@ export function AssessmentFlow() {
       const initial = createInitialState();
       setState(initial);
       setPhase("question");
-      loadNextQuestion(initial);
+      // Start integrity tracking
+      trackerRef.current = createIntegrityTracker();
+      trackerRef.current.start();
+      loadNextQuestion(initial, email);
     },
     [email, loadNextQuestion]
   );
@@ -232,6 +247,11 @@ export function AssessmentFlow() {
       const timeTakenMs = Date.now() - questionStartTime.current;
       const answerId = timedOut ? "__timeout__" : selectedOption || "__timeout__";
 
+      // Record answer timing for integrity tracking
+      if (trackerRef.current) {
+        trackerRef.current.recordAnswer(timeTakenMs);
+      }
+
       const newState = processAnswer(
         state,
         currentQuestion,
@@ -240,13 +260,14 @@ export function AssessmentFlow() {
       );
       setState(newState);
 
-      // Brief delay before next question for UX
+      // Enforce 5s minimum — show "Processing..." if answered too fast
+      const delay = timeTakenMs < 5000 ? 5000 - timeTakenMs : 300;
       setTimeout(() => {
         setIsSubmitting(false);
-        loadNextQuestion(newState);
-      }, 300);
+        loadNextQuestion(newState, email);
+      }, delay);
     },
-    [currentQuestion, selectedOption, state, isSubmitting, loadNextQuestion]
+    [currentQuestion, selectedOption, state, isSubmitting, loadNextQuestion, email]
   );
 
   const overallScore = calculateOverallPromptScore(state.dimensionScores);
@@ -365,7 +386,7 @@ export function AssessmentFlow() {
             </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-3">
-            {currentQuestion.options.map((option) => (
+            {shuffledOptions.map((option) => (
               <button
                 key={option.id}
                 onClick={() => setSelectedOption(option.id)}
@@ -558,6 +579,70 @@ export function AssessmentFlow() {
                 </div>
               );
             })}
+          </CardContent>
+        </Card>
+
+        {/* Share */}
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle>Share Your Results</CardTitle>
+            <CardDescription>
+              Let others know about your AI proficiency score
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-3">
+            <div className="flex gap-3">
+              <Button
+                variant="outline"
+                className="flex-1"
+                onClick={() => {
+                  const text = `I scored ${overallScore}/100 (${getScoreLabel(overallScore)}) on the InpromptiFy AI Proficiency Assessment! Test yours:`;
+                  const url = window.location.origin + "/assess";
+                  window.open(
+                    `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&summary=${encodeURIComponent(text)}`,
+                    "_blank",
+                    "width=600,height=500"
+                  );
+                }}
+              >
+                <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+                LinkedIn
+              </Button>
+              <Button
+                variant="outline"
+                className="flex-1"
+                onClick={() => {
+                  const text = `I scored ${overallScore}/100 (${getScoreLabel(overallScore)}) on the @InpromptiFy AI Proficiency Assessment! Test yours:`;
+                  const url = window.location.origin + "/assess";
+                  window.open(
+                    `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
+                    "_blank",
+                    "width=600,height=400"
+                  );
+                }}
+              >
+                <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+                Twitter / X
+              </Button>
+            </div>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                const text = `InpromptiFy PromptScore: ${overallScore}/100 (${getScoreLabel(overallScore)})\n\nDimensions:\n${Object.entries(DIMENSION_LABELS)
+                  .map(([k, l]) => `  ${l}: ${Math.round(state.dimensionScores[k] || 50)}`)
+                  .join("\n")}\n\nRecommendation: ${recommendation.label}\n\nTake the assessment: ${window.location.origin}/assess`;
+                navigator.clipboard.writeText(text).then(() => {
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 2000);
+                });
+              }}
+            >
+              {copied ? "Copied!" : "Copy Results to Clipboard"}
+            </Button>
           </CardContent>
         </Card>
 
