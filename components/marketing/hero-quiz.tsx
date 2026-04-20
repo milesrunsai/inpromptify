@@ -1,60 +1,21 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import Link from 'next/link'
+import { HERO_QUIZ_BANK, type HeroQuestion } from './quiz-questions'
 
-const questions = [
-  {
-    difficulty: 'INTERMEDIATE',
-    category: 'AI Fundamentals',
-    text: 'Which technique allows a large language model to generate more accurate responses by first producing a step-by-step reasoning process?',
-    options: [
-      { id: 'A', text: 'Fine-tuning' },
-      { id: 'B', text: 'Chain-of-thought prompting' },
-      { id: 'C', text: 'Tokenization' },
-      { id: 'D', text: 'Gradient descent' },
-    ],
-    correctId: 'B',
-  },
-  {
-    difficulty: 'ADVANCED',
-    category: 'RAG Architecture',
-    text: 'In a Retrieval-Augmented Generation pipeline, what is the primary purpose of the embedding model?',
-    options: [
-      { id: 'A', text: 'Generate the final response text' },
-      { id: 'B', text: 'Rank documents by publication date' },
-      { id: 'C', text: 'Convert text into vector representations for similarity search' },
-      { id: 'D', text: 'Compress the context window size' },
-    ],
-    correctId: 'C',
-  },
-  {
-    difficulty: 'BEGINNER',
-    category: 'Prompt Engineering',
-    text: 'What is "few-shot prompting"?',
-    options: [
-      { id: 'A', text: 'Training a model on a small dataset' },
-      { id: 'B', text: "Providing examples in the prompt to guide the model's response" },
-      { id: 'C', text: 'Using multiple models simultaneously' },
-      { id: 'D', text: 'Limiting the output token count' },
-    ],
-    correctId: 'B',
-  },
-  {
-    difficulty: 'INTERMEDIATE',
-    category: 'AI Safety',
-    text: 'Which approach helps prevent an LLM from generating harmful or biased outputs?',
-    options: [
-      { id: 'A', text: 'Increasing temperature to maximum' },
-      { id: 'B', text: 'Removing all training data filters' },
-      { id: 'C', text: 'RLHF (Reinforcement Learning from Human Feedback)' },
-      { id: 'D', text: 'Using a larger context window' },
-    ],
-    correctId: 'C',
-  },
-]
+function selectRandomQuestions(bank: HeroQuestion[], count: number): HeroQuestion[] {
+  const shuffled = [...bank]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled.slice(0, count)
+}
 
 export function HeroQuiz() {
+  const questions = useMemo(() => selectRandomQuestions(HERO_QUIZ_BANK, 4), [])
+
   const [currentQ, setCurrentQ] = useState(0)
   const [selected, setSelected] = useState<string | null>(null)
   const [submitted, setSubmitted] = useState(false)
@@ -85,35 +46,35 @@ export function HeroQuiz() {
         setSubmitted(false)
       }
     }, 1500)
-  }, [selected, submitted, currentQ, completedCount, totalQuestions])
+  }, [selected, submitted, currentQ, completedCount, totalQuestions, questions])
 
   return (
     <div className="glass-strong rounded-2xl overflow-hidden">
       {/* Card header */}
-      <div className="flex items-center gap-2 px-5 py-3.5 border-b border-white/[0.06]">
+      <div className="flex items-center gap-2 px-4 sm:px-5 py-3 sm:py-3.5 border-b border-white/[0.06]">
         <div className="flex gap-1.5">
           <div className="w-3 h-3 rounded-full bg-white/10" />
           <div className="w-3 h-3 rounded-full bg-white/10" />
           <div className="w-3 h-3 rounded-full bg-white/10" />
         </div>
-        <span className="ml-3 text-xs text-white/30 font-mono">
+        <span className="ml-3 text-xs text-white/30 font-mono hidden sm:inline">
           assessment.inpromptify.com
         </span>
       </div>
 
       {/* Card body */}
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
         {finished ? (
-          <div className="text-center py-6">
+          <div className="text-center py-4 sm:py-6">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-orange-500/20 to-amber-500/20 mb-5">
               <span className="text-2xl font-bold gradient-text">{correctCount}/{totalQuestions}</span>
             </div>
             <h3 className="text-lg font-semibold text-white mb-2">Assessment Complete</h3>
-            <p className="text-sm text-white/40 mb-6">
+            <p className="text-sm text-gray-400 mb-6">
               {correctCount === totalQuestions
-                ? 'Perfect score! You know your AI fundamentals.'
+                ? 'Perfect score! You really know how to use AI.'
                 : correctCount >= 3
-                ? 'Great job! You have solid AI knowledge.'
+                ? 'Great job! You have solid AI skills.'
                 : correctCount >= 2
                 ? "Good start — there's room to grow."
                 : 'Keep learning — AI proficiency takes practice.'}
@@ -188,7 +149,7 @@ export function HeroQuiz() {
                   <button
                     key={opt.id}
                     onClick={() => !submitted && setSelected(opt.id)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg border transition-all w-full text-left ${borderClass} ${
+                    className={`flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border transition-all w-full text-left ${borderClass} ${
                       !submitted ? 'hover:border-white/[0.12] cursor-pointer' : 'cursor-default'
                     }`}
                   >
@@ -197,25 +158,25 @@ export function HeroQuiz() {
                     >
                       {opt.id}
                     </span>
-                    <span className={`text-sm ${textClass}`}>
+                    <span className={`text-xs sm:text-sm ${textClass}`}>
                       {opt.text}
                     </span>
                     {submitted && isCorrect && (
-                      <span className="ml-auto text-emerald-400">
+                      <span className="ml-auto text-emerald-400 flex-shrink-0">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                           <path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </span>
                     )}
                     {submitted && isSelected && !isCorrect && (
-                      <span className="ml-auto text-red-400">
+                      <span className="ml-auto text-red-400 flex-shrink-0">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                           <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                         </svg>
                       </span>
                     )}
                     {!submitted && isSelected && (
-                      <span className="ml-auto text-orange-400">
+                      <span className="ml-auto text-orange-400 flex-shrink-0">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                           <path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>

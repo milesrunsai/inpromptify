@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Integrations",
@@ -90,12 +88,11 @@ const integrations = {
 function StatusBadge({ status }: { status: "Available" | "Coming Soon" }) {
   return (
     <span
-      className={cn(
-        "inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium",
+      className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
         status === "Available"
-          ? "bg-primary/10 text-primary"
-          : "bg-muted text-muted-foreground"
-      )}
+          ? "bg-orange-500/10 text-orange-400"
+          : "bg-white/[0.04] text-white/30"
+      }`}
     >
       {status}
     </span>
@@ -104,85 +101,74 @@ function StatusBadge({ status }: { status: "Available" | "Coming Soon" }) {
 
 export default function IntegrationsPage() {
   return (
-    <>
-      {/* Hero */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
-        <div className="mx-auto max-w-3xl text-center">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+    <div className="min-h-screen pt-24 pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Hero */}
+        <div className="max-w-3xl mx-auto text-center mb-16">
+          <span className="section-label">[ Integrations ]</span>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white mt-2">
             Integrations
           </h1>
-          <p className="mt-4 text-lg text-muted-foreground">
+          <p className="mt-4 text-base sm:text-lg text-gray-400">
             Connect InpromptiFy with the tools your team already uses.
             Assessment data flows where it needs to go — your ATS, LMS, or
             any automation platform.
           </p>
         </div>
-      </section>
 
-      {/* Integration Categories */}
-      {Object.entries(integrations).map(([key, category]) => (
-        <section key={key} className="border-t border-border/50">
-          <div className="mx-auto max-w-7xl px-6 py-16">
-            <h2 className="text-2xl font-bold tracking-tight">
+        {/* Integration Categories */}
+        {Object.entries(integrations).map(([key, category]) => (
+          <div key={key} className="mb-16">
+            <h2 className="text-2xl font-bold tracking-tight text-white">
               {category.title}
             </h2>
-            <p className="mt-3 max-w-2xl text-muted-foreground">
+            <p className="mt-3 max-w-2xl text-gray-400">
               {category.description}
             </p>
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {category.items.map((item) => (
                 <div
                   key={item.name}
-                  className="rounded-xl border border-border/50 bg-card p-6"
+                  className="glass-strong p-6 rounded-2xl"
                 >
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold">{item.name}</h3>
+                    <h3 className="font-semibold text-white">{item.name}</h3>
                     <StatusBadge status={item.status} />
                   </div>
-                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                  <p className="mt-3 text-sm leading-6 text-gray-400">
                     {item.description}
                   </p>
                 </div>
               ))}
             </div>
           </div>
-        </section>
-      ))}
+        ))}
 
-      {/* Custom Integration CTA */}
-      <section className="border-t border-border/50 bg-card/30">
-        <div className="mx-auto max-w-7xl px-6 py-24">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight">
-              Need a custom integration?
-            </h2>
-            <p className="mt-4 text-muted-foreground">
-              Our REST API and webhook system let you build any integration.
-              Enterprise customers get dedicated integration support.
-            </p>
-            <div className="mt-8 flex items-center justify-center gap-4">
-              <Link
-                href="/developers"
-                className={cn(
-                  buttonVariants({ size: "lg" }),
-                  "h-12 px-8 text-base"
-                )}
-              >
-                View API Docs
-              </Link>
-              <Link
-                href="#"
-                className={cn(
-                  buttonVariants({ variant: "outline", size: "lg" }),
-                  "h-12 px-8 text-base"
-                )}
-              >
-                Contact Sales
-              </Link>
-            </div>
+        {/* Custom Integration CTA */}
+        <div className="glass-strong rounded-2xl p-8 sm:p-10 text-center max-w-2xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+            Need a custom integration?
+          </h2>
+          <p className="mt-4 text-gray-400">
+            Our REST API and webhook system let you build any integration.
+            Enterprise customers get dedicated integration support.
+          </p>
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/developers"
+              className="glow-btn px-8 py-3 text-sm font-medium inline-block text-center w-full sm:w-auto"
+            >
+              View API Docs
+            </Link>
+            <Link
+              href="/contact"
+              className="ghost-btn px-8 py-3 text-sm font-medium inline-block text-center w-full sm:w-auto"
+            >
+              Contact Sales
+            </Link>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </div>
   );
 }

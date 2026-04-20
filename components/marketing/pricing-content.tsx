@@ -94,10 +94,10 @@ export function PricingContent() {
 
   return (
     <div className="min-h-screen pt-24 pb-16">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center max-w-xl mx-auto">
           <span className="section-label">[ Pricing ]</span>
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mt-2 text-white">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mt-2 text-white">
             Simple, transparent pricing
           </h1>
           <p className="text-lg text-gray-400 mt-4">

@@ -82,45 +82,46 @@ export default function ContactPage() {
 
   if (step === "confirmed") {
     return (
-      <div className="mx-auto max-w-lg px-6 py-24 text-center">
+      <div className="mx-auto max-w-lg px-4 sm:px-6 py-24 text-center">
         <div className="flex justify-center mb-6">
           <Image src="/logo.png" alt="InpromptiFy" width={48} height={48} className="h-12 w-auto" />
         </div>
-        <h1 className="text-3xl font-bold text-hero-heading">Demo Booked</h1>
-        <p className="mt-4 text-lg text-muted-foreground">
-          We will be in touch at <span className="text-foreground font-medium">{form.email}</span> to
+        <h1 className="text-3xl font-bold text-white">Demo Booked</h1>
+        <p className="mt-4 text-base sm:text-lg text-gray-400">
+          We will be in touch at <span className="text-white font-medium">{form.email}</span> to
           confirm your demo on{" "}
-          <span className="text-foreground font-medium">
+          <span className="text-white font-medium">
             {selectedDate?.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}
           </span>{" "}
-          at <span className="text-foreground font-medium">{selectedTime} AEST</span>.
+          at <span className="text-white font-medium">{selectedTime} AEST</span>.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-24">
+    <div className="mx-auto max-w-4xl px-4 sm:px-6 py-24">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold tracking-tight text-hero-heading sm:text-5xl">
+        <span className="section-label">[ Contact ]</span>
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white mt-2">
           Book a Demo
         </h1>
-        <p className="mt-4 text-lg text-muted-foreground">
+        <p className="mt-4 text-base sm:text-lg text-gray-400">
           See InpromptiFy in action. Pick a time that works for you.
         </p>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-2">
         {/* Calendar */}
-        <div className="liquid-glass rounded-2xl p-6">
+        <div className="glass-strong rounded-2xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-6">
-            <button onClick={prevMonth} className="p-2 rounded-lg hover:bg-white/5 text-muted-foreground hover:text-foreground transition-colors">
+            <button onClick={prevMonth} className="p-2 rounded-lg hover:bg-white/5 text-white/40 hover:text-white transition-colors">
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            <h2 className="text-lg font-semibold text-hero-heading">{monthName}</h2>
-            <button onClick={nextMonth} className="p-2 rounded-lg hover:bg-white/5 text-muted-foreground hover:text-foreground transition-colors">
+            <h2 className="text-lg font-semibold text-white">{monthName}</h2>
+            <button onClick={nextMonth} className="p-2 rounded-lg hover:bg-white/5 text-white/40 hover:text-white transition-colors">
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
@@ -130,7 +131,7 @@ export default function ContactPage() {
           {/* Day headers */}
           <div className="grid grid-cols-7 gap-1 mb-2">
             {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((d) => (
-              <div key={d} className="text-center text-xs font-medium text-muted-foreground py-2">{d}</div>
+              <div key={d} className="text-center text-xs font-medium text-white/30 py-2">{d}</div>
             ))}
           </div>
 
@@ -151,8 +152,8 @@ export default function ContactPage() {
                   disabled={disabled}
                   className={`
                     h-10 w-full rounded-lg text-sm font-medium transition-all
-                    ${disabled ? "text-muted-foreground/30 cursor-not-allowed" : "text-foreground hover:bg-primary/20 cursor-pointer"}
-                    ${selected ? "bg-primary text-primary-foreground hover:bg-primary/90" : ""}
+                    ${disabled ? "text-white/10 cursor-not-allowed" : "text-white hover:bg-orange-500/20 cursor-pointer"}
+                    ${selected ? "bg-orange-500 text-white hover:bg-orange-500/90" : ""}
                   `}
                 >
                   {day}
@@ -163,18 +164,18 @@ export default function ContactPage() {
 
           {/* Time slots */}
           {selectedDate && (
-            <div className="mt-6 border-t border-border/30 pt-6">
-              <h3 className="text-sm font-medium text-muted-foreground mb-3">
+            <div className="mt-6 border-t border-white/[0.06] pt-6">
+              <h3 className="text-sm font-medium text-white/40 mb-3">
                 {selectedDate.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })} — Select a time (AEST)
               </h3>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                 {timeSlots.map((time) => (
                   <button
                     key={time}
                     onClick={() => { setSelectedTime(time); setStep("details"); }}
                     className={`
                       rounded-lg py-2 text-sm font-medium transition-all
-                      ${selectedTime === time ? "bg-primary text-primary-foreground" : "bg-white/5 text-foreground hover:bg-primary/20"}
+                      ${selectedTime === time ? "bg-orange-500 text-white" : "bg-white/[0.04] text-white hover:bg-orange-500/20"}
                     `}
                   >
                     {time}
@@ -186,54 +187,54 @@ export default function ContactPage() {
         </div>
 
         {/* Details form */}
-        <div className="liquid-glass rounded-2xl p-6">
+        <div className="glass-strong rounded-2xl p-4 sm:p-6">
           {step === "details" ? (
             <>
-              <h2 className="text-lg font-semibold text-hero-heading mb-1">Your Details</h2>
-              <p className="text-sm text-muted-foreground mb-6">
+              <h2 className="text-lg font-semibold text-white mb-1">Your Details</h2>
+              <p className="text-sm text-gray-400 mb-6">
                 {selectedDate?.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })} at {selectedTime} AEST
               </p>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-1">Name *</label>
+                  <label className="block text-sm font-medium text-white mb-1">Name *</label>
                   <input
                     type="text"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full rounded-lg border border-border/50 bg-background/50 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                    className="w-full rounded-lg border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder:text-white/30 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
                     placeholder="Your name"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-1">Work Email *</label>
+                  <label className="block text-sm font-medium text-white mb-1">Work Email *</label>
                   <input
                     type="email"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full rounded-lg border border-border/50 bg-background/50 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                    className="w-full rounded-lg border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder:text-white/30 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
                     placeholder="you@company.com"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-1">Company</label>
+                  <label className="block text-sm font-medium text-white mb-1">Company</label>
                   <input
                     type="text"
                     value={form.company}
                     onChange={(e) => setForm({ ...form, company: e.target.value })}
-                    className="w-full rounded-lg border border-border/50 bg-background/50 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                    className="w-full rounded-lg border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder:text-white/30 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
                     placeholder="Company name"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-1">Team Size</label>
+                  <label className="block text-sm font-medium text-white mb-1">Team Size</label>
                   <div className="flex flex-wrap gap-2">
                     {teamSizes.map((size) => (
                       <button
                         key={size}
                         onClick={() => setForm({ ...form, teamSize: size })}
                         className={`rounded-lg px-3 py-1.5 text-sm transition-all ${
-                          form.teamSize === size ? "bg-primary text-primary-foreground" : "bg-white/5 text-muted-foreground hover:text-foreground hover:bg-white/10"
+                          form.teamSize === size ? "bg-orange-500 text-white" : "bg-white/[0.04] text-white/60 hover:text-white hover:bg-white/[0.08]"
                         }`}
                       >
                         {size}
@@ -242,25 +243,25 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-1">Anything specific you want to see?</label>
+                  <label className="block text-sm font-medium text-white mb-1">Anything specific you want to see?</label>
                   <textarea
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                     rows={3}
-                    className="w-full rounded-lg border border-border/50 bg-background/50 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary outline-none resize-none"
+                    className="w-full rounded-lg border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder:text-white/30 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none resize-none"
                     placeholder="e.g. ATS integration, team analytics..."
                   />
                 </div>
                 <button
                   onClick={handleSubmit}
                   disabled={!form.name || !form.email || submitting}
-                  className="w-full rounded-full bg-primary py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="glow-btn w-full py-3 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {submitting ? "Booking..." : "Confirm Booking"}
                 </button>
                 <button
                   onClick={() => setStep("calendar")}
-                  className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="w-full text-sm text-white/40 hover:text-white transition-colors"
                 >
                   Back to calendar
                 </button>
@@ -268,13 +269,13 @@ export default function ContactPage() {
             </>
           ) : (
             <div className="flex flex-col items-center justify-center h-full text-center py-12">
-              <div className="text-6xl mb-4 text-primary">
+              <div className="text-orange-400 mb-4">
                 <svg className="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-hero-heading">Select a date and time</h3>
-              <p className="mt-2 text-sm text-muted-foreground max-w-xs">
+              <h3 className="text-lg font-semibold text-white">Select a date and time</h3>
+              <p className="mt-2 text-sm text-gray-400 max-w-xs">
                 Pick a day on the calendar, then choose a time slot. We will walk you through
                 the full platform in 30 minutes.
               </p>
@@ -284,11 +285,11 @@ export default function ContactPage() {
       </div>
 
       {/* General contact below */}
-      <div className="mt-16 liquid-glass rounded-xl p-8 text-center">
-        <h2 className="text-lg font-semibold text-hero-heading">Prefer email?</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
+      <div className="mt-16 glass-strong rounded-xl p-6 sm:p-8 text-center">
+        <h2 className="text-lg font-semibold text-white">Prefer email?</h2>
+        <p className="mt-2 text-sm text-gray-400">
           Reach us at{" "}
-          <a href="mailto:hello@inpromptify.com" className="text-primary hover:underline">
+          <a href="mailto:hello@inpromptify.com" className="text-orange-400 hover:underline">
             hello@inpromptify.com
           </a>
           {" "}and we will respond within 24 hours.

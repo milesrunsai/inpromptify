@@ -26,11 +26,12 @@ const entries = [
 
 export default function ChangelogPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-24">
-      <h1 className="text-4xl font-bold tracking-tight text-hero-heading sm:text-5xl">
+    <div className="mx-auto max-w-3xl px-4 sm:px-6 py-24">
+      <span className="section-label">[ Changelog ]</span>
+      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white mt-2">
         Changelog
       </h1>
-      <p className="mt-4 text-lg text-muted-foreground">
+      <p className="mt-4 text-base sm:text-lg text-gray-400">
         What we shipped, when we shipped it. No fluff.
       </p>
 
@@ -38,14 +39,14 @@ export default function ChangelogPage() {
         {entries.map((entry) => (
           <div key={entry.date} className="relative">
             <div className="flex items-center gap-4 mb-4">
-              <span className="text-sm font-medium text-primary">{entry.date}</span>
-              <div className="flex-1 h-px bg-border/50" />
+              <span className="text-sm font-medium text-orange-400">{entry.date}</span>
+              <div className="flex-1 h-px bg-white/[0.06]" />
             </div>
-            <h2 className="text-2xl font-bold text-hero-heading">{entry.title}</h2>
+            <h2 className="text-2xl font-bold text-white">{entry.title}</h2>
             <ul className="mt-4 space-y-2">
               {entry.items.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-muted-foreground">
-                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
+                <li key={item} className="flex items-start gap-3 text-gray-400">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-orange-400 shrink-0" />
                   <span className="text-sm">{item}</span>
                 </li>
               ))}

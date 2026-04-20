@@ -151,7 +151,7 @@ export default async function BlogPostPage({
 
   return (
     <div className="min-h-screen pt-24 pb-16">
-      <div className="max-w-3xl mx-auto px-6">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6">
         <Link
           href="/blog"
           className="text-sm text-white/40 hover:text-white/60 transition-colors"

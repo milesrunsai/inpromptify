@@ -48,11 +48,11 @@ export function SocialProof() {
   const ref = useReveal()
   return (
     <section ref={ref} className="relative py-20 section-frame">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <p className="text-center text-xs uppercase tracking-[0.2em] text-white/30 mb-10">
           Trusted by leading organizations
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
+        <div className="flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-12 gap-y-6">
           {companies.map((name) => (
             <span
               key={name}
@@ -289,7 +289,7 @@ export function FeaturesSection() {
   return (
     <section ref={ref} className="relative py-24 overflow-hidden section-frame">
       <div className="absolute inset-0 grid-pattern" />
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <div className="reveal text-center mb-12">
           <span className="section-label">[ What we offer ]</span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-white">
@@ -299,12 +299,12 @@ export function FeaturesSection() {
           </h2>
         </div>
 
-        <div className="reveal stagger-1 flex flex-wrap justify-center gap-1 mb-12">
+        <div className="reveal stagger-1 flex flex-wrap justify-center gap-1 mb-8 sm:mb-12">
           {featureTabs.map((t, i) => (
             <button
               key={t.label}
               onClick={() => setActive(i)}
-              className={`relative px-4 py-2.5 text-sm rounded-lg transition-all duration-200 ${
+              className={`relative px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm rounded-lg transition-all duration-200 ${
                 i === active
                   ? 'text-white bg-orange-500/10 border border-orange-500/20'
                   : 'text-white/40 hover:text-white/60 hover:bg-white/[0.03]'
@@ -391,7 +391,7 @@ export function StatsSection() {
         />
       </video>
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f]/60 via-[#0a0a0f]/70 to-[#0a0a0f]/90" />
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <div className="reveal text-center mb-14">
           <span className="section-label">[ By the numbers ]</span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-white">Built for scale.</h2>
@@ -605,7 +605,7 @@ export function UseCasesSection() {
 
   return (
     <section ref={ref} className="relative py-24 section-frame">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="reveal text-center mb-12">
           <span className="section-label">[ Use Cases ]</span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-white">Use Cases</h2>
@@ -614,12 +614,12 @@ export function UseCasesSection() {
           </p>
         </div>
 
-        <div className="reveal stagger-1 flex justify-center gap-1 mb-12">
+        <div className="reveal stagger-1 flex flex-wrap justify-center gap-1 mb-8 sm:mb-12">
           {useCasesData.map((uc, i) => (
             <button
               key={uc.label}
               onClick={() => setActive(i)}
-              className={`px-5 py-2.5 text-sm rounded-lg transition-all ${
+              className={`px-3 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm rounded-lg transition-all ${
                 i === active
                   ? 'text-white bg-orange-500/10 border border-orange-500/20'
                   : 'text-white/40 hover:text-white/60 hover:bg-white/[0.03]'
@@ -670,7 +670,7 @@ export function TestimonialsSection() {
 
   return (
     <section ref={ref} className="relative py-24 section-frame">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="reveal text-center mb-14">
           <span className="section-label">[ Testimonials ]</span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-white">
@@ -719,10 +719,10 @@ export function FAQSection() {
 
   return (
     <section ref={ref} className="relative py-24 section-frame">
-      <div className="max-w-3xl mx-auto px-6">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6">
         <div className="reveal text-center mb-14">
           <span className="section-label">[ FAQ ]</span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-white">
             Frequently asked questions.
           </h2>
         </div>
@@ -732,7 +732,7 @@ export function FAQSection() {
             <div key={i} className="border border-white/[0.06] rounded-xl overflow-hidden">
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-white/[0.02] transition-colors"
+                className="w-full flex items-center justify-between px-4 sm:px-6 py-4 text-left hover:bg-white/[0.02] transition-colors"
               >
                 <span className="text-sm font-medium text-white/80">{faq.q}</span>
                 <svg
@@ -744,7 +744,7 @@ export function FAQSection() {
               </button>
               <div className={`accordion-content ${openIndex === i ? 'open' : ''}`}>
                 <div>
-                  <p className="px-6 pb-4 text-sm text-white/40 leading-relaxed">{faq.a}</p>
+                  <p className="px-4 sm:px-6 pb-4 text-sm text-gray-400 leading-relaxed">{faq.a}</p>
                 </div>
               </div>
             </div>
@@ -799,7 +799,7 @@ export function CTASection() {
   return (
     <section ref={ref} className="relative py-24 section-frame">
       <div className="absolute inset-0 dot-pattern opacity-20" />
-      <div className="relative max-w-5xl mx-auto px-6">
+      <div className="relative max-w-5xl mx-auto px-4 sm:px-6">
         <div className="reveal text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
             Get started in seconds

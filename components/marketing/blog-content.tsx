@@ -45,10 +45,10 @@ export function BlogContent() {
 
   return (
     <div className="min-h-screen pt-24 pb-16">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="max-w-xl">
           <span className="section-label">[ Blog ]</span>
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mt-2 text-white">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mt-2 text-white">
             Latest updates
           </h1>
           <p className="text-lg text-gray-400 mt-4">
@@ -58,7 +58,7 @@ export function BlogContent() {
         </div>
 
         {/* Category filters */}
-        <div className="flex gap-2 mt-10">
+        <div className="flex flex-wrap gap-2 mt-10">
           {categories.map((cat) => (
             <button
               key={cat}

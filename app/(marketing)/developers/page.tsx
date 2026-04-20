@@ -98,111 +98,84 @@ print(result.dimension_scores) # {"prompt_quality": 85, ...}`,
 
 export default function DevelopersPage() {
   return (
-    <>
-      {/* Hero */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
-        <div className="mx-auto max-w-3xl text-center">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+    <div className="min-h-screen pt-24 pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Hero */}
+        <div className="max-w-3xl mx-auto text-center mb-16">
+          <span className="section-label">[ Developers ]</span>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white mt-2">
             Developer Documentation
           </h1>
-          <p className="mt-4 text-lg text-muted-foreground">
+          <p className="mt-4 text-base sm:text-lg text-gray-400">
             REST API, webhook events, and SDK clients. Everything you need to
             integrate AI proficiency assessment into your workflow.
           </p>
         </div>
-      </section>
 
-      {/* API Overview */}
-      <section className="border-t border-border/50 bg-card/30">
-        <div className="mx-auto max-w-7xl px-6 py-16">
-          <h2 className="text-2xl font-bold tracking-tight">API Overview</h2>
-          <div className="mt-6 grid gap-6 lg:grid-cols-3">
-            <div className="rounded-xl border border-border/50 bg-card p-6">
-              <h3 className="font-semibold">Base URL</h3>
-              <code className="mt-2 block text-sm text-primary">
+        {/* API Overview */}
+        <div className="mb-16">
+          <h2 className="text-2xl font-bold tracking-tight text-white">API Overview</h2>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="glass-strong p-6 rounded-2xl">
+              <h3 className="font-semibold text-white">Base URL</h3>
+              <code className="mt-2 block text-sm text-orange-400">
                 https://api.inpromptify.com/v1
               </code>
-              <p className="mt-3 text-sm text-muted-foreground">
+              <p className="mt-3 text-sm text-gray-400">
                 All API requests use HTTPS. Authentication via Bearer token in
                 the Authorization header.
               </p>
             </div>
-            <div className="rounded-xl border border-border/50 bg-card p-6">
-              <h3 className="font-semibold">Authentication</h3>
-              <code className="mt-2 block text-sm text-muted-foreground">
+            <div className="glass-strong p-6 rounded-2xl">
+              <h3 className="font-semibold text-white">Authentication</h3>
+              <code className="mt-2 block text-sm text-gray-400 font-mono">
                 Authorization: Bearer sk_live_...
               </code>
-              <p className="mt-3 text-sm text-muted-foreground">
+              <p className="mt-3 text-sm text-gray-400">
                 API keys are scoped to your organization. Generate keys from
                 the dashboard under Settings.
               </p>
             </div>
-            <div className="rounded-xl border border-border/50 bg-card p-6">
-              <h3 className="font-semibold">Rate Limits</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
+            <div className="glass-strong p-6 rounded-2xl">
+              <h3 className="font-semibold text-white">Rate Limits</h3>
+              <p className="mt-2 text-sm text-gray-400">
                 100 requests/minute for standard endpoints. Assessment creation
                 is limited to your plan&apos;s credit allocation.
               </p>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* Endpoints */}
-      <section className="border-t border-border/50">
-        <div className="mx-auto max-w-7xl px-6 py-16">
-          <h2 className="text-2xl font-bold tracking-tight">Key Endpoints</h2>
-          <div className="mt-6 overflow-hidden rounded-xl border border-border/50">
+        {/* Endpoints */}
+        <div className="mb-16">
+          <h2 className="text-2xl font-bold tracking-tight text-white">Key Endpoints</h2>
+          <div className="mt-6 overflow-x-auto rounded-2xl border border-white/[0.06]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border/50 bg-card">
-                  <th className="px-6 py-3 text-left font-semibold">Method</th>
-                  <th className="px-6 py-3 text-left font-semibold">
-                    Endpoint
-                  </th>
-                  <th className="px-6 py-3 text-left font-semibold">
-                    Description
-                  </th>
+                <tr className="border-b border-white/[0.06] bg-white/[0.02]">
+                  <th className="px-4 sm:px-6 py-3 text-left font-semibold text-white">Method</th>
+                  <th className="px-4 sm:px-6 py-3 text-left font-semibold text-white">Endpoint</th>
+                  <th className="px-4 sm:px-6 py-3 text-left font-semibold text-white hidden sm:table-cell">Description</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border/50">
+              <tbody className="divide-y divide-white/[0.06]">
                 {[
-                  {
-                    method: "POST",
-                    endpoint: "/assessments",
-                    desc: "Create a new assessment",
-                  },
-                  {
-                    method: "GET",
-                    endpoint: "/assessments/:id",
-                    desc: "Get assessment details and scores",
-                  },
-                  {
-                    method: "GET",
-                    endpoint: "/assessments",
-                    desc: "List assessments (paginated)",
-                  },
-                  {
-                    method: "GET",
-                    endpoint: "/org/analytics",
-                    desc: "Aggregate team analytics",
-                  },
-                  {
-                    method: "POST",
-                    endpoint: "/webhooks",
-                    desc: "Register a webhook endpoint",
-                  },
+                  { method: "POST", endpoint: "/assessments", desc: "Create a new assessment" },
+                  { method: "GET", endpoint: "/assessments/:id", desc: "Get assessment details and scores" },
+                  { method: "GET", endpoint: "/assessments", desc: "List assessments (paginated)" },
+                  { method: "GET", endpoint: "/org/analytics", desc: "Aggregate team analytics" },
+                  { method: "POST", endpoint: "/webhooks", desc: "Register a webhook endpoint" },
                 ].map((row) => (
-                  <tr key={row.endpoint} className="bg-card/50">
-                    <td className="px-6 py-3">
-                      <span className="rounded bg-primary/10 px-2 py-0.5 font-mono text-xs font-semibold text-primary">
+                  <tr key={row.endpoint + row.method} className="bg-white/[0.01]">
+                    <td className="px-4 sm:px-6 py-3">
+                      <span className="rounded bg-orange-500/10 px-2 py-0.5 font-mono text-xs font-semibold text-orange-400">
                         {row.method}
                       </span>
                     </td>
-                    <td className="px-6 py-3 font-mono text-muted-foreground">
+                    <td className="px-4 sm:px-6 py-3 font-mono text-gray-400">
                       {row.endpoint}
                     </td>
-                    <td className="px-6 py-3 text-muted-foreground">
+                    <td className="px-4 sm:px-6 py-3 text-gray-400 hidden sm:table-cell">
                       {row.desc}
                     </td>
                   </tr>
@@ -211,13 +184,11 @@ export default function DevelopersPage() {
             </table>
           </div>
         </div>
-      </section>
 
-      {/* Webhooks */}
-      <section className="border-t border-border/50 bg-card/30">
-        <div className="mx-auto max-w-7xl px-6 py-16">
-          <h2 className="text-2xl font-bold tracking-tight">Webhook Events</h2>
-          <p className="mt-3 text-muted-foreground">
+        {/* Webhooks */}
+        <div className="mb-16">
+          <h2 className="text-2xl font-bold tracking-tight text-white">Webhook Events</h2>
+          <p className="mt-3 text-gray-400">
             Configure webhook endpoints in your dashboard. All payloads are
             signed with HMAC-SHA256 for verification.
           </p>
@@ -225,72 +196,66 @@ export default function DevelopersPage() {
             {webhookEvents.map((wh) => (
               <div
                 key={wh.event}
-                className="rounded-xl border border-border/50 bg-card"
+                className="glass-strong rounded-2xl overflow-hidden"
               >
-                <div className="border-b border-border/50 px-6 py-4">
-                  <code className="text-sm font-semibold text-primary">
+                <div className="border-b border-white/[0.06] px-4 sm:px-6 py-4">
+                  <code className="text-sm font-semibold text-orange-400">
                     {wh.event}
                   </code>
-                  <p className="mt-1 text-sm text-muted-foreground">
+                  <p className="mt-1 text-sm text-gray-400">
                     {wh.description}
                   </p>
                 </div>
-                <pre className="overflow-x-auto p-6 text-sm text-muted-foreground">
+                <pre className="overflow-x-auto p-4 sm:p-6 text-sm text-gray-400">
                   <code>{wh.payload}</code>
                 </pre>
               </div>
             ))}
           </div>
         </div>
-      </section>
 
-      {/* SDK Snippets */}
-      <section className="border-t border-border/50">
-        <div className="mx-auto max-w-7xl px-6 py-16">
-          <h2 className="text-2xl font-bold tracking-tight">
+        {/* SDK Snippets */}
+        <div className="mb-16">
+          <h2 className="text-2xl font-bold tracking-tight text-white">
             Quickstart SDKs
           </h2>
-          <p className="mt-3 text-muted-foreground">
+          <p className="mt-3 text-gray-400">
             Official client libraries for TypeScript and Python. Install and
             start making API calls in under a minute.
           </p>
-          <div className="mt-8 grid gap-6 lg:grid-cols-2">
+          <div className="mt-8 grid gap-4 lg:grid-cols-2">
             {sdkSnippets.map((snippet) => (
               <div
                 key={snippet.language}
-                className="rounded-xl border border-border/50 bg-card"
+                className="glass-strong rounded-2xl overflow-hidden"
               >
-                <div className="border-b border-border/50 px-6 py-3">
-                  <span className="text-sm font-semibold">
+                <div className="border-b border-white/[0.06] px-4 sm:px-6 py-3">
+                  <span className="text-sm font-semibold text-white">
                     {snippet.language}
                   </span>
                 </div>
-                <pre className="overflow-x-auto p-6 text-sm text-muted-foreground">
+                <pre className="overflow-x-auto p-4 sm:p-6 text-sm text-gray-400">
                   <code>{snippet.code}</code>
                 </pre>
               </div>
             ))}
           </div>
         </div>
-      </section>
 
-      {/* Postman */}
-      <section className="border-t border-border/50 bg-card/30">
-        <div className="mx-auto max-w-7xl px-6 py-16">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-2xl font-bold tracking-tight">
-              Postman Collection
-            </h2>
-            <p className="mt-3 text-muted-foreground">
-              Import our Postman collection to explore the API interactively.
-              Includes pre-configured environments for sandbox and production.
-            </p>
-            <p className="mt-4 text-sm text-muted-foreground">
-              Collection available after sign-up in your developer settings.
-            </p>
-          </div>
+        {/* Postman */}
+        <div className="glass-strong rounded-2xl p-8 sm:p-10 text-center max-w-2xl mx-auto">
+          <h2 className="text-2xl font-bold tracking-tight text-white">
+            Postman Collection
+          </h2>
+          <p className="mt-3 text-gray-400">
+            Import our Postman collection to explore the API interactively.
+            Includes pre-configured environments for sandbox and production.
+          </p>
+          <p className="mt-4 text-sm text-white/30">
+            Collection available after sign-up in your developer settings.
+          </p>
         </div>
-      </section>
-    </>
+      </div>
+    </div>
   );
 }

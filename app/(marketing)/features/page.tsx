@@ -78,14 +78,14 @@ const categories = [
 export default function FeaturesPage() {
   return (
     <div className="min-h-screen pt-24 pb-16">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="max-w-2xl">
           <span className="section-label">[ Features ]</span>
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mt-2">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mt-2 text-white">
             Everything you need to{" "}
             <span className="gradient-text">assess AI proficiency</span>
           </h1>
-          <p className="text-lg text-white/40 mt-6 leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-400 mt-6 leading-relaxed">
             From adaptive testing to verifiable certifications, InpromptiFy
             provides the complete toolkit for measuring and validating AI skills
             at any scale.
@@ -102,7 +102,7 @@ export default function FeaturesPage() {
                 <div key={f.title} className="glass-strong p-6 rounded-2xl">
                   <span className="text-2xl mb-3 block">{f.icon}</span>
                   <h3 className="text-base font-semibold mb-2">{f.title}</h3>
-                  <p className="text-sm text-white/40 leading-relaxed">
+                  <p className="text-sm text-gray-400 leading-relaxed">
                     {f.desc}
                   </p>
                 </div>
@@ -117,14 +117,14 @@ export default function FeaturesPage() {
             <h2 className="text-2xl font-bold text-white mb-3">
               Ready to get started?
             </h2>
-            <p className="text-sm text-white/40 mb-6">
+            <p className="text-sm text-gray-400 mb-6">
               Start measuring AI proficiency across your team today. Free to get
               started, no credit card required.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4">
               <Link
                 href="/sign-up"
-                className="glow-btn px-8 py-3 text-sm font-medium inline-block"
+                className="glow-btn px-8 py-3 text-sm font-medium inline-block text-center"
               >
                 Start Free Trial
               </Link>
@@ -132,7 +132,7 @@ export default function FeaturesPage() {
                 href="https://agentmail.to/enterprise"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="ghost-btn px-8 py-3 text-sm font-medium inline-block"
+                className="ghost-btn px-8 py-3 text-sm font-medium inline-block text-center"
               >
                 Contact Sales
               </a>

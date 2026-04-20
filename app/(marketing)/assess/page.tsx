@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function AssessPage() {
   return (
-    <main className="mx-auto w-full max-w-3xl px-6 py-12">
+    <main className="mx-auto w-full max-w-3xl px-4 sm:px-6 py-12">
       <AssessmentFlow />
     </main>
   );
