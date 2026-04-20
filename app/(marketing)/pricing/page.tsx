@@ -27,7 +27,7 @@ const tiers = [
   },
   {
     name: "Starter",
-    price: { monthly: "$149", annual: "$119" },
+    price: { monthly: "$99", annual: "$79" },
     period: "/mo",
     description: "For growing teams running structured AI hiring.",
     features: [
@@ -35,7 +35,7 @@ const tiers = [
       "5 admin seats",
       "Full 5-dimension scoring",
       "Team analytics dashboard",
-      "CSV export",
+      "API access",
       "Zapier integration",
       "Priority email support",
     ],
@@ -45,12 +45,12 @@ const tiers = [
   },
   {
     name: "Business",
-    price: { monthly: "$499", annual: "$399" },
+    price: { monthly: "$399", annual: "$319" },
     period: "/mo",
     description: "For organizations scaling AI fluency across departments.",
     features: [
-      "250 assessments per month",
-      "Unlimited admin seats",
+      "500 assessments per month",
+      "25 admin seats",
       "Full 5-dimension scoring",
       "Advanced team analytics",
       "ATS integrations (Greenhouse, Lever)",
