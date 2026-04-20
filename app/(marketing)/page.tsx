@@ -64,14 +64,10 @@ export default function LandingPage() {
       <section className="relative overflow-hidden bg-background min-h-screen flex flex-col items-center justify-center">
         <VideoHero />
         <div className="relative z-10 flex flex-col items-center justify-center pt-20 px-4 text-center">
-          <h1
-            className="text-[120px] sm:text-[180px] lg:text-[230px] font-normal leading-none tracking-tighter bg-clip-text text-transparent"
-            style={{
-              backgroundImage:
-                "linear-gradient(223deg, #E8E8E9 0%, #3A7BBF 104.15%)",
-            }}
-          >
-            IF
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-hero-heading leading-tight">
+            Measure real AI proficiency.
+            <br />
+            <span className="text-primary">Not AI trivia.</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg text-hero-sub opacity-80 leading-relaxed">
             The most powerful AI proficiency assessment
@@ -80,7 +76,7 @@ export default function LandingPage() {
           </p>
           <Link
             href="/assess"
-            className="liquid-glass mt-10 rounded-full px-[29px] py-[24px] text-sm font-medium text-foreground transition-colors hover:bg-white/5"
+            className="mt-10 rounded-full bg-primary px-8 py-4 text-base font-medium text-primary-foreground transition-colors hover:bg-primary/90 shadow-lg shadow-primary/25"
           >
             Start Free Assessment
           </Link>
