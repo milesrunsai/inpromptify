@@ -43,14 +43,14 @@ function useReveal() {
 export function BoldStatement() {
   const ref = useReveal()
   return (
-    <section ref={ref} className="bg-[#e8e4e0] py-20 px-6">
+    <section ref={ref} className="bg-[#0a0a0a] py-20 px-6">
       <div className="max-w-5xl mx-auto">
         <p className="text-2xl sm:text-3xl lg:text-4xl leading-relaxed reveal">
-          <span className="text-gray-400 font-normal">Unlock the potential of </span>
-          <span className="text-gray-900 font-bold">AI proficiency measurement.</span>
+          <span className="text-white/40 font-normal">Unlock the potential of </span>
+          <span className="text-white font-bold">AI proficiency measurement.</span>
           <br />
-          <span className="text-gray-400 font-normal">InpromptiFy equips businesses to assess, benchmark, and certify their workforce, </span>
-          <span className="text-gray-900 font-bold">redefining how organizations measure AI readiness.</span>
+          <span className="text-white/40 font-normal">InpromptiFy equips businesses to assess, benchmark, and certify their workforce, </span>
+          <span className="text-white font-bold">redefining how organizations measure AI readiness.</span>
         </p>
       </div>
     </section>
