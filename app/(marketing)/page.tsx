@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
+import { VideoHero } from "@/components/marketing/video-hero";
+import { LogoMarquee } from "@/components/marketing/logo-marquee";
 
 const features = [
   {
@@ -60,64 +60,40 @@ export default function LandingPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background" />
-        <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:py-40">
-          <div className="mx-auto max-w-3xl text-center">
-            {/* Looping video — transparent bg, blends into dark background */}
-            <div className="mx-auto mb-10 flex items-center justify-center">
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="h-48 w-48 sm:h-64 sm:w-64 lg:h-80 lg:w-80 object-contain mix-blend-screen"
-              >
-                <source
-                  src="https://d8j0ntlcm91z4.cloudfront.net/user_3CVjpU5MqL28kt1M6PyOAXhNcyX/hf_20260420_033355_d2d70c02-2cf9-437b-8cd0-e210a60ba6c9.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
-              Measure AI proficiency.
-              <br />
-              <span className="text-primary">Not AI trivia.</span>
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-muted-foreground sm:text-xl">
-              Adaptive assessments that evaluate how people actually use AI
-              tools. Five scoring dimensions. One standardized credential.
-              Built for enterprise hiring and workforce development.
-            </p>
-            <div className="mt-10 flex items-center justify-center gap-4">
-              <Link
-                href="/assess"
-                className={cn(
-                  buttonVariants({ size: "lg" }),
-                  "h-12 px-8 text-base"
-                )}
-              >
-                Take the 3-Minute Assessment
-              </Link>
-              <Link
-                href="/features"
-                className={cn(
-                  buttonVariants({ variant: "outline", size: "lg" }),
-                  "h-12 px-8 text-base"
-                )}
-              >
-                See How It Works
-              </Link>
-            </div>
-          </div>
+      <section className="relative overflow-hidden bg-background min-h-screen flex flex-col items-center justify-center">
+        <VideoHero />
+        <div className="relative z-10 flex flex-col items-center justify-center pt-20 px-4 text-center">
+          <h1
+            className="text-[120px] sm:text-[180px] lg:text-[230px] font-normal leading-none tracking-tighter bg-clip-text text-transparent"
+            style={{
+              backgroundImage:
+                "linear-gradient(223deg, #E8E8E9 0%, #3A7BBF 104.15%)",
+            }}
+          >
+            IF
+          </h1>
+          <p className="mt-6 max-w-xl text-lg text-hero-sub opacity-80 leading-relaxed">
+            The most powerful AI proficiency assessment
+            <br />
+            ever deployed in talent acquisition
+          </p>
+          <Link
+            href="/assess"
+            className="liquid-glass mt-10 rounded-full px-[29px] py-[24px] text-sm font-medium text-foreground transition-colors hover:bg-white/5"
+          >
+            Start Free Assessment
+          </Link>
+        </div>
+        <div className="relative z-10 mt-auto w-full max-w-5xl mx-auto px-4">
+          <LogoMarquee />
         </div>
       </section>
 
       {/* Features Grid */}
-      <section className="border-t border-border/50 bg-card/30">
+      <section className="bg-background">
         <div className="mx-auto max-w-7xl px-6 py-24">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-hero-heading sm:text-4xl">
               Assessment infrastructure for the AI era
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
@@ -129,9 +105,11 @@ export default function LandingPage() {
             {features.map((feature) => (
               <div
                 key={feature.title}
-                className="rounded-xl border border-border/50 bg-card p-6 transition-colors hover:border-primary/30"
+                className="liquid-glass rounded-xl p-6 transition-all hover:scale-[1.02]"
               >
-                <h3 className="text-lg font-semibold">{feature.title}</h3>
+                <h3 className="text-lg font-semibold text-hero-heading">
+                  {feature.title}
+                </h3>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
                   {feature.description}
                 </p>
@@ -142,14 +120,14 @@ export default function LandingPage() {
       </section>
 
       {/* Use Cases */}
-      <section className="border-t border-border/50">
+      <section className="bg-background">
         <div className="mx-auto max-w-7xl px-6 py-24">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-hero-heading sm:text-4xl">
               Built for the people who decide
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              Whether you are hiring, training, or certifying — InpromptiFy
+              Whether you are hiring, training, or certifying -- InpromptiFy
               gives your team the data to make decisions about AI readiness.
             </p>
           </div>
@@ -157,12 +135,14 @@ export default function LandingPage() {
             {useCases.map((useCase) => (
               <div
                 key={useCase.title}
-                className="rounded-xl border border-border/50 bg-card p-8"
+                className="liquid-glass rounded-xl p-8"
               >
                 <p className="text-xs font-medium uppercase tracking-wider text-primary">
                   {useCase.audience}
                 </p>
-                <h3 className="mt-3 text-xl font-semibold">{useCase.title}</h3>
+                <h3 className="mt-3 text-xl font-semibold text-hero-heading">
+                  {useCase.title}
+                </h3>
                 <p className="mt-3 text-sm leading-6 text-muted-foreground">
                   {useCase.description}
                 </p>
@@ -172,11 +152,11 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Built With / Trust */}
-      <section className="border-t border-border/50 bg-card/30">
+      {/* Trust */}
+      <section className="bg-background">
         <div className="mx-auto max-w-7xl px-6 py-24">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-hero-heading sm:text-4xl">
               Built on proven infrastructure
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
@@ -193,9 +173,11 @@ export default function LandingPage() {
             ].map((item) => (
               <div
                 key={item.name}
-                className="rounded-lg border border-border/50 bg-card px-6 py-4"
+                className="liquid-glass rounded-lg px-6 py-4"
               >
-                <p className="text-sm font-semibold">{item.name}</p>
+                <p className="text-sm font-semibold text-hero-heading">
+                  {item.name}
+                </p>
                 <p className="mt-1 text-xs text-muted-foreground">
                   {item.detail}
                 </p>
@@ -206,10 +188,10 @@ export default function LandingPage() {
       </section>
 
       {/* CTA */}
-      <section className="border-t border-border/50">
+      <section className="bg-background">
         <div className="mx-auto max-w-7xl px-6 py-24">
-          <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-background p-12 text-center sm:p-16">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+          <div className="liquid-glass rounded-2xl p-12 text-center sm:p-16">
+            <h2 className="text-3xl font-bold tracking-tight text-hero-heading sm:text-4xl">
               See where you stand in 3 minutes
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">
@@ -219,10 +201,7 @@ export default function LandingPage() {
             <div className="mt-8">
               <Link
                 href="/assess"
-                className={cn(
-                  buttonVariants({ size: "lg" }),
-                  "h-12 px-8 text-base"
-                )}
+                className="inline-block rounded-full bg-primary px-8 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
                 Start Assessment
               </Link>
