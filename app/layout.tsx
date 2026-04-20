@@ -24,6 +24,36 @@ export const metadata: Metadata = {
   },
   description:
     "Adaptive AI proficiency assessments for hiring and upskilling. Measure real AI fluency with PromptScore.",
+  icons: {
+    icon: [
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+  openGraph: {
+    title: "InpromptiFy — AI Proficiency Assessment",
+    description: "Measure real AI proficiency. Not AI trivia. Take the free 3-minute assessment and get your PromptScore.",
+    url: "https://inpromptify.com",
+    siteName: "InpromptiFy",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "InpromptiFy — AI Proficiency Assessment",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "InpromptiFy — AI Proficiency Assessment",
+    description: "Measure real AI proficiency. Not AI trivia. Get your PromptScore in 3 minutes.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({
