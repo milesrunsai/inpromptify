@@ -1,55 +1,267 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "The mission behind InpromptiFy — building the standard for AI proficiency measurement.",
+    "Why InpromptiFy exists — AI is reshaping every industry, but most people are using it wrong.",
 };
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen pt-24 pb-16">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="max-w-2xl">
-          <span className="section-label">[ About ]</span>
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mt-2 text-white">
-            Measuring AI proficiency,{" "}
-            <span className="gradient-text">accurately</span>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Hero */}
+        <div className="max-w-3xl">
+          <span className="section-label">[ About InpromptiFy ]</span>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mt-2 text-white leading-tight">
+            AI is taking jobs.{" "}
+            <span className="gradient-text">But only from those who cannot use it.</span>
           </h1>
           <p className="text-lg text-gray-400 mt-6 leading-relaxed">
-            InpromptiFy was built on a simple observation: as AI transforms every
-            industry, there&apos;s no reliable way to measure how well people
-            actually use these tools. We&apos;re changing that.
+            The statistics are clear. AI is automating tasks across every industry at an
+            unprecedented pace. But here is what most people miss: AI does not replace skilled
+            users. It replaces unskilled ones.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-4 mt-16">
-          {[
-            {
-              title: "Our Mission",
-              text: "To create the global standard for AI proficiency measurement. We believe that accurate assessment drives better learning, smarter hiring, and more effective teams.",
-            },
-            {
-              title: "Our Approach",
-              text: "We combine psychometric science with modern AI to build assessments that are adaptive, fair, and genuinely useful. No trivia questions — only real-world skill validation.",
-            },
-            {
-              title: "Why We Built This",
-              text: "InpromptiFy was started in Australia by a young entrepreneur who saw firsthand how quickly AI was reshaping the workforce — and how few tools existed to measure whether people were actually keeping up. We're building what the industry needs.",
-            },
-          ].map((card) => (
-            <div
-              key={card.title}
-              className="glass-strong p-6 rounded-2xl hover:border-orange-500/10 transition-all duration-300"
-            >
-              <h3 className="text-base font-semibold mb-3 text-white">
-                {card.title}
-              </h3>
-              <p className="text-sm text-gray-400 leading-relaxed">
-                {card.text}
+        {/* The Problem Section */}
+        <div className="grid lg:grid-cols-2 gap-12 mt-20 items-center">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              The real problem is not AI. It is how people use it.
+            </h2>
+            <div className="mt-6 space-y-4 text-gray-400 leading-relaxed">
+              <p>
+                AI is only powerful when it is used correctly. A poorly written prompt to GPT-4
+                wastes tokens, produces garbage output, and costs real money. The difference
+                between a proficient AI user and an amateur is not what model they use. It is
+                how they use it.
+              </p>
+              <p>
+                Most professionals today are stuck on ChatGPT. They do not know that Claude
+                handles long documents better. They do not understand that Gemini has a 2 million
+                token context window. They have never heard of RAG, function calling, or
+                multi-agent workflows. They are paying enterprise rates for consumer-level
+                output.
+              </p>
+              <p>
+                Older employees are particularly affected. Not because they lack intelligence,
+                but because no one is measuring their AI fluency or showing them what they are
+                missing. Companies are spending thousands on AI licenses while their teams
+                use 5% of the capability.
               </p>
             </div>
-          ))}
+          </div>
+          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80"
+              alt="AI technology visualization"
+              className="w-full h-full object-cover rounded-2xl"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-transparent" />
+          </div>
+        </div>
+
+        {/* Why Proficiency Matters */}
+        <div className="mt-24">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white text-center">
+            AI proficiency is not optional. It is the new literacy.
+          </h2>
+          <p className="text-center text-gray-400 mt-4 max-w-2xl mx-auto">
+            Without the right skills, expensive models are wasted. With the right skills,
+            even free models outperform the competition.
+          </p>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
+            {[
+              {
+                stat: "$600B+",
+                label: "Annual AI skills gap",
+                detail:
+                  "Companies are investing in AI tools their teams cannot fully utilize. The gap between AI spending and AI competency is growing every quarter.",
+              },
+              {
+                stat: "73%",
+                label: "Only use ChatGPT",
+                detail:
+                  "Most professionals have never tried Claude, Gemini, Mistral, or open-source models. They do not know what they are missing or which model fits their workflow.",
+              },
+              {
+                stat: "5x",
+                label: "Cost difference",
+                detail:
+                  "A proficient AI user produces the same output in one prompt that an amateur needs five attempts to achieve. At enterprise token pricing, that difference is thousands per month.",
+              },
+              {
+                stat: "89%",
+                label: "Cannot iterate effectively",
+                detail:
+                  "When the first AI output is wrong, most users give up or start over. Proficient users refine, add constraints, and converge in 2-3 iterations.",
+              },
+              {
+                stat: "40+",
+                label: "Niches we assess",
+                detail:
+                  "From prompt engineering and RAG to AI agents, evaluation frameworks, safety protocols, and tool orchestration. Every skill a business needs, measured.",
+              },
+              {
+                stat: "< 3min",
+                label: "Time to score",
+                detail:
+                  "Our adaptive engine measures real AI proficiency in under 3 minutes. No long tests, no trivia, no wasted time. Just applied judgment under pressure.",
+              },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="glass-strong p-6 rounded-2xl hover:border-orange-500/10 transition-all duration-300"
+              >
+                <div className="text-3xl font-bold gradient-text">{item.stat}</div>
+                <h3 className="text-sm font-semibold text-white mt-2">{item.label}</h3>
+                <p className="text-sm text-gray-400 mt-2 leading-relaxed">{item.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* What We Cover */}
+        <div className="grid lg:grid-cols-2 gap-12 mt-24 items-center">
+          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden order-2 lg:order-1">
+            <img
+              src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80"
+              alt="Neural network visualization"
+              className="w-full h-full object-cover rounded-2xl"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-transparent" />
+          </div>
+          <div className="order-1 lg:order-2">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Every niche a business could want to test on.
+            </h2>
+            <div className="mt-6 space-y-4 text-gray-400 leading-relaxed">
+              <p>
+                InpromptiFy does not just test prompt engineering. We cover the full spectrum
+                of AI proficiency that modern businesses need:
+              </p>
+              <ul className="space-y-3">
+                {[
+                  "Prompt engineering across multiple models (GPT-4, Claude, Gemini, Mistral, open-source)",
+                  "RAG architecture, chunking strategies, and retrieval optimization",
+                  "AI agent workflows, function calling, and multi-step orchestration",
+                  "Output evaluation, hallucination detection, and quality assurance",
+                  "AI safety, bias mitigation, prompt injection defense, and compliance",
+                  "Workflow optimization, token efficiency, and cost management",
+                  "Model selection for specific use cases (when to use which model and why)",
+                  "Iteration intelligence (refining outputs, adding constraints, converging on quality)",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-500 shrink-0" />
+                    <span className="text-sm">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <p>
+                Whether you are hiring a marketing team that needs content generation skills or
+                a dev team that needs agentic workflow expertise, we have the assessment for it.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* How We Connect */}
+        <div className="mt-24">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white text-center">
+            How we connect and integrate
+          </h2>
+          <p className="text-center text-gray-400 mt-4 max-w-2xl mx-auto">
+            InpromptiFy plugs into the tools your HR and engineering teams already use.
+          </p>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
+            {[
+              {
+                title: "ATS Integration",
+                detail:
+                  "Greenhouse, Lever, Workday, BambooHR, Ashby. One-click candidate assessment directly from your hiring pipeline.",
+              },
+              {
+                title: "LMS Embedding",
+                detail:
+                  "Canvas, Moodle, Blackboard via LTI. Embed assessments into your existing learning management system.",
+              },
+              {
+                title: "Zapier and Make",
+                detail:
+                  "Connect to Slack, Teams, Notion, Google Sheets, and 5,000+ apps. Automate assessment triggers and notifications.",
+              },
+              {
+                title: "REST API",
+                detail:
+                  "Full API with webhooks. Create assessments, pull scores, sync results to your own systems programmatically.",
+              },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="glass-strong p-6 rounded-2xl hover:border-orange-500/10 transition-all duration-300"
+              >
+                <h3 className="text-sm font-semibold text-white">{item.title}</h3>
+                <p className="text-sm text-gray-400 mt-2 leading-relaxed">{item.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Origin */}
+        <div className="mt-24 max-w-3xl mx-auto text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white">
+            Built in Australia. Bootstrapped. No VC pressure.
+          </h2>
+          <div className="mt-6 space-y-4 text-gray-400 leading-relaxed">
+            <p>
+              InpromptiFy was started by a 19-year-old Australian entrepreneur who watched the
+              AI revolution unfold and noticed something everyone else missed: companies were
+              adopting AI tools at record speed, but nobody was measuring whether their people
+              could actually use them.
+            </p>
+            <p>
+              The statistics were alarming. AI was taking over tasks across every industry. But
+              the jobs being replaced were not the ones where people used AI well. They were the
+              ones where people did not know how to use it at all. The divide between AI-proficient
+              and AI-illiterate workers was growing faster than any training program could close it.
+            </p>
+            <p>
+              InpromptiFy exists to close that gap. Not with another course or certification mill,
+              but with a rigorous, adaptive assessment engine that tells you exactly where your
+              team stands and what they need to improve.
+            </p>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="mt-24 text-center">
+          <div className="glass-strong rounded-2xl p-8 sm:p-12 max-w-2xl mx-auto">
+            <h2 className="text-2xl font-bold text-white">
+              See where your team stands
+            </h2>
+            <p className="text-gray-400 mt-3">
+              Take the free 3-minute assessment. No account required. Get your PromptScore instantly.
+            </p>
+            <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+              <Link
+                href="/assess"
+                className="glow-btn px-8 py-3 text-sm font-medium inline-block text-center"
+              >
+                Start Free Assessment
+              </Link>
+              <Link
+                href="/contact"
+                className="ghost-btn px-8 py-3 text-sm inline-block text-center"
+              >
+                Book a Demo
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
