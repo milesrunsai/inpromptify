@@ -22,7 +22,7 @@ export default function SignInPage() {
         <SignIn
           appearance={{
             variables: {
-              colorPrimary: "hsl(262, 83%, 58%)",
+              colorPrimary: "hsl(24, 100%, 50%)",
               colorBackground: "#ffffff",
               colorText: "#111111",
               colorTextSecondary: "#555555",
@@ -40,15 +40,15 @@ export default function SignInPage() {
               socialButtonsBlockButtonText: "text-gray-700",
               formFieldLabel: "text-gray-700 font-medium",
               formFieldInput:
-                "bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-purple-500",
-              footerActionLink: "text-purple-600 hover:text-purple-700 font-medium",
+                "bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-orange-500 focus:border-orange-500",
+              footerActionLink: "text-orange-500 hover:text-orange-600 font-medium",
               formButtonPrimary:
-                "bg-purple-600 text-white hover:bg-purple-700 shadow-lg",
+                "bg-orange-500 text-white hover:bg-orange-600 shadow-lg",
               dividerLine: "bg-gray-200",
               dividerText: "text-gray-400",
               footer: "text-gray-500",
               footerActionText: "text-gray-500",
-              identityPreviewEditButton: "text-purple-600",
+              identityPreviewEditButton: "text-orange-500",
               formFieldSuccessText: "text-green-600",
               formFieldErrorText: "text-red-600",
               alertText: "text-gray-700",
