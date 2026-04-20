@@ -51,7 +51,7 @@ export default function LeaderboardPage() {
   }, [timeRange]);
 
   return (
-    <div className="min-h-screen pt-24 pb-24">
+    <div className="pt-24 pb-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="text-center mb-12">
