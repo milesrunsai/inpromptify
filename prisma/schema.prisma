@@ -11,7 +11,6 @@ model Organization {
   id            String         @id @default(cuid())
   name          String
   slug          String         @unique
-  clerkOrgId    String         @unique
   members       Membership[]
   assessments   Assessment[]
   subscriptions Subscription[]
@@ -30,15 +29,29 @@ model Membership {
 }
 
 model User {
-  id           String          @id @default(cuid())
-  clerkUserId  String          @unique
-  email        String          @unique
-  name         String?
-  imageUrl     String?
-  memberships  Membership[]
-  chatMessages AiChatMessage[]
-  apiKeys      ApiKey[]
-  createdAt    DateTime        @default(now())
+  id               String          @id @default(cuid())
+  email            String          @unique
+  name             String?
+  imageUrl         String?
+  passwordHash     String
+  emailVerified    Boolean         @default(false)
+  emailVerifyToken String?
+  resetToken       String?
+  resetTokenExpiry DateTime?
+  memberships      Membership[]
+  sessions         Session[]
+  chatMessages     AiChatMessage[]
+  apiKeys          ApiKey[]
+  createdAt        DateTime        @default(now())
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 }
 
 model Assessment {

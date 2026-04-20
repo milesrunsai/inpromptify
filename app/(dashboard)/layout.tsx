@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { getCurrentUser, getUserOrg } from "@/lib/auth";
 import { DashboardShell } from "@/components/dashboard/shell";
 
 export default async function DashboardLayout({
@@ -7,17 +7,18 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { orgId, orgSlug } = await auth();
-  const user = await currentUser();
+  const user = await getCurrentUser();
 
   if (!user) redirect("/sign-in");
 
+  const org = await getUserOrg(user.id);
+
   return (
     <DashboardShell
-      orgName={orgSlug ?? "Personal"}
-      userImageUrl={user.imageUrl}
-      userName={user.firstName ?? user.emailAddresses[0]?.emailAddress ?? "User"}
-      hasOrg={!!orgId}
+      orgName={org?.slug ?? "Personal"}
+      userImageUrl={user.imageUrl ?? ""}
+      userName={user.name ?? user.email}
+      hasOrg={!!org}
     >
       {children}
     </DashboardShell>

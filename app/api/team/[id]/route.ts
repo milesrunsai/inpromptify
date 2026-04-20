@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { getCurrentUser, getUserOrg } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { isAdmin } from "@/lib/admin";
 
@@ -8,14 +8,18 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { userId, orgId } = await auth();
-  if (!userId || !orgId) {
+  const user = await getCurrentUser();
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const user = await currentUser();
-  if (!isAdmin(user?.emailAddresses?.[0]?.emailAddress)) {
+  if (!isAdmin(user.email)) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  const org = await getUserOrg(user.id);
+  if (!org) {
+    return NextResponse.json({ error: "No organization" }, { status: 403 });
   }
 
   const { id } = await params;
@@ -27,13 +31,6 @@ export async function PATCH(
       { error: "role must be ADMIN or MEMBER" },
       { status: 400 }
     );
-  }
-
-  const org = await prisma.organization.findUnique({
-    where: { clerkOrgId: orgId },
-  });
-  if (!org) {
-    return NextResponse.json({ error: "Organization not found" }, { status: 404 });
   }
 
   const membership = await prisma.membership.findFirst({
@@ -56,24 +53,21 @@ export async function DELETE(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { userId, orgId } = await auth();
-  if (!userId || !orgId) {
+  const user = await getCurrentUser();
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const user = await currentUser();
-  if (!isAdmin(user?.emailAddresses?.[0]?.emailAddress)) {
+  if (!isAdmin(user.email)) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const { id } = await params;
-
-  const org = await prisma.organization.findUnique({
-    where: { clerkOrgId: orgId },
-  });
+  const org = await getUserOrg(user.id);
   if (!org) {
-    return NextResponse.json({ error: "Organization not found" }, { status: 404 });
+    return NextResponse.json({ error: "No organization" }, { status: 403 });
   }
+
+  const { id } = await params;
 
   // Try deleting a membership first
   const membership = await prisma.membership.findFirst({

@@ -94,7 +94,7 @@ const featureGrid = [
       {
         title: "SSO and SCIM",
         description:
-          "SAML 2.0, Okta, Azure AD, and Google Workspace. SCIM provisioning for automatic user sync. Built on Clerk with enterprise-grade auth from day one.",
+          "SAML 2.0, Okta, Azure AD, and Google Workspace. SCIM provisioning for automatic user sync. Enterprise-grade auth from day one.",
       },
       {
         title: "SOC 2 Ready",

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { getCurrentUser, getUserOrg } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getStripeClient, PLANS, type PlanKey } from "@/lib/stripe";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
@@ -11,16 +11,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Rate limited" }, { status: 429 });
   }
 
-  const { orgId } = await auth();
-  if (!orgId) {
+  const user = await getCurrentUser();
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const org = await prisma.organization.findUnique({
-    where: { clerkOrgId: orgId },
-  });
+  const org = await getUserOrg(user.id);
   if (!org) {
-    return NextResponse.json({ error: "Organization not found" }, { status: 404 });
+    return NextResponse.json({ error: "No organization" }, { status: 403 });
   }
 
   const body = await req.json();
@@ -46,20 +44,22 @@ export async function POST(req: NextRequest) {
 
 /** GET /api/billing — get current billing info */
 export async function GET() {
-  const { orgId } = await auth();
-  if (!orgId) {
+  const user = await getCurrentUser();
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const org = await prisma.organization.findUnique({
-    where: { clerkOrgId: orgId },
-    include: { subscriptions: true },
-  });
+  const org = await getUserOrg(user.id);
   if (!org) {
-    return NextResponse.json({ error: "Organization not found" }, { status: 404 });
+    return NextResponse.json({ error: "No organization" }, { status: 403 });
   }
 
-  const subscription = org.subscriptions[0];
+  const orgWithSubs = await prisma.organization.findUnique({
+    where: { id: org.id },
+    include: { subscriptions: true },
+  });
+
+  const subscription = orgWithSubs?.subscriptions[0];
 
   return NextResponse.json({
     plan: subscription?.tier ?? "FREE",

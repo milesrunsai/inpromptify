@@ -1,18 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { getCurrentUser, getUserOrg } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { isAdmin } from "@/lib/admin";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 /** GET /api/team — list team members for the authenticated org */
 export async function GET(req: NextRequest) {
-  const { orgId } = await auth();
-  if (!orgId) {
+  const user = await getCurrentUser();
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const org = await prisma.organization.findUnique({
-    where: { clerkOrgId: orgId },
+  const org = await getUserOrg(user.id);
+  if (!org) {
+    return NextResponse.json({ error: "No organization" }, { status: 403 });
+  }
+
+  const orgWithMembers = await prisma.organization.findUnique({
+    where: { id: org.id },
     include: {
       members: {
         include: {
@@ -22,14 +27,13 @@ export async function GET(req: NextRequest) {
               email: true,
               name: true,
               imageUrl: true,
-              clerkUserId: true,
             },
           },
         },
       },
     },
   });
-  if (!org) {
+  if (!orgWithMembers) {
     return NextResponse.json({ error: "Organization not found" }, { status: 404 });
   }
 
@@ -40,7 +44,7 @@ export async function GET(req: NextRequest) {
   });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const members = (org.members as any[]).map((m) => ({
+  const members = (orgWithMembers.members as any[]).map((m) => ({
     id: m.id,
     name: m.user.name,
     email: m.user.email,
@@ -63,15 +67,18 @@ export async function GET(req: NextRequest) {
 
 /** POST /api/team — invite a team member */
 export async function POST(req: NextRequest) {
-  const { userId, orgId } = await auth();
-  if (!userId || !orgId) {
+  const user = await getCurrentUser();
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const user = await currentUser();
-  const email = user?.emailAddresses?.[0]?.emailAddress;
-  if (!isAdmin(email)) {
+  if (!isAdmin(user.email)) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  const org = await getUserOrg(user.id);
+  if (!org) {
+    return NextResponse.json({ error: "No organization" }, { status: 403 });
   }
 
   const rl = rateLimit(`team-invite:${getClientIp(req)}`, 10);
@@ -92,13 +99,6 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const org = await prisma.organization.findUnique({
-    where: { clerkOrgId: orgId },
-  });
-  if (!org) {
-    return NextResponse.json({ error: "Organization not found" }, { status: 404 });
-  }
-
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
 
   const invite = await prisma.teamInvite.create({
@@ -106,7 +106,7 @@ export async function POST(req: NextRequest) {
       orgId: org.id,
       email: inviteEmail.toLowerCase(),
       role: role === "ADMIN" ? "ADMIN" : "MEMBER",
-      invitedBy: email!,
+      invitedBy: user.email,
       status: "pending",
       expiresAt,
     },

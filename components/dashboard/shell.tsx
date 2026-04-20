@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   ClipboardList,
@@ -12,9 +12,9 @@ import {
   Bot,
   Menu,
   X,
+  LogOut,
 } from "lucide-react";
 import { useState } from "react";
-import { UserButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 
 const mainNavItems = [
@@ -44,7 +44,15 @@ export function DashboardShell({
   hasOrg: boolean;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
+
+  async function handleSignOut() {
+    setSigningOut(true);
+    await fetch("/api/auth/sign-out", { method: "POST" });
+    router.push("/");
+  }
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
@@ -146,16 +154,30 @@ export function DashboardShell({
         {/* User footer */}
         <div className="border-t border-sidebar-border p-4">
           <div className="flex items-center gap-3">
-            <UserButton
-              appearance={{
-                elements: { avatarBox: "size-8" },
-              }}
-            />
+            {userImageUrl ? (
+              <img
+                src={userImageUrl}
+                alt={userName}
+                className="size-8 rounded-full object-cover"
+              />
+            ) : (
+              <div className="size-8 rounded-full bg-sidebar-accent flex items-center justify-center text-xs font-bold text-sidebar-accent-foreground">
+                {userName.charAt(0).toUpperCase()}
+              </div>
+            )}
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-medium text-sidebar-foreground">
                 {userName}
               </p>
             </div>
+            <button
+              onClick={handleSignOut}
+              disabled={signingOut}
+              className="rounded-md p-1.5 text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
+              title="Sign out"
+            >
+              <LogOut className="size-4" />
+            </button>
           </div>
         </div>
       </aside>

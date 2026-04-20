@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { currentUser } from "@clerk/nextjs/server";
+import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import OpenAI from "openai";
@@ -14,7 +14,7 @@ const SYSTEM_PROMPT =
 
 /** POST /api/ai-chat — streaming AI chat */
 export async function POST(req: NextRequest) {
-  const user = await currentUser();
+  const user = await getCurrentUser();
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -56,19 +56,13 @@ export async function POST(req: NextRequest) {
   messages.push({ role: "user", content: message });
 
   // Save user message to DB
-  const dbUser = await prisma.user.findUnique({
-    where: { clerkUserId: user.id },
+  await prisma.aiChatMessage.create({
+    data: {
+      userId: user.id,
+      role: "user",
+      content: message,
+    },
   });
-
-  if (dbUser) {
-    await prisma.aiChatMessage.create({
-      data: {
-        userId: dbUser.id,
-        role: "user",
-        content: message,
-      },
-    });
-  }
 
   // Create streaming response
   const stream = await openai.chat.completions.create({
@@ -96,15 +90,13 @@ export async function POST(req: NextRequest) {
         controller.close();
 
         // Save assistant response to DB
-        if (dbUser) {
-          await prisma.aiChatMessage.create({
-            data: {
-              userId: dbUser.id,
-              role: "assistant",
-              content: fullResponse,
-            },
-          });
-        }
+        await prisma.aiChatMessage.create({
+          data: {
+            userId: user.id,
+            role: "assistant",
+            content: fullResponse,
+          },
+        });
       } catch (error) {
         controller.error(error);
       }

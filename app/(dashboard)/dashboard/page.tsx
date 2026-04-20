@@ -1,7 +1,7 @@
-import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/db";
+import { getCurrentUser, getUserOrg } from "@/lib/auth";
 import {
   Card,
   CardContent,
@@ -9,7 +9,6 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -41,14 +40,14 @@ function StatusBadge({ status }: { status: string }) {
 }
 
 export default async function DashboardOverviewPage() {
-  const { orgId } = await auth();
-  const user = await currentUser();
+  const user = await getCurrentUser();
   if (!user) redirect("/sign-in");
 
-  const firstName = user.firstName ?? "there";
+  const firstName = user.name?.split(" ")[0] ?? "there";
+  const org = await getUserOrg(user.id);
 
   // If no org, show a lightweight prompt
-  if (!orgId) {
+  if (!org) {
     return (
       <div className="space-y-8">
         <div>
@@ -62,7 +61,7 @@ export default async function DashboardOverviewPage() {
             <CardTitle>Create an Organization</CardTitle>
             <CardDescription>
               You need an organization to start creating assessments and managing
-              your team. Create one from the user menu in the sidebar.
+              your team. Create one from the settings page.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -79,9 +78,9 @@ export default async function DashboardOverviewPage() {
     );
   }
 
-  // Fetch org from DB
-  const org = await prisma.organization.findUnique({
-    where: { clerkOrgId: orgId },
+  // Fetch org with subscriptions and members
+  const orgWithData = await prisma.organization.findUnique({
+    where: { id: org.id },
     include: {
       subscriptions: { take: 1, orderBy: { id: "desc" } },
       members: true,
@@ -92,14 +91,14 @@ export default async function DashboardOverviewPage() {
   const [totalAssessments, completedAssessments, recentAssessments] =
     await Promise.all([
       prisma.assessment.count({
-        where: { orgId: org?.id ?? "" },
+        where: { orgId: org.id },
       }),
       prisma.assessment.findMany({
-        where: { orgId: org?.id ?? "", status: "COMPLETED", score: { not: null } },
+        where: { orgId: org.id, status: "COMPLETED", score: { not: null } },
         select: { score: true },
       }),
       prisma.assessment.findMany({
-        where: { orgId: org?.id ?? "" },
+        where: { orgId: org.id },
         orderBy: { createdAt: "desc" },
         take: 5,
         select: {
@@ -120,8 +119,8 @@ export default async function DashboardOverviewPage() {
         )
       : null;
 
-  const teamCount = org?.members.length ?? 0;
-  const subscription = org?.subscriptions[0];
+  const teamCount = orgWithData?.members.length ?? 0;
+  const subscription = orgWithData?.subscriptions[0];
   const credits = subscription?.credits ?? 5;
   const tier = subscription?.tier ?? "FREE";
 

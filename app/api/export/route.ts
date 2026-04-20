@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { getCurrentUser, getUserOrg } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 
 /** GET /api/export — export completed assessments as CSV */
 export async function GET(req: NextRequest) {
-  const { orgId } = await auth();
-  if (!orgId) {
+  const user = await getCurrentUser();
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -17,11 +17,9 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const org = await prisma.organization.findUnique({
-    where: { clerkOrgId: orgId },
-  });
+  const org = await getUserOrg(user.id);
   if (!org) {
-    return NextResponse.json({ error: "Organization not found" }, { status: 404 });
+    return NextResponse.json({ error: "No organization" }, { status: 403 });
   }
 
   const assessments = await prisma.assessment.findMany({

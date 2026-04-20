@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
 import { Geist, Geist_Mono } from "next/font/google";
 import { PostHogProvider } from "@/components/posthog-provider";
 import { ConsentBanner } from "@/components/consent-banner";
@@ -69,25 +67,12 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} dark antialiased`}
     >
       <body className="bg-background text-foreground overflow-x-hidden">
-        <ClerkProvider
-          afterSignOutUrl="/"
-          appearance={{
-            baseTheme: dark,
-            variables: {
-              colorPrimary: "oklch(0.7 0.18 50)",
-              colorBackground: "oklch(0.14 0.005 250)",
-              colorInputBackground: "oklch(0.1 0.005 250)",
-              colorInputText: "oklch(0.95 0 0)",
-            },
-          }}
-        >
-          <Suspense fallback={null}>
-            <PostHogProvider>
-              {children}
-              <ConsentBanner />
-            </PostHogProvider>
-          </Suspense>
-        </ClerkProvider>
+        <Suspense fallback={null}>
+          <PostHogProvider>
+            {children}
+            <ConsentBanner />
+          </PostHogProvider>
+        </Suspense>
       </body>
     </html>
   );

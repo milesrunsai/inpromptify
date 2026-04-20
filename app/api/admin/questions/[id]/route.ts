@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { isAdmin } from "@/lib/admin";
 
@@ -8,13 +8,11 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { userId } = await auth();
-  if (!userId) {
+  const user = await getCurrentUser();
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const user = await currentUser();
-  const email = user?.emailAddresses?.[0]?.emailAddress;
-  if (!isAdmin(email)) {
+  if (!isAdmin(user.email)) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
@@ -45,7 +43,7 @@ export async function PATCH(
     // Update pending status
     await prisma.pendingQuestion.update({
       where: { id },
-      data: { status: "approved", reviewedBy: email ?? null },
+      data: { status: "approved", reviewedBy: user.email ?? null },
     });
 
     return NextResponse.json({ success: true, action: "approved" });
@@ -54,7 +52,7 @@ export async function PATCH(
   if (action === "reject") {
     await prisma.pendingQuestion.update({
       where: { id },
-      data: { status: "rejected", reviewedBy: email ?? null },
+      data: { status: "rejected", reviewedBy: user.email ?? null },
     });
     return NextResponse.json({ success: true, action: "rejected" });
   }

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { getCurrentUser, getUserOrg } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 
 /** GET /api/assessments/:id — get a single assessment */
@@ -8,16 +8,14 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const { orgId } = await auth();
-  if (!orgId) {
+  const user = await getCurrentUser();
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const org = await prisma.organization.findUnique({
-    where: { clerkOrgId: orgId },
-  });
+  const org = await getUserOrg(user.id);
   if (!org) {
-    return NextResponse.json({ error: "Organization not found" }, { status: 404 });
+    return NextResponse.json({ error: "No organization" }, { status: 403 });
   }
 
   const assessment = await prisma.assessment.findFirst({

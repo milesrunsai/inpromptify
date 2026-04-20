@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { getCurrentUser, getUserOrg } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
@@ -10,16 +10,14 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Rate limited" }, { status: 429 });
   }
 
-  const { orgId } = await auth();
-  if (!orgId) {
+  const user = await getCurrentUser();
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const org = await prisma.organization.findUnique({
-    where: { clerkOrgId: orgId },
-  });
+  const org = await getUserOrg(user.id);
   if (!org) {
-    return NextResponse.json({ error: "Organization not found" }, { status: 404 });
+    return NextResponse.json({ error: "No organization" }, { status: 403 });
   }
 
   // Pagination & filtering
@@ -58,21 +56,20 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Rate limited" }, { status: 429 });
   }
 
-  const { orgId } = await auth();
-  if (!orgId) {
+  const user = await getCurrentUser();
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const org = await prisma.organization.findUnique({
-    where: { clerkOrgId: orgId },
-    include: { subscriptions: true },
-  });
+  const org = await getUserOrg(user.id);
   if (!org) {
-    return NextResponse.json({ error: "Organization not found" }, { status: 404 });
+    return NextResponse.json({ error: "No organization" }, { status: 403 });
   }
 
   // Check credits
-  const subscription = org.subscriptions[0];
+  const subscription = await prisma.subscription.findFirst({
+    where: { orgId: org.id },
+  });
   const credits = subscription?.credits ?? 5; // Free tier default
   if (credits === 0) {
     return NextResponse.json(

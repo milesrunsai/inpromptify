@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { SignIn, SignUp } from "@clerk/nextjs";
 
 interface DropdownItem {
   name: string;
@@ -53,8 +52,6 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [showSignIn, setShowSignIn] = useState(false);
-  const [showSignUp, setShowSignUp] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
 
@@ -168,18 +165,18 @@ export function Header() {
           >
             Book a Demo
           </Link>
-          <button
-            onClick={() => setShowSignIn(true)}
+          <Link
+            href="/sign-in"
             className="text-[13px] text-white/80 hover:text-white transition-colors px-4 py-2"
           >
             Sign In
-          </button>
-          <button
-            onClick={() => setShowSignUp(true)}
+          </Link>
+          <Link
+            href="/sign-up"
             className="text-[13px] font-medium text-white border border-white/20 hover:border-primary/60 hover:text-primary rounded-full px-5 py-2 transition-all duration-200"
           >
             Get Started
-          </button>
+          </Link>
         </div>
 
         {/* Mobile Toggle */}
@@ -238,59 +235,16 @@ export function Header() {
               <Link href="/contact" className="block text-sm text-white/60 hover:text-white">
                 Book a Demo
               </Link>
-              <button onClick={() => { setShowSignIn(true); setMobileOpen(false); }} className="block text-sm text-white/60 hover:text-white">
+              <Link href="/sign-in" className="block text-sm text-white/60 hover:text-white">
                 Sign In
-              </button>
-              <button
-                onClick={() => { setShowSignUp(true); setMobileOpen(false); }}
+              </Link>
+              <Link
+                href="/sign-up"
                 className="text-sm font-medium text-white border border-white/20 rounded-full w-full py-2.5 block text-center"
               >
                 Get Started
-              </button>
+              </Link>
             </div>
-          </div>
-        </div>
-      )}
-      {showSignIn && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={() => setShowSignIn(false)}>
-          <div onClick={e => e.stopPropagation()}>
-            <SignIn
-              fallbackRedirectUrl="/dashboard"
-              appearance={{
-                variables: { colorPrimary: 'hsl(24, 100%, 50%)', colorBackground: '#ffffff', colorText: '#111111', colorTextSecondary: '#555555', colorInputBackground: '#f9f9f9', colorInputText: '#111111', borderRadius: '0.75rem' },
-                elements: {
-                  card: 'bg-white border border-gray-200 shadow-2xl shadow-black/20 rounded-2xl',
-                  headerTitle: 'text-gray-900',
-                  headerSubtitle: 'text-gray-500',
-                  formFieldLabel: 'text-gray-700',
-                  formFieldInput: 'bg-gray-50 border-gray-200 text-gray-900',
-                  formButtonPrimary: 'bg-orange-500 text-white hover:bg-orange-600',
-                  footerActionLink: 'text-orange-500',
-                }
-              }}
-            />
-          </div>
-        </div>
-      )}
-
-      {showSignUp && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={() => setShowSignUp(false)}>
-          <div onClick={e => e.stopPropagation()}>
-            <SignUp
-              fallbackRedirectUrl="/dashboard"
-              appearance={{
-                variables: { colorPrimary: 'hsl(24, 100%, 50%)', colorBackground: '#ffffff', colorText: '#111111', colorTextSecondary: '#555555', colorInputBackground: '#f9f9f9', colorInputText: '#111111', borderRadius: '0.75rem' },
-                elements: {
-                  card: 'bg-white border border-gray-200 shadow-2xl shadow-black/20 rounded-2xl',
-                  headerTitle: 'text-gray-900',
-                  headerSubtitle: 'text-gray-500',
-                  formFieldLabel: 'text-gray-700',
-                  formFieldInput: 'bg-gray-50 border-gray-200 text-gray-900',
-                  formButtonPrimary: 'bg-orange-500 text-white hover:bg-orange-600',
-                  footerActionLink: 'text-orange-500',
-                }
-              }}
-            />
           </div>
         </div>
       )}

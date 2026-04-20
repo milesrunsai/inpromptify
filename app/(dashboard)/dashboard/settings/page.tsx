@@ -1,6 +1,6 @@
-import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
+import { getCurrentUser, getUserOrg } from "@/lib/auth";
 import {
   Card,
   CardContent,
@@ -9,7 +9,6 @@ import {
   CardDescription,
   CardFooter,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
@@ -25,9 +24,10 @@ const tierBadgeStyles: Record<string, string> = {
 };
 
 export default async function SettingsPage() {
-  const { orgId } = await auth();
-  const user = await currentUser();
+  const user = await getCurrentUser();
   if (!user) redirect("/sign-in");
+
+  const userOrg = await getUserOrg(user.id);
 
   let org = null;
   let subscription = null;
@@ -36,9 +36,9 @@ export default async function SettingsPage() {
   let credits = 5;
   let assessmentCount = 0;
 
-  if (orgId) {
+  if (userOrg) {
     org = await prisma.organization.findUnique({
-      where: { clerkOrgId: orgId },
+      where: { id: userOrg.id },
       include: {
         subscriptions: { take: 1, orderBy: { id: "desc" } },
       },
@@ -204,13 +204,13 @@ export default async function SettingsPage() {
             </div>
           ) : (
             <p className="text-sm text-muted-foreground">
-              No organization found. Create one from the user menu to get
+              No organization found. Contact your admin to get
               started.
             </p>
           )}
           <p className="text-xs text-muted-foreground">
-            Full organization management (members, roles, SSO) is available
-            through the Clerk dashboard.
+            Organization management (members, roles) is available through the
+            Team page.
           </p>
         </CardContent>
       </Card>

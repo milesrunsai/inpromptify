@@ -50,7 +50,7 @@ export default function PrivacyPage() {
         </h3>
         <p className="text-gray-400 leading-relaxed mb-4">
           When you create an account or use our services, we may collect the following personal
-          information through our authentication provider, Clerk:
+          information through our platform:
         </p>
         <ul className="list-disc list-inside text-gray-400 leading-relaxed mb-4 space-y-2 ml-4">
           <li>Email address</li>
@@ -127,7 +127,7 @@ export default function PrivacyPage() {
         </h3>
         <p className="text-gray-400 leading-relaxed mb-4">
           These cookies are strictly necessary for the operation of our platform. They include
-          session cookies for authentication (managed by Clerk) and cookies required to maintain
+          session cookies for authentication and cookies required to maintain
           your preferences and security tokens. These cannot be disabled without impairing core
           functionality.
         </p>
@@ -156,15 +156,6 @@ export default function PrivacyPage() {
         </p>
 
         <div className="space-y-4 mt-4">
-          <div className="border border-white/10 rounded-lg p-4">
-            <h4 className="text-white font-medium mb-2">Clerk — Authentication</h4>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Manages user registration, login, and session management. Clerk processes your email
-              address, name, and authentication credentials. Clerk&apos;s privacy policy applies to
-              data they process on our behalf.
-            </p>
-          </div>
-
           <div className="border border-white/10 rounded-lg p-4">
             <h4 className="text-white font-medium mb-2">Stripe — Payments</h4>
             <p className="text-gray-400 text-sm leading-relaxed">
@@ -406,8 +397,8 @@ export default function PrivacyPage() {
           <li>Encryption of data in transit using TLS/SSL</li>
           <li>Encryption of data at rest in our database infrastructure</li>
           <li>
-            Authentication and access controls managed through Clerk, with support for multi-factor
-            authentication
+            Secure authentication with encrypted passwords, httpOnly session cookies, and support
+            for multi-factor authentication
           </li>
           <li>Regular security reviews and dependency updates</li>
           <li>
