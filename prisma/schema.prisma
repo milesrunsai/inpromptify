@@ -43,9 +43,23 @@ model Assessment {
   status          AssessmentStatus
   score           Int?
   dimensionScores Json?
-  responses       Json
+  responses       Json[]
+  currentTheta    Float            @default(50.0)
   completedAt     DateTime?
   createdAt       DateTime         @default(now())
+}
+
+model QuestionBank {
+  id              String   @id @default(cuid())
+  text            String
+  options         Json     // [{id: "A", text: "...", isCorrect: true}, ...]
+  correctOptionId String
+  difficulty      Int      // 1-100
+  dimensions      Json     // ["promptQuality", "responseQuality"]
+  tags            String[]
+  maxTimeSeconds  Int
+  createdAt       DateTime @default(now())
+  isActive        Boolean  @default(true)
 }
 
 model Subscription {
