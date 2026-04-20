@@ -44,6 +44,9 @@ model Assessment {
   dimensionScores Json?
   responses       Json[]
   currentTheta    Float            @default(50.0)
+  isPublic        Boolean          @default(true)  // public tests show on leaderboard
+  visibility      String           @default("public") // public, private, org-only
+  issuedBy        String?          // org that issued the test (null = self-taken)
   completedAt     DateTime?
   createdAt       DateTime         @default(now())
 }

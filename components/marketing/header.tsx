@@ -27,6 +27,7 @@ const navigation: NavItem[] = [
     ],
   },
   { name: "Pricing", href: "/pricing" },
+  { name: "Leaderboard", href: "/leaderboard" },
   {
     name: "Developers",
     items: [
