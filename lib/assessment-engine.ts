@@ -62,11 +62,28 @@ export function calculateNextTheta(
   timeTakenMs: number,
   maxTimeMs: number
 ): number {
-  const accuracyAdjustment = wasCorrect ? +12 : -18;
+  let correctBonus: number;
+  let wrongPenalty: number;
+
+  if (currentTheta >= 95) {
+    correctBonus = 5;
+    wrongPenalty = -45;
+  } else if (currentTheta >= 85) {
+    correctBonus = 8;
+    wrongPenalty = -35;
+  } else if (currentTheta >= 70) {
+    correctBonus = 12;
+    wrongPenalty = -25;
+  } else {
+    correctBonus = 12;
+    wrongPenalty = -18;
+  }
+
+  const accuracyAdjustment = wasCorrect ? correctBonus : wrongPenalty;
   const speedBonus = ((maxTimeMs - timeTakenMs) / maxTimeMs) * 8;
   return Math.max(
-    10,
-    Math.min(90, currentTheta + accuracyAdjustment + speedBonus)
+    0,
+    Math.min(100, currentTheta + accuracyAdjustment + speedBonus)
   );
 }
 

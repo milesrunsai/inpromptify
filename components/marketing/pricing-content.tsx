@@ -3,19 +3,35 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-const plans = [
+type PricingCategory = 'jobseekers' | 'businesses'
+
+interface Plan {
+  name: string
+  monthly: number
+  annual: number
+  priceLabel: string
+  period: string
+  description: string
+  features: string[]
+  cta: string
+  ctaLink: string
+  external: boolean
+  highlighted: boolean
+}
+
+const jobSeekerPlans: Plan[] = [
   {
     name: 'Free',
     monthly: 0,
     annual: 0,
     priceLabel: '$0',
     period: '/forever',
-    description: 'Try it out. No credit card required.',
+    description: 'Get started and see where you stand.',
     features: [
-      '5 assessments per month',
-      'Basic role templates',
-      'Limited reports',
-      'Public self-test version',
+      '3 assessments per month',
+      'Basic PromptScore',
+      'Leaderboard opt-in',
+      'Public self-test',
       'Email support',
     ],
     cta: 'Get Started',
@@ -24,43 +40,68 @@ const plans = [
     highlighted: false,
   },
   {
-    name: 'Starter',
-    monthly: 79,
-    annual: 59,
+    name: 'Pro',
+    monthly: 29,
+    annual: 23,
     priceLabel: '',
     period: '',
-    description: 'For SMBs and recruiters screening AI skills.',
+    description: 'For professionals serious about AI skills.',
+    features: [
+      'Unlimited retakes',
+      'Full 5-dimension breakdown',
+      'Verified LinkedIn badge',
+      'PDF certificate',
+      'Resume integration',
+      'Score history & trends',
+      'Priority support',
+    ],
+    cta: 'Go Pro',
+    ctaLink: '/sign-up?plan=pro',
+    external: false,
+    highlighted: true,
+  },
+]
+
+const businessPlans: Plan[] = [
+  {
+    name: 'Team',
+    monthly: 99,
+    annual: 79,
+    priceLabel: '',
+    period: '',
+    description: 'For small teams screening AI skills.',
     features: [
       '50 assessments per month',
-      'All role templates',
-      'Full analytics + export',
-      'PromptScore breakdowns',
+      '5 team members',
+      'Team analytics dashboard',
+      'CSV export',
       'Candidate invite links',
       'Priority email support',
     ],
     cta: 'Start Free Trial',
-    ctaLink: '/sign-up',
+    ctaLink: '/sign-up?plan=team',
     external: false,
     highlighted: false,
   },
   {
     name: 'Business',
-    monthly: 599,
-    annual: 479,
+    monthly: 399,
+    annual: 319,
     priceLabel: '',
     period: '',
-    description: 'For growing companies hiring at scale.',
+    description: 'For scaling organizations hiring at volume.',
     features: [
-      'Unlimited assessments',
+      '500 assessments per month',
+      '25 team members',
       'ATS integrations (Greenhouse, Lever)',
-      'Team seats (up to 25)',
+      'Custom assessment templates',
+      'SSO (SAML)',
       'Company benchmarking',
       'API + webhooks',
-      'Priority support',
-      'Custom assessment builder',
+      'Dedicated support',
     ],
     cta: 'Start Free Trial',
-    ctaLink: '/sign-up',
+    ctaLink: '/sign-up?plan=business',
     external: false,
     highlighted: true,
   },
@@ -72,14 +113,13 @@ const plans = [
     period: '',
     description: 'For large organizations with advanced needs.',
     features: [
-      'Everything in Business',
+      'Unlimited assessments',
       'Unlimited team members',
-      'SSO / SAML + SCIM',
-      'SOC 2 compliance',
-      'Bias audit reports',
-      'Advanced benchmarking',
+      'SCIM provisioning',
       'Dedicated CSM',
+      'SLA guarantee',
       'On-premise option',
+      'Bias audit reports',
       'Custom models + sandbox',
     ],
     cta: 'Book a Demo',
@@ -90,7 +130,9 @@ const plans = [
 ]
 
 export function PricingContent() {
+  const [category, setCategory] = useState<PricingCategory>('jobseekers')
   const [annual, setAnnual] = useState(true)
+  const plans = category === 'jobseekers' ? jobSeekerPlans : businessPlans
 
   return (
     <div className="min-h-screen pt-24 pb-16">
@@ -104,8 +146,32 @@ export function PricingContent() {
             Start free. Scale as you grow. No surprises.
           </p>
 
+          {/* Job Seekers / Businesses tab toggle */}
+          <div className="flex items-center justify-center gap-1 mt-8 p-1 rounded-full bg-white/5 max-w-xs mx-auto">
+            <button
+              onClick={() => setCategory('jobseekers')}
+              className={`flex-1 py-2 px-4 rounded-full text-sm font-medium transition-all ${
+                category === 'jobseekers'
+                  ? 'bg-orange-500 text-white shadow-lg'
+                  : 'text-white/50 hover:text-white/80'
+              }`}
+            >
+              Job Seekers
+            </button>
+            <button
+              onClick={() => setCategory('businesses')}
+              className={`flex-1 py-2 px-4 rounded-full text-sm font-medium transition-all ${
+                category === 'businesses'
+                  ? 'bg-orange-500 text-white shadow-lg'
+                  : 'text-white/50 hover:text-white/80'
+              }`}
+            >
+              Businesses
+            </button>
+          </div>
+
           {/* Monthly / Annual toggle */}
-          <div className="flex items-center justify-center gap-3 mt-8">
+          <div className="flex items-center justify-center gap-3 mt-6">
             <span className={`text-sm ${!annual ? 'text-white' : 'text-white/40'}`}>Monthly</span>
             <button
               onClick={() => setAnnual(!annual)}
@@ -125,7 +191,13 @@ export function PricingContent() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12 max-w-6xl mx-auto">
+        <div
+          className={`grid gap-4 mt-12 max-w-6xl mx-auto ${
+            plans.length === 2
+              ? 'md:grid-cols-2 max-w-3xl'
+              : 'md:grid-cols-2 lg:grid-cols-3'
+          }`}
+        >
           {plans.map((plan) => {
             const price = plan.priceLabel
               ? plan.priceLabel
@@ -222,7 +294,7 @@ export function PricingContent() {
               },
               {
                 q: 'Can I try before I buy?',
-                a: 'Yes. The Free tier gives you 5 assessments per month with no credit card required. The public self-test on our homepage also gives a taste of the experience.',
+                a: 'Yes. The Free tier gives you 3 assessments per month with no credit card required. The public self-test on our homepage also gives a taste of the experience.',
               },
               {
                 q: 'What happens if I exceed my monthly limit?',
@@ -231,6 +303,10 @@ export function PricingContent() {
               {
                 q: 'Do you offer annual discounts?',
                 a: 'Yes — 20% off when you pay annually. Toggle the switch above to see annual pricing.',
+              },
+              {
+                q: "What's the difference between Job Seeker and Business plans?",
+                a: 'Job Seeker plans are for individuals who want to assess and certify their own AI skills. Business plans are for companies that want to evaluate candidates or team members at scale with team management, analytics, and integrations.',
               },
             ].map((item) => (
               <details

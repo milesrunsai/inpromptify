@@ -380,29 +380,19 @@ export function StatsSection() {
   const sectionRef = useReveal()
 
   return (
-    <section ref={sectionRef} className="relative py-24 section-frame overflow-hidden">
-      <video
-        autoPlay muted loop playsInline preload="auto"
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-20"
-      >
-        <source
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_3CVjpU5MqL28kt1M6PyOAXhNcyX/hf_20260418_090031_885160dc-6202-4e28-a61d-e167a459ce25.mp4"
-          type="video/mp4"
-        />
-      </video>
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f]/60 via-[#0a0a0f]/70 to-[#0a0a0f]/90" />
+    <section ref={sectionRef} className="relative py-24 section-frame overflow-hidden bg-white">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <div className="reveal text-center mb-14">
           <span className="section-label">[ By the numbers ]</span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-white">Built for scale.</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-gray-900">Built for scale.</h2>
         </div>
 
         <div className="reveal stagger-1 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="md:col-span-2 glass-strong p-8 rounded-2xl" ref={counter1.ref}>
+          <div className="md:col-span-2 bg-gray-50 border border-gray-100 rounded-2xl p-8" ref={counter1.ref}>
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-5xl font-bold gradient-text">{counter1.display}</p>
-                <p className="text-sm text-gray-400 mt-2">Assessments completed across 40+ countries</p>
+                <p className="text-sm text-gray-600 mt-2">Assessments completed across 40+ countries</p>
               </div>
               <div className="text-white/[0.06]">
                 <svg width="120" height="60" viewBox="0 0 120 60" fill="none" className="opacity-50">
@@ -414,32 +404,32 @@ export function StatsSection() {
             </div>
           </div>
 
-          <div className="glass-strong p-6 rounded-2xl flex flex-col justify-between">
+          <div className="bg-gray-50 border border-gray-100 rounded-2xl p-6 flex flex-col justify-between">
             <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center mb-4">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-orange-400">
                 <path d="M10 1L12.5 6.5L18.5 7.3L14.25 11.4L15.3 17.3L10 14.5L4.7 17.3L5.75 11.4L1.5 7.3L7.5 6.5L10 1Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
               </svg>
             </div>
             <div>
-              <p className="text-lg font-semibold text-white">Enterprise Ready</p>
-              <p className="text-xs text-gray-400 mt-1">SOC 2 compliant, GDPR ready</p>
+              <p className="text-lg font-semibold text-gray-900">Enterprise Ready</p>
+              <p className="text-xs text-gray-600 mt-1">SOC 2 compliant, GDPR ready</p>
             </div>
           </div>
 
-          <div className="glass-strong p-6 rounded-2xl flex flex-col justify-between">
+          <div className="bg-gray-50 border border-gray-100 rounded-2xl p-6 flex flex-col justify-between">
             <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center mb-4">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-orange-400">
                 <path d="M11 1L3 12H10L9 19L17 8H10L11 1Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
               </svg>
             </div>
             <div>
-              <p className="text-lg font-semibold text-white">Instant Results</p>
-              <p className="text-xs text-gray-400 mt-1">Real-time AI-powered scoring</p>
+              <p className="text-lg font-semibold text-gray-900">Instant Results</p>
+              <p className="text-xs text-gray-600 mt-1">Real-time AI-powered scoring</p>
             </div>
           </div>
 
           <div className="md:col-span-2 lg:col-span-4 grid md:grid-cols-2 gap-4">
-            <div className="glass-strong p-6 rounded-2xl">
+            <div className="bg-gray-50 border border-gray-100 rounded-2xl p-6">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center flex-shrink-0">
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-orange-400">
@@ -447,12 +437,12 @@ export function StatsSection() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-lg font-semibold text-white">Developer First</p>
-                  <p className="text-xs text-gray-400 mt-1">API access, webhooks, integrations</p>
+                  <p className="text-lg font-semibold text-gray-900">Developer First</p>
+                  <p className="text-xs text-gray-600 mt-1">API access, webhooks, integrations</p>
                 </div>
               </div>
             </div>
-            <div className="glass-strong p-6 rounded-2xl">
+            <div className="bg-gray-50 border border-gray-100 rounded-2xl p-6">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center flex-shrink-0">
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-orange-400">
@@ -461,8 +451,8 @@ export function StatsSection() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-lg font-semibold text-white">99.9% Uptime</p>
-                  <p className="text-xs text-gray-400 mt-1">Globally distributed infrastructure</p>
+                  <p className="text-lg font-semibold text-gray-900">99.9% Uptime</p>
+                  <p className="text-xs text-gray-600 mt-1">Globally distributed infrastructure</p>
                 </div>
               </div>
             </div>
@@ -669,19 +659,19 @@ export function TestimonialsSection() {
   const ref = useReveal()
 
   return (
-    <section ref={ref} className="relative py-24 section-frame">
+    <section ref={ref} className="relative py-24 section-frame bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="reveal text-center mb-14">
           <span className="section-label">[ Testimonials ]</span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-white">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-gray-900">
             Trusted by teams worldwide
           </h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-4">
           {testimonials.map((t, i) => (
-            <div key={t.name} className={`reveal stagger-${i + 1} glass-strong p-6 rounded-2xl`}>
-              <p className="text-sm text-gray-300 leading-relaxed mb-6">
+            <div key={t.name} className={`reveal stagger-${i + 1} bg-gray-50 border border-gray-100 rounded-2xl p-6`}>
+              <p className="text-sm text-gray-600 leading-relaxed mb-6">
                 &ldquo;{t.quote}&rdquo;
               </p>
               <div className="flex items-center gap-3">
@@ -689,8 +679,8 @@ export function TestimonialsSection() {
                   {t.initials}
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-white">{t.name}</p>
-                  <p className="text-xs text-white/30">{t.title}, {t.company}</p>
+                  <p className="text-sm font-medium text-gray-900">{t.name}</p>
+                  <p className="text-xs text-gray-400">{t.title}, {t.company}</p>
                 </div>
               </div>
             </div>
@@ -718,33 +708,33 @@ export function FAQSection() {
   const ref = useReveal()
 
   return (
-    <section ref={ref} className="relative py-24 section-frame">
+    <section ref={ref} className="relative py-24 section-frame bg-white">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
         <div className="reveal text-center mb-14">
           <span className="section-label">[ FAQ ]</span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-white">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-gray-900">
             Frequently asked questions.
           </h2>
         </div>
 
         <div className="reveal stagger-1 space-y-2">
           {faqs.map((faq, i) => (
-            <div key={i} className="border border-white/[0.06] rounded-xl overflow-hidden">
+            <div key={i} className="border border-gray-200 rounded-xl overflow-hidden">
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between px-4 sm:px-6 py-4 text-left hover:bg-white/[0.02] transition-colors"
+                className="w-full flex items-center justify-between px-4 sm:px-6 py-4 text-left hover:bg-gray-50 transition-colors"
               >
-                <span className="text-sm font-medium text-white">{faq.q}</span>
+                <span className="text-sm font-medium text-gray-900">{faq.q}</span>
                 <svg
                   width="16" height="16" viewBox="0 0 16 16" fill="none"
-                  className={`flex-shrink-0 ml-4 text-white/30 transition-transform duration-300 ${openIndex === i ? 'rotate-45' : ''}`}
+                  className={`flex-shrink-0 ml-4 text-gray-400 transition-transform duration-300 ${openIndex === i ? 'rotate-45' : ''}`}
                 >
                   <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
               </button>
               <div className={`accordion-content ${openIndex === i ? 'open' : ''}`}>
                 <div>
-                  <p className="px-4 sm:px-6 pb-4 text-sm text-gray-300 leading-relaxed">{faq.a}</p>
+                  <p className="px-4 sm:px-6 pb-4 text-sm text-gray-600 leading-relaxed">{faq.a}</p>
                 </div>
               </div>
             </div>

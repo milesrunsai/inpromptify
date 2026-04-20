@@ -170,11 +170,11 @@ export default function AboutPage() {
         </div>
 
         {/* How We Connect */}
-        <div className="mt-24">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white text-center">
+        <div className="mt-24 bg-white rounded-3xl p-8 sm:p-12 -mx-4 sm:-mx-6 px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center">
             How we connect and integrate
           </h2>
-          <p className="text-center text-gray-400 mt-4 max-w-2xl mx-auto">
+          <p className="text-center text-gray-600 mt-4 max-w-2xl mx-auto">
             InpromptiFy plugs into the tools your HR and engineering teams already use.
           </p>
 
@@ -203,17 +203,17 @@ export default function AboutPage() {
             ].map((item) => (
               <div
                 key={item.title}
-                className="glass-strong p-6 rounded-2xl hover:border-orange-500/10 transition-all duration-300"
+                className="bg-gray-50 border border-gray-100 rounded-2xl p-6 hover:border-orange-500/10 transition-all duration-300"
               >
-                <h3 className="text-sm font-semibold text-white">{item.title}</h3>
-                <p className="text-sm text-gray-400 mt-2 leading-relaxed">{item.detail}</p>
+                <h3 className="text-sm font-semibold text-gray-900">{item.title}</h3>
+                <p className="text-sm text-gray-600 mt-2 leading-relaxed">{item.detail}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Founder */}
-        <div className="mt-24">
+        <div className="mt-24 bg-white rounded-3xl p-8 sm:p-12 -mx-4 sm:-mx-6 px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="relative aspect-[3/4] max-w-sm mx-auto lg:mx-0 rounded-2xl overflow-hidden">
               <img
@@ -221,17 +221,17 @@ export default function AboutPage() {
                 alt="Miles Cass, Founder of InpromptiFy"
                 className="w-full h-full object-cover rounded-2xl"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6">
-                <h3 className="text-lg font-bold text-white">Miles Cass</h3>
-                <p className="text-sm text-gray-400">Founder and CEO</p>
-                <p className="text-xs text-white/30 mt-1">Perth, Western Australia</p>
+                <h3 className="text-lg font-bold text-gray-900">Miles Cass</h3>
+                <p className="text-sm text-gray-600">Founder and CEO</p>
+                <p className="text-xs text-gray-400 mt-1">Perth, Western Australia</p>
                 <div className="flex items-center gap-3 mt-2">
                   <a
                     href="https://x.com/milesdoesai"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white/40 hover:text-white transition-colors"
+                    className="text-gray-400 hover:text-gray-900 transition-colors"
                     aria-label="X (Twitter)"
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -242,7 +242,7 @@ export default function AboutPage() {
                     href="https://www.linkedin.com/in/miles-cass-0a01973b7/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white/40 hover:text-white transition-colors"
+                    className="text-gray-400 hover:text-gray-900 transition-colors"
                     aria-label="LinkedIn"
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -254,10 +254,10 @@ export default function AboutPage() {
             </div>
             <div>
               <span className="section-label">[ The Founder ]</span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-white mt-2">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-2">
                 Built by someone who lives in AI.
               </h2>
-              <div className="mt-6 space-y-4 text-gray-400 leading-relaxed">
+              <div className="mt-6 space-y-4 text-gray-600 leading-relaxed">
                 <p>
                   I am Miles Cass from Perth, Western Australia. I spend 17 hours a day on my
                   computer building with AI. Not browsing. Not scrolling. Building.

@@ -51,7 +51,10 @@ const DIMENSION_LABELS: Record<string, string> = {
 };
 
 function getScoreLabel(score: number): string {
-  if (score >= 80) return "Expert";
+  if (score >= 97) return "Grandmaster";
+  if (score >= 92) return "Master";
+  if (score >= 85) return "Expert";
+  if (score >= 75) return "Advanced";
   if (score >= 65) return "Proficient";
   if (score >= 45) return "Intermediate";
   if (score >= 25) return "Developing";
@@ -59,7 +62,9 @@ function getScoreLabel(score: number): string {
 }
 
 function getScoreColor(score: number): string {
-  if (score >= 80) return "text-green-400";
+  if (score >= 92) return "text-purple-400";
+  if (score >= 85) return "text-green-400";
+  if (score >= 75) return "text-emerald-400";
   if (score >= 65) return "text-primary";
   if (score >= 45) return "text-yellow-400";
   if (score >= 25) return "text-orange-400";
@@ -67,7 +72,9 @@ function getScoreColor(score: number): string {
 }
 
 function getScoreRingColor(score: number): string {
-  if (score >= 80) return "#4ade80";
+  if (score >= 92) return "#c084fc";
+  if (score >= 85) return "#4ade80";
+  if (score >= 75) return "#34d399";
   if (score >= 65) return "#f97316";
   if (score >= 45) return "#facc15";
   return "#f87171";
@@ -169,6 +176,10 @@ export function AssessmentFlow() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [integritySignals, setIntegritySignals] = useState<IntegritySignals | null>(null);
   const [copied, setCopied] = useState(false);
+  const [showResumeText, setShowResumeText] = useState(false);
+  const [displayName, setDisplayName] = useState("");
+  const [showOnLeaderboard, setShowOnLeaderboard] = useState(true);
+  const [displayAnonymous, setDisplayAnonymous] = useState(false);
 
   const questionStartTime = useRef<number>(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -312,6 +323,43 @@ export function AssessmentFlow() {
                   className="h-10"
                 />
               </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="name">Name (optional)</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="Your name"
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                  className="h-10"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="leaderboard"
+                  checked={showOnLeaderboard}
+                  onChange={(e) => setShowOnLeaderboard(e.target.checked)}
+                  className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
+                />
+                <Label htmlFor="leaderboard" className="text-sm font-normal">
+                  Show my score on the public leaderboard
+                </Label>
+              </div>
+              {showOnLeaderboard && (
+                <div className="flex items-center gap-2 ml-6">
+                  <input
+                    type="checkbox"
+                    id="anonymous"
+                    checked={displayAnonymous}
+                    onChange={(e) => setDisplayAnonymous(e.target.checked)}
+                    className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
+                  />
+                  <Label htmlFor="anonymous" className="text-sm font-normal">
+                    Display as anonymous
+                  </Label>
+                </div>
+              )}
               <Button type="submit" className="w-full">
                 Begin Assessment
               </Button>
@@ -648,6 +696,56 @@ export function AssessmentFlow() {
                   >
                     {copied ? "Link Copied!" : "Copy Results Link"}
                   </Button>
+                  <div className="flex gap-3">
+                    <Button
+                      variant="outline"
+                      className="flex-1"
+                      onClick={() => setShowResumeText((prev) => !prev)}
+                    >
+                      Add to Resume
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="flex-1"
+                      onClick={() => window.print()}
+                    >
+                      Print Results
+                    </Button>
+                  </div>
+                  <div className="flex gap-3">
+                    <Button
+                      variant="outline"
+                      className="flex-1"
+                      onClick={() => window.print()}
+                    >
+                      Download PDF
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="flex-1"
+                      onClick={() => {
+                        window.open("https://www.linkedin.com/in/me", "_blank");
+                      }}
+                    >
+                      Share to LinkedIn Featured
+                    </Button>
+                  </div>
+                  {showResumeText && (
+                    <div className="bg-muted rounded-lg p-4">
+                      <pre className="whitespace-pre-wrap text-sm">{`InpromptiFy PromptScore: ${overallScore}/100 (${getScoreLabel(overallScore)}) | Verified at inpromptify.com/verify/${resultData}\nDimensions: Prompt Quality ${Math.round(state.dimensionScores["promptQuality"] || 50)} | Efficiency ${Math.round(state.dimensionScores["efficiency"] || 50)} | Speed ${Math.round(state.dimensionScores["speed"] || 50)} | Response Quality ${Math.round(state.dimensionScores["responseQuality"] || 50)} | Iteration ${Math.round(state.dimensionScores["iterationIntelligence"] || 50)}`}</pre>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        className="mt-2"
+                        onClick={() => {
+                          const text = `InpromptiFy PromptScore: ${overallScore}/100 (${getScoreLabel(overallScore)}) | Verified at inpromptify.com/verify/${resultData}\nDimensions: Prompt Quality ${Math.round(state.dimensionScores["promptQuality"] || 50)} | Efficiency ${Math.round(state.dimensionScores["efficiency"] || 50)} | Speed ${Math.round(state.dimensionScores["speed"] || 50)} | Response Quality ${Math.round(state.dimensionScores["responseQuality"] || 50)} | Iteration ${Math.round(state.dimensionScores["iterationIntelligence"] || 50)}`;
+                          navigator.clipboard.writeText(text);
+                        }}
+                      >
+                        Copy to Clipboard
+                      </Button>
+                    </div>
+                  )}
                 </>
               );
             })()}

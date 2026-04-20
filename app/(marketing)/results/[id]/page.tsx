@@ -22,8 +22,10 @@ const DIMENSION_LABELS: Record<string, string> = {
 };
 
 function getScoreLabel(score: number): string {
-  if (score >= 90) return "Exceptional";
-  if (score >= 80) return "Expert";
+  if (score >= 97) return "Grandmaster";
+  if (score >= 92) return "Master";
+  if (score >= 85) return "Expert";
+  if (score >= 75) return "Advanced";
   if (score >= 65) return "Proficient";
   if (score >= 45) return "Intermediate";
   if (score >= 25) return "Developing";

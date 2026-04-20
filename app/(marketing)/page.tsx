@@ -9,6 +9,7 @@ import {
   FAQSection,
   CTASection,
 } from "@/components/marketing/homepage-sections";
+import { HomepagePricing } from "@/components/marketing/homepage-pricing";
 
 export default function LandingPage() {
   return (
@@ -110,6 +111,18 @@ export default function LandingPage() {
                   </a>
                 </div>
               </div>
+
+              <div className="mt-6">
+                <Link
+                  href="/leaderboard"
+                  className="inline-flex items-center gap-2 text-xs text-white/40 hover:text-orange-400 transition-colors"
+                >
+                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                  See where you rank on the leaderboard
+                </Link>
+              </div>
             </div>
 
             {/* Right — Interactive Demo Card */}
@@ -125,117 +138,7 @@ export default function LandingPage() {
       <StatsSection />
       <UseCasesSection />
       <TestimonialsSection />
-      {/* Pricing — White background section */}
-      <section className="bg-white py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-16">
-            <span className="text-xs font-medium uppercase tracking-wider text-orange-500">[ Pricing ]</span>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-gray-900">
-              Simple, transparent pricing
-            </h2>
-            <p className="text-lg text-gray-500 mt-4 max-w-xl mx-auto">
-              Start free. Upgrade when you need team analytics, integrations, or higher volume.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                name: "Free",
-                price: "$0",
-                period: "",
-                description: "Try it out. No credit card.",
-                features: ["3 assessments/month", "Basic PromptScore", "1 user", "Email support"],
-                cta: "Get Started",
-                href: "/sign-up",
-                highlighted: false,
-              },
-              {
-                name: "Starter",
-                price: "$99",
-                period: "/mo",
-                description: "For growing teams.",
-                features: ["50 assessments/month", "Full 5-dimension scoring", "5 users", "API access", "Zapier", "Priority support"],
-                cta: "Start Trial",
-                href: "/sign-up?plan=starter",
-                highlighted: false,
-              },
-              {
-                name: "Business",
-                price: "$399",
-                period: "/mo",
-                description: "For scaling organizations.",
-                features: ["500 assessments/month", "25 users", "Team analytics", "ATS integrations", "Custom templates", "SSO (SAML)", "Dedicated support"],
-                cta: "Start Trial",
-                href: "/sign-up?plan=business",
-                highlighted: true,
-              },
-              {
-                name: "Enterprise",
-                price: "Custom",
-                period: "",
-                description: "For large organizations.",
-                features: ["Unlimited assessments", "Unlimited users", "SCIM provisioning", "Dedicated CSM", "SLA guarantee", "On-prem option", "Bias audit reports"],
-                cta: "Contact Sales",
-                href: "/contact",
-                highlighted: false,
-              },
-            ].map((tier) => (
-              <div
-                key={tier.name}
-                className={`rounded-2xl p-6 flex flex-col ${
-                  tier.highlighted
-                    ? "bg-gray-900 text-white ring-2 ring-orange-500 shadow-xl shadow-orange-500/10"
-                    : "bg-gray-50 text-gray-900 border border-gray-200"
-                }`}
-              >
-                <h3 className={`text-lg font-semibold ${tier.highlighted ? "text-white" : "text-gray-900"}`}>
-                  {tier.name}
-                </h3>
-                <div className="mt-4 flex items-baseline gap-1">
-                  <span className={`text-4xl font-bold ${tier.highlighted ? "text-white" : "text-gray-900"}`}>
-                    {tier.price}
-                  </span>
-                  {tier.period && (
-                    <span className={`text-sm ${tier.highlighted ? "text-gray-400" : "text-gray-500"}`}>
-                      {tier.period}
-                    </span>
-                  )}
-                </div>
-                <p className={`mt-2 text-sm ${tier.highlighted ? "text-gray-400" : "text-gray-500"}`}>
-                  {tier.description}
-                </p>
-                <ul className="mt-6 flex-1 space-y-3">
-                  {tier.features.map((feature) => (
-                    <li key={feature} className={`flex items-start gap-2 text-sm ${tier.highlighted ? "text-gray-300" : "text-gray-600"}`}>
-                      <svg className={`mt-0.5 h-4 w-4 shrink-0 ${tier.highlighted ? "text-orange-400" : "text-orange-500"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-8">
-                  <Link
-                    href={tier.href}
-                    className={`block w-full text-center rounded-full py-3 text-sm font-medium transition-all ${
-                      tier.highlighted
-                        ? "bg-orange-500 text-white hover:bg-orange-600"
-                        : "bg-gray-900 text-white hover:bg-gray-800"
-                    }`}
-                  >
-                    {tier.cta}
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <p className="text-center text-sm text-gray-400 mt-8">
-            Annual billing saves 20%. All prices in USD.
-          </p>
-        </div>
-      </section>
+      <HomepagePricing />
 
       <FAQSection />
       <CTASection />

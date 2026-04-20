@@ -53,6 +53,8 @@ export const metadata: Metadata = {
     title: "InpromptiFy — AI Proficiency Assessment",
     description: "Measure real AI proficiency. Not AI trivia. Get your PromptScore in 3 minutes.",
     images: ["/og-image.png"],
+    site: "@Inpromptify",
+    creator: "@Inpromptify",
   },
 };
 
