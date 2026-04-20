@@ -64,6 +64,21 @@ export default function LandingPage() {
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background" />
         <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:py-40">
           <div className="mx-auto max-w-3xl text-center">
+            {/* Looping video — transparent bg, blends into dark background */}
+            <div className="mx-auto mb-10 flex items-center justify-center">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="h-48 w-48 sm:h-64 sm:w-64 lg:h-80 lg:w-80 object-contain mix-blend-screen"
+              >
+                <source
+                  src="https://d8j0ntlcm91z4.cloudfront.net/user_3CVjpU5MqL28kt1M6PyOAXhNcyX/hf_20260420_033355_d2d70c02-2cf9-437b-8cd0-e210a60ba6c9.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
               Measure AI proficiency.
               <br />
