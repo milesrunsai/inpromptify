@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { VideoHero } from "@/components/marketing/video-hero";
 import { LogoMarquee } from "@/components/marketing/logo-marquee";
+import { SocialProofSection } from "@/components/marketing/social-proof-section";
 
 const features = [
   {
@@ -88,6 +89,9 @@ export default function LandingPage() {
           <LogoMarquee />
         </div>
       </section>
+
+      {/* Social Proof / Video Section */}
+      <SocialProofSection />
 
       {/* Features Grid */}
       <section className="bg-background">
