@@ -36,7 +36,7 @@ const jobSeekerPlans: HomepagePlan[] = [
   },
   {
     name: 'Pro',
-    price: '$29',
+    price: '$19',
     annualPrice: '$23',
     period: '/mo',
     description: 'For professionals serious about AI skills.',

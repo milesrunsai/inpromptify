@@ -115,7 +115,7 @@ function AdaptiveTestingViz() {
         {levels.map((l) => (
           <div key={l.label} className="flex-1 flex flex-col items-center gap-1">
             <div
-              className="w-full rounded-t bg-gradient-to-t from-orange-600/40 to-orange-400/60 transition-all"
+              className="w-full rounded-t bg-gradient-to-t from-orange-500 to-amber-400 transition-all opacity-80"
               style={{ height: `${l.difficulty}%` }}
             />
             <span className="text-[10px] text-white/30 font-mono">{l.label}</span>
