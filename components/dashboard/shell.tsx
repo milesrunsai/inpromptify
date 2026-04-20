@@ -7,6 +7,7 @@ import {
   ClipboardList,
   Users,
   Settings,
+  ShieldCheck,
   Menu,
   X,
 } from "lucide-react";
@@ -19,6 +20,7 @@ const navItems = [
   { label: "Assessments", href: "/dashboard/assessments", icon: ClipboardList },
   { label: "Team", href: "/dashboard/team", icon: Users },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
+  { label: "Admin: Questions", href: "/dashboard/admin/questions", icon: ShieldCheck },
 ];
 
 export function DashboardShell({

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { Geist, Geist_Mono } from "next/font/google";
+import { PostHogProvider } from "@/components/posthog-provider";
+import { ConsentBanner } from "@/components/consent-banner";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -45,7 +48,12 @@ export default function RootLayout({
             },
           }}
         >
-          {children}
+          <Suspense fallback={null}>
+            <PostHogProvider>
+              {children}
+              <ConsentBanner />
+            </PostHogProvider>
+          </Suspense>
         </ClerkProvider>
       </body>
     </html>

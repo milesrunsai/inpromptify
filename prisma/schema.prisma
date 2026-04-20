@@ -49,6 +49,23 @@ model Assessment {
 }
 
 model QuestionBank {
+  id              String    @id @default(cuid())
+  text            String
+  options         Json      // [{id: "A", text: "...", isCorrect: true}, ...]
+  correctOptionId String
+  difficulty      Int       // 1-100
+  dimensions      Json      // ["promptQuality", "responseQuality"]
+  tags            String[]
+  maxTimeSeconds  Int
+  irtA            Float?
+  irtB            Float?
+  irtC            Float?
+  lastCalibrated  DateTime?
+  createdAt       DateTime  @default(now())
+  isActive        Boolean   @default(true)
+}
+
+model PendingQuestion {
   id              String   @id @default(cuid())
   text            String
   options         Json     // [{id: "A", text: "...", isCorrect: true}, ...]
@@ -57,8 +74,20 @@ model QuestionBank {
   dimensions      Json     // ["promptQuality", "responseQuality"]
   tags            String[]
   maxTimeSeconds  Int
+  source          String   @default("manual") // llm-generated, manual, community
+  status          String   @default("pending") // pending, approved, rejected
+  reviewedBy      String?
   createdAt       DateTime @default(now())
-  isActive        Boolean  @default(true)
+}
+
+model CalibrationResponse {
+  id               String   @id @default(cuid())
+  assessmentId     String?
+  questionId       String
+  selectedOptionId String
+  wasCorrect       Boolean
+  timeTakenMs      Int
+  createdAt        DateTime @default(now())
 }
 
 model Subscription {

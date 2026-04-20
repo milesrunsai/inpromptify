@@ -1,9 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 /** GET /api/assessments — list assessments for the authenticated org */
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const rl = rateLimit(`assessments-get:${getClientIp(req)}`, 30);
+  if (!rl.allowed) {
+    return NextResponse.json({ error: "Rate limited" }, { status: 429 });
+  }
+
   const { orgId } = await auth();
   if (!orgId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -27,6 +33,11 @@ export async function GET() {
 
 /** POST /api/assessments — create a new assessment invitation */
 export async function POST(req: NextRequest) {
+  const rl = rateLimit(`assessments-post:${getClientIp(req)}`, 10);
+  if (!rl.allowed) {
+    return NextResponse.json({ error: "Rate limited" }, { status: 429 });
+  }
+
   const { orgId } = await auth();
   if (!orgId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

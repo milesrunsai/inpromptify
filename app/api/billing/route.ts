@@ -2,9 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db";
 import { getStripeClient, PLANS, type PlanKey } from "@/lib/stripe";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 /** POST /api/billing — create a Stripe checkout session */
 export async function POST(req: NextRequest) {
+  const rl = rateLimit(`billing-post:${getClientIp(req)}`, 5);
+  if (!rl.allowed) {
+    return NextResponse.json({ error: "Rate limited" }, { status: 429 });
+  }
+
   const { orgId } = await auth();
   if (!orgId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
