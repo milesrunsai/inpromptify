@@ -8,6 +8,7 @@ import {
   Users,
   Settings,
   ShieldCheck,
+  Calendar,
   Menu,
   X,
 } from "lucide-react";
@@ -21,6 +22,7 @@ const navItems = [
   { label: "Team", href: "/dashboard/team", icon: Users },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
   { label: "Admin: Questions", href: "/dashboard/admin/questions", icon: ShieldCheck },
+  { label: "Admin: Bookings", href: "/dashboard/admin/bookings", icon: Calendar },
 ];
 
 export function DashboardShell({

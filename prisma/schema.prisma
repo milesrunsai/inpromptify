@@ -117,3 +117,16 @@ enum Tier {
   BUSINESS
   ENTERPRISE
 }
+
+model DemoBooking {
+  id           String   @id @default(cuid())
+  name         String
+  email        String
+  company      String?
+  teamSize     String?
+  date         DateTime
+  time         String
+  message      String?
+  status       String   @default("pending") // pending, confirmed, cancelled
+  createdAt    DateTime @default(now())
+}
