@@ -20,6 +20,8 @@ export default function SignInPage() {
           />
         </div>
         <SignIn
+          forceRedirectUrl="/dashboard"
+          fallbackRedirectUrl="/dashboard"
           appearance={{
             variables: {
               colorPrimary: "hsl(24, 100%, 50%)",

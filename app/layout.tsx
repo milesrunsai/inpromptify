@@ -70,6 +70,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <ClerkProvider
+          afterSignUpUrl="/dashboard"
+          afterSignInUrl="/dashboard"
+          signUpFallbackRedirectUrl="/dashboard"
+          signInFallbackRedirectUrl="/dashboard"
           appearance={{
             baseTheme: dark,
             variables: {

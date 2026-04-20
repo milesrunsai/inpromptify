@@ -20,6 +20,8 @@ export default function SignUpPage() {
           />
         </div>
         <SignUp
+          forceRedirectUrl="/dashboard"
+          fallbackRedirectUrl="/dashboard"
           appearance={{
             variables: {
               colorPrimary: "hsl(24, 100%, 50%)",
