@@ -258,6 +258,13 @@ export default function AboutPage() {
                   employees does not just use AI, but uses it well.
                 </p>
                 <p>
+                  I also love competition. The idea of a universal scale where people can measure
+                  and compare their AI capabilities excites me. Imagine posting your PromptScore
+                  on X or LinkedIn and seeing how you stack up against others in your field. Not
+                  a vanity metric. A real, verified measure of how well you use the most important
+                  technology of our generation. That is the future I am building.
+                </p>
+                <p>
                   No VC money. No board meetings. No one telling me to water it down. Just relentless
                   focus on building the most accurate AI proficiency assessment on the market.
                 </p>
