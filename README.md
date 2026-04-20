@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# InpromptiFy
 
-## Getting Started
+AI Proficiency Assessment Platform for hiring and upskilling.
 
-First, run the development server:
+## What It Does
+
+InpromptiFy measures real AI fluency through adaptive assessments that score 5 dimensions: Prompt Quality, Efficiency, Speed, Response Quality, and Iteration Intelligence. Built for HR/TA teams, L&D departments, and organizations scaling AI adoption.
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router) + TypeScript
+- **Styling:** Tailwind CSS + shadcn/ui (dark theme, orange accent)
+- **Database:** Neon PostgreSQL + Prisma 7
+- **Auth:** Clerk (SSO/SAML/SCIM support)
+- **Payments:** Stripe (subscriptions + usage-based credits)
+- **Analytics:** PostHog + Sentry
+- **Deployment:** Vercel
+
+## Features
+
+### Assessment Engine
+- Adaptive MCQ with real-time theta estimation and difficulty adjustment
+- 85+ questions across 5 AI topics (prompt engineering, RAG, agents, evaluation, safety)
+- 5-dimension scoring with weighted role templates (8 pre-built roles)
+- Anti-cheat: tab blur detection, paste prevention, option randomization, minimum answer time
+- Seeded Fisher-Yates shuffle for deterministic option ordering
+
+### Platform
+- 6 marketing pages (landing, pricing with comparison matrix, developers/API docs, integrations, features, assess)
+- Public 3-minute mini-assessment with email capture and results (radar chart, theta curve, hire/no-hire recommendation)
+- Dashboard with org management, assessments list, team management, settings
+- Admin panel: question bank management, approve/reject pending questions
+- Automated question generation via LLM (Vercel cron)
+- IRT infrastructure (2PL implementation, CalibrationResponse model for future calibration)
+
+### Integrations (stubs/pages ready)
+- ATS: Greenhouse, Lever, Workday, BambooHR, Ashby
+- LMS: Canvas, Moodle
+- Automation: Zapier, Make.com
+
+## Local Development
 
 ```bash
+git clone https://github.com/milesrunsai/inpromptify.git
+cd inpromptify
+npm install
+cp .env.example .env  # fill in your keys
+npx prisma generate
+npx prisma db push
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+See `.env.example` for all required variables.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Routes (22 total)
 
-## Learn More
+### Marketing (static)
+- `/` — Landing page
+- `/pricing` — Pricing tiers + comparison matrix
+- `/developers` — API documentation
+- `/integrations` — Integration partners
+- `/features` — Feature breakdown
+- `/assess` — Public mini-assessment
 
-To learn more about Next.js, take a look at the following resources:
+### Auth
+- `/sign-in` — Clerk sign-in
+- `/sign-up` — Clerk sign-up
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Dashboard (protected)
+- `/dashboard` — Overview with stats
+- `/dashboard/assessments` — Assessment management
+- `/dashboard/team` — Team members
+- `/dashboard/settings` — Org settings + billing
+- `/dashboard/admin/questions` — Question bank management
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### API
+- `GET/POST /api/assessments` — List/create assessments
+- `GET/PATCH /api/assessments/:id` — Get/update assessment
+- `GET/POST /api/billing` — Billing info + checkout
+- `GET/POST/PATCH /api/admin/questions` — Question management
+- `POST /api/cron/generate-questions` — LLM question generation
+- `POST /api/webhooks/clerk` — Clerk event sync
+- `POST /api/webhooks/stripe` — Stripe event handling
 
-## Deploy on Vercel
+## Roadmap
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See `ROADMAP.md` for the full phased plan.
