@@ -165,9 +165,17 @@ function ScoreRing({ score }: { score: number }) {
   );
 }
 
-export function AssessmentFlow() {
-  const [phase, setPhase] = useState<Phase>("start");
-  const [email, setEmail] = useState("");
+export function AssessmentFlow({
+  initialEmail,
+  initialName,
+  autoStart = false,
+}: {
+  initialEmail?: string;
+  initialName?: string;
+  autoStart?: boolean;
+}) {
+  const [phase, setPhase] = useState<Phase>(autoStart && initialEmail ? "question" : "start");
+  const [email, setEmail] = useState(initialEmail || "");
   const [state, setState] = useState<AssessmentState>(createInitialState());
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [shuffledOptions, setShuffledOptions] = useState<Question["options"]>([]);
@@ -177,7 +185,7 @@ export function AssessmentFlow() {
   const [integritySignals, setIntegritySignals] = useState<IntegritySignals | null>(null);
   const [copied, setCopied] = useState(false);
   const [showResumeText, setShowResumeText] = useState(false);
-  const [displayName, setDisplayName] = useState("");
+  const [displayName, setDisplayName] = useState(initialName || "");
   const [showOnLeaderboard, setShowOnLeaderboard] = useState(true);
   const [displayAnonymous, setDisplayAnonymous] = useState(false);
 
@@ -240,6 +248,20 @@ export function AssessmentFlow() {
     },
     [email, loadNextQuestion]
   );
+
+  // Auto-start for logged-in users
+  const autoStartedRef = useRef(false);
+  useEffect(() => {
+    if (autoStart && initialEmail && !autoStartedRef.current) {
+      autoStartedRef.current = true;
+      const initial = createInitialState();
+      setState(initial);
+      trackerRef.current = createIntegrityTracker();
+      trackerRef.current.start();
+      loadNextQuestion(initial, initialEmail);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Auto-submit when time runs out
   useEffect(() => {
