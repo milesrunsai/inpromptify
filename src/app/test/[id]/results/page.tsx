@@ -41,7 +41,7 @@ function AttemptTimeline({ messages }: { messages: StoredMessage[] }) {
           <div key={pair.index} className="border border-white/[0.06] rounded-lg overflow-hidden bg-[#0C1120]">
             <button onClick={() => setExpandedIdx(isExpanded ? null : pair.index)} className="w-full flex items-center justify-between px-4 py-3 hover:bg-white/[0.02] transition-colors text-left">
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-7 h-7 rounded-full bg-[#6366F1] text-white flex items-center justify-center text-xs font-bold shrink-0">{pair.index + 1}</div>
+                <div className="w-7 h-7 rounded-full bg-[#f97316] text-white flex items-center justify-center text-xs font-bold shrink-0">{pair.index + 1}</div>
                 <p className="text-sm text-white font-medium truncate max-w-[300px] sm:max-w-[500px]">{pair.prompt.content.slice(0, 80)}{pair.prompt.content.length > 80 ? "…" : ""}</p>
               </div>
               <svg className={`w-4 h-4 text-gray-500 shrink-0 transition-transform ${isExpanded ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
@@ -88,7 +88,7 @@ function ScoreDistributionChart({ userScore }: { userScore: number }) {
           <div key={b.range} className="flex items-center gap-3">
             <span className="text-[10px] text-gray-400 w-10 text-right font-mono">{b.range}</span>
             <div className="flex-1 h-5 bg-white/[0.04] rounded-sm overflow-hidden relative">
-              <div className={`h-full rounded-sm transition-all duration-1000 ease-out ${isUser ? "bg-[#6366F1]" : "bg-white/[0.12]"}`} style={{ width: `${pct}%` }} />
+              <div className={`h-full rounded-sm transition-all duration-1000 ease-out ${isUser ? "bg-[#f97316]" : "bg-white/[0.12]"}`} style={{ width: `${pct}%` }} />
               {isUser && <span className="absolute right-2 top-0.5 text-[9px] font-bold text-white">YOU</span>}
             </div>
             <span className="text-[10px] text-gray-400 w-6 font-mono">{b.count}</span>
@@ -154,7 +154,7 @@ export default function TestResultsPage({ params }: { params: Promise<{ id: stri
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0A0F1C] flex items-center justify-center">
+      <div className="min-h-screen bg-[#111118] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full mx-auto mb-3" />
           <p className="text-sm text-gray-500">Calculating your score...</p>
@@ -165,7 +165,7 @@ export default function TestResultsPage({ params }: { params: Promise<{ id: stri
 
   if (!result) {
     return (
-      <div className="min-h-screen bg-[#0A0F1C] flex items-center justify-center">
+      <div className="min-h-screen bg-[#111118] flex items-center justify-center">
         <div className="text-center">
           <p className="text-gray-500 text-sm mb-4">No results found for this test session.</p>
           <Link href="/" className="text-sm text-orange-400 hover:text-orange-300 font-medium">Back to Home</Link>
@@ -185,7 +185,7 @@ export default function TestResultsPage({ params }: { params: Promise<{ id: stri
   const testName = result.testName || "Test";
 
   return (
-    <div className="min-h-screen bg-[#0A0F1C]">
+    <div className="min-h-screen bg-[#111118]">
       <div className="bg-[#0C1120] border-b border-white/[0.06] sticky top-0 z-30">
         <div className="max-w-3xl mx-auto px-5 py-3 flex items-center justify-between">
           <Link href="/" className="font-mono text-sm text-white">
@@ -212,7 +212,7 @@ export default function TestResultsPage({ params }: { params: Promise<{ id: stri
       )}
 
       {/* Test Info Banner */}
-      <div className="bg-[#0A0F1C] text-white">
+      <div className="bg-[#111118] text-white">
         <div className="max-w-3xl mx-auto px-5 py-6">
           <h1 className="text-lg font-bold mb-1">{testName}</h1>
           {result.testDescription && <p className="text-sm text-gray-300 leading-relaxed mb-3">{result.testDescription}</p>}

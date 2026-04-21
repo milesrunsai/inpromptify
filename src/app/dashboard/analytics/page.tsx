@@ -60,7 +60,7 @@ const INDUSTRY_BENCHMARKS: Record<string, number> = {
 };
 
 function ScoreBar({ score }: { score: number }) {
-  const color = score >= 80 ? "bg-indigo-500" : score >= 60 ? "bg-indigo-500/60" : score >= 40 ? "bg-indigo-500/40" : "bg-indigo-500/20";
+  const color = score >= 80 ? "bg-orange-500" : score >= 60 ? "bg-orange-500/60" : score >= 40 ? "bg-orange-500/40" : "bg-orange-500/20";
   return (
     <div className="flex items-center gap-2">
       <div className="w-20 h-2 bg-white/[0.04] rounded-full overflow-hidden">
@@ -86,7 +86,7 @@ export default function AnalyticsPage() {
   if (loading) {
     return (
       <div className="p-8 text-center">
-        <div className="animate-spin w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full mx-auto" />
+        <div className="animate-spin w-6 h-6 border-2 border-orange-500 border-t-transparent rounded-full mx-auto" />
       </div>
     );
   }
@@ -96,7 +96,7 @@ export default function AnalyticsPage() {
       <div className="p-8">
         <h1 className="text-xl font-bold text-white mb-2">Team Analytics</h1>
         <p className="text-sm text-gray-500 mb-6">No assessment data yet. Create a test and invite your team to get started.</p>
-        <a href="/dashboard/create" className="text-sm text-indigo-600 font-medium hover:text-indigo-700">Create your first assessment</a>
+        <a href="/dashboard/create" className="text-sm text-orange-500 font-medium hover:text-orange-600">Create your first assessment</a>
       </div>
     );
   }
@@ -124,7 +124,7 @@ export default function AnalyticsPage() {
           { label: "Total Assessments", value: summary.totalAttempts, suffix: "" },
           { label: "Est. Annual Savings", value: `$${summary.estimatedAnnualSavings.toLocaleString()}`, suffix: "", highlight: true },
         ].map((card) => (
-          <div key={card.label} className={`bg-[#0C1120] rounded-lg border ${card.highlight ? "border-indigo-500/20 bg-indigo-500/10" : "border-white/[0.06]"} p-4`}>
+          <div key={card.label} className={`bg-[#0C1120] rounded-lg border ${card.highlight ? "border-orange-500/20 bg-orange-500/10" : "border-white/[0.06]"} p-4`}>
             <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-2">{card.label}</div>
             <div className="text-2xl font-bold text-white">
               {typeof card.value === "number" ? card.value : card.value}
@@ -146,7 +146,7 @@ export default function AnalyticsPage() {
                 <div key={bucket} className="flex items-center gap-3">
                   <span className="text-[11px] text-gray-400 w-12 text-right font-mono">{bucket}</span>
                   <div className="flex-1 h-6 bg-white/[0.04] rounded-sm overflow-hidden">
-                    <div className="h-full bg-indigo-500 rounded-sm transition-all duration-700" style={{ width: `${pct}%` }} />
+                    <div className="h-full bg-orange-500 rounded-sm transition-all duration-700" style={{ width: `${pct}%` }} />
                   </div>
                   <span className="text-[11px] text-gray-400 w-6 font-mono">{count}</span>
                 </div>
@@ -169,7 +169,7 @@ export default function AnalyticsPage() {
                       <span className="text-sm text-white font-medium">{p.name}</span>
                       <span className="text-[11px] text-gray-400 ml-2">{p.tests_taken} tests</span>
                     </div>
-                    <span className="text-sm font-semibold text-indigo-600">{p.avg_score}</span>
+                    <span className="text-sm font-semibold text-orange-500">{p.avg_score}</span>
                   </div>
                 ))}
               </div>
@@ -225,7 +225,7 @@ export default function AnalyticsPage() {
                     </span>
                   </div>
                   <div className="relative h-2 bg-white/[0.04] rounded-full overflow-hidden">
-                    <div className="absolute h-full bg-indigo-500 rounded-full" style={{ width: `${Math.min(dim.yours, 100)}%` }} />
+                    <div className="absolute h-full bg-orange-500 rounded-full" style={{ width: `${Math.min(dim.yours, 100)}%` }} />
                     <div className="absolute h-full w-0.5 bg-amber-400/60" style={{ left: `${benchmark}%` }} title={`Industry: ${benchmark}`} />
                   </div>
                 </div>
@@ -233,7 +233,7 @@ export default function AnalyticsPage() {
             })}
           </div>
           <div className="flex items-center gap-4 mt-4 text-[10px] text-gray-600">
-            <span className="flex items-center gap-1"><span className="w-2 h-2 bg-indigo-500 rounded-full" /> Your team</span>
+            <span className="flex items-center gap-1"><span className="w-2 h-2 bg-orange-500 rounded-full" /> Your team</span>
             <span className="flex items-center gap-1"><span className="w-2 h-0.5 bg-amber-400/60" /> Industry avg</span>
           </div>
         </div>
@@ -373,7 +373,7 @@ export default function AnalyticsPage() {
                       {entries.map((e, i) => (
                         <div
                           key={i}
-                          className="flex-1 bg-indigo-500/60 rounded-t-sm min-w-[4px]"
+                          className="flex-1 bg-orange-500/60 rounded-t-sm min-w-[4px]"
                           style={{ height: `${Math.max((e.score / 100) * 100, 8)}%` }}
                           title={`${e.score}/100 — ${new Date(e.completed_at).toLocaleDateString()}`}
                         />

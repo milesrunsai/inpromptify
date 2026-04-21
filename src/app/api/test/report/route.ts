@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
 
     // Header
     doc.setFontSize(10);
-    doc.setTextColor(99, 102, 241); // indigo
+    doc.setTextColor(249, 115, 22); // orange
     doc.text("[InpromptiFy]", 14, y);
     doc.setTextColor(150, 150, 150);
     doc.text("Assessment Report", pageWidth - 14, y, { align: "right" });
@@ -44,10 +44,10 @@ export async function POST(request: NextRequest) {
     y += 14;
 
     // Score Box
-    doc.setFillColor(245, 245, 255);
+    doc.setFillColor(255, 247, 237);
     doc.roundedRect(14, y, pageWidth - 28, 35, 3, 3, "F");
     doc.setFontSize(36);
-    doc.setTextColor(99, 102, 241);
+    doc.setTextColor(249, 115, 22);
     doc.text(`${promptScore}`, 30, y + 25);
     doc.setFontSize(12);
     doc.setTextColor(150, 150, 150);
@@ -91,7 +91,7 @@ export async function POST(request: NextRequest) {
       doc.roundedRect(14, y, pageWidth - 28, 4, 1, 1, "F");
       // Progress bar fill
       const barWidth = ((pageWidth - 28) * score) / 100;
-      doc.setFillColor(99, 102, 241);
+      doc.setFillColor(249, 115, 22);
       if (barWidth > 0) doc.roundedRect(14, y, barWidth, 4, 1, 1, "F");
       y += 10;
     }

@@ -40,8 +40,8 @@ export default function JobsPage() {
   return (
     <>
       <Nav />
-      <main className="min-h-screen bg-[#0A0F1C]">
-        <div className="max-w-4xl mx-auto px-5 sm:px-6 py-14">
+      <main className="min-h-screen bg-[#111118]">
+        <div className="max-w-4xl mx-auto px-5 sm:px-6 pt-28 pb-14">
           <div className="mb-10">
             <h1 className="text-2xl font-bold text-white">Open Roles</h1>
             <p className="text-sm text-gray-500 mt-1">Apply by completing a prompting assessment</p>
@@ -79,7 +79,7 @@ export default function JobsPage() {
                       </div>
                       <div className="min-w-0">
                         <h2 className="text-lg font-semibold text-white">{test.title}</h2>
-                        {test.company_name && <p className="text-sm text-[#6366F1] font-medium mt-0.5">{test.company_name}</p>}
+                        {test.company_name && <p className="text-sm text-orange-500 font-medium mt-0.5">{test.company_name}</p>}
                         {test.description && <p className="text-sm text-gray-500 mt-2 line-clamp-2">{test.description}</p>}
                         <div className="flex flex-wrap gap-3 mt-3 text-xs text-gray-400">
                           {test.location && <span>📍 {test.location}</span>}
@@ -91,7 +91,7 @@ export default function JobsPage() {
                     </div>
                     <Link
                       href={`/test/${test.id}`}
-                      className="shrink-0 ml-4 bg-[#6366F1] hover:bg-[#4F46E5] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                      className="shrink-0 ml-4 bg-orange-500 hover:bg-orange-400 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
                     >
                       Apply →
                     </Link>
@@ -105,7 +105,7 @@ export default function JobsPage() {
                   <div className="flex items-start justify-between">
                     <div className="flex-1 min-w-0">
                       <h2 className="text-lg font-semibold text-white">{job.title}</h2>
-                      <p className="text-sm text-[#6366F1] font-medium mt-0.5">{job.company}</p>
+                      <p className="text-sm text-orange-500 font-medium mt-0.5">{job.company}</p>
                       {job.description && <p className="text-sm text-gray-500 mt-2 line-clamp-2">{job.description}</p>}
                       <div className="flex flex-wrap gap-3 mt-3 text-xs text-gray-400">
                         {job.location && <span>📍 {job.location}</span>}
@@ -117,7 +117,7 @@ export default function JobsPage() {
                     {job.test_id && (
                       <Link
                         href={`/test/${job.test_id}`}
-                        className="shrink-0 ml-4 bg-[#6366F1] hover:bg-[#4F46E5] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                        className="shrink-0 ml-4 bg-orange-500 hover:bg-orange-400 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
                       >
                         Apply →
                       </Link>

@@ -74,14 +74,14 @@ export default function ApiPage() {
         <p className="text-xs text-gray-400 mb-4">API access requires a Pro plan or above.</p>
         {error && <div className="text-sm text-red-600 bg-red-500/10 border border-red-500/20 rounded-md px-3 py-2 mb-3">{error}</div>}
         <div className="flex gap-3">
-          <input type="text" value={newKeyName} onChange={e => setNewKeyName(e.target.value)} className="border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent" placeholder="Key name" />
-          <button onClick={generateKey} disabled={generating} className="bg-[#6366F1] hover:bg-[#4F46E5] disabled:opacity-60 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+          <input type="text" value={newKeyName} onChange={e => setNewKeyName(e.target.value)} className="border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#f97316] focus:border-transparent" placeholder="Key name" />
+          <button onClick={generateKey} disabled={generating} className="bg-[#f97316] hover:bg-[#ea580c] disabled:opacity-60 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
             {generating ? "Generating..." : "Generate Key"}
           </button>
         </div>
         {generatedKey && (
-          <div className="mt-4 bg-indigo-500/10 border border-indigo-500/20 rounded-md p-3">
-            <p className="text-xs text-indigo-300 font-medium mb-1">Copy this key now — it won&apos;t be shown again</p>
+          <div className="mt-4 bg-orange-500/10 border border-orange-500/20 rounded-md p-3">
+            <p className="text-xs text-orange-300 font-medium mb-1">Copy this key now — it won&apos;t be shown again</p>
             <code className="text-sm font-mono text-white break-all">{generatedKey}</code>
           </div>
         )}
@@ -126,7 +126,7 @@ export default function ApiPage() {
             <div className="space-y-4">
               <div className="bg-white/[0.02] rounded-md p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[10px] font-bold text-indigo-300 bg-indigo-500/10 px-1.5 py-0.5 rounded">POST</span>
+                  <span className="text-[10px] font-bold text-orange-300 bg-orange-500/10 px-1.5 py-0.5 rounded">POST</span>
                   <code className="text-sm text-white">/api/v1/tests/create</code>
                 </div>
                 <p className="text-xs text-gray-500 mb-2">Create a test programmatically</p>
@@ -137,7 +137,7 @@ export default function ApiPage() {
               </div>
               <div className="bg-white/[0.02] rounded-md p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[10px] font-bold text-violet-400 bg-violet-500/10 px-1.5 py-0.5 rounded">GET</span>
+                  <span className="text-[10px] font-bold text-orange-300 bg-orange-400/10 px-1.5 py-0.5 rounded">GET</span>
                   <code className="text-sm text-white">/api/v1/tests/:id/results</code>
                 </div>
                 <p className="text-xs text-gray-500 mb-2">Get test results for a specific test</p>
@@ -157,7 +157,7 @@ export default function ApiPage() {
               </div>
               <div className="bg-white/[0.02] rounded-md p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[10px] font-bold text-indigo-300 bg-indigo-500/10 px-1.5 py-0.5 rounded">POST</span>
+                  <span className="text-[10px] font-bold text-orange-300 bg-orange-500/10 px-1.5 py-0.5 rounded">POST</span>
                   <code className="text-sm text-white">/api/v1/webhooks</code>
                 </div>
                 <p className="text-xs text-gray-500 mb-2">Register a webhook for real-time event notifications</p>
@@ -168,7 +168,7 @@ export default function ApiPage() {
               </div>
               <div className="bg-white/[0.02] rounded-md p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[10px] font-bold text-violet-400 bg-violet-500/10 px-1.5 py-0.5 rounded">GET</span>
+                  <span className="text-[10px] font-bold text-orange-300 bg-orange-400/10 px-1.5 py-0.5 rounded">GET</span>
                   <code className="text-sm text-white">/api/v1/webhooks</code>
                 </div>
                 <p className="text-xs text-gray-500 mb-2">List your registered webhooks</p>

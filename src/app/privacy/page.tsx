@@ -9,8 +9,8 @@ export default function PrivacyPage() {
   return (
     <>
       <Nav />
-      <main className="bg-[#0A0F1C] min-h-screen">
-        <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-24">
+      <main className="bg-[#111118] min-h-screen">
+        <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 pt-28 pb-16 md:pb-24">
           <h1 className="text-3xl font-bold text-white mb-2">Privacy Policy</h1>
           <p className="text-sm text-gray-500 mb-10">Last updated: February 2026</p>
 
@@ -78,7 +78,7 @@ export default function PrivacyPage() {
             <section>
               <h2 className="text-lg font-semibold text-white">8. Security</h2>
               <p>
-                We implement industry-standard security measures including encryption in transit (TLS) and at rest. For more details, see our <a href="/security" className="text-[#6366F1] underline">Security page</a>.
+                We implement industry-standard security measures including encryption in transit (TLS) and at rest. For more details, see our <a href="/security" className="text-orange-500 underline">Security page</a>.
               </p>
             </section>
 
@@ -93,7 +93,7 @@ export default function PrivacyPage() {
               <h2 className="text-lg font-semibold text-white">10. Contact</h2>
               <p>
                 Questions about this policy? Contact us at{" "}
-                <a href="mailto:hello@inpromptify.com" className="text-[#6366F1] underline">hello@inpromptify.com</a>.
+                <a href="mailto:hello@inpromptify.com" className="text-orange-500 underline">hello@inpromptify.com</a>.
               </p>
             </section>
           </div>

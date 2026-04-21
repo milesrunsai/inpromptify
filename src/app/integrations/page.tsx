@@ -51,7 +51,7 @@ const INTEGRATIONS = [
 
 const STATUS_STYLES: Record<string, { label: string; style: string }> = {
   api: { label: "API Ready", style: "text-orange-300 bg-orange-400/[0.08] border-orange-400/20" },
-  webhook: { label: "Via Webhooks", style: "text-violet-400 bg-violet-500/[0.06] border-violet-500/15" },
+  webhook: { label: "Via Webhooks", style: "text-orange-300 bg-orange-400/[0.06] border-orange-400/15" },
   coming: { label: "Coming Soon", style: "text-gray-500 bg-white/[0.03] border-white/[0.06]" },
 };
 
@@ -59,8 +59,8 @@ export default function IntegrationsPage() {
   return (
     <>
       <Nav />
-      <main className="bg-[#0A0F1C] min-h-screen">
-        <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
+      <main className="bg-[#111118] min-h-screen">
+        <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 pt-28 pb-20 md:pb-28">
           {/* Header */}
           <div className="text-center mb-16">
             <p className="text-[11px] font-mono text-orange-400/70 uppercase tracking-wider mb-3">Integrations</p>
@@ -149,7 +149,7 @@ export default function IntegrationsPage() {
 
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[10px] font-bold text-violet-400 bg-violet-500/10 px-1.5 py-0.5 rounded">2. INVITE</span>
+                  <span className="text-[10px] font-bold text-orange-300 bg-orange-400/10 px-1.5 py-0.5 rounded">2. INVITE</span>
                   <code className="text-sm text-white">POST /api/v1/tests/:id/invite</code>
                 </div>
                 <pre className="bg-white/[0.02] rounded-md p-3 text-[12px] text-gray-400 overflow-x-auto">{`curl -X POST https://inpromptify.com/api/v1/tests/42/invite \\

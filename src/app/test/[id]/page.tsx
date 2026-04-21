@@ -73,7 +73,7 @@ export default function TestLandingPage({ params }: { params: Promise<{ id: stri
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0A0F1C] flex items-center justify-center">
+      <div className="min-h-screen bg-[#111118] flex items-center justify-center">
         <div className="text-sm text-gray-500">Loading test...</div>
       </div>
     );
@@ -81,7 +81,7 @@ export default function TestLandingPage({ params }: { params: Promise<{ id: stri
 
   if (error || !test) {
     return (
-      <div className="min-h-screen bg-[#0A0F1C] flex items-center justify-center">
+      <div className="min-h-screen bg-[#111118] flex items-center justify-center">
         <div className="text-center">
           <p className="text-gray-500 text-sm mb-4">{error || "Test not found"}</p>
           <Link href="/" className="text-sm text-orange-400 hover:text-orange-300 font-medium">Back to Home</Link>
@@ -91,10 +91,10 @@ export default function TestLandingPage({ params }: { params: Promise<{ id: stri
   }
 
   const modelLabel = test.model === "gpt-4o" ? "GPT-4o" : test.model === "claude" ? "Claude" : test.model === "gemini" ? "Gemini" : test.model;
-  const inputClass = "w-full border border-white/[0.08] rounded-md px-3 py-2 text-sm bg-white/[0.04] text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-orange-500/40";
+  const inputClass = "w-full border border-white/[0.08] rounded-md px-3 py-2 text-sm bg-white/[0.04] text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40";
 
   return (
-    <div className="min-h-screen bg-[#0A0F1C]">
+    <div className="min-h-screen bg-[#111118]">
       <div className="border-b border-white/[0.06]">
         <div className="max-w-3xl mx-auto px-5 py-4 flex items-center justify-between">
           <Link href="/" ><span className="inline-flex items-center gap-2"><img src="/logo.png" alt="InpromptiFy" width={20} height={20} /><span className="font-semibold text-white">InpromptiFy</span></span></Link>

@@ -90,7 +90,7 @@ export default function Hero() {
           type="video/mp4"
         />
       </video>
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f]/70 via-[#0a0a0f]/80 to-[#0a0a0f]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#111118]/70 via-[#111118]/80 to-[#111118]" />
       <div className="absolute inset-0 dot-pattern opacity-40" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-16 w-full">

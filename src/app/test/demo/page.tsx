@@ -205,7 +205,7 @@ export default function DemoTestPage() {
   // Intro
   if (phase === "intro") {
     return (
-      <div className="bg-[#0A0F1C] min-h-screen flex flex-col">
+      <div className="bg-[#111118] min-h-screen flex flex-col">
         <div className="flex items-center gap-3 px-6 py-4 border-b border-white/[0.06]">
           <Link href="/" className="text-sm font-bold text-white hover:text-orange-300 transition-colors">InpromptiFy</Link>
         </div>
@@ -314,7 +314,7 @@ export default function DemoTestPage() {
     const grade = overallScore >= 90 ? "A+" : overallScore >= 80 ? "A" : overallScore >= 70 ? "B" : overallScore >= 60 ? "C" : overallScore >= 50 ? "D" : "F";
 
     return (
-      <div className="bg-[#0A0F1C] min-h-screen flex flex-col">
+      <div className="bg-[#111118] min-h-screen flex flex-col">
         <div className="flex items-center gap-3 px-6 py-4 border-b border-white/[0.06]">
           <Link href="/" className="text-sm font-bold text-white hover:text-orange-300 transition-colors">InpromptiFy</Link>
           <span className="text-gray-600">|</span>
@@ -480,9 +480,9 @@ export default function DemoTestPage() {
 
   // Sandbox (active test)
   return (
-    <div className="bg-[#0A0F1C] min-h-screen flex flex-col">
+    <div className="bg-[#111118] min-h-screen flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06] bg-[#0A0F1C]/95 backdrop-blur-xl">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06] bg-[#111118]/95 backdrop-blur-xl">
         <div className="flex items-center gap-3">
           <Link href="/" className="text-sm font-bold text-white hover:text-orange-300 transition-colors">InpromptiFy</Link>
           <span className="text-gray-600">|</span>
@@ -579,7 +579,7 @@ export default function DemoTestPage() {
       </div>
 
       {/* Input */}
-      <div className="border-t border-white/[0.06] bg-[#0A0F1C] px-4 py-3">
+      <div className="border-t border-white/[0.06] bg-[#111118] px-4 py-3">
         <div className="max-w-3xl mx-auto flex gap-3">
           <input
             type="text"
@@ -588,7 +588,7 @@ export default function DemoTestPage() {
             onKeyDown={(e) => { integrity.onKeyDown(e); if (e.key === "Enter" && !e.shiftKey) handleSend(); }}
             disabled={sending || attemptsLeft <= 0}
             placeholder={attemptsLeft <= 0 ? `No attempts left — click "${currentStage < STAGES.length - 1 ? "Next Task" : "Finish"}"` : "Type your prompt... (Enter to send)"}
-            className="flex-1 bg-[#0C1120] border border-white/[0.06] rounded-md px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 focus:border-orange-500/30 disabled:opacity-50"
+            className="flex-1 bg-[#0C1120] border border-white/[0.06] rounded-md px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-orange-500/50 focus:border-orange-500/30 disabled:opacity-50"
           />
           <button
             onClick={handleSend}

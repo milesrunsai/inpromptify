@@ -23,7 +23,7 @@ function CircularProgress({
   const offset = circumference * (1 - progress);
 
   const gradeColors: Record<LetterGrade, { stroke: string; text: string; bg: string }> = {
-    S: { stroke: "#8B5CF6", text: "text-violet-600", bg: "bg-violet-50" },
+    S: { stroke: "#F97316", text: "text-orange-400", bg: "bg-orange-50" },
     A: { stroke: "#10B981", text: "text-emerald-600", bg: "bg-emerald-50" },
     B: { stroke: "#3B82F6", text: "text-blue-600", bg: "bg-blue-50" },
     C: { stroke: "#F59E0B", text: "text-amber-600", bg: "bg-amber-50" },
@@ -73,7 +73,7 @@ function CircularProgress({
 /** Letter grade badge */
 function GradeBadge({ grade, size = "lg" }: { grade: LetterGrade; size?: "sm" | "lg" }) {
   const gradeStyles: Record<LetterGrade, string> = {
-    S: "bg-violet-100 text-violet-700 ring-violet-200",
+    S: "bg-orange-100 text-orange-700 ring-orange-200",
     A: "bg-emerald-100 text-emerald-700 ring-emerald-200",
     B: "bg-blue-100 text-blue-700 ring-blue-200",
     C: "bg-amber-100 text-amber-700 ring-amber-200",
@@ -220,7 +220,7 @@ export default function ScoreCard({ result, testName }: ScoreCardProps) {
   };
 
   const dimensionConfig = [
-    { key: "promptQuality" as const, label: "Prompt Quality", color: "bg-[#6366F1]" },
+    { key: "promptQuality" as const, label: "Prompt Quality", color: "bg-[#f97316]" },
     { key: "responseQuality" as const, label: "Response Quality", color: "bg-emerald-500" },
     { key: "efficiency" as const, label: "Efficiency", color: "bg-blue-500" },
     { key: "speed" as const, label: "Speed", color: "bg-purple-500" },

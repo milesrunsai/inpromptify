@@ -234,8 +234,8 @@ export default function CreateTestPage() {
         {steps.map((s, i) => (
           <div key={s} className="flex items-center gap-1 flex-1">
             <button onClick={() => { if (i < step || validateStep(step)) setStep(i); }}
-              className={`flex items-center gap-2 text-[12px] font-medium transition-all duration-200 ${i === step ? "text-indigo-400" : i < step ? "text-emerald-400" : "text-gray-600"}`}>
-              <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-semibold transition-all duration-200 ${i === step ? "bg-indigo-600 text-white" : i < step ? "bg-emerald-500 text-white" : "bg-white/[0.06] text-gray-500"}`}>
+              className={`flex items-center gap-2 text-[12px] font-medium transition-all duration-200 ${i === step ? "text-orange-400" : i < step ? "text-emerald-400" : "text-gray-600"}`}>
+              <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-semibold transition-all duration-200 ${i === step ? "bg-orange-500 text-white" : i < step ? "bg-emerald-500 text-white" : "bg-white/[0.06] text-gray-500"}`}>
                 {i < step ? (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12" /></svg>) : i + 1}
               </span>
               <span className="hidden sm:inline">{s}</span>
@@ -281,7 +281,7 @@ export default function CreateTestPage() {
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
                   {TEMPLATES.map((t) => (
                     <button key={t.id} onClick={() => handleTemplateSelect(t.id)}
-                      className="p-3 rounded-lg border border-white/[0.06] hover:border-indigo-500/30 hover:bg-indigo-500/[0.04] text-left transition-all duration-200">
+                      className="p-3 rounded-lg border border-white/[0.06] hover:border-orange-500/30 hover:bg-orange-500/[0.04] text-left transition-all duration-200">
                       <div className="font-medium text-[12px] text-white">{t.label}</div>
                       <div className="text-[10px] text-gray-500 mt-0.5 leading-tight">{t.desc}</div>
                     </button>
@@ -291,9 +291,9 @@ export default function CreateTestPage() {
             )}
 
             {aiSuggested && (
-              <div className="border border-indigo-500/20 bg-indigo-500/[0.04] rounded-lg p-5 space-y-4">
+              <div className="border border-orange-500/20 bg-orange-500/[0.04] rounded-lg p-5 space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-[14px] font-semibold text-indigo-400">AI Suggestion</h3>
+                  <h3 className="text-[14px] font-semibold text-orange-400">AI Suggestion</h3>
                   <button onClick={() => setStep(1)} className="text-[12px] font-medium text-gray-500 hover:text-gray-300 transition-colors">Customize manually</button>
                 </div>
                 <div className="space-y-3 text-[13px]">
@@ -331,7 +331,7 @@ export default function CreateTestPage() {
               <label className={ds.inputLabel}>Task Prompt * <span className="text-gray-600 font-normal">-- what candidates will see</span></label>
               <textarea value={form.taskPrompt} onChange={(e) => handleTaskPromptChange(e.target.value)} rows={6} className={`${ds.input} resize-none ${fieldErrors.taskPrompt ? "border-red-500/40" : ""}`} placeholder="Describe the task in detail..." />
               {fieldErrors.taskPrompt && <p className={ds.inputError}>{fieldErrors.taskPrompt}</p>}
-              {activeTip && <div className="mt-2 text-[12px] text-indigo-400 bg-indigo-500/[0.06] border border-indigo-500/[0.12] rounded-md px-3 py-2">{activeTip}</div>}
+              {activeTip && <div className="mt-2 text-[12px] text-orange-400 bg-orange-500/[0.06] border border-orange-500/[0.12] rounded-md px-3 py-2">{activeTip}</div>}
             </div>
             <div>
               <label className={ds.inputLabel}>Expected Outcomes</label>
@@ -344,7 +344,7 @@ export default function CreateTestPage() {
                 <div className="flex gap-2">
                   {DIFFICULTIES.map((d) => (
                     <button key={d} type="button" onClick={() => update("difficulty", d)}
-                      className={`px-3 py-1.5 rounded-md text-[12px] font-medium border transition-all duration-200 ${form.difficulty === d ? "border-indigo-500/40 bg-indigo-500/10 text-indigo-400" : "border-white/[0.08] text-gray-500 hover:border-white/[0.14]"}`}>
+                      className={`px-3 py-1.5 rounded-md text-[12px] font-medium border transition-all duration-200 ${form.difficulty === d ? "border-orange-500/40 bg-orange-500/10 text-orange-400" : "border-white/[0.08] text-gray-500 hover:border-white/[0.14]"}`}>
                       {d.charAt(0).toUpperCase() + d.slice(1)}
                     </button>
                   ))}
@@ -355,7 +355,7 @@ export default function CreateTestPage() {
                 <div className="flex gap-2">
                   {[{ value: "gpt-4o", name: "GPT-4o" }, { value: "claude", name: "Claude" }, { value: "gemini", name: "Gemini" }].map((m) => (
                     <button key={m.value} type="button" onClick={() => update("model", m.value)}
-                      className={`px-3.5 py-1.5 rounded-md text-[12px] font-medium border transition-all duration-200 ${form.model === m.value ? "border-indigo-500/40 bg-indigo-500/10 text-indigo-400" : "border-white/[0.08] text-gray-500 hover:border-white/[0.14]"}`}>
+                      className={`px-3.5 py-1.5 rounded-md text-[12px] font-medium border transition-all duration-200 ${form.model === m.value ? "border-orange-500/40 bg-orange-500/10 text-orange-400" : "border-white/[0.08] text-gray-500 hover:border-white/[0.14]"}`}>
                       {m.name}
                     </button>
                   ))}
@@ -396,7 +396,7 @@ export default function CreateTestPage() {
                       <span className="text-[12px] font-mono text-gray-500">{form.scoringWeights[key]}%</span>
                     </div>
                     <input type="range" min={0} max={100} value={form.scoringWeights[key]} onChange={(e) => updateWeight(key, parseInt(e.target.value))}
-                      className="w-full h-1 bg-white/[0.06] rounded-full appearance-none cursor-pointer accent-indigo-600" />
+                      className="w-full h-1 bg-white/[0.06] rounded-full appearance-none cursor-pointer accent-orange-500" />
                   </div>
                 ))}
               </div>
@@ -445,7 +445,7 @@ export default function CreateTestPage() {
                           <div className="flex gap-2">
                             {["professional", "casual", "technical", "creative"].map((tone) => (
                               <button key={tone} type="button" onClick={() => updateCriterionConfig(c.id, "tone", tone)}
-                                className={`px-3 py-1 rounded-md text-[11px] font-medium border transition-all ${c.config.tone === tone ? "border-indigo-500/40 bg-indigo-500/10 text-indigo-400" : "border-white/[0.08] text-gray-500"}`}>
+                                className={`px-3 py-1 rounded-md text-[11px] font-medium border transition-all ${c.config.tone === tone ? "border-orange-500/40 bg-orange-500/10 text-orange-400" : "border-white/[0.08] text-gray-500"}`}>
                                 {tone.charAt(0).toUpperCase() + tone.slice(1)}
                               </button>
                             ))}
@@ -481,7 +481,7 @@ export default function CreateTestPage() {
                   { value: "public" as const, label: "Public", desc: "Appears in public listings." },
                 ].map((v) => (
                   <button key={v.value} type="button" onClick={() => update("visibility", v.value)}
-                    className={`p-4 rounded-lg border text-left transition-all duration-200 ${form.visibility === v.value ? "border-indigo-500/40 bg-indigo-500/[0.06]" : "border-white/[0.08] hover:border-white/[0.14]"}`}>
+                    className={`p-4 rounded-lg border text-left transition-all duration-200 ${form.visibility === v.value ? "border-orange-500/40 bg-orange-500/[0.06]" : "border-white/[0.08] hover:border-white/[0.14]"}`}>
                     <span className="font-medium text-[13px] text-white">{v.label}</span>
                     <div className="text-[11px] text-gray-500 mt-1">{v.desc}</div>
                   </button>
@@ -499,7 +499,7 @@ export default function CreateTestPage() {
                       { value: "casual" as const, label: "Casual", desc: "Fun / practice" },
                     ].map((t) => (
                       <button key={t.value} type="button" onClick={() => update("listingType", t.value)}
-                        className={`p-3.5 rounded-lg border text-left transition-all duration-200 ${form.listingType === t.value ? "border-indigo-500/40 bg-indigo-500/[0.06]" : "border-white/[0.08] hover:border-white/[0.14]"}`}>
+                        className={`p-3.5 rounded-lg border text-left transition-all duration-200 ${form.listingType === t.value ? "border-orange-500/40 bg-orange-500/[0.06]" : "border-white/[0.08] hover:border-white/[0.14]"}`}>
                         <span className="font-medium text-[13px] text-white">{t.label}</span>
                         <div className="text-[11px] text-gray-500 mt-0.5">{t.desc}</div>
                       </button>

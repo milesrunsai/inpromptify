@@ -55,12 +55,12 @@ export default function PublicScorePage({ params }: { params: Promise<{ id: stri
     }
   };
 
-  const scoreColor = (s: number) => s >= 80 ? "#10b981" : s >= 65 ? "#6366f1" : s >= 50 ? "#f59e0b" : "#ef4444";
+  const scoreColor = (s: number) => s >= 80 ? "#10b981" : s >= 65 ? "#f97316" : s >= 50 ? "#f59e0b" : "#ef4444";
   const recommendation = (s: number) => s >= 80 ? "Strong Hire" : s >= 65 ? "Hire" : s >= 50 ? "Consider with Training" : "Needs Development";
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0A0F1C] flex items-center justify-center">
+      <div className="min-h-screen bg-[#111118] flex items-center justify-center">
         <div className="animate-spin w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full" />
       </div>
     );
@@ -68,7 +68,7 @@ export default function PublicScorePage({ params }: { params: Promise<{ id: stri
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-[#0A0F1C] flex items-center justify-center">
+      <div className="min-h-screen bg-[#111118] flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-lg font-bold text-white mb-2">Score Not Found</h1>
           <p className="text-sm text-gray-500 mb-6">This score may not exist or hasn't been made public yet.</p>
@@ -81,7 +81,7 @@ export default function PublicScorePage({ params }: { params: Promise<{ id: stri
   const color = scoreColor(data.score);
 
   return (
-    <div className="min-h-screen bg-[#0A0F1C]">
+    <div className="min-h-screen bg-[#111118]">
       {/* Header */}
       <div className="bg-[#0C1120] border-b border-white/[0.06]">
         <div className="max-w-3xl mx-auto px-5 py-3 flex items-center justify-between">
@@ -141,7 +141,7 @@ export default function PublicScorePage({ params }: { params: Promise<{ id: stri
         </div>
 
         {/* Verified Badge CTA */}
-        <div className="bg-gradient-to-r from-emerald-600/[0.08] to-indigo-600/[0.04] rounded-xl border border-emerald-500/[0.12] p-6 mb-6">
+        <div className="bg-gradient-to-r from-emerald-600/[0.08] to-orange-500/[0.04] rounded-xl border border-emerald-500/[0.12] p-6 mb-6">
           <h3 className="text-sm font-semibold text-white mb-1">Get Your Verified Credential</h3>
           <p className="text-[13px] text-gray-500 mb-4">Create a permanent, shareable verification page with your PromptScore, certification badge, and dimension breakdown.</p>
           <button
@@ -184,7 +184,7 @@ export default function PublicScorePage({ params }: { params: Promise<{ id: stri
         </div>
 
         {/* Share / Actions */}
-        <div className="bg-gradient-to-r from-indigo-600/[0.08] to-violet-600/[0.04] rounded-xl border border-orange-500/[0.12] p-6 mb-6">
+        <div className="bg-gradient-to-r from-orange-500/[0.08] to-orange-400/[0.04] rounded-xl border border-orange-500/[0.12] p-6 mb-6">
           <h3 className="text-sm font-semibold text-white mb-1">Share Your PromptScore</h3>
           <p className="text-[13px] text-gray-500 mb-4">Add it to your resume, LinkedIn, or portfolio to prove your AI proficiency.</p>
           <div className="flex flex-wrap gap-2">

@@ -48,7 +48,7 @@ export default function BlogPage() {
   return (
     <>
       <Nav />
-      <main className="bg-[#0a0a0f] min-h-screen">
+      <main className="bg-[#111118] min-h-screen">
         <div className="max-w-7xl mx-auto px-6 pt-28 pb-16">
           <div className="max-w-xl">
             <span className="section-label">[ Blog ]</span>

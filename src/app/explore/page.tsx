@@ -24,7 +24,7 @@ interface PublicTest {
 const DIFFICULTY_COLORS: Record<string, string> = {
   beginner: "text-orange-300 bg-orange-400/[0.08] border-orange-400/20",
   intermediate: "text-orange-400 bg-orange-400/[0.06] border-orange-500/15",
-  advanced: "text-violet-400 bg-violet-500/[0.06] border-violet-500/15",
+  advanced: "text-orange-300 bg-orange-400/[0.06] border-orange-400/15",
   expert: "text-purple-400 bg-purple-500/[0.06] border-purple-500/15",
 };
 
@@ -55,7 +55,7 @@ export default function ExplorePage() {
     });
 
   return (
-    <div className="min-h-screen bg-[#0A0F1C]">
+    <div className="min-h-screen bg-[#111118]">
       {/* Header */}
       <div className="bg-[#0C1120] border-b border-white/[0.06]">
         <div className="max-w-5xl mx-auto px-6 py-5">

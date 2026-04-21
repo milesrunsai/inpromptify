@@ -13,7 +13,7 @@ export default function SettingsPage() {
 
   const Toggle = ({ checked, onChange }: { checked: boolean; onChange: (v: boolean) => void }) => (
     <button onClick={() => onChange(!checked)}
-      className={`relative w-9 h-5 rounded-full transition-colors duration-200 ${checked ? "bg-indigo-600" : "bg-gray-200"}`}>
+      className={`relative w-9 h-5 rounded-full transition-colors duration-200 ${checked ? "bg-orange-500" : "bg-gray-200"}`}>
       <span className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-200 shadow-sm ${checked ? "translate-x-4" : ""}`} />
     </button>
   );
@@ -86,7 +86,7 @@ export default function SettingsPage() {
           </div>
           <button className="text-[12px] text-red-500 hover:text-red-600 font-medium transition-colors">Revoke</button>
         </div>
-        <button className="text-[12px] text-indigo-400 hover:text-indigo-400 font-medium mt-3 transition-colors">Generate new key</button>
+        <button className="text-[12px] text-orange-400 hover:text-orange-400 font-medium mt-3 transition-colors">Generate new key</button>
       </section>
 
       {/* Billing */}
@@ -104,9 +104,9 @@ export default function SettingsPage() {
           </span>
         </div>
         <div className="flex gap-3 mt-3 text-[12px]">
-          <button className="text-indigo-400 hover:text-indigo-400 font-medium transition-colors">Manage subscription</button>
+          <button className="text-orange-400 hover:text-orange-400 font-medium transition-colors">Manage subscription</button>
           <span className="text-gray-200">|</span>
-          <button className="text-indigo-400 hover:text-indigo-400 font-medium transition-colors">View invoices</button>
+          <button className="text-orange-400 hover:text-orange-400 font-medium transition-colors">View invoices</button>
         </div>
       </section>
     </div>

@@ -40,9 +40,9 @@ export async function POST(request: NextRequest) {
     const html = `
       <div style="font-family: system-ui, sans-serif; max-width: 600px; margin: 0 auto; padding: 32px 0;">
         <div style="margin-bottom: 24px;">
-          <span style="color: #6366f1; font-family: monospace; font-size: 14px;">[</span>
+          <span style="color: #f97316; font-family: monospace; font-size: 14px;">[</span>
           <span style="font-weight: 700; font-size: 14px;">InpromptiFy</span>
-          <span style="color: #6366f1; font-family: monospace; font-size: 14px;">]</span>
+          <span style="color: #f97316; font-family: monospace; font-size: 14px;">]</span>
         </div>
         <h1 style="font-size: 20px; font-weight: 600; color: #111; margin-bottom: 16px;">New Enterprise Inquiry</h1>
         
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
           </tr>
           <tr style="border-bottom: 1px solid #eee;">
             <td style="padding: 8px 0; font-weight: 600;">Email</td>
-            <td style="padding: 8px 0;"><a href="mailto:${email}" style="color: #6366f1;">${email}</a></td>
+            <td style="padding: 8px 0;"><a href="mailto:${email}" style="color: #f97316;">${email}</a></td>
           </tr>
           <tr style="border-bottom: 1px solid #eee;">
             <td style="padding: 8px 0; font-weight: 600;">Company</td>

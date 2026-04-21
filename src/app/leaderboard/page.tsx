@@ -106,12 +106,12 @@ export default function LeaderboardPage() {
   return (
     <>
       <Nav />
-      <main className="min-h-screen bg-[#0a0a0f]">
+      <main className="min-h-screen bg-[#111118]">
         <div className="max-w-5xl mx-auto px-5 sm:px-6 pt-28 pb-16">
 
           {/* ── Signup funnel banner (only for logged-out users) ── */}
           {!isLoggedIn && (
-            <div className="relative mb-10 rounded-2xl overflow-hidden border border-orange-500/20 bg-gradient-to-r from-[#1a0f00] via-[#0a0a0f] to-[#1a0f00]">
+            <div className="relative mb-10 rounded-2xl overflow-hidden border border-orange-500/20 bg-gradient-to-r from-[#1a0f00] via-[#111118] to-[#1a0f00]">
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(249,115,22,0.12),transparent_60%)]" />
               <div className="relative flex flex-col sm:flex-row items-center gap-6 p-6 sm:p-8">
                 <div className="flex-shrink-0">

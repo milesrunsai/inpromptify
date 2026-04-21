@@ -100,13 +100,13 @@ export default function ContactPage() {
     }
   };
 
-  const inputClass = "w-full px-3 py-2 border border-white/[0.08] rounded-md text-sm bg-white/[0.04] text-white placeholder-gray-600 focus:ring-2 focus:ring-indigo-500/40 focus:border-orange-500/40 focus:outline-none";
+  const inputClass = "w-full px-3 py-2 border border-white/[0.08] rounded-md text-sm bg-white/[0.04] text-white placeholder-gray-600 focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 focus:outline-none";
 
   return (
     <>
       <Nav />
-      <main className="bg-[#0A0F1C] min-h-screen">
-        <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20">
+      <main className="bg-[#111118] min-h-screen">
+        <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 pt-28 pb-16 md:pb-20">
           <div className="max-w-2xl mb-12">
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Contact</h1>
             <p className="text-gray-400">
@@ -171,7 +171,7 @@ export default function ContactPage() {
                     <div className="space-y-2">
                       {(Object.keys(PRICING.addOns) as AddOnKey[]).map((key) => (
                         <label key={key} className="flex items-center gap-3 cursor-pointer">
-                          <input type="checkbox" checked={addOns[key]} onChange={() => setAddOns({ ...addOns, [key]: !addOns[key] })} className="w-4 h-4 rounded border-white/[0.12] bg-white/[0.04] text-orange-500 focus:ring-indigo-500" />
+                          <input type="checkbox" checked={addOns[key]} onChange={() => setAddOns({ ...addOns, [key]: !addOns[key] })} className="w-4 h-4 rounded border-white/[0.12] bg-white/[0.04] text-orange-500 focus:ring-orange-500" />
                           <span className="text-sm text-gray-400">{PRICING.addOns[key].label}</span>
                           <span className="text-xs text-gray-600 ml-auto">${PRICING.addOns[key].price}/mo</span>
                         </label>

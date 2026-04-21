@@ -15,7 +15,7 @@ export default function HomePage() {
     <>
       <Nav transparent />
       <ScrollRevealProvider />
-      <main className="bg-[#0a0a0f]">
+      <main className="bg-[#111118]">
         <Hero />
         <SocialProof />
         <Features />

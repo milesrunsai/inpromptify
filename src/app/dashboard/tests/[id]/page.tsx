@@ -80,7 +80,7 @@ export default function TestDetailPage() {
   if (error || !test) return (
     <div className="p-6 lg:p-8">
       <div className="text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-md px-4 py-3">{error || "Test not found"}</div>
-      <Link href="/dashboard/tests" className="text-sm text-[#6366F1] mt-4 inline-block">← Back to My Tests</Link>
+      <Link href="/dashboard/tests" className="text-sm text-orange-500 mt-4 inline-block">← Back to My Tests</Link>
     </div>
   );
 
@@ -193,7 +193,7 @@ export default function TestDetailPage() {
               <div key={key} className="flex items-center gap-3">
                 <span className="text-sm text-gray-500 w-20 capitalize">{key}</span>
                 <div className="flex-1 bg-white/[0.06] rounded h-3 overflow-hidden">
-                  <div className="bg-[#6366F1] h-full rounded" style={{ width: `${weights[key]}%` }} />
+                  <div className="bg-orange-500 h-full rounded" style={{ width: `${weights[key]}%` }} />
                 </div>
                 <span className="text-sm font-mono text-gray-600 w-10 text-right">{weights[key]}%</span>
               </div>
@@ -218,7 +218,7 @@ export default function TestDetailPage() {
 
       {/* Share link section */}
       {test.status === "active" && (
-        <div className="bg-[#6366F1]/5 border border-[#6366F1]/10 rounded-lg p-5 mb-4">
+        <div className="bg-orange-500/5 border border-orange-500/10 rounded-lg p-5 mb-4">
           <h3 className="text-sm font-semibold text-gray-900 mb-2">Share This Test</h3>
           <p className="text-xs text-gray-500 mb-3">Anyone with this link can take the test without an account.</p>
           <div className="flex gap-2">
@@ -228,7 +228,7 @@ export default function TestDetailPage() {
               value={`${typeof window !== "undefined" ? window.location.origin : ""}/test/${test.slug || test.id}`}
               className="flex-1 bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2 text-sm text-gray-600 font-mono"
             />
-            <button onClick={copyLink} className="bg-[#6366F1] hover:bg-[#4F46E5] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors shrink-0">
+            <button onClick={copyLink} className="bg-orange-500 hover:bg-orange-400 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors shrink-0">
               {copied ? "Copied!" : "Copy"}
             </button>
           </div>

@@ -11,7 +11,7 @@ const dimensions = [
   {
     name: "Prompt Quality",
     weight: 25,
-    color: "indigo",
+    color: "orange",
     description: "How well-constructed are your prompts? We analyze clarity, specificity, structure, formatting instructions, constraints, and context-setting.",
     highScore: [
       "Clear, structured instructions with numbered steps",
@@ -30,7 +30,7 @@ const dimensions = [
   {
     name: "Efficiency",
     weight: 25,
-    color: "violet",
+    color: "orange",
     description: "How economically do you use your resources? Measured by attempts used vs. allowed and tokens consumed vs. budget.",
     highScore: [
       "Achieving the goal in 1-2 attempts",
@@ -102,8 +102,7 @@ const dimensions = [
 ];
 
 const colorMap: Record<string, { bg: string; text: string; border: string; bar: string }> = {
-  indigo: { bg: "bg-orange-400/10", text: "text-orange-400", border: "border-orange-500/20", bar: "bg-orange-400" },
-  violet: { bg: "bg-violet-500/10", text: "text-violet-400", border: "border-violet-500/20", bar: "bg-violet-500" },
+  orange: { bg: "bg-orange-400/10", text: "text-orange-400", border: "border-orange-500/20", bar: "bg-orange-400" },
   purple: { bg: "bg-purple-500/10", text: "text-purple-400", border: "border-purple-500/20", bar: "bg-purple-500" },
   fuchsia: { bg: "bg-fuchsia-500/10", text: "text-fuchsia-400", border: "border-fuchsia-500/20", bar: "bg-fuchsia-500" },
   slate: { bg: "bg-orange-400/10", text: "text-orange-300", border: "border-orange-400/20", bar: "bg-orange-400" },
@@ -113,9 +112,9 @@ export default function ScoringPage() {
   return (
     <>
       <Nav />
-      <main className="bg-[#0A0F1C] min-h-screen">
+      <main className="bg-[#111118] min-h-screen">
         {/* Header */}
-        <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20">
+        <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 pt-28 pb-16 md:pb-20">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">How Scoring Works</h1>
           <p className="text-gray-400 max-w-xl mb-3">
             Every PromptScore is calculated from 5 weighted dimensions that together measure
@@ -134,12 +133,12 @@ export default function ScoringPage() {
             <h2 className="text-sm font-semibold text-white mb-4">Score Scale</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
               {[
-                { grade: "S", range: "95-100", label: "Exceptional", color: "text-indigo-200 bg-orange-400/15 border-indigo-300/30" },
+                { grade: "S", range: "95-100", label: "Exceptional", color: "text-orange-200 bg-orange-400/15 border-orange-300/30" },
                 { grade: "A", range: "80-94", label: "Strong Hire", color: "text-orange-300 bg-orange-400/[0.1] border-orange-400/25" },
                 { grade: "B", range: "65-79", label: "Hire", color: "text-orange-400 bg-orange-400/[0.07] border-orange-500/20" },
                 { grade: "C", range: "50-64", label: "Consider", color: "text-orange-400/70 bg-orange-400/[0.04] border-orange-500/15" },
                 { grade: "D", range: "35-49", label: "Below Avg", color: "text-orange-500/50 bg-orange-400/[0.03] border-orange-500/10" },
-                { grade: "F", range: "0-34", label: "Not Ready", color: "text-orange-500/50 bg-orange-500/[0.02] border-indigo-600/10" },
+                { grade: "F", range: "0-34", label: "Not Ready", color: "text-orange-500/50 bg-orange-500/[0.02] border-orange-600/10" },
               ].map((g) => (
                 <div key={g.grade} className={`rounded-md border p-3 text-center ${g.color}`}>
                   <div className="text-2xl font-bold">{g.grade}</div>

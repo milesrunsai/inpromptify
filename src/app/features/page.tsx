@@ -49,7 +49,7 @@ export default function FeaturesPage() {
   return (
     <>
       <Nav />
-      <main className="bg-[#0a0a0f] min-h-screen pt-24 pb-16">
+      <main className="bg-[#111118] min-h-screen pt-28 pb-16">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-2xl">
             <span className="section-label">[ Features ]</span>

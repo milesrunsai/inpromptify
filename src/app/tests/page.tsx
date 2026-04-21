@@ -6,7 +6,7 @@ export default function PublicTestsPage() {
   return (
     <>
       <Nav />
-      <main className="min-h-screen bg-[#0A0F1C]">
+      <main className="min-h-screen bg-[#111118]">
         <PublicListingPage
           title="Assessments"
           subtitle="Professional AI prompting assessments — test your skills and prove your abilities"

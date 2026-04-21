@@ -30,18 +30,18 @@ export default async function Image({ params }: { params: Promise<{ id: string }
     }
   } catch { /* use defaults */ }
 
-  const scoreColor = score >= 80 ? "#10b981" : score >= 65 ? "#6366f1" : score >= 50 ? "#f59e0b" : "#ef4444";
+  const scoreColor = score >= 80 ? "#10b981" : score >= 65 ? "#f97316" : score >= 50 ? "#f59e0b" : "#ef4444";
 
   return new ImageResponse(
     (
-      <div style={{ background: "#0A0F1C", width: "100%", height: "100%", display: "flex", flexDirection: "column", padding: 60, fontFamily: "system-ui, sans-serif" }}>
+      <div style={{ background: "#111118", width: "100%", height: "100%", display: "flex", flexDirection: "column", padding: 60, fontFamily: "system-ui, sans-serif" }}>
         {/* Top: logo + test name */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 40 }}>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 12 }}>
-              <span style={{ color: "rgba(99,102,241,0.6)", fontSize: 24 }}>[</span>
+              <span style={{ color: "rgba(249,115,22,0.6)", fontSize: 24 }}>[</span>
               <span style={{ color: "white", fontSize: 24, fontWeight: 700 }}>InpromptiFy</span>
-              <span style={{ color: "rgba(99,102,241,0.6)", fontSize: 24 }}>]</span>
+              <span style={{ color: "rgba(249,115,22,0.6)", fontSize: 24 }}>]</span>
             </div>
             <span style={{ color: "rgba(255,255,255,0.4)", fontSize: 18 }}>{testName}</span>
           </div>

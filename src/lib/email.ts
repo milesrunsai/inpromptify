@@ -40,9 +40,9 @@ export async function sendInviteEmail(
   const html = `
     <div style="font-family: system-ui, sans-serif; max-width: 520px; margin: 0 auto; padding: 32px 0;">
       <div style="margin-bottom: 24px;">
-        <span style="color: #6366f1; font-family: monospace; font-size: 14px;">[</span>
+        <span style="color: #f97316; font-family: monospace; font-size: 14px;">[</span>
         <span style="font-weight: 700; font-size: 14px;">InpromptiFy</span>
-        <span style="color: #6366f1; font-family: monospace; font-size: 14px;">]</span>
+        <span style="color: #f97316; font-family: monospace; font-size: 14px;">]</span>
       </div>
       <h1 style="font-size: 20px; font-weight: 600; color: #111; margin-bottom: 8px;">Hi ${candidateName},</h1>
       <p style="color: #555; font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
@@ -52,7 +52,7 @@ export async function sendInviteEmail(
         This assessment measures how effectively you use AI tools across 5 dimensions:
         prompt quality, efficiency, speed, response quality, and iteration intelligence.
       </p>
-      <a href="${inviteUrl}" style="display: inline-block; background: #6366f1; color: white; padding: 12px 28px; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none;">
+      <a href="${inviteUrl}" style="display: inline-block; background: #f97316; color: white; padding: 12px 28px; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none;">
         Start Assessment
       </a>
       <p style="color: #999; font-size: 12px; margin-top: 24px;">
@@ -77,9 +77,9 @@ export async function sendResultsEmail(
   const html = `
     <div style="font-family: system-ui, sans-serif; max-width: 520px; margin: 0 auto; padding: 32px 0;">
       <div style="margin-bottom: 24px;">
-        <span style="color: #6366f1; font-family: monospace; font-size: 14px;">[</span>
+        <span style="color: #f97316; font-family: monospace; font-size: 14px;">[</span>
         <span style="font-weight: 700; font-size: 14px;">InpromptiFy</span>
-        <span style="color: #6366f1; font-family: monospace; font-size: 14px;">]</span>
+        <span style="color: #f97316; font-family: monospace; font-size: 14px;">]</span>
       </div>
       <h1 style="font-size: 20px; font-weight: 600; color: #111; margin-bottom: 8px;">Hi ${employerName},</h1>
       <p style="color: #555; font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
@@ -94,7 +94,7 @@ export async function sendResultsEmail(
           </div>
         </div>
       </div>
-      <a href="https://inpromptify.com/dashboard/candidates" style="display: inline-block; background: #6366f1; color: white; padding: 12px 28px; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none;">
+      <a href="https://inpromptify.com/dashboard/candidates" style="display: inline-block; background: #f97316; color: white; padding: 12px 28px; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none;">
         View Full Results
       </a>
     </div>

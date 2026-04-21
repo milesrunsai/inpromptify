@@ -121,7 +121,7 @@ export default function Stats() {
           type="video/mp4"
         />
       </video>
-      <div className="absolute inset-0 bg-[#0a0a0f]/85" />
+      <div className="absolute inset-0 bg-[#111118]/85" />
       <div className="absolute inset-0 grid-pattern opacity-20" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">

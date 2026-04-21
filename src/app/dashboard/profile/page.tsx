@@ -103,36 +103,36 @@ export default function ProfilePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-medium text-gray-500 mb-1">Full Name</label>
-            <input type="text" value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent" />
+            <input type="text" value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" />
           </div>
           <div>
             <label className="block text-xs font-medium text-gray-500 mb-1">Avatar URL</label>
-            <input type="url" value={form.avatarUrl} onChange={e => setForm(p => ({ ...p, avatarUrl: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent" placeholder="https://..." />
+            <input type="url" value={form.avatarUrl} onChange={e => setForm(p => ({ ...p, avatarUrl: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" placeholder="https://..." />
           </div>
         </div>
 
         <div>
           <label className="block text-xs font-medium text-gray-500 mb-1">Bio / Description</label>
-          <textarea value={form.bio} onChange={e => setForm(p => ({ ...p, bio: e.target.value }))} rows={3} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent resize-none" placeholder="Tell employers about yourself..." />
+          <textarea value={form.bio} onChange={e => setForm(p => ({ ...p, bio: e.target.value }))} rows={3} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none" placeholder="Tell employers about yourself..." />
         </div>
 
         <div>
           <label className="block text-xs font-medium text-gray-500 mb-1">Work History</label>
-          <textarea value={form.workHistory} onChange={e => setForm(p => ({ ...p, workHistory: e.target.value }))} rows={4} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent resize-none" placeholder="Past roles and experience..." />
+          <textarea value={form.workHistory} onChange={e => setForm(p => ({ ...p, workHistory: e.target.value }))} rows={4} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none" placeholder="Past roles and experience..." />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-medium text-gray-500 mb-1">LinkedIn URL</label>
-            <input type="url" value={form.linkedinUrl} onChange={e => setForm(p => ({ ...p, linkedinUrl: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent" placeholder="https://linkedin.com/in/..." />
+            <input type="url" value={form.linkedinUrl} onChange={e => setForm(p => ({ ...p, linkedinUrl: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" placeholder="https://linkedin.com/in/..." />
           </div>
           <div>
             <label className="block text-xs font-medium text-gray-500 mb-1">Skills (comma-separated)</label>
-            <input type="text" value={form.skillsTags} onChange={e => setForm(p => ({ ...p, skillsTags: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent" placeholder="AI prompting, content strategy, data analysis" />
+            <input type="text" value={form.skillsTags} onChange={e => setForm(p => ({ ...p, skillsTags: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" placeholder="AI prompting, content strategy, data analysis" />
           </div>
         </div>
 
-        <button onClick={handleSave} disabled={saving} className="bg-[#6366F1] hover:bg-[#4F46E5] disabled:opacity-60 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors">
+        <button onClick={handleSave} disabled={saving} className="bg-orange-500 hover:bg-orange-400 disabled:opacity-60 text-white px-6 py-2.5 rounded-md text-sm font-medium transition-colors">
           {saving ? "Saving..." : "Save Profile"}
         </button>
       </div>

@@ -31,7 +31,7 @@ export default function LoginPage() {
   const handleLinkedInLogin = () => { signIn("linkedin", { callbackUrl: "/dashboard" }); };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-[#111118] flex flex-col relative overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 dot-pattern opacity-20" />
 
@@ -77,7 +77,7 @@ export default function LoginPage() {
 
             <div className="relative mb-5">
               <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/[0.06]" /></div>
-              <div className="relative flex justify-center text-xs"><span className="bg-[#0a0a0f] px-3 text-gray-600">or</span></div>
+              <div className="relative flex justify-center text-xs"><span className="bg-[#111118] px-3 text-gray-600">or</span></div>
             </div>
 
             {error && (

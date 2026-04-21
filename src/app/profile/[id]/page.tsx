@@ -37,7 +37,7 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
     return (
       <>
         <Nav transparent />
-        <main className="min-h-screen bg-[#0A0F1C] flex items-center justify-center">
+        <main className="min-h-screen bg-[#111118] flex items-center justify-center">
           <div className="animate-spin w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full" />
         </main>
       </>
@@ -48,7 +48,7 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
     return (
       <>
         <Nav transparent />
-        <main className="min-h-screen bg-[#0A0F1C] flex items-center justify-center">
+        <main className="min-h-screen bg-[#111118] flex items-center justify-center">
           <div className="text-center">
             <p className="text-gray-500 text-sm mb-4">Profile not found</p>
             <Link href="/" className="text-sm text-orange-400 font-medium">Back to Home</Link>
@@ -66,7 +66,7 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
   return (
     <>
       <Nav transparent />
-      <main className="min-h-screen bg-[#0A0F1C]">
+      <main className="min-h-screen bg-[#111118]">
         <div className="max-w-3xl mx-auto px-5 sm:px-6 py-14">
           {/* Header */}
           <div className="flex flex-col sm:flex-row items-start justify-between gap-6 mb-10">
@@ -158,7 +158,7 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
           )}
 
           {/* Verified badge CTA */}
-          <div className="mt-10 bg-gradient-to-r from-indigo-600/[0.06] to-violet-600/[0.03] rounded-xl border border-orange-500/[0.1] p-6 text-center">
+          <div className="mt-10 bg-gradient-to-r from-orange-500/[0.06] to-orange-400/[0.03] rounded-xl border border-orange-500/[0.1] p-6 text-center">
             <h3 className="text-sm font-semibold text-white mb-1">Verified AI Proficiency</h3>
             <p className="text-[13px] text-gray-500 mb-0.5">PromptScore assessments are timed, sandboxed, and monitored.</p>
             <p className="text-[11px] text-gray-600">Scores cannot be faked or self-reported.</p>

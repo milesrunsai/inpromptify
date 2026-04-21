@@ -48,8 +48,8 @@ export default function QuizPage() {
     return (
       <>
         <Nav />
-        <main className="bg-[#0A0F1C] min-h-screen">
-          <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
+        <main className="bg-[#111118] min-h-screen">
+          <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 pt-28 pb-20 md:pb-28">
             <div className="text-center mb-12">
               <p className="text-[11px] font-mono text-orange-400/70 uppercase tracking-wider mb-3">Free Assessment</p>
               <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4">
@@ -105,13 +105,13 @@ export default function QuizPage() {
 
   if (finished) {
     const scoreColor = score >= 8 ? "text-orange-300" : score >= 6 ? "text-orange-400" : score >= 4 ? "text-orange-400/70" : "text-orange-500/50";
-    const gradeColor = score >= 8 ? "border-orange-400/30 bg-orange-400/[0.08]" : score >= 6 ? "border-orange-500/25 bg-orange-400/[0.06]" : score >= 4 ? "border-orange-500/15 bg-orange-400/[0.04]" : "border-indigo-600/10 bg-orange-500/[0.02]";
+    const gradeColor = score >= 8 ? "border-orange-400/30 bg-orange-400/[0.08]" : score >= 6 ? "border-orange-500/25 bg-orange-400/[0.06]" : score >= 4 ? "border-orange-500/15 bg-orange-400/[0.04]" : "border-orange-600/10 bg-orange-500/[0.02]";
 
     return (
       <>
         <Nav />
-        <main className="bg-[#0A0F1C] min-h-screen">
-          <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
+        <main className="bg-[#111118] min-h-screen">
+          <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 pt-28 pb-20 md:pb-28">
             <div className="text-center mb-8">
               <p className="text-[11px] font-mono text-orange-400/70 uppercase tracking-wider mb-3">Your Results</p>
               <h1 className="text-3xl font-bold text-white tracking-tight">
@@ -217,8 +217,8 @@ export default function QuizPage() {
   return (
     <>
       <Nav />
-      <main className="bg-[#0A0F1C] min-h-screen">
-        <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-12 md:py-20">
+      <main className="bg-[#111118] min-h-screen">
+        <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 pt-28 pb-12 md:pb-20">
           {/* Progress bar + timer */}
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-3">
@@ -253,7 +253,7 @@ export default function QuizPage() {
                 if (i === q.correctIndex) {
                   optStyle = "border-orange-400/40 bg-orange-400/[0.06]";
                 } else if (i === selected && i !== q.correctIndex) {
-                  optStyle = "border-indigo-600/30 bg-orange-500/[0.04]";
+                  optStyle = "border-orange-600/30 bg-orange-500/[0.04]";
                 } else {
                   optStyle = "border-white/[0.04] opacity-50";
                 }

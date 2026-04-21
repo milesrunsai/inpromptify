@@ -78,7 +78,7 @@ export default function DashboardJobsPage() {
           <h1 className="text-xl font-bold text-white">Job Listings</h1>
           <p className="text-gray-500 text-sm mt-1">Create roles that require a prompting assessment</p>
         </div>
-        <button onClick={() => setShowForm(!showForm)} className="bg-[#6366F1] hover:bg-[#4F46E5] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+        <button onClick={() => setShowForm(!showForm)} className="bg-orange-500 hover:bg-orange-400 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
           {showForm ? "Cancel" : "Create Job"}
         </button>
       </div>
@@ -90,31 +90,31 @@ export default function DashboardJobsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-gray-500 mb-1">Job Title *</label>
-              <input type="text" value={form.title} onChange={e => setForm(p => ({ ...p, title: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent" placeholder="AI Content Strategist" />
+              <input type="text" value={form.title} onChange={e => setForm(p => ({ ...p, title: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" placeholder="AI Content Strategist" />
             </div>
             <div>
               <label className="block text-xs font-medium text-gray-500 mb-1">Company *</label>
-              <input type="text" value={form.company} onChange={e => setForm(p => ({ ...p, company: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent" placeholder="Acme Corp" />
+              <input type="text" value={form.company} onChange={e => setForm(p => ({ ...p, company: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" placeholder="Acme Corp" />
             </div>
             <div className="sm:col-span-2">
               <label className="block text-xs font-medium text-gray-500 mb-1">Description</label>
-              <textarea value={form.description} onChange={e => setForm(p => ({ ...p, description: e.target.value }))} rows={3} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent resize-none" placeholder="Job description..." />
+              <textarea value={form.description} onChange={e => setForm(p => ({ ...p, description: e.target.value }))} rows={3} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none" placeholder="Job description..." />
             </div>
             <div>
               <label className="block text-xs font-medium text-gray-500 mb-1">Location</label>
-              <input type="text" value={form.location} onChange={e => setForm(p => ({ ...p, location: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent" placeholder="Remote / NYC" />
+              <input type="text" value={form.location} onChange={e => setForm(p => ({ ...p, location: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" placeholder="Remote / NYC" />
             </div>
             <div>
               <label className="block text-xs font-medium text-gray-500 mb-1">Salary Range</label>
-              <input type="text" value={form.salaryRange} onChange={e => setForm(p => ({ ...p, salaryRange: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent" placeholder="$80k - $120k" />
+              <input type="text" value={form.salaryRange} onChange={e => setForm(p => ({ ...p, salaryRange: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" placeholder="$80k - $120k" />
             </div>
             <div>
               <label className="block text-xs font-medium text-gray-500 mb-1">Required PromptScore</label>
-              <input type="number" value={form.requiredScore} onChange={e => setForm(p => ({ ...p, requiredScore: parseInt(e.target.value) || 0 }))} min={0} max={100} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent" />
+              <input type="number" value={form.requiredScore} onChange={e => setForm(p => ({ ...p, requiredScore: parseInt(e.target.value) || 0 }))} min={0} max={100} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" />
             </div>
             <div>
               <label className="block text-xs font-medium text-gray-500 mb-1">Linked Test</label>
-              <select value={form.testId} onChange={e => setForm(p => ({ ...p, testId: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent bg-[#0C1120]">
+              <select value={form.testId} onChange={e => setForm(p => ({ ...p, testId: e.target.value }))} className="w-full border border-white/[0.06] rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-[#0C1120]">
                 <option value="">None</option>
                 {tests.map(t => <option key={t.id} value={t.id}>{t.title}</option>)}
               </select>
@@ -131,7 +131,7 @@ export default function DashboardJobsPage() {
       ) : jobs.length === 0 && !showForm ? (
         <div className="bg-[#0C1120] rounded-lg border border-white/[0.06] px-5 py-16 text-center">
           <p className="text-gray-400 text-sm mb-4">No job listings yet</p>
-          <button onClick={() => setShowForm(true)} className="bg-[#6366F1] hover:bg-[#4F46E5] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">Create your first job listing</button>
+          <button onClick={() => setShowForm(true)} className="bg-orange-500 hover:bg-orange-400 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">Create your first job listing</button>
         </div>
       ) : (
         <div className="space-y-3">
@@ -140,7 +140,7 @@ export default function DashboardJobsPage() {
               <div className="flex items-start justify-between">
                 <div>
                   <h3 className="font-semibold text-white text-sm">{job.title}</h3>
-                  <p className="text-sm text-[#6366F1] font-medium">{job.company}</p>
+                  <p className="text-sm text-orange-500 font-medium">{job.company}</p>
                   {job.description && <p className="text-sm text-gray-500 mt-1 line-clamp-1">{job.description}</p>}
                   <div className="flex flex-wrap gap-3 mt-2 text-xs text-gray-400">
                     {job.location && <span>{job.location}</span>}

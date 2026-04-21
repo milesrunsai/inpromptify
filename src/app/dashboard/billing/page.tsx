@@ -107,7 +107,7 @@ export default function BillingPage() {
       <div className="flex items-center gap-3 mb-8">
         <span className={`text-sm font-medium ${!annual ? "text-white" : "text-gray-500"}`}>Monthly</span>
         <button onClick={() => setAnnual(!annual)}
-          className={`relative w-10 h-5 rounded-full transition-colors ${annual ? "bg-indigo-600" : "bg-white/[0.12]"}`}>
+          className={`relative w-10 h-5 rounded-full transition-colors ${annual ? "bg-orange-500" : "bg-white/[0.12]"}`}>
           <span className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full transition-transform shadow-sm ${annual ? "translate-x-5" : ""}`} />
         </button>
         <span className={`text-sm font-medium ${annual ? "text-white" : "text-gray-500"}`}>
@@ -119,11 +119,11 @@ export default function BillingPage() {
       <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-4 mb-10">
         {plans.map((plan) => (
           <div key={plan.name}
-            className={`rounded-lg p-5 flex flex-col ${plan.highlight ? "bg-indigo-600/10 border-2 border-indigo-500/30" : plan.current ? "bg-[#0C1120] border-2 border-emerald-500/30" : "bg-[#0C1120] border border-white/[0.06]"}`}>
+            className={`rounded-lg p-5 flex flex-col ${plan.highlight ? "bg-orange-500/10 border-2 border-orange-500/30" : plan.current ? "bg-[#0C1120] border-2 border-emerald-500/30" : "bg-[#0C1120] border border-white/[0.06]"}`}>
             <div className="flex items-center gap-2 mb-1">
               <span className="text-sm font-semibold text-gray-400">{plan.name}</span>
               {plan.current && <span className="text-[10px] font-medium text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">Current</span>}
-              {plan.highlight && <span className="text-[10px] font-medium text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded">Popular</span>}
+              {plan.highlight && <span className="text-[10px] font-medium text-orange-400 bg-orange-500/10 px-1.5 py-0.5 rounded">Popular</span>}
             </div>
             <div className="flex items-baseline gap-1 mb-1">
               <span className="text-2xl font-bold text-white">{getPrice(plan.monthlyPrice)}</span>
@@ -150,7 +150,7 @@ export default function BillingPage() {
               </Link>
             ) : (
               <button onClick={() => handleUpgrade(plan.name)}
-                className={`w-full py-2 px-4 rounded-md text-[13px] font-medium transition-colors ${plan.highlight ? "bg-indigo-600 hover:bg-indigo-500 text-white" : "bg-white/[0.06] hover:bg-white/[0.1] text-white border border-white/[0.08]"}`}>
+                className={`w-full py-2 px-4 rounded-md text-[13px] font-medium transition-colors ${plan.highlight ? "bg-orange-500 hover:bg-orange-400 text-white" : "bg-white/[0.06] hover:bg-white/[0.1] text-white border border-white/[0.08]"}`}>
                 Upgrade
               </button>
             )}

@@ -272,7 +272,7 @@ export default function TestSandboxPage({
   if (sandboxState === "loading" || !test) {
     if (error) {
       return (
-        <div className="h-screen flex items-center justify-center bg-[#0A0F1C]">
+        <div className="h-screen flex items-center justify-center bg-[#111118]">
           <div className="text-center">
             <p className="text-red-400 text-sm mb-4">{error}</p>
             <Link href="/" className="text-sm text-orange-400">Back to Home</Link>
@@ -281,7 +281,7 @@ export default function TestSandboxPage({
       );
     }
     return (
-      <div className="h-screen flex items-center justify-center bg-[#0A0F1C]">
+      <div className="h-screen flex items-center justify-center bg-[#111118]">
         <div className="text-sm text-gray-500">Loading test...</div>
       </div>
     );
@@ -300,7 +300,7 @@ export default function TestSandboxPage({
 
   if (sandboxState === "ready") {
     return (
-      <div className="min-h-screen bg-[#0A0F1C] flex items-center justify-center p-6">
+      <div className="min-h-screen bg-[#111118] flex items-center justify-center p-6">
         <div className="max-w-2xl w-full">
           <div className="text-center mb-8">
             <Link href="/" className="font-mono text-sm text-white inline-block mb-6">
@@ -359,7 +359,7 @@ export default function TestSandboxPage({
   }
 
   return (
-    <div className="h-screen flex flex-col bg-[#0A0F1C]">
+    <div className="h-screen flex flex-col bg-[#111118]">
       {/* Top Bar */}
       <div className="bg-[#0C1120] border-b border-white/[0.06] px-3 sm:px-4 py-2.5 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
@@ -517,7 +517,7 @@ export default function TestSandboxPage({
                   placeholder={sandboxState === "submitting" ? "Scoring in progress..." : "Type your prompt... (Enter to send, Shift+Enter for new line)"}
                   disabled={isDisabled || isTyping}
                   rows={1}
-                  className="flex-1 bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-orange-500/40 disabled:opacity-40 resize-none"
+                  className="flex-1 bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 disabled:opacity-40 resize-none"
                 />
                 <button onClick={sendMessage} disabled={!input.trim() || isTyping || isDisabled} className="bg-orange-500 hover:bg-orange-400 disabled:bg-white/[0.04] disabled:text-gray-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors shrink-0">
                   {isTyping ? <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg> : "Send"}

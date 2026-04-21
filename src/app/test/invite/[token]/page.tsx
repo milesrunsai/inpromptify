@@ -59,7 +59,7 @@ export default function InvitePage({ params }: { params: Promise<{ token: string
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0A0F1C] flex items-center justify-center">
+      <div className="min-h-screen bg-[#111118] flex items-center justify-center">
         <div className="text-sm text-gray-500">Loading...</div>
       </div>
     );
@@ -67,7 +67,7 @@ export default function InvitePage({ params }: { params: Promise<{ token: string
 
   if (error && !invite) {
     return (
-      <div className="min-h-screen bg-[#0A0F1C] flex items-center justify-center px-5">
+      <div className="min-h-screen bg-[#111118] flex items-center justify-center px-5">
         <div className="text-center max-w-sm">
           <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-4">
             <svg className="w-6 h-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -85,7 +85,7 @@ export default function InvitePage({ params }: { params: Promise<{ token: string
   if (!invite) return null;
 
   return (
-    <div className="min-h-screen bg-[#0A0F1C] flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-[#111118] flex flex-col relative overflow-hidden">
       <div className="absolute inset-0 dot-grid opacity-20" />
 
       <div className="relative z-10 flex-1 flex items-center justify-center px-5 py-12">
@@ -135,7 +135,7 @@ export default function InvitePage({ params }: { params: Promise<{ token: string
                   type="text"
                   value={name}
                   onChange={(e) => { setName(e.target.value); setError(""); }}
-                  className="w-full bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-orange-500/40 transition-all"
+                  className="w-full bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 transition-all"
                   placeholder="Jane Doe"
                 />
               </div>
@@ -145,7 +145,7 @@ export default function InvitePage({ params }: { params: Promise<{ token: string
                   type="email"
                   value={email}
                   onChange={(e) => { setEmail(e.target.value); setError(""); }}
-                  className="w-full bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-orange-500/40 transition-all"
+                  className="w-full bg-white/[0.04] border border-white/[0.08] rounded-md px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 transition-all"
                   placeholder="you@company.com"
                 />
               </div>

@@ -56,9 +56,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const allTabs = [...primaryTabs, ...secondaryTabs];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f]">
+    <div className="min-h-screen bg-[#111118]">
       {/* Top navigation bar */}
-      <header className="sticky top-0 z-40 bg-[#0a0a0f] border-b border-white/[0.06]">
+      <header className="sticky top-0 z-40 bg-[#111118] border-b border-white/[0.06]">
         {/* Primary bar */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-14">

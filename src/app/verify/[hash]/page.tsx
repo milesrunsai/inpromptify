@@ -59,7 +59,7 @@ export default async function VerifyPage({ params }: VerifyPageProps) {
     return (
       <>
         <Nav />
-        <main className="bg-[#0A0F1C] min-h-screen">
+        <main className="bg-[#111118] min-h-screen">
           <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28 text-center">
             <h1 className="text-2xl font-bold text-white mb-4">Verification Not Found</h1>
             <p className="text-sm text-gray-500">This verification link is invalid or has expired.</p>
@@ -96,7 +96,7 @@ export default async function VerifyPage({ params }: VerifyPageProps) {
   return (
     <>
       <Nav />
-      <main className="bg-[#0A0F1C] min-h-screen">
+      <main className="bg-[#111118] min-h-screen">
         <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-20 md:py-28">
           {/* Header */}
           <div className="text-center mb-10">

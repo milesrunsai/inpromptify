@@ -20,7 +20,7 @@ function hashStr(s: string): number {
 
 const GRADIENTS: Record<string, string> = {
   job: "from-emerald-500 via-teal-500 to-cyan-600",
-  test: "from-indigo-500 via-violet-500 to-purple-600",
+  test: "from-orange-500 via-orange-400 to-purple-600",
   casual: "from-amber-400 via-orange-400 to-rose-500",
 };
 
