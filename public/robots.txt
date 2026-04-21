@@ -10,9 +10,10 @@ Allow: /about
 Allow: /pricing
 Allow: /features
 Allow: /blog
+Allow: /review
+Allow: /assess
 Disallow: /api/
 Disallow: /dashboard/
-Disallow: /assess
 Disallow: /sign-in
 Disallow: /sign-up
 
@@ -25,9 +26,10 @@ Allow: /about
 Allow: /pricing
 Allow: /features
 Allow: /blog
+Allow: /review
+Allow: /assess
 Disallow: /api/
 Disallow: /dashboard/
-Disallow: /assess
 Disallow: /sign-in
 Disallow: /sign-up
 
@@ -68,9 +70,10 @@ Allow: /
 Allow: /daily
 Allow: /weekly
 Allow: /leaderboard
+Allow: /review
+Allow: /assess
 Disallow: /api/
 Disallow: /dashboard/
-Disallow: /assess
 Disallow: /sign-in
 Disallow: /sign-up
 
