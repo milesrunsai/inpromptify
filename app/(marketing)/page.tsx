@@ -18,6 +18,9 @@ export default function LandingPage() {
     <>
       {/* Hero */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
+        {/* Static gradient background — visible instantly while video loads */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a1a] via-[#0f1020] to-[#0a0a0f]" />
+
         {/* Background Video */}
         <video
           autoPlay
@@ -26,6 +29,7 @@ export default function LandingPage() {
           playsInline
           preload="auto"
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          style={{ willChange: "auto" }}
         >
           <source
             src="https://d8j0ntlcm91z4.cloudfront.net/user_3CVjpU5MqL28kt1M6PyOAXhNcyX/hf_20260420_060720_7b600b45-de92-47e3-b11c-619fab9fc4c5.mp4"
