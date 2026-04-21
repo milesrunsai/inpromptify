@@ -84,17 +84,14 @@ export function DashboardShell({
       >
         {/* Org header */}
         <div className="flex h-16 items-center justify-between border-b border-sidebar-border px-4">
-          <Link href="/dashboard" className="flex items-center gap-2">
+          <Link href="/dashboard" className="flex items-center">
             <Image
               src="/logo.png"
               alt="Inpromptify"
-              width={28}
-              height={28}
-              className="h-7 w-auto"
+              width={120}
+              height={32}
+              className="h-8 w-auto"
             />
-            <span className="text-lg font-bold text-sidebar-foreground">
-              Inpromptify
-            </span>
           </Link>
           <button
             onClick={() => setSidebarOpen(false)}
@@ -104,15 +101,7 @@ export function DashboardShell({
           </button>
         </div>
 
-        {/* Org info */}
-        <div className="border-b border-sidebar-border px-4 py-3">
-          <p className="truncate text-sm font-medium text-sidebar-foreground">
-            {orgName}
-          </p>
-          <p className="text-xs text-muted-foreground">
-            {hasOrg ? "Organization" : "Personal workspace"}
-          </p>
-        </div>
+
 
         {/* Nav */}
         <nav className="flex-1 space-y-1 px-2 py-3">
@@ -217,13 +206,10 @@ export function DashboardShell({
           <Image
             src="/logo.png"
             alt="Inpromptify"
-            width={24}
-            height={24}
-            className="ml-3 h-6 w-auto"
+            width={100}
+            height={28}
+            className="ml-3 h-7 w-auto"
           />
-          <span className="ml-2 text-lg font-bold text-gray-900">
-            Inpromptify
-          </span>
         </header>
 
         {/* Content area */}

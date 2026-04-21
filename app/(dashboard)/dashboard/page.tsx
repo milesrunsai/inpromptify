@@ -53,19 +53,12 @@ export default async function DashboardOverviewPage() {
   if (!org) {
     return (
       <div className="space-y-8">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
-          <p className="text-muted-foreground">
-            Welcome back, {firstName}!
-          </p>
-        </div>
-
         {/* Take Assessment hero card */}
         <Link href="/assess" className="block">
           <Card className="border-orange-200 bg-gradient-to-r from-orange-50 to-amber-50 transition-shadow hover:shadow-md">
             <CardContent className="flex flex-col items-center gap-4 py-8 sm:flex-row sm:py-6">
               <div className="flex size-14 shrink-0 items-center justify-center rounded-full bg-orange-100">
-                <Zap className="size-7 text-orange-600" />
+                <img src="/logo.png" alt="InpromptiFy" className="size-9 object-contain" />
               </div>
               <div className="flex-1 text-center sm:text-left">
                 <h2 className="text-lg font-semibold text-gray-900">
@@ -206,13 +199,7 @@ export default async function DashboardOverviewPage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
-          <p className="text-muted-foreground">
-            Welcome back, {firstName}!
-          </p>
-        </div>
+      <div className="flex items-center justify-end">
         <Link
           href="/dashboard/assessments"
           className={cn(buttonVariants({ size: "sm" }), "gap-1.5")}
@@ -227,7 +214,7 @@ export default async function DashboardOverviewPage() {
         <Card className="border-orange-200 bg-gradient-to-r from-orange-50 to-amber-50 transition-shadow hover:shadow-md">
           <CardContent className="flex flex-col items-center gap-4 py-8 sm:flex-row sm:py-6">
             <div className="flex size-14 shrink-0 items-center justify-center rounded-full bg-orange-100">
-              <Zap className="size-7 text-orange-600" />
+              <img src="/logo.png" alt="InpromptiFy" className="size-9 object-contain" />
             </div>
             <div className="flex-1 text-center sm:text-left">
               <h2 className="text-lg font-semibold text-gray-900">
