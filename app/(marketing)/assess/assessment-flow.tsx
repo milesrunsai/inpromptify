@@ -303,57 +303,62 @@ export function AssessmentFlow({
     [currentQuestion, selectedOption, state, isSubmitting, loadNextQuestion, email]
   );
 
+  // Keyboard shortcuts for question phase
+  useEffect(() => {
+    if (phase !== "question" || !currentQuestion || isSubmitting) return;
+    function handleKeyDown(e: KeyboardEvent) {
+      const key = e.key.toUpperCase();
+      const idx = key.charCodeAt(0) - 65; // A=0, B=1, C=2, D=3
+      if (idx >= 0 && idx < shuffledOptions.length) {
+        setSelectedOption(shuffledOptions[idx].id);
+        setTimeout(() => handleSubmitAnswer(), 200);
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [phase, currentQuestion, isSubmitting, shuffledOptions, handleSubmitAnswer]);
+
   const overallScore = calculateOverallPromptScore(state.dimensionScores);
 
   // --- START SCREEN ---
   if (phase === "start") {
     return (
-      <div className="flex flex-col items-center gap-8 pt-8">
-        <div className="text-center">
-          <Badge variant="secondary" className="mb-4">
-            Free Assessment
-          </Badge>
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Discover Your{" "}
-            <span className="text-primary">AI Proficiency</span>
-          </h1>
-          <p className="mt-4 max-w-lg text-muted-foreground">
-            Take a quick adaptive assessment to measure your AI fluency across 5
-            key dimensions. Get your PromptScore in under 3 minutes.
-          </p>
-        </div>
+      <>
+        <style>{`header, nav, footer, [role="banner"], [role="contentinfo"] { display: none !important; }`}</style>
+        <div className="fixed inset-0 bg-white z-50 flex items-center justify-center">
+          <div className="w-full max-w-md px-6">
+            <div className="text-center mb-10">
+              <p className="text-xs font-medium text-orange-500 uppercase tracking-widest mb-3">AI Proficiency Assessment</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                Discover Your AI Proficiency
+              </h1>
+              <p className="mt-3 text-sm text-gray-500">
+                Adaptive assessment across 5 dimensions. Takes about 3 minutes.
+              </p>
+            </div>
 
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <CardTitle>Get Started</CardTitle>
-            <CardDescription>
-              Enter your email to begin. Your results will be sent to this
-              address.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleStart} className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="email">Email address</Label>
-                <Input
+            <form onSubmit={handleStart} className="space-y-4">
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email address</label>
+                <input
                   id="email"
                   type="email"
                   placeholder="you@company.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="h-10"
+                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 text-sm"
                 />
               </div>
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="name">Name (optional)</Label>
-                <Input
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name (optional)</label>
+                <input
                   id="name"
                   type="text"
                   placeholder="Your name"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
-                  className="h-10"
+                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 text-sm"
                 />
               </div>
               <div className="flex items-center gap-2">
@@ -362,11 +367,11 @@ export function AssessmentFlow({
                   id="leaderboard"
                   checked={showOnLeaderboard}
                   onChange={(e) => setShowOnLeaderboard(e.target.checked)}
-                  className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
+                  className="h-4 w-4 rounded border-gray-300 text-orange-500 focus:ring-orange-500"
                 />
-                <Label htmlFor="leaderboard" className="text-sm font-normal">
+                <label htmlFor="leaderboard" className="text-sm text-gray-600">
                   Show my score on the public leaderboard
-                </Label>
+                </label>
               </div>
               {showOnLeaderboard && (
                 <div className="flex items-center gap-2 ml-6">
@@ -375,122 +380,117 @@ export function AssessmentFlow({
                     id="anonymous"
                     checked={displayAnonymous}
                     onChange={(e) => setDisplayAnonymous(e.target.checked)}
-                    className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
+                    className="h-4 w-4 rounded border-gray-300 text-orange-500 focus:ring-orange-500"
                   />
-                  <Label htmlFor="anonymous" className="text-sm font-normal">
+                  <label htmlFor="anonymous" className="text-sm text-gray-600">
                     Display as anonymous
-                  </Label>
+                  </label>
                 </div>
               )}
-              <Button type="submit" className="w-full">
+              <button
+                type="submit"
+                className="w-full px-8 py-3.5 rounded-xl bg-orange-500 text-white font-semibold hover:bg-orange-600 transition-colors text-sm"
+              >
                 Begin Assessment
-              </Button>
+              </button>
             </form>
-          </CardContent>
-        </Card>
 
-        <div className="grid grid-cols-3 gap-6 text-center text-sm text-muted-foreground">
-          <div>
-            <div className="text-2xl font-bold text-foreground">8-12</div>
-            <div>Adaptive questions</div>
+            <div className="grid grid-cols-3 gap-4 mt-10 text-center">
+              <div>
+                <div className="text-xl font-bold text-gray-900">8-12</div>
+                <div className="text-xs text-gray-400">Questions</div>
+              </div>
+              <div>
+                <div className="text-xl font-bold text-gray-900">~3 min</div>
+                <div className="text-xs text-gray-400">To complete</div>
+              </div>
+              <div>
+                <div className="text-xl font-bold text-gray-900">5</div>
+                <div className="text-xs text-gray-400">Dimensions</div>
+              </div>
+            </div>
           </div>
-          <div>
-            <div className="text-2xl font-bold text-foreground">~3 min</div>
-            <div>To complete</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold text-foreground">5</div>
-            <div>Dimensions scored</div>
-          </div>
+
+          {/* Logo watermark */}
+          <img src="/logo.png" alt="" className="fixed bottom-6 left-6 h-5 w-auto opacity-20" />
         </div>
-      </div>
+      </>
     );
   }
 
   // --- QUESTION SCREEN ---
   if (phase === "question" && currentQuestion) {
-    const progressPercent = (state.questionCount / 12) * 100;
-    const timerPercent =
-      (timeLeft / currentQuestion.maxTimeSeconds) * 100;
     const isTimeLow = timeLeft <= 10;
+    const isTimeWarn = timeLeft <= 20;
 
     return (
-      <div className="flex flex-col gap-6">
-        {/* Progress bar */}
-        <div className="flex flex-col gap-2">
-          <Progress value={progressPercent}>
-            <ProgressLabel>
-              Question {state.questionCount + 1}
-            </ProgressLabel>
-            <ProgressValue />
-          </Progress>
-        </div>
-
-        {/* Timer */}
-        <div className="flex items-center justify-between text-sm">
-          <div className="flex items-center gap-2">
+      <>
+        <style>{`header, nav, footer, [role="banner"], [role="contentinfo"] { display: none !important; }`}</style>
+        <div className="fixed inset-0 bg-white z-50 flex items-center justify-center">
+          {/* Progress line at top */}
+          <div className="fixed top-0 left-0 right-0 h-1 bg-gray-100">
             <div
-              className={`h-2 w-2 rounded-full ${
-                isTimeLow ? "animate-pulse bg-destructive" : "bg-primary"
-              }`}
+              className="h-full bg-orange-500 transition-all duration-500"
+              style={{ width: `${(state.questionCount / 12) * 100}%` }}
             />
-            <span className={isTimeLow ? "text-destructive font-medium" : "text-muted-foreground"}>
-              {timeLeft}s remaining
+          </div>
+
+          {/* Top bar: question counter + timer */}
+          <div className="fixed top-6 left-0 right-0 px-8 flex items-center justify-between">
+            <span className="text-sm font-mono text-gray-400">
+              {state.questionCount + 1} / 12
+            </span>
+            <span className={`text-2xl font-mono font-bold tabular-nums transition-colors duration-500 ${
+              isTimeLow ? "text-red-500" : isTimeWarn ? "text-yellow-500" : "text-gray-300"
+            }`}>
+              {timeLeft}s
             </span>
           </div>
-          <div className="h-1 flex-1 mx-4 rounded-full bg-muted overflow-hidden">
-            <div
-              className={`h-full transition-all duration-1000 rounded-full ${
-                isTimeLow ? "bg-destructive" : "bg-primary"
-              }`}
-              style={{ width: `${timerPercent}%` }}
-            />
-          </div>
-        </div>
 
-        {/* Question card */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg leading-relaxed">
+          {/* Question content */}
+          <div className="w-full max-w-2xl px-6">
+            <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 leading-relaxed mb-10 text-center">
               {currentQuestion.text}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-3">
-            {shuffledOptions.map((option) => (
-              <button
-                key={option.id}
-                onClick={() => setSelectedOption(option.id)}
-                disabled={isSubmitting}
-                className={`flex items-start gap-3 rounded-lg border p-4 text-left text-sm transition-all ${
-                  selectedOption === option.id
-                    ? "border-primary bg-primary/10 ring-1 ring-primary"
-                    : "border-border hover:border-muted-foreground/30 hover:bg-muted/50"
-                } ${isSubmitting ? "pointer-events-none opacity-60" : ""}`}
-              >
-                <span
-                  className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-xs font-medium ${
-                    selectedOption === option.id
-                      ? "border-primary bg-primary text-primary-foreground"
-                      : "border-border text-muted-foreground"
-                  }`}
-                >
-                  {option.id}
-                </span>
-                <span className="leading-relaxed">{option.text}</span>
-              </button>
-            ))}
-          </CardContent>
-        </Card>
+            </h2>
 
-        <Button
-          onClick={() => handleSubmitAnswer()}
-          disabled={!selectedOption || isSubmitting}
-          className="w-full"
-          size="lg"
-        >
-          {isSubmitting ? "Processing..." : "Submit Answer"}
-        </Button>
-      </div>
+            <div className="space-y-3">
+              {shuffledOptions.map((option, idx) => (
+                <button
+                  key={option.id}
+                  onClick={() => {
+                    if (isSubmitting) return;
+                    setSelectedOption(option.id);
+                    setTimeout(() => handleSubmitAnswer(), 200);
+                  }}
+                  disabled={isSubmitting}
+                  className={`w-full text-left px-5 py-4 rounded-xl border transition-all duration-200 ${
+                    selectedOption === option.id
+                      ? "bg-orange-50 border-orange-500 text-gray-900 ring-2 ring-orange-500/20"
+                      : "bg-gray-50 border-gray-200 text-gray-700 hover:border-orange-300 hover:bg-orange-50/50"
+                  } ${isSubmitting ? "pointer-events-none opacity-60" : ""}`}
+                >
+                  <span className="flex items-start gap-3">
+                    <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-mono font-bold flex-shrink-0 mt-0.5 ${
+                      selectedOption === option.id
+                        ? "bg-orange-500 text-white"
+                        : "bg-gray-200 text-gray-500"
+                    }`}>
+                      {String.fromCharCode(65 + idx)}
+                    </span>
+                    <span className="text-sm sm:text-base leading-relaxed">{option.text}</span>
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Keyboard hint */}
+            <p className="text-center text-xs text-gray-300 mt-8">Press A–D to answer</p>
+          </div>
+
+          {/* Logo watermark */}
+          <img src="/logo.png" alt="" className="fixed bottom-6 left-6 h-5 w-auto opacity-20" />
+        </div>
+      </>
     );
   }
 
