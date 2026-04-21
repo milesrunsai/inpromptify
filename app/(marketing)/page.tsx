@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HeroQuiz } from "@/components/marketing/hero-quiz";
+import { HeroVideo } from "@/components/marketing/hero-video";
 
 import {
   BoldStatement,
@@ -22,20 +23,10 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a1a] via-[#0f1020] to-[#0a0a0f]" />
 
         {/* Background Video */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
+        <HeroVideo
+          src="/hero-bg.mp4"
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-          style={{ willChange: "auto" }}
-        >
-          <source
-            src="/hero-bg.mp4"
-            type="video/mp4"
-          />
-        </video>
+        />
 
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f]/70 via-[#0a0a0f]/80 to-[#0a0a0f]" />

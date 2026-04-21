@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { HeroVideo } from "@/components/marketing/hero-video";
 
 interface LeaderboardEntry {
   rank: number;
@@ -71,18 +72,10 @@ export default function LeaderboardPage() {
   return (
     <div className="relative pt-24 pb-16 min-h-screen overflow-hidden">
       {/* Video background — only on /leaderboard */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
+      <HeroVideo
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_3CVjpU5MqL28kt1M6PyOAXhNcyX/hf_20260418_085528_e32a0b1e-ca22-4247-9b28-22c4f7d5fed6.mp4"
         className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none"
-      >
-        <source
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_3CVjpU5MqL28kt1M6PyOAXhNcyX/hf_20260418_085528_e32a0b1e-ca22-4247-9b28-22c4f7d5fed6.mp4"
-          type="video/mp4"
-        />
-      </video>
+      />
       {/* Dark overlay to keep text readable */}
       <div className="absolute inset-0 bg-black/60 pointer-events-none" />
 
