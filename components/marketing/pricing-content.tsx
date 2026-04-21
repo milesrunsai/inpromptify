@@ -15,7 +15,6 @@ interface Plan {
   features: string[]
   cta: string
   ctaLink: string
-  external: boolean
   highlighted: boolean
 }
 
@@ -26,17 +25,15 @@ const jobSeekerPlans: Plan[] = [
     annual: 0,
     priceLabel: '$0',
     period: '/forever',
-    description: 'Get started and see where you stand.',
+    description: 'For individuals — see where you stand.',
     features: [
-      '3 assessments per month',
-      'Basic PromptScore',
-      'Leaderboard opt-in',
-      'Public self-test',
-      'Email support',
+      '3 full assessments per month',
+      'Daily AI Challenge + leaderboard (unlimited)',
+      'Basic PromptScore credential',
+      'Community support',
     ],
     cta: 'Get Started',
     ctaLink: '/sign-up',
-    external: false,
     highlighted: false,
   },
   {
@@ -45,64 +42,40 @@ const jobSeekerPlans: Plan[] = [
     annual: 23,
     priceLabel: '',
     period: '',
-    description: 'For professionals serious about AI skills.',
+    description: 'For job seekers and professionals serious about AI skills.',
     features: [
-      'Unlimited retakes',
-      'Full 5-dimension breakdown',
-      'Verified LinkedIn badge',
+      'Unlimited full assessments',
+      'Daily Challenge + leaderboard',
+      'LinkedIn-shareable verified PromptScore',
       'PDF certificate',
-      'Resume integration',
-      'Score history & trends',
-      'Priority support',
+      'Score history and trends',
+      'Email support',
     ],
     cta: 'Go Pro',
     ctaLink: '/sign-up?plan=pro',
-    external: false,
     highlighted: true,
   },
 ]
 
 const businessPlans: Plan[] = [
   {
-    name: 'Team',
-    monthly: 99,
-    annual: 79,
+    name: 'Business',
+    monthly: 49,
+    annual: 39,
     priceLabel: '',
     period: '',
-    description: 'For small teams screening AI skills.',
+    description: 'For teams that need benchmarking and analytics.',
     features: [
-      '50 assessments per month',
-      '5 team members',
-      'Team analytics dashboard',
+      'Everything in Pro',
+      'Team dashboard with company benchmarks',
+      'Industry/role benchmarking',
       'CSV export',
       'Candidate invite links',
-      'Priority email support',
-    ],
-    cta: 'Start Free Trial',
-    ctaLink: '/sign-up?plan=team',
-    external: false,
-    highlighted: false,
-  },
-  {
-    name: 'Business',
-    monthly: 399,
-    annual: 319,
-    priceLabel: '',
-    period: '',
-    description: 'For scaling organizations hiring at volume.',
-    features: [
-      '500 assessments per month',
-      '25 team members',
-      'ATS integrations (Greenhouse, Lever)',
-      'Custom assessment templates',
-      'SSO (SAML)',
-      'Company benchmarking',
-      'API + webhooks',
-      'Dedicated support',
+      'Zapier integration',
+      'Priority support',
     ],
     cta: 'Start Free Trial',
     ctaLink: '/sign-up?plan=business',
-    external: false,
     highlighted: true,
   },
   {
@@ -113,18 +86,19 @@ const businessPlans: Plan[] = [
     period: '',
     description: 'For large organizations with advanced needs.',
     features: [
-      'Unlimited assessments',
-      'Unlimited team members',
-      'SCIM provisioning',
-      'Dedicated CSM',
-      'SLA guarantee',
-      'On-premise option',
-      'Bias audit reports',
-      'Custom models + sandbox',
+      'Everything in Business',
+      'Unlimited users',
+      'Native ATS integrations (Greenhouse, Lever)',
+      'LMS integrations (Canvas, Moodle)',
+      'SSO (SAML/OIDC) + SCIM provisioning',
+      'Custom assessment templates + weighting',
+      'API + webhooks + SDKs',
+      'Private industry benchmarks',
+      'Dedicated support + SLAs',
+      'SOC 2 compliance',
     ],
-    cta: 'Book a Demo',
-    ctaLink: 'https://agentmail.to/enterprise',
-    external: true,
+    cta: 'Contact Sales',
+    ctaLink: '/contact',
     highlighted: false,
   },
 ]
@@ -191,14 +165,9 @@ export function PricingContent() {
           </div>
         </div>
 
-        <div
-          className={`grid gap-4 mt-12 max-w-6xl mx-auto ${
-            plans.length === 2
-              ? 'md:grid-cols-2 max-w-3xl'
-              : 'md:grid-cols-2 lg:grid-cols-3'
-          }`}
-        >
+        <div className="grid gap-4 mt-12 max-w-3xl mx-auto md:grid-cols-2">
           {plans.map((plan) => {
+            const isBusinessPerUser = plan.name === 'Business'
             const price = plan.priceLabel
               ? plan.priceLabel
               : annual
@@ -209,9 +178,13 @@ export function PricingContent() {
                 ? ''
                 : plan.priceLabel
                 ? plan.period
+                : isBusinessPerUser
+                ? annual
+                  ? '/user/mo billed annually'
+                  : '/user/mo'
                 : annual
                 ? '/mo billed annually'
-                : '/month'
+                : '/mo'
 
             return (
               <div
@@ -229,7 +202,7 @@ export function PricingContent() {
                 )}
                 <h3 className="text-lg font-semibold text-white">{plan.name}</h3>
                 <div className="mt-3 flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-white">{price}</span>
+                  <span className="text-4xl sm:text-5xl font-bold text-white">{price}</span>
                   {period && <span className="text-xs text-white/30">{period}</span>}
                 </div>
                 <p className="text-sm text-gray-400 mt-2">{plan.description}</p>
@@ -257,56 +230,43 @@ export function PricingContent() {
                   ))}
                 </ul>
 
-                {plan.external ? (
-                  <a
-                    href={plan.ctaLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`mt-8 w-full py-2.5 rounded-lg text-sm font-medium transition-all text-center block ${
-                      plan.highlighted ? 'glow-btn' : 'ghost-btn'
-                    }`}
-                  >
-                    {plan.cta}
-                  </a>
-                ) : (
-                  <Link
-                    href={plan.ctaLink}
-                    className={`mt-8 w-full py-2.5 rounded-lg text-sm font-medium transition-all text-center block ${
-                      plan.highlighted ? 'glow-btn' : 'ghost-btn'
-                    }`}
-                  >
-                    {plan.cta}
-                  </Link>
-                )}
+                <Link
+                  href={plan.ctaLink}
+                  className={`mt-8 w-full py-2.5 rounded-lg text-sm font-medium transition-all text-center block ${
+                    plan.highlighted ? 'glow-btn' : 'ghost-btn'
+                  }`}
+                >
+                  {plan.cta}
+                </Link>
               </div>
             )
           })}
         </div>
 
-        {/* FAQ-style trust section */}
+        {/* FAQ section */}
         <div className="max-w-3xl mx-auto mt-20 text-center">
           <h2 className="text-2xl font-bold text-white mb-8">Frequently asked</h2>
           <div className="space-y-4 text-left">
             {[
               {
                 q: 'What counts as an assessment?',
-                a: "One assessment = one candidate completing a full task (sandbox session + scoring). Partial attempts or abandoned sessions don't count against your limit.",
+                a: "One assessment = one full adaptive test (8–12 questions across 5 dimensions, role-weighted scoring). Partial attempts or abandoned sessions don't count against your limit. The Daily Challenge does not count against your assessment limit.",
               },
               {
                 q: 'Can I try before I buy?',
-                a: 'Yes. The Free tier gives you 3 assessments per month with no credit card required. The public self-test on our homepage also gives a taste of the experience.',
+                a: 'Yes. The Free tier gives you 3 full assessments per month and unlimited Daily Challenges — no credit card required.',
               },
               {
                 q: 'What happens if I exceed my monthly limit?',
-                a: "You'll be notified when you're approaching your limit. Assessments aren't cut off mid-session. You can upgrade anytime or wait for the next billing cycle.",
+                a: "You'll be notified when you're approaching your limit. Upgrade anytime or wait for the next billing cycle.",
               },
               {
                 q: 'Do you offer annual discounts?',
-                a: 'Yes — 20% off when you pay annually. Toggle the switch above to see annual pricing.',
+                a: 'Yes — save 20% when you pay annually. Toggle the switch above to see annual pricing.',
               },
               {
-                q: "What's the difference between Job Seeker and Business plans?",
-                a: 'Job Seeker plans are for individuals who want to assess and certify their own AI skills. Business plans are for companies that want to evaluate candidates or team members at scale with team management, analytics, and integrations.',
+                q: "What's the difference between PromptScore and the Daily Challenge?",
+                a: 'PromptScore is your full adaptive assessment — 8–12 questions, 5-dimension scoring, role-weighted. The Daily Challenge is a quick 5-question benchmark that refreshes every day — great for practice and leaderboard competition.',
               },
             ].map((item) => (
               <details
