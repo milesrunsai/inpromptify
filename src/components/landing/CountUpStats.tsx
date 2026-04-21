@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 
-function CountUpStat({ value, label }: { value: string; label: string }) {
+function CountUpStat({ value, label, light }: { value: string; label: string; light?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const [display, setDisplay] = useState(value);
   const hasAnimated = useRef(false);
@@ -44,19 +44,19 @@ function CountUpStat({ value, label }: { value: string; label: string }) {
 
   return (
     <div ref={ref} className="reveal">
-      <p className="text-3xl font-bold gradient-text">{display}</p>
-      <p className="text-sm text-white/30 mt-1">{label}</p>
+      <p className={`text-3xl font-bold ${light ? 'text-orange-500' : 'gradient-text'}`}>{display}</p>
+      <p className={`text-sm mt-1 ${light ? 'text-gray-500' : 'text-white/30'}`}>{label}</p>
     </div>
   );
 }
 
-export default function CountUpStats() {
+export default function CountUpStats({ light }: { light?: boolean }) {
   return (
     <div className="mt-24 grid md:grid-cols-4 gap-8 text-center">
-      <CountUpStat value="150K+" label="Assessments" />
-      <CountUpStat value="40+" label="Countries" />
-      <CountUpStat value="500+" label="Organizations" />
-      <CountUpStat value="99.9%" label="Uptime" />
+      <CountUpStat value="150K+" label="Assessments" light={light} />
+      <CountUpStat value="40+" label="Countries" light={light} />
+      <CountUpStat value="500+" label="Organizations" light={light} />
+      <CountUpStat value="99.9%" label="Uptime" light={light} />
     </div>
   );
 }
