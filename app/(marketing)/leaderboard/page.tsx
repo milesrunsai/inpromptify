@@ -79,7 +79,7 @@ export default function LeaderboardPage() {
         className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none"
       >
         <source
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_3CVjpU5MqL28kt1M6PyOAXhNcyX/hf_20260421_090946_47124ffa-1e4f-49c9-a0ed-84039d5331f6.mp4"
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_3CVjpU5MqL28kt1M6PyOAXhNcyX/hf_20260418_085528_e32a0b1e-ca22-4247-9b28-22c4f7d5fed6.mp4"
           type="video/mp4"
         />
       </video>
