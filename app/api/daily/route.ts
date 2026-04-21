@@ -34,12 +34,11 @@ async function getDailyQuestions(date: string) {
   const shuffledHard = seededShuffle(hard, date + "-hard");
   const shuffledExpert = seededShuffle(expert, date + "-expert");
 
-  // Pick: 1 easy, 2 medium, 1 hard, 1 expert
+  // Pick: 0 easy, 1 medium, 2 hard, 2 expert — daily should be challenging
   const selected = [
-    ...shuffledEasy.slice(0, 1),
-    ...shuffledMedium.slice(0, 2),
-    ...shuffledHard.slice(0, 1),
-    ...shuffledExpert.slice(0, 1),
+    ...shuffledMedium.slice(0, 1),
+    ...shuffledHard.slice(0, 2),
+    ...shuffledExpert.slice(0, 2),
   ];
 
   // If any bucket is empty, fill from shuffled all
