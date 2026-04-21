@@ -1,0 +1,300 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource/geist-sans/400.css";
+@import "@fontsource/geist-sans/500.css";
+@import "@fontsource/geist-sans/600.css";
+@import "@fontsource/geist-sans/700.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(260 87% 3%);
+  --color-foreground: hsl(40 6% 95%);
+  --color-card: hsl(240 6% 9%);
+  --color-card-foreground: hsl(40 6% 95%);
+  --color-popover: hsl(240 6% 9%);
+  --color-popover-foreground: hsl(40 6% 95%);
+  --color-primary: hsl(24 100% 50%);
+  --color-primary-foreground: hsl(0 0% 100%);
+  --color-secondary: hsl(240 4% 16%);
+  --color-secondary-foreground: hsl(40 6% 95%);
+  --color-muted: hsl(240 4% 16%);
+  --color-muted-foreground: hsl(240 5% 65%);
+  --color-accent: hsl(24 100% 50%);
+  --color-accent-foreground: hsl(0 0% 100%);
+  --color-destructive: hsl(0 84.2% 60.2%);
+  --color-destructive-foreground: hsl(0 0% 100%);
+  --color-border: hsl(240 4% 20%);
+  --color-input: hsl(240 4% 20%);
+  --color-ring: hsl(24 100% 50%);
+  --radius: 0.75rem;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --color-hero-heading: hsl(40 10% 96%);
+  --color-hero-sub: hsl(40 6% 82%);
+  --color-sidebar: hsl(240 6% 7%);
+  --color-sidebar-foreground: hsl(40 6% 95%);
+  --color-sidebar-primary: hsl(262 83% 58%);
+  --color-sidebar-primary-foreground: hsl(0 0% 100%);
+  --color-sidebar-accent: hsl(240 4% 16%);
+  --color-sidebar-accent-foreground: hsl(40 6% 95%);
+  --color-sidebar-border: hsl(240 4% 20%);
+  --color-sidebar-ring: hsl(262 83% 58%);
+  --color-chart-1: hsl(262 83% 58%);
+  --color-chart-2: hsl(150 50% 50%);
+  --color-chart-3: hsl(220 50% 50%);
+  --color-chart-4: hsl(320 50% 50%);
+  --color-chart-5: hsl(80 50% 60%);
+  --font-sans: "Geist Sans", "Inter", system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono);
+  --font-heading: "Geist Sans", "Inter", system-ui, sans-serif;
+  --animate-marquee: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Geist Sans", "Inter", system-ui, sans-serif;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/* White dashboard theme — applied to main content area only */
+.dashboard-theme {
+  --color-background: hsl(0 0% 100%);
+  --color-foreground: hsl(222 47% 11%);
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(222 47% 11%);
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(222 47% 11%);
+  --color-secondary: hsl(210 40% 96.1%);
+  --color-secondary-foreground: hsl(222 47% 11%);
+  --color-muted: hsl(210 40% 96.1%);
+  --color-muted-foreground: hsl(215 16% 47%);
+  --color-border: hsl(214 32% 91%);
+  --color-input: hsl(214 32% 91%);
+  --color-ring: hsl(24 100% 50%);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    @apply bg-orange-600/40 text-white;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-white/10 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-white/20;
+  }
+}
+
+@layer utilities {
+  .liquid-glass {
+    background: rgba(255, 255, 255, 0.01);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  .liquid-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(180deg,
+      rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%,
+      rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%,
+      rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400;
+  }
+
+  .glass {
+    @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] rounded-2xl;
+  }
+
+  .glass-strong {
+    @apply bg-white/[0.05] backdrop-blur-2xl border border-white/[0.08] rounded-2xl;
+  }
+}
+
+/* Buttons */
+.glow-btn {
+  @apply relative overflow-hidden bg-gradient-to-r from-orange-500 to-amber-500
+         px-6 py-3 rounded-lg font-medium text-white
+         transition-all duration-300;
+}
+.glow-btn:hover {
+  box-shadow: 0 0 30px rgba(249, 115, 22, 0.3);
+  transform: scale(1.02);
+}
+.glow-btn:active {
+  transform: scale(0.98);
+}
+
+.ghost-btn {
+  @apply px-6 py-3 rounded-lg font-medium text-white/80
+         border border-white/10 transition-all duration-300;
+}
+.ghost-btn:hover {
+  @apply bg-white/5 border-white/20 text-white;
+}
+
+.section-label {
+  @apply inline-block text-xs tracking-[0.2em] uppercase text-orange-400/80 font-mono mb-4;
+}
+
+/* Background patterns */
+.dot-pattern {
+  background-image: radial-gradient(circle, rgba(249, 115, 22, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(249, 115, 22, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(249, 115, 22, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+.stagger-5 { transition-delay: 0.5s; }
+.stagger-6 { transition-delay: 0.6s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-scale {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Accordion */
+.accordion-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+.accordion-content.open {
+  grid-template-rows: 1fr;
+}
+.accordion-content > div {
+  overflow: hidden;
+}
+
+/* Section frames */
+.section-frame {
+  @apply relative;
+}
+.section-frame::before {
+  content: '';
+  @apply absolute inset-x-6 inset-y-0 border border-white/[0.06] rounded-3xl pointer-events-none;
+}
+@media (min-width: 768px) {
+  .section-frame::before {
+    @apply inset-x-12;
+  }
+}
+@media (min-width: 1280px) {
+  .section-frame::before {
+    @apply inset-x-20;
+  }
+}
+
+/* Tab active indicator */
+.tab-active {
+  @apply text-white;
+}
+.tab-active::after {
+  content: '';
+  @apply absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-orange-500 to-amber-500;
+}
+
+/* Print styles for results sharing */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  nav, footer, .no-print,
+  button, .glow-btn, .ghost-btn {
+    display: none !important;
+  }
+
+  .print-results-card {
+    background: white !important;
+    color: #111 !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 12px !important;
+    padding: 2rem !important;
+    box-shadow: none !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

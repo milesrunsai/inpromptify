@@ -1,0 +1,212 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Organization {
+  id            String         @id @default(cuid())
+  name          String
+  slug          String         @unique
+  members       Membership[]
+  assessments   Assessment[]
+  subscriptions Subscription[]
+  teamInvites   TeamInvite[]
+  apiKeys       ApiKey[]
+  createdAt     DateTime       @default(now())
+}
+
+model Membership {
+  id     String       @id @default(cuid())
+  org    Organization @relation(fields: [orgId], references: [id])
+  orgId  String
+  user   User         @relation(fields: [userId], references: [id])
+  userId String
+  role   Role         @default(MEMBER)
+}
+
+model User {
+  id               String          @id @default(cuid())
+  email            String          @unique
+  name             String?
+  imageUrl         String?
+  passwordHash     String
+  emailVerified    Boolean         @default(false)
+  emailVerifyToken String?
+  resetToken       String?
+  resetTokenExpiry DateTime?
+  memberships      Membership[]
+  sessions         Session[]
+  chatMessages     AiChatMessage[]
+  apiKeys          ApiKey[]
+  createdAt        DateTime        @default(now())
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Assessment {
+  id              String           @id @default(cuid())
+  org             Organization     @relation(fields: [orgId], references: [id])
+  orgId           String
+  candidateEmail  String
+  status          AssessmentStatus
+  score           Int?
+  dimensionScores Json?
+  responses       Json[]
+  currentTheta    Float            @default(50.0)
+  isPublic        Boolean          @default(true) // public tests show on leaderboard
+  visibility      String           @default("public") // public, private, org-only
+  issuedBy        String? // org that issued the test (null = self-taken)
+  completedAt     DateTime?
+  createdAt       DateTime         @default(now())
+}
+
+model QuestionBank {
+  id              String    @id @default(cuid())
+  text            String
+  options         Json // [{id: "A", text: "...", isCorrect: true}, ...]
+  correctOptionId String
+  difficulty      Int // 1-100
+  dimensions      Json // ["promptQuality", "responseQuality"]
+  tags            String[]
+  maxTimeSeconds  Int
+  irtA            Float?
+  irtB            Float?
+  irtC            Float?
+  lastCalibrated  DateTime?
+  createdAt       DateTime  @default(now())
+  isActive        Boolean   @default(true)
+}
+
+model PendingQuestion {
+  id              String   @id @default(cuid())
+  text            String
+  options         Json // [{id: "A", text: "...", isCorrect: true}, ...]
+  correctOptionId String
+  difficulty      Int // 1-100
+  dimensions      Json // ["promptQuality", "responseQuality"]
+  tags            String[]
+  maxTimeSeconds  Int
+  source          String   @default("manual") // llm-generated, manual, community
+  status          String   @default("pending") // pending, approved, rejected
+  reviewedBy      String?
+  createdAt       DateTime @default(now())
+}
+
+model CalibrationResponse {
+  id               String   @id @default(cuid())
+  assessmentId     String?
+  questionId       String
+  selectedOptionId String
+  wasCorrect       Boolean
+  timeTakenMs      Int
+  createdAt        DateTime @default(now())
+}
+
+model Subscription {
+  id          String       @id @default(cuid())
+  org         Organization @relation(fields: [orgId], references: [id])
+  orgId       String
+  stripeSubId String       @unique
+  tier        Tier
+  credits     Int
+  status      String
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+enum AssessmentStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum Tier {
+  FREE
+  STARTER
+  BUSINESS
+  ENTERPRISE
+}
+
+model TeamInvite {
+  id        String       @id @default(cuid())
+  org       Organization @relation(fields: [orgId], references: [id])
+  orgId     String
+  email     String
+  role      Role         @default(MEMBER)
+  invitedBy String
+  status    String       @default("pending") // pending, accepted, expired
+  expiresAt DateTime
+  createdAt DateTime     @default(now())
+
+  @@unique([orgId, email])
+}
+
+model AiChatMessage {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  role      String // user, assistant
+  content   String
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
+
+model ApiKey {
+  id        String       @id @default(cuid())
+  user      User         @relation(fields: [userId], references: [id])
+  userId    String
+  org       Organization @relation(fields: [orgId], references: [id])
+  orgId     String
+  name      String
+  keyHash   String       @unique
+  prefix    String // First 8 chars for display (e.g., "inp_abc1...")
+  lastUsed  DateTime?
+  expiresAt DateTime?
+  isActive  Boolean      @default(true)
+  createdAt DateTime     @default(now())
+
+  @@index([userId])
+}
+
+model DailyQuizAttempt {
+  id            String   @id @default(cuid())
+  email         String
+  userId        String?
+  date          String   // YYYY-MM-DD format
+  score         Int      // 0-5
+  totalQuestions Int     @default(5)
+  responses     Json     // [{questionId, selectedOptionId, correct, timeTakenMs}]
+  streak        Int      @default(1)
+  createdAt     DateTime @default(now())
+
+  @@unique([email, date])
+  @@index([date, score])
+}
+
+model DemoBooking {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  company   String?
+  teamSize  String?
+  date      DateTime
+  time      String
+  message   String?
+  status    String   @default("pending") // pending, confirmed, cancelled
+  createdAt DateTime @default(now())
+}
