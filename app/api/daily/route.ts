@@ -207,6 +207,24 @@ export async function POST(req: NextRequest) {
       },
     } : responses;
 
+    // Save individual responses to CalibrationResponse for IRT calibration
+    try {
+      await Promise.all(
+        responses.map((r) =>
+          prisma.calibrationResponse.create({
+            data: {
+              questionId: r.questionId,
+              selectedOptionId: r.selectedOptionId,
+              wasCorrect: r.correct,
+              timeTakenMs: r.timeTakenMs,
+            },
+          })
+        )
+      );
+    } catch (e) {
+      console.error("CalibrationResponse write failed:", e);
+    }
+
     // Save attempt
     const attempt = await prisma.dailyQuizAttempt.create({
       data: {

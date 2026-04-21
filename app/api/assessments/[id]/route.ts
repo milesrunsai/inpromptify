@@ -44,6 +44,29 @@ export async function PATCH(
   const body = await req.json();
   const { status, score, dimensionScores, responses, currentTheta } = body;
 
+  // Write individual responses to CalibrationResponse for IRT calibration
+  if (responses && Array.isArray(responses) && status === "COMPLETED") {
+    try {
+      await Promise.all(
+        responses
+          .filter((r: any) => r.questionId && r.selectedOptionId)
+          .map((r: any) =>
+            prisma.calibrationResponse.create({
+              data: {
+                assessmentId: id,
+                questionId: r.questionId,
+                selectedOptionId: r.selectedOptionId,
+                wasCorrect: !!r.correct,
+                timeTakenMs: r.timeTakenMs || 0,
+              },
+            })
+          )
+      );
+    } catch (e) {
+      console.error("CalibrationResponse write failed:", e);
+    }
+  }
+
   const updated = await prisma.assessment.update({
     where: { id },
     data: {
