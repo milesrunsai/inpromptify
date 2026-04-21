@@ -68,7 +68,8 @@ export async function POST(req: NextRequest) {
     } else {
       const currentCount = await prisma.questionBank.count({ where: { isActive: true } });
       const remaining = Math.max(0, target - currentCount);
-      const batches = Math.ceil(remaining / batchSize);
+      const maxBatchesPerCall = parseInt(req.nextUrl.searchParams.get("maxBatches") || "3", 10);
+      const batches = Math.min(maxBatchesPerCall, Math.ceil(remaining / batchSize));
       let totalGenerated = 0;
       const genErrors: string[] = [];
 
