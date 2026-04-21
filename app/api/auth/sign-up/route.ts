@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
 import { createSession } from "@/lib/auth";
 import { verifyTurnstile } from "@/lib/turnstile";
+import { sendWelcomeEmail } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
   try {
@@ -61,6 +62,9 @@ export async function POST(req: NextRequest) {
     });
 
     await createSession(user.id);
+
+    // Send welcome email (non-blocking)
+    sendWelcomeEmail(user.email, user.name ?? "").catch(() => {});
 
     return NextResponse.json({ success: true }, { status: 201 });
   } catch {

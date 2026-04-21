@@ -1,18 +1,28 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth";
 import { isAdmin } from "@/lib/admin";
 
-const ADMIN_EMAIL = "inpromptyou@gmail.com";
+const ADMIN_EMAILS_RAW = process.env.ADMIN_EMAILS ?? "";
+const ADMIN_EMAIL =
+  ADMIN_EMAILS_RAW.split(",").filter(Boolean)[0] ?? "inpromptyou@gmail.com";
 const ORG_NAME = "InpromptiFy";
 const ORG_SLUG = "inpromptify";
 
 /** GET /api/admin/seed — seed admin account, org, and enterprise subscription */
-export async function GET() {
-  const currentUser = await getCurrentUser();
-  if (!currentUser || !isAdmin(currentUser.email)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+export async function GET(req: NextRequest) {
+  // Allow bootstrap via secret token OR logged-in admin
+  const secret = req.nextUrl.searchParams.get("secret");
+  const adminSecret = process.env.ADMIN_SECRET;
+
+  if (secret && adminSecret && secret === adminSecret) {
+    // Authorized via secret token — proceed
+  } else {
+    const currentUser = await getCurrentUser();
+    if (!currentUser || !isAdmin(currentUser.email)) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
   }
 
   try {

@@ -1,18 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Turnstile } from "@/components/turnstile";
+
+const OAUTH_ERRORS: Record<string, string> = {
+  oauth_denied: "Authentication was cancelled.",
+  oauth_error: "Something went wrong with Google sign-in. Please try again.",
+  oauth_invalid: "Invalid OAuth response. Please try again.",
+  oauth_state: "Session expired. Please try signing in again.",
+  oauth_token: "Failed to authenticate with Google. Please try again.",
+  oauth_userinfo: "Could not retrieve your Google account info. Please try again.",
+  oauth_no_email: "No email found on your Google account.",
+};
 
 export default function SignInPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState("");
+
+  useEffect(() => {
+    const oauthError = searchParams.get("error");
+    if (oauthError && OAUTH_ERRORS[oauthError]) {
+      setError(OAUTH_ERRORS[oauthError]);
+    }
+  }, [searchParams]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

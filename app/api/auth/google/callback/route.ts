@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import crypto from "crypto";
 import { prisma } from "@/lib/db";
 import { createSession } from "@/lib/auth";
+import { sendWelcomeEmail } from "@/lib/email";
 
 interface GoogleTokenResponse {
   access_token: string;
@@ -85,6 +86,8 @@ export async function GET(req: NextRequest) {
     // Find or create user
     let user = await prisma.user.findUnique({ where: { email } });
 
+    let isNewUser = false;
+
     if (!user) {
       // Create new user with random password hash (OAuth user)
       const randomHash = crypto.randomBytes(32).toString("hex");
@@ -97,6 +100,7 @@ export async function GET(req: NextRequest) {
           emailVerified: true,
         },
       });
+      isNewUser = true;
     } else {
       // Update profile info if missing
       if (!user.imageUrl && googleUser.picture) {
@@ -108,6 +112,10 @@ export async function GET(req: NextRequest) {
     }
 
     await createSession(user.id);
+
+    if (isNewUser) {
+      sendWelcomeEmail(email, googleUser.name ?? "").catch(() => {});
+    }
 
     return NextResponse.redirect(`${appUrl}/dashboard`);
   } catch {
