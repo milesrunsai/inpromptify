@@ -669,22 +669,20 @@ export default function DailyQuizPage() {
           {/* ===== QUIZ PHASE ===== */}
           {phase === "quiz" && questions[currentIndex] && (
             <div className="relative w-full">
-              {/* Progress indicator - top left */}
-              <div className="absolute top-6 left-6">
-                <div className="text-xs font-mono text-gray-400 mb-2">
-                  {currentIndex + 1} / {questions.length}
+              {/* Top bar: progress + timer */}
+              <div className="flex items-center justify-between mb-8 sm:mb-12">
+                <div>
+                  <div className="text-xs font-mono text-gray-400 mb-2">
+                    {currentIndex + 1} / {questions.length}
+                  </div>
+                  <div className="w-16 h-0.5 bg-gray-200 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-orange-500 rounded-full transition-all duration-500 ease-out"
+                      style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
+                    />
+                  </div>
                 </div>
-                <div className="w-16 h-0.5 bg-gray-200 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-orange-500 rounded-full transition-all duration-500 ease-out"
-                    style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Timer - top right */}
-              <div className="absolute top-6 right-6">
-                <span className={`text-4xl font-mono font-bold tabular-nums transition-colors duration-500 ${
+                <span className={`text-2xl sm:text-4xl font-mono font-bold tabular-nums transition-colors duration-500 ${
                   timeLeft > 20 ? "text-gray-400" :
                   timeLeft > 10 ? "text-yellow-500" :
                   "text-red-500"
@@ -693,16 +691,13 @@ export default function DailyQuizPage() {
                 </span>
               </div>
 
-              {/* Brand mark - bottom left */}
-              <img src="/logo.png" alt="" className="h-5 w-auto opacity-20 absolute bottom-6 left-6" />
-
               {/* Question with entrance animation */}
               <div
                 className={`transition-all duration-300 ease-out ${
                   questionVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3"
                 }`}
               >
-                <h2 className="text-2xl sm:text-3xl font-medium text-gray-900 leading-relaxed text-center max-w-xl mx-auto mb-16">
+                <h2 className="text-lg sm:text-2xl md:text-3xl font-medium text-gray-900 leading-relaxed text-center max-w-xl mx-auto mb-10 sm:mb-16">
                   {questions[currentIndex].text}
                 </h2>
 
@@ -736,8 +731,8 @@ export default function DailyQuizPage() {
                   ))}
                 </div>
                 
-                {/* Keyboard hint */}
-                <p className="text-center text-xs text-gray-300 mt-8">
+                {/* Keyboard hint — hide on mobile */}
+                <p className="hidden sm:block text-center text-xs text-gray-300 mt-8">
                   Press A-D to answer
                 </p>
               </div>

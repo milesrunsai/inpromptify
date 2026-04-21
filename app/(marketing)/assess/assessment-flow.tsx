@@ -426,9 +426,9 @@ export function AssessmentFlow({
     return (
       <>
         <style>{`header, nav, footer, [role="banner"], [role="contentinfo"] { display: none !important; }`}</style>
-        <div className="fixed inset-0 bg-white z-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
           {/* Progress line at top */}
-          <div className="fixed top-0 left-0 right-0 h-1 bg-gray-100">
+          <div className="fixed top-0 left-0 right-0 h-1 bg-gray-100 z-10">
             <div
               className="h-full bg-orange-500 transition-all duration-500"
               style={{ width: `${(state.questionCount / 12) * 100}%` }}
@@ -436,20 +436,21 @@ export function AssessmentFlow({
           </div>
 
           {/* Top bar: question counter + timer */}
-          <div className="fixed top-6 left-0 right-0 px-8 flex items-center justify-between">
-            <span className="text-sm font-mono text-gray-400">
+          <div className="fixed top-4 left-0 right-0 px-6 sm:px-8 flex items-center justify-between z-10">
+            <span className="text-xs sm:text-sm font-mono text-gray-400">
               {state.questionCount + 1} / 12
             </span>
-            <span className={`text-2xl font-mono font-bold tabular-nums transition-colors duration-500 ${
+            <span className={`text-lg sm:text-2xl font-mono font-bold tabular-nums transition-colors duration-500 ${
               isTimeLow ? "text-red-500" : isTimeWarn ? "text-yellow-500" : "text-gray-300"
             }`}>
               {timeLeft}s
             </span>
           </div>
 
-          {/* Question content */}
-          <div className="w-full max-w-2xl px-6">
-            <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 leading-relaxed mb-10 text-center">
+          {/* Question content — vertically centered with safe top/bottom padding */}
+          <div className="min-h-full flex items-center justify-center px-5 sm:px-6 py-20 sm:py-24">
+          <div className="w-full max-w-2xl">
+            <h2 className="text-lg sm:text-2xl font-semibold text-gray-900 leading-relaxed mb-8 sm:mb-10 text-center">
               {currentQuestion.text}
             </h2>
 
@@ -483,12 +484,13 @@ export function AssessmentFlow({
               ))}
             </div>
 
-            {/* Keyboard hint */}
-            <p className="text-center text-xs text-gray-300 mt-8">Press A–D to answer</p>
+            {/* Keyboard hint — hide on mobile */}
+            <p className="hidden sm:block text-center text-xs text-gray-300 mt-8">Press A–D to answer</p>
+          </div>
           </div>
 
-          {/* Logo watermark */}
-          <img src="/logo.png" alt="" className="fixed bottom-6 left-6 h-5 w-auto opacity-20" />
+          {/* Logo watermark — hide on mobile to save space */}
+          <img src="/logo.png" alt="" className="fixed bottom-6 left-6 h-5 w-auto opacity-20 hidden sm:block" />
         </div>
       </>
     );
