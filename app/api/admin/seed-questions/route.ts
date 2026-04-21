@@ -59,9 +59,12 @@ export async function POST(req: NextRequest) {
 
   // ── Phase 2: Generate via LLM ──
   if (generate) {
-    const apiKey = process.env.ANTHROPIC_API_KEY;
+    const anthropicKey = process.env.ANTHROPIC_API_KEY;
+    const openaiKey = process.env.OPENAI_API_KEY;
+    const apiKey = anthropicKey || openaiKey;
+    const useOpenAI = !anthropicKey && !!openaiKey;
     if (!apiKey) {
-      results.push({ phase: "generate", count: 0, errors: ["ANTHROPIC_API_KEY not set"] });
+      results.push({ phase: "generate", count: 0, errors: ["Neither ANTHROPIC_API_KEY nor OPENAI_API_KEY set"] });
     } else {
       const currentCount = await prisma.questionBank.count({ where: { isActive: true } });
       const remaining = Math.max(0, target - currentCount);
@@ -111,28 +114,26 @@ Rules:
 Return ONLY a JSON array. No markdown, no explanation.`;
 
         try {
-          const response = await fetch("https://api.anthropic.com/v1/messages", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "x-api-key": apiKey,
-              "anthropic-version": "2023-06-01",
-            },
-            body: JSON.stringify({
-              model: "claude-sonnet-4-20250514",
-              max_tokens: 8192,
-              messages: [{ role: "user", content: prompt }],
-            }),
-          });
-
-          if (!response.ok) {
-            const err = await response.text();
-            genErrors.push(`Batch ${i + 1}: API ${response.status} - ${err.slice(0, 200)}`);
-            continue;
+          let content = "";
+          if (useOpenAI) {
+            const resp = await fetch("https://api.openai.com/v1/chat/completions", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "Authorization": `Bearer ${apiKey}` },
+              body: JSON.stringify({ model: "gpt-4o", max_tokens: 8192, messages: [{ role: "user", content: prompt }] }),
+            });
+            if (!resp.ok) { genErrors.push(`Batch ${i + 1}: OpenAI ${resp.status}`); continue; }
+            const d = await resp.json();
+            content = d.choices?.[0]?.message?.content ?? "";
+          } else {
+            const resp = await fetch("https://api.anthropic.com/v1/messages", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "x-api-key": apiKey, "anthropic-version": "2023-06-01" },
+              body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 8192, messages: [{ role: "user", content: prompt }] }),
+            });
+            if (!resp.ok) { genErrors.push(`Batch ${i + 1}: Anthropic ${resp.status}`); continue; }
+            const d = await resp.json();
+            content = d.content?.[0]?.text ?? "";
           }
-
-          const data = await response.json();
-          const content = data.content?.[0]?.text ?? "";
           const jsonMatch = content.match(/\[[\s\S]*\]/);
           if (!jsonMatch) {
             genErrors.push(`Batch ${i + 1}: No JSON array in response`);
