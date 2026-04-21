@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Careers",
-  description: "Join InpromptiFy and help build the standard for AI proficiency assessment.",
+  description: "Join Inpromptify and help build the standard for AI proficiency assessment.",
 };
 
 export default function CareersPage() {

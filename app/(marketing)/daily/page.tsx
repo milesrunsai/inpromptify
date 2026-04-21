@@ -304,7 +304,7 @@ export default function DailyQuizPage() {
   }
 
   const shareText = result
-    ? `I scored ${result.attempt.score}/${result.attempt.totalQuestions} on today's InpromptiFy Daily AI Challenge! Can you beat me? inpromptify.com/daily`
+    ? `I scored ${result.attempt.score}/${result.attempt.totalQuestions} on today's Inpromptify Daily AI Challenge! Can you beat me? inpromptify.com/daily`
     : "";
 
   const shareUrl = typeof window !== "undefined"
@@ -765,7 +765,7 @@ export default function DailyQuizPage() {
                 <p className="text-sm text-white/40 mb-4">Share your result</p>
                 <a
                   href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                    `I scored ${existingAttempt.score}/${existingAttempt.totalQuestions} on today's InpromptiFy Daily AI Challenge! Can you beat me? inpromptify.com/daily`
+                    `I scored ${existingAttempt.score}/${existingAttempt.totalQuestions} on today's Inpromptify Daily AI Challenge! Can you beat me? inpromptify.com/daily`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"

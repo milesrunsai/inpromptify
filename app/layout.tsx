@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "InpromptiFy — AI Proficiency Assessment",
-    template: "%s | InpromptiFy",
+    default: "Inpromptify — AI Proficiency Assessment",
+    template: "%s | Inpromptify",
   },
   description:
     "Adaptive AI proficiency assessments for hiring and upskilling. Measure real AI fluency with PromptScore.",
@@ -32,23 +32,23 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "InpromptiFy — AI Proficiency Assessment",
+    title: "Inpromptify — AI Proficiency Assessment",
     description: "Measure real AI proficiency. Not AI trivia. Take the free 3-minute assessment and get your PromptScore.",
     url: "https://inpromptify.com",
-    siteName: "InpromptiFy",
+    siteName: "Inpromptify",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "InpromptiFy — AI Proficiency Assessment",
+        alt: "Inpromptify — AI Proficiency Assessment",
       },
     ],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "InpromptiFy — AI Proficiency Assessment",
+    title: "Inpromptify — AI Proficiency Assessment",
     description: "Measure real AI proficiency. Not AI trivia. Get your PromptScore in 3 minutes.",
     images: ["/og-image.png"],
     site: "@Inpromptify",

@@ -26,7 +26,7 @@ const posts = [
   },
   {
     slug: 'building-certification-program',
-    title: 'Building a Certification Program with InpromptiFy',
+    title: 'Building a Certification Program with Inpromptify',
     excerpt:
       'Step-by-step guide to creating, deploying, and managing verifiable AI certification programs for your organization.',
     date: 'Apr 5, 2026',
@@ -126,7 +126,7 @@ const posts = [
     slug: 'five-dimensions-ai-proficiency',
     title: 'The Five Dimensions of AI Proficiency',
     excerpt:
-      'AI proficiency is not one skill but five. Learn about the dimensions InpromptiFy measures: prompt engineering, model understanding, output evaluation, ethical awareness, and workflow integration.',
+      'AI proficiency is not one skill but five. Learn about the dimensions Inpromptify measures: prompt engineering, model understanding, output evaluation, ethical awareness, and workflow integration.',
     date: 'Apr 2, 2026',
     readTime: '6 min read',
     tag: 'Product',

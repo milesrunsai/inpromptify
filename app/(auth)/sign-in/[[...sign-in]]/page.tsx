@@ -67,7 +67,7 @@ export default function SignInPage() {
         <div className="flex justify-center mb-6">
           <Image
             src="/logo.png"
-            alt="InpromptiFy"
+            alt="Inpromptify"
             width={48}
             height={48}
             className="h-12 w-auto"
@@ -76,7 +76,7 @@ export default function SignInPage() {
 
         <div className="bg-white border border-gray-200 shadow-2xl shadow-black/20 rounded-2xl p-8">
           <h1 className="text-gray-900 text-xl font-bold text-center mb-1">
-            Sign in to InpromptiFy
+            Sign in to Inpromptify
           </h1>
           <p className="text-gray-500 text-sm text-center mb-6">
             Welcome back! Please enter your credentials.

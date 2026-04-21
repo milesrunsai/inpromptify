@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Terms and Conditions",
   description:
-    "Terms and Conditions for using the InpromptiFy platform, including account terms, acceptable use, assessment integrity, and more.",
+    "Terms and Conditions for using the Inpromptify platform, including account terms, acceptable use, assessment integrity, and more.",
 };
 
 export default function TermsPage() {
@@ -27,13 +27,13 @@ export default function TermsPage() {
             1. Introduction and Acceptance of Terms
           </h2>
           <p className="text-gray-400 leading-relaxed mb-4">
-            Welcome to InpromptiFy. These Terms and Conditions (&quot;Terms&quot;) constitute a
+            Welcome to Inpromptify. These Terms and Conditions (&quot;Terms&quot;) constitute a
             legally binding agreement between you (&quot;User,&quot; &quot;you,&quot; or
-            &quot;your&quot;) and InpromptiFy, operated by Miles Cass, located in Perth, Western
-            Australia (&quot;InpromptiFy,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;).
+            &quot;your&quot;) and Inpromptify, operated by Miles Cass, located in Perth, Western
+            Australia (&quot;Inpromptify,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;).
           </p>
           <p className="text-gray-400 leading-relaxed mb-4">
-            By accessing or using the InpromptiFy platform, website, applications, APIs, or any
+            By accessing or using the Inpromptify platform, website, applications, APIs, or any
             related services (collectively, the &quot;Service&quot;), you acknowledge that you have
             read, understood, and agree to be bound by these Terms. If you do not agree to these
             Terms, you must not access or use the Service.
@@ -68,7 +68,7 @@ export default function TermsPage() {
             </li>
             <li>
               <strong className="text-gray-300">&quot;PromptScore&quot;</strong> means the proprietary
-              scoring metric used by InpromptiFy to evaluate AI proficiency.
+              scoring metric used by Inpromptify to evaluate AI proficiency.
             </li>
             <li>
               <strong className="text-gray-300">&quot;Organisation Account&quot;</strong> means an
@@ -160,7 +160,7 @@ export default function TermsPage() {
             5. Assessment Integrity
           </h2>
           <p className="text-gray-400 leading-relaxed mb-4">
-            5.1. The integrity of Assessments is fundamental to the value of the InpromptiFy
+            5.1. The integrity of Assessments is fundamental to the value of the Inpromptify
             platform. By taking any Assessment, you agree to complete it honestly and independently,
             relying solely on your own knowledge and abilities.
           </p>
@@ -215,25 +215,25 @@ export default function TermsPage() {
           <p className="text-gray-400 leading-relaxed mb-4">
             6.1. The Service, including its design, text, graphics, logos, icons, images, audio,
             software, code, Assessment content, scoring algorithms, and all other materials
-            (collectively, &quot;InpromptiFy Materials&quot;), are owned by or licensed to InpromptiFy
+            (collectively, &quot;Inpromptify Materials&quot;), are owned by or licensed to Inpromptify
             and are protected by copyright, trademark, and other intellectual property laws.
           </p>
           <p className="text-gray-400 leading-relaxed mb-4">
             6.2. You are granted a limited, non-exclusive, non-transferable, revocable licence to
             access and use the Service for its intended purpose, subject to these Terms. This licence
             does not include the right to modify, reproduce, distribute, create derivative works of,
-            publicly display, or commercially exploit any InpromptiFy Materials without our prior
+            publicly display, or commercially exploit any Inpromptify Materials without our prior
             written consent.
           </p>
           <p className="text-gray-400 leading-relaxed mb-4">
-            6.3. The InpromptiFy name, logo, PromptScore, and all related trademarks, service marks,
-            and trade names are the exclusive property of InpromptiFy. You may not use any of these
+            6.3. The Inpromptify name, logo, PromptScore, and all related trademarks, service marks,
+            and trade names are the exclusive property of Inpromptify. You may not use any of these
             marks without our prior written permission.
           </p>
           <p className="text-gray-400 leading-relaxed mb-4">
             6.4. You retain ownership of any original content you submit to the Service (such as
             prompt responses during Assessments). However, by submitting content, you grant
-            InpromptiFy a worldwide, royalty-free, non-exclusive licence to use, reproduce, modify,
+            Inpromptify a worldwide, royalty-free, non-exclusive licence to use, reproduce, modify,
             analyse, and display such content for the purposes of operating, improving, and
             developing the Service, including for research and analytics purposes.
           </p>
@@ -310,16 +310,16 @@ export default function TermsPage() {
             9. Limitation of Liability
           </h2>
           <p className="text-gray-400 leading-relaxed mb-4">
-            9.1. To the maximum extent permitted by applicable law, InpromptiFy and its owner,
+            9.1. To the maximum extent permitted by applicable law, Inpromptify and its owner,
             operators, employees, agents, and affiliates shall not be liable for any indirect,
             incidental, special, consequential, or punitive damages, including but not limited to loss
             of profits, data, business opportunities, or goodwill, arising out of or in connection
             with your use of or inability to use the Service.
           </p>
           <p className="text-gray-400 leading-relaxed mb-4">
-            9.2. In no event shall InpromptiFy&apos;s total aggregate liability to you for all claims
+            9.2. In no event shall Inpromptify&apos;s total aggregate liability to you for all claims
             arising out of or relating to these Terms or the Service exceed the total amount you have
-            paid to InpromptiFy in the twelve (12) months immediately preceding the event giving rise
+            paid to Inpromptify in the twelve (12) months immediately preceding the event giving rise
             to the claim, or one hundred Australian Dollars (AUD $100), whichever is greater.
           </p>
           <p className="text-gray-400 leading-relaxed mb-4">
@@ -344,7 +344,7 @@ export default function TermsPage() {
             10. Indemnification
           </h2>
           <p className="text-gray-400 leading-relaxed mb-4">
-            10.1. You agree to indemnify, defend, and hold harmless InpromptiFy, its owner, officers,
+            10.1. You agree to indemnify, defend, and hold harmless Inpromptify, its owner, officers,
             employees, agents, and affiliates from and against any and all claims, damages, losses,
             liabilities, costs, and expenses (including reasonable legal fees) arising out of or in
             connection with:
@@ -443,7 +443,7 @@ export default function TermsPage() {
           </p>
           <div className="text-gray-400 leading-relaxed mb-4">
             <p className="mb-1">
-              <strong className="text-gray-300">InpromptiFy</strong>
+              <strong className="text-gray-300">Inpromptify</strong>
             </p>
             <p className="mb-1">Operated by Miles Cass</p>
             <p className="mb-1">Perth, Western Australia, Australia</p>
@@ -458,7 +458,7 @@ export default function TermsPage() {
             </p>
           </div>
           <p className="text-gray-400 leading-relaxed mt-8 pt-8 border-t border-white/10 text-sm">
-            By using InpromptiFy, you acknowledge that you have read, understood, and agreed to be
+            By using Inpromptify, you acknowledge that you have read, understood, and agreed to be
             bound by these Terms and Conditions. Last updated: April 20, 2026.
           </p>
         </div>

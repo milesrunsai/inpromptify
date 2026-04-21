@@ -84,7 +84,7 @@ export default function ContactPage() {
     return (
       <div className="mx-auto max-w-lg px-4 sm:px-6 py-24 text-center">
         <div className="flex justify-center mb-6">
-          <Image src="/logo.png" alt="InpromptiFy" width={48} height={48} className="h-12 w-auto" />
+          <Image src="/logo.png" alt="Inpromptify" width={48} height={48} className="h-12 w-auto" />
         </div>
         <h1 className="text-3xl font-bold text-white">Demo Booked</h1>
         <p className="mt-4 text-base sm:text-lg text-gray-400">
@@ -107,7 +107,7 @@ export default function ContactPage() {
           Book a Demo
         </h1>
         <p className="mt-4 text-base sm:text-lg text-gray-400">
-          See InpromptiFy in action. Pick a time that works for you.
+          See Inpromptify in action. Pick a time that works for you.
         </p>
       </div>
 

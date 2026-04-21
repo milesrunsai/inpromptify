@@ -34,7 +34,7 @@ Organizations investing in AI adoption without measuring proficiency are flying 
 
 Standardised AI proficiency assessment gives organisations a common language for AI skills. It helps L&D teams target training where it's needed most, helps hiring managers make better decisions, and gives individuals a credible way to demonstrate their capabilities.
 
-At InpromptiFy, we're building the assessment infrastructure to make this possible — adaptive, fair, and grounded in real-world AI skills rather than theoretical knowledge.`,
+At Inpromptify, we're building the assessment infrastructure to make this possible — adaptive, fair, and grounded in real-world AI skills rather than theoretical knowledge.`,
   },
   "adaptive-testing-how-it-works": {
     title: "Introducing Adaptive Testing: How It Works",
@@ -44,7 +44,7 @@ At InpromptiFy, we're building the assessment infrastructure to make this possib
 
 Adaptive testing solves this by adjusting question difficulty in real time based on how the test-taker is performing.
 
-## How InpromptiFy's Adaptive Engine Works
+## How Inpromptify's Adaptive Engine Works
 
 Our adaptive testing engine uses a modified Item Response Theory (IRT) model combined with a Bayesian skill estimation approach. Here's the simplified version:
 
@@ -72,14 +72,14 @@ Generic adaptive testing platforms exist, but AI proficiency has unique characte
 We also handle the inherently practical nature of AI skills. Many of our assessment items aren't traditional multiple-choice — they involve evaluating AI outputs, crafting prompts for specific scenarios, or identifying issues in AI-generated code. The adaptive engine works across all these question types.`,
   },
   "building-certification-program": {
-    title: "Building a Certification Program with InpromptiFy",
+    title: "Building a Certification Program with Inpromptify",
     date: "Apr 5, 2026",
     tag: "Guide",
-    content: `Whether you're an L&D team rolling out AI training, an education provider creating credentials, or an HR department standardising AI skills across the organisation, building a certification program with InpromptiFy is straightforward. This guide walks through the process from start to finish.
+    content: `Whether you're an L&D team rolling out AI training, an education provider creating credentials, or an HR department standardising AI skills across the organisation, building a certification program with Inpromptify is straightforward. This guide walks through the process from start to finish.
 
 ## Step 1: Define Your Competency Framework
 
-Before creating assessments, decide what you're measuring. InpromptiFy provides a default AI competency framework covering six dimensions, but you can customise this to match your organisation's specific needs.
+Before creating assessments, decide what you're measuring. Inpromptify provides a default AI competency framework covering six dimensions, but you can customise this to match your organisation's specific needs.
 
 Common competency areas include:
 - **Foundational AI Knowledge**: Understanding of how AI models work, their capabilities and limitations
@@ -91,7 +91,7 @@ Common competency areas include:
 
 ## Step 2: Create or Curate Assessments
 
-InpromptiFy offers two paths:
+Inpromptify offers two paths:
 
 **Use our question bank**: We maintain a continuously updated bank of AI proficiency questions across all competency areas and difficulty levels. You can select categories relevant to your certification and let the adaptive engine handle question selection.
 
@@ -101,14 +101,14 @@ Most organisations use a combination — our standard bank for foundational know
 
 ## Step 3: Set Certification Thresholds
 
-Define what passing looks like. InpromptiFy supports:
+Define what passing looks like. Inpromptify supports:
 - **Single threshold**: Score above X% to earn the certification
 - **Multi-level**: Bronze, Silver, Gold tiers based on score ranges
 - **Dimension requirements**: Must meet minimum thresholds across all competency areas (prevents someone from passing by being exceptional in one area while having no skills in another)
 
 ## Step 4: Deploy and Monitor
 
-Roll out the certification to your target audience. InpromptiFy provides:
+Roll out the certification to your target audience. Inpromptify provides:
 - **Unique assessment links** or LMS integration for distribution
 - **Real-time dashboards** showing completion rates, score distributions, and pass rates
 - **Skill gap analysis** identifying which competency areas have the widest gaps across your organisation
@@ -116,7 +116,7 @@ Roll out the certification to your target audience. InpromptiFy provides:
 
 ## Step 5: Iterate
 
-The first version of any certification program won't be perfect. Use InpromptiFy's analytics to identify questions that are too easy, too hard, or ambiguous. Monitor whether the certification thresholds are producing meaningful differentiation. Update the competency framework as AI tools and best practices evolve.
+The first version of any certification program won't be perfect. Use Inpromptify's analytics to identify questions that are too easy, too hard, or ambiguous. Monitor whether the certification thresholds are producing meaningful differentiation. Update the competency framework as AI tools and best practices evolve.
 
 Certification is not a one-time event — it's an ongoing program that grows with your organisation's AI maturity.`,
   },
@@ -292,7 +292,7 @@ For individual professionals, AI agents raise the bar for what constitutes valua
     title: "The Five Dimensions of AI Proficiency",
     date: "Apr 2, 2026",
     tag: "Product",
-    content: `AI proficiency is not a single skill. It is a multi-dimensional competency that encompasses very different capabilities. At InpromptiFy, we have identified five core dimensions that together define what it means to be truly proficient with AI. Understanding these dimensions helps individuals identify their strengths and gaps, and helps organisations build more effective training programs.
+    content: `AI proficiency is not a single skill. It is a multi-dimensional competency that encompasses very different capabilities. At Inpromptify, we have identified five core dimensions that together define what it means to be truly proficient with AI. Understanding these dimensions helps individuals identify their strengths and gaps, and helps organisations build more effective training programs.
 
 ## Dimension 1: Prompt Engineering
 
@@ -322,7 +322,7 @@ Workflow integration is the practical dimension — the ability to embed AI into
 
 AI certifications broadly fall into four categories. Vendor-specific certifications from companies like AWS, Google Cloud, and Microsoft validate your ability to use their specific AI platforms and services. These are valuable if you work within those ecosystems but do not transfer well across vendors. Academic certifications from universities and MOOCs tend to focus on theoretical foundations — machine learning concepts, neural network architectures, and statistical methods. These build deep understanding but often lack practical application.
 
-Professional certifications from industry bodies attempt to validate broader AI competency across tools and approaches. These are the most relevant for general AI proficiency but vary widely in quality and recognition. Finally, skill-based assessment platforms like InpromptiFy focus on measuring demonstrated competency through adaptive testing rather than course completion, providing a more objective measure of what you can actually do.
+Professional certifications from industry bodies attempt to validate broader AI competency across tools and approaches. These are the most relevant for general AI proficiency but vary widely in quality and recognition. Finally, skill-based assessment platforms like Inpromptify focus on measuring demonstrated competency through adaptive testing rather than course completion, providing a more objective measure of what you can actually do.
 
 ## What Actually Matters
 
@@ -338,7 +338,7 @@ Rather than collecting certifications randomly, build a strategy that aligns wit
     title: "Understanding Bias in AI Assessments",
     date: "Mar 28, 2026",
     tag: "Engineering",
-    content: `Any assessment system can introduce bias, and AI proficiency assessments are no exception. If we are going to use assessments to make high-stakes decisions about hiring, promotion, and workforce development, we have a responsibility to ensure those assessments are fair, valid, and free from systematic bias. This is a challenge we take seriously at InpromptiFy.
+    content: `Any assessment system can introduce bias, and AI proficiency assessments are no exception. If we are going to use assessments to make high-stakes decisions about hiring, promotion, and workforce development, we have a responsibility to ensure those assessments are fair, valid, and free from systematic bias. This is a challenge we take seriously at Inpromptify.
 
 ## Sources of Bias in AI Assessments
 
@@ -354,7 +354,7 @@ During scoring, use clear, objective rubrics that focus on demonstrated competen
 
 ## Ongoing Vigilance
 
-Fairness is not a one-time achievement. It requires continuous monitoring and improvement. At InpromptiFy, we regularly analyse assessment results across demographic dimensions, review flagged questions, update our item bank to remove or revise biased items, and publish fairness metrics. Building trustworthy AI assessments means holding ourselves to the same standards of rigour and transparency that we expect from AI systems themselves.`,
+Fairness is not a one-time achievement. It requires continuous monitoring and improvement. At Inpromptify, we regularly analyse assessment results across demographic dimensions, review flagged questions, update our item bank to remove or revise biased items, and publish fairness metrics. Building trustworthy AI assessments means holding ourselves to the same standards of rigour and transparency that we expect from AI systems themselves.`,
   },
   "enterprise-ai-readiness": {
     title: "Enterprise AI Readiness: A Framework for Leaders",
@@ -404,7 +404,7 @@ To make the business case for AI upskilling investment, calculate your organisat
     title: "AI Proficiency Benchmarks: What Good Looks Like",
     date: "Mar 22, 2026",
     tag: "Product",
-    content: `One of the most common questions we hear from organisations is: what does good AI proficiency actually look like? Without clear benchmarks, it is impossible to set meaningful goals, measure progress, or compare your workforce against industry standards. At InpromptiFy, we have developed a benchmarking framework based on assessment data from thousands of professionals across industries.
+    content: `One of the most common questions we hear from organisations is: what does good AI proficiency actually look like? Without clear benchmarks, it is impossible to set meaningful goals, measure progress, or compare your workforce against industry standards. At Inpromptify, we have developed a benchmarking framework based on assessment data from thousands of professionals across industries.
 
 ## The Four Proficiency Levels
 

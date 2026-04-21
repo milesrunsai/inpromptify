@@ -28,7 +28,7 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center mb-4">
-              <img src="/logo.png" alt="InpromptiFy" className="h-6 w-auto" />
+              <img src="/logo.png" alt="Inpromptify" className="h-6 w-auto" />
             </Link>
             <p className="text-sm text-white/40 leading-relaxed">
               AI-powered proficiency assessment platform for modern teams.
@@ -71,7 +71,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-16 pt-8 border-t border-white/[0.06] flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-white/30">
-            &copy; {new Date().getFullYear()} InpromptiFy. All rights reserved.
+            &copy; {new Date().getFullYear()} Inpromptify. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <a

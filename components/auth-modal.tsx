@@ -218,7 +218,7 @@ export function AuthModal({ open, onClose, defaultTab = "sign-in" }: AuthModalPr
 
         {/* Logo */}
         <div className="flex justify-center mb-4">
-          <Image src="/logo.png" alt="InpromptiFy" width={48} height={48} className="h-12 w-auto" />
+          <Image src="/logo.png" alt="Inpromptify" width={48} height={48} className="h-12 w-auto" />
         </div>
 
         {/* Tab toggle */}
@@ -249,7 +249,7 @@ export function AuthModal({ open, onClose, defaultTab = "sign-in" }: AuthModalPr
         {tab === "sign-in" && (
           <>
             <h1 className="text-gray-900 text-xl font-bold text-center mb-1">
-              Sign in to InpromptiFy
+              Sign in to Inpromptify
             </h1>
             <p className="text-gray-500 text-sm text-center mb-6">
               Welcome back! Please enter your credentials.

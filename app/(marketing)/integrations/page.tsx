@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Integrations",
   description:
-    "Connect InpromptiFy with your ATS, LMS, and automation tools. Greenhouse, Lever, Workday, Zapier, and more.",
+    "Connect Inpromptify with your ATS, LMS, and automation tools. Greenhouse, Lever, Workday, Zapier, and more.",
 };
 
 const integrations = {
@@ -48,7 +48,7 @@ const integrations = {
   lms: {
     title: "Learning Management Systems",
     description:
-      "Use InpromptiFy assessments as learning checkpoints. Measure skill development before and after AI training programs.",
+      "Use Inpromptify assessments as learning checkpoints. Measure skill development before and after AI training programs.",
     items: [
       {
         name: "Canvas",
@@ -67,7 +67,7 @@ const integrations = {
   automation: {
     title: "Automation & Workflow",
     description:
-      "Connect InpromptiFy to thousands of tools through automation platforms. Build custom workflows without code.",
+      "Connect Inpromptify to thousands of tools through automation platforms. Build custom workflows without code.",
     items: [
       {
         name: "Zapier",
@@ -110,7 +110,7 @@ export default function IntegrationsPage() {
             Integrations
           </h1>
           <p className="mt-4 text-base sm:text-lg text-gray-400">
-            Connect InpromptiFy with the tools your team already uses.
+            Connect Inpromptify with the tools your team already uses.
             Assessment data flows where it needs to go — your ATS, LMS, or
             any automation platform.
           </p>

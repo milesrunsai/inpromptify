@@ -101,7 +101,7 @@ export function Header() {
           <Link href="/" className="flex items-center shrink-0">
             <Image
               src="/logo.png"
-              alt="InpromptiFy"
+              alt="Inpromptify"
               width={32}
               height={32}
               className="h-6 w-auto"

@@ -39,7 +39,7 @@ export function ApiKeys({
         <div className="rounded-lg border border-gray-200 bg-gray-50 p-6 text-center">
           <Key className="mx-auto mb-3 size-8 text-muted-foreground/40" />
           <p className="text-sm text-muted-foreground">
-            No API keys yet. Create one to integrate InpromptiFy into your
+            No API keys yet. Create one to integrate Inpromptify into your
             workflows.
           </p>
         </div>

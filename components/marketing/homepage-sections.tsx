@@ -49,7 +49,7 @@ export function BoldStatement() {
           <span className="text-white/40 font-normal">Unlock the potential of </span>
           <span className="text-white font-bold">AI proficiency measurement.</span>
           <br />
-          <span className="text-white/40 font-normal">InpromptiFy equips businesses to assess, benchmark, and certify their workforce, </span>
+          <span className="text-white/40 font-normal">Inpromptify equips businesses to assess, benchmark, and certify their workforce, </span>
           <span className="text-white font-bold">redefining how organizations measure AI readiness.</span>
         </p>
       </div>
@@ -248,8 +248,8 @@ function CertificationsViz() {
       <div className="w-full max-w-[260px] rounded-xl border border-white/[0.08] bg-white/[0.03] p-5">
         {/* Logo + Title */}
         <div className="flex items-center justify-center gap-2 mb-3">
-          <img src="/logo.png" alt="InpromptiFy" className="w-6 h-6 rounded" />
-          <span className="text-[10px] font-mono text-white/40 tracking-wider uppercase">InpromptiFy</span>
+          <img src="/logo.png" alt="Inpromptify" className="w-6 h-6 rounded" />
+          <span className="text-[10px] font-mono text-white/40 tracking-wider uppercase">Inpromptify</span>
         </div>
         <p className="text-sm font-semibold text-white/90">AI Fundamentals</p>
         <p className="text-[10px] text-orange-400 font-medium mt-0.5">Certified Proficient</p>
@@ -505,7 +505,7 @@ const useCasesData = [
   {
     label: 'Education',
     title: 'Integrate AI assessments into your curriculum',
-    description: 'Universities and bootcamps use InpromptiFy to benchmark student AI literacy. LMS integrations, cohort analytics, and automated grading included.',
+    description: 'Universities and bootcamps use Inpromptify to benchmark student AI literacy. LMS integrations, cohort analytics, and automated grading included.',
   },
 ]
 
@@ -659,7 +659,7 @@ export function UseCasesSection() {
 
 const testimonials = [
   {
-    quote: 'InpromptiFy completely transformed our hiring process. We went from guessing about AI skills to having quantifiable, comparable data on every candidate.',
+    quote: 'Inpromptify completely transformed our hiring process. We went from guessing about AI skills to having quantifiable, comparable data on every candidate.',
     name: 'Rachel Torres', title: 'VP of Engineering', company: 'Nexus AI', initials: 'RT', gradient: 'from-orange-500 to-amber-500',
   },
   {
@@ -667,7 +667,7 @@ const testimonials = [
     name: 'David Kim', title: 'CTO', company: 'Synthwave Labs', initials: 'DK', gradient: 'from-amber-500 to-yellow-500',
   },
   {
-    quote: 'We rolled out InpromptiFy across 2,000 employees in three weeks. The team analytics dashboard gave our L&D team exactly the insights they needed to prioritize training.',
+    quote: 'We rolled out Inpromptify across 2,000 employees in three weeks. The team analytics dashboard gave our L&D team exactly the insights they needed to prioritize training.',
     name: 'Priya Mehta', title: 'Chief People Officer', company: 'ScalePoint', initials: 'PM', gradient: 'from-orange-600 to-orange-400',
   },
   {
@@ -715,11 +715,11 @@ export function TestimonialsSection() {
 /* ───────────────────────── FAQ ───────────────────────── */
 
 const faqs = [
-  { q: 'What is InpromptiFy?', a: 'InpromptiFy is an AI-powered proficiency assessment platform that measures, validates, and certifies AI skills. It uses adaptive testing, real-time scoring, and comprehensive skill mapping to provide accurate assessments for individuals and organizations.' },
+  { q: 'What is Inpromptify?', a: 'Inpromptify is an AI-powered proficiency assessment platform that measures, validates, and certifies AI skills. It uses adaptive testing, real-time scoring, and comprehensive skill mapping to provide accurate assessments for individuals and organizations.' },
   { q: 'How does adaptive testing work?', a: "Our AI engine analyzes your responses in real-time and adjusts the difficulty of subsequent questions. If you answer correctly, questions get harder. If you struggle, they get easier. This zeros in on your exact proficiency level much faster than traditional fixed-difficulty tests." },
-  { q: 'What AI skills and tools can be assessed?', a: 'InpromptiFy covers a wide range of AI topics including prompt engineering, model fine-tuning, RAG architectures, AI agents, evaluation methodologies, AI safety, and specific tools like ChatGPT, Claude, Midjourney, and more. You can also create custom assessments for any topic.' },
+  { q: 'What AI skills and tools can be assessed?', a: 'Inpromptify covers a wide range of AI topics including prompt engineering, model fine-tuning, RAG architectures, AI agents, evaluation methodologies, AI safety, and specific tools like ChatGPT, Claude, Midjourney, and more. You can also create custom assessments for any topic.' },
   { q: 'How long does an assessment take?', a: 'Most assessments take 15-30 minutes thanks to adaptive testing, which eliminates questions that are too easy or too hard for you. Traditional assessments covering the same material would typically take 60-90 minutes.' },
-  { q: 'Can I integrate InpromptiFy with my existing tools?', a: 'Yes. We offer a REST API, webhooks, and native integrations with popular HR platforms, LMS systems, and ATS tools. Our developer documentation covers everything you need to get started.' },
+  { q: 'Can I integrate Inpromptify with my existing tools?', a: 'Yes. We offer a REST API, webhooks, and native integrations with popular HR platforms, LMS systems, and ATS tools. Our developer documentation covers everything you need to get started.' },
   { q: 'Are the certifications verifiable?', a: 'Absolutely. Each certificate includes a unique verification URL that anyone can use to confirm authenticity. Certificates also integrate with LinkedIn and can be added to digital portfolios.' },
   { q: 'Is there a free tier?', a: 'Yes. You can create an account and take assessments for free with our Starter plan. Paid plans unlock custom assessments, team analytics, certifications, API access, and priority support.' },
 ]
@@ -771,9 +771,9 @@ export function FAQSection() {
 const codeTabs = [
   {
     label: 'Python',
-    code: `from inpromptify import InpromptiFy
+    code: `from inpromptify import Inpromptify
 
-client = InpromptiFy()
+client = Inpromptify()
 
 assessment = client.assessments.create(
     title="AI Fundamentals",
@@ -782,9 +782,9 @@ assessment = client.assessments.create(
   },
   {
     label: 'TypeScript',
-    code: `import { InpromptiFy } from 'inpromptify';
+    code: `import { Inpromptify } from 'inpromptify';
 
-const client = new InpromptiFy();
+const client = new Inpromptify();
 
 const assessment = await client.assessments.create({
   title: 'AI Fundamentals',

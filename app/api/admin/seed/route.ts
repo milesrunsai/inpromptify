@@ -7,7 +7,7 @@ import { isAdmin } from "@/lib/admin";
 const ADMIN_EMAILS_RAW = process.env.ADMIN_EMAILS ?? "";
 const ADMIN_EMAIL =
   ADMIN_EMAILS_RAW.split(",").filter(Boolean)[0] ?? "inpromptyou@gmail.com";
-const ORG_NAME = "InpromptiFy";
+const ORG_NAME = "Inpromptify";
 const ORG_SLUG = "inpromptify";
 
 /** GET /api/admin/seed — seed admin account, org, and enterprise subscription */
@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
       user = await prisma.user.create({
         data: {
           email: ADMIN_EMAIL,
-          name: "InpromptiFy Admin",
+          name: "Inpromptify Admin",
           passwordHash: randomHash,
           emailVerified: true,
         },

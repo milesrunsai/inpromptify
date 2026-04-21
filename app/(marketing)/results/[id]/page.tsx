@@ -94,7 +94,7 @@ export default function ResultsPage() {
             <div className="flex items-center justify-between">
               <Image
                 src="/logo.png"
-                alt="InpromptiFy"
+                alt="Inpromptify"
                 width={40}
                 height={40}
                 className="h-8 w-auto"

@@ -5,7 +5,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Why InpromptiFy exists — AI is reshaping every industry, but most people are using it wrong.",
+    "Why Inpromptify exists — AI is reshaping every industry, but most people are using it wrong.",
 };
 
 export default function AboutPage() {
@@ -14,7 +14,7 @@ export default function AboutPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Hero */}
         <div className="max-w-3xl">
-          <span className="section-label">[ About InpromptiFy ]</span>
+          <span className="section-label">[ About Inpromptify ]</span>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mt-2 text-white leading-tight">
             AI is taking jobs.{" "}
             <span className="gradient-text">But only from those who cannot use it.</span>
@@ -141,7 +141,7 @@ export default function AboutPage() {
             </h2>
             <div className="mt-6 space-y-4 text-gray-400 leading-relaxed">
               <p>
-                InpromptiFy does not just test prompt engineering. We cover the full spectrum
+                Inpromptify does not just test prompt engineering. We cover the full spectrum
                 of AI proficiency that modern businesses need:
               </p>
               <ul className="space-y-3">
@@ -175,7 +175,7 @@ export default function AboutPage() {
             How we connect and integrate
           </h2>
           <p className="text-center text-white/60 mt-4 max-w-2xl mx-auto">
-            InpromptiFy plugs into the tools your HR and engineering teams already use.
+            Inpromptify plugs into the tools your HR and engineering teams already use.
           </p>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
@@ -218,7 +218,7 @@ export default function AboutPage() {
             <div className="relative aspect-[3/4] max-w-sm mx-auto lg:mx-0 rounded-2xl overflow-hidden">
               <img
                 src="/miles.jpg"
-                alt="Miles Cass, Founder of InpromptiFy"
+                alt="Miles Cass, Founder of Inpromptify"
                 className="w-full h-full object-cover rounded-2xl"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
@@ -269,14 +269,14 @@ export default function AboutPage() {
                   actually works and what is just hype.
                 </p>
                 <p>
-                  The idea for InpromptiFy came from watching the gap widen. Companies were spending
+                  The idea for Inpromptify came from watching the gap widen. Companies were spending
                   massive budgets on AI tools, but their employees could barely write a decent prompt.
                   Older workers were stuck on ChatGPT because nobody showed them there were better
                   options for their specific tasks. New hires claimed "AI proficiency" on their
                   resumes with nothing to back it up.
                 </p>
                 <p>
-                  I am building InpromptiFy to change that. To measure, test, compare, and benchmark
+                  I am building Inpromptify to change that. To measure, test, compare, and benchmark
                   AI proficiency across every industry. To set the standard that tells employers
                   exactly how capable their team is with AI. And to make sure the next generation of
                   employees does not just use AI, but uses it well.

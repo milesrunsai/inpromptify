@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Developers",
   description:
-    "API documentation, webhook events, SDK snippets, and Postman collection for the InpromptiFy assessment platform.",
+    "API documentation, webhook events, SDK snippets, and Postman collection for the Inpromptify assessment platform.",
 };
 
 const webhookEvents = [
@@ -60,9 +60,9 @@ const webhookEvents = [
 const sdkSnippets = [
   {
     language: "TypeScript",
-    code: `import { InpromptiFy } from "@inpromptify/sdk";
+    code: `import { Inpromptify } from "@inpromptify/sdk";
 
-const client = new InpromptiFy({
+const client = new Inpromptify({
   apiKey: process.env.INPROMPTIFY_API_KEY,
 });
 
@@ -79,9 +79,9 @@ console.log(result.dimensionScores); // { promptQuality: 85, ... }`,
   },
   {
     language: "Python",
-    code: `from inpromptify import InpromptiFy
+    code: `from inpromptify import Inpromptify
 
-client = InpromptiFy(api_key=os.environ["INPROMPTIFY_API_KEY"])
+client = Inpromptify(api_key=os.environ["INPROMPTIFY_API_KEY"])
 
 # Create an assessment
 assessment = client.assessments.create(

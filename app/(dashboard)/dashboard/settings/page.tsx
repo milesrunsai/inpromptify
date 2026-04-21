@@ -165,7 +165,7 @@ export default async function SettingsPage() {
         <CardHeader>
           <CardTitle>API Keys</CardTitle>
           <CardDescription>
-            Manage API keys for integrating InpromptiFy into your workflows.
+            Manage API keys for integrating Inpromptify into your workflows.
           </CardDescription>
         </CardHeader>
         <CardContent>

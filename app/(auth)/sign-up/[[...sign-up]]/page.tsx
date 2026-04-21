@@ -88,7 +88,7 @@ export default function SignUpPage() {
         <div className="flex justify-center mb-6">
           <Image
             src="/logo.png"
-            alt="InpromptiFy"
+            alt="Inpromptify"
             width={48}
             height={48}
             className="h-12 w-auto"

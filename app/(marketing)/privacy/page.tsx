@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "Privacy Policy for InpromptiFy — how we collect, use, and protect your data. GDPR and Australian Privacy Act compliant.",
+    "Privacy Policy for Inpromptify — how we collect, use, and protect your data. GDPR and Australian Privacy Act compliant.",
 };
 
 export default function PrivacyPage() {
@@ -24,7 +24,7 @@ export default function PrivacyPage() {
           1. Introduction
         </h2>
         <p className="text-gray-400 leading-relaxed mb-4">
-          InpromptiFy (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) operates the InpromptiFy
+          Inpromptify (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) operates the Inpromptify
           platform, an AI literacy assessment and benchmarking service. This Privacy Policy explains
           how we collect, use, disclose, and safeguard your personal information when you visit our
           website and use our services.
@@ -370,7 +370,7 @@ export default function PrivacyPage() {
           9. International Data Transfers
         </h2>
         <p className="text-gray-400 leading-relaxed mb-4">
-          InpromptiFy is operated from Perth, Western Australia. Our third-party service providers
+          Inpromptify is operated from Perth, Western Australia. Our third-party service providers
           may process and store data in various countries, including the United States and other
           jurisdictions outside Australia and the EEA.
         </p>
@@ -461,7 +461,7 @@ export default function PrivacyPage() {
         </p>
         <div className="border border-white/10 rounded-lg p-6 mt-4">
           <p className="text-white font-medium">Miles Cass</p>
-          <p className="text-gray-400 mt-1">InpromptiFy</p>
+          <p className="text-gray-400 mt-1">Inpromptify</p>
           <p className="text-gray-400">Perth, Western Australia</p>
           <p className="text-gray-400 mt-2">
             Email:{" "}

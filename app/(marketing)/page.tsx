@@ -50,7 +50,7 @@ export default function LandingPage() {
                   <span className="gradient-text">Proficiency Assessment</span>
                 </h1>
                 <p className="mt-6 text-sm sm:text-base lg:text-lg text-gray-400 leading-relaxed">
-                  InpromptiFy is the intelligent assessment platform that measures,
+                  Inpromptify is the intelligent assessment platform that measures,
                   validates, and certifies AI proficiency. Real-time scoring,
                   adaptive difficulty, and comprehensive skill mapping.
                 </p>

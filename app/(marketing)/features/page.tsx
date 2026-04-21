@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Features",
   description:
-    "Adaptive testing, five-dimension scoring, team analytics, anti-cheat, and enterprise integrations. See how InpromptiFy measures real AI proficiency.",
+    "Adaptive testing, five-dimension scoring, team analytics, anti-cheat, and enterprise integrations. See how Inpromptify measures real AI proficiency.",
 };
 
 const heroFeatures = [
@@ -24,7 +24,7 @@ const heroFeatures = [
   {
     title: "Five-Dimension Scoring",
     description:
-      "A single number does not capture AI proficiency. InpromptiFy scores across five distinct dimensions that map to real-world AI usage patterns. Each dimension is weighted based on the role template selected.",
+      "A single number does not capture AI proficiency. Inpromptify scores across five distinct dimensions that map to real-world AI usage patterns. Each dimension is weighted based on the role template selected.",
     details: [
       "Prompt Quality — clarity, specificity, and structure of instructions",
       "Efficiency — token usage optimization and concise prompting",
@@ -124,7 +124,7 @@ const featureGrid = [
       {
         title: "Learning Management",
         description:
-          "Canvas, Moodle, and Blackboard via LTI 1.3. Embed InpromptiFy assessments inside your existing LMS for seamless upskilling and certification workflows.",
+          "Canvas, Moodle, and Blackboard via LTI 1.3. Embed Inpromptify assessments inside your existing LMS for seamless upskilling and certification workflows.",
       },
       {
         title: "Automation",
@@ -152,7 +152,7 @@ export default function FeaturesPage() {
             <span className="gradient-text">assessment platform</span>
           </h1>
           <p className="text-lg text-gray-400 mt-6 leading-relaxed">
-            Not another quiz tool. InpromptiFy is a psychometrically-designed adaptive
+            Not another quiz tool. Inpromptify is a psychometrically-designed adaptive
             engine that measures how well people actually use AI — across every model,
             every workflow, and every role.
           </p>

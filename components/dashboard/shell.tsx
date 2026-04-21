@@ -85,13 +85,13 @@ export function DashboardShell({
           <Link href="/dashboard" className="flex items-center gap-2">
             <Image
               src="/logo.png"
-              alt="InpromptiFy"
+              alt="Inpromptify"
               width={28}
               height={28}
               className="h-7 w-auto"
             />
             <span className="text-lg font-bold text-sidebar-foreground">
-              InpromptiFy
+              Inpromptify
             </span>
           </Link>
           <button
@@ -214,13 +214,13 @@ export function DashboardShell({
           </button>
           <Image
             src="/logo.png"
-            alt="InpromptiFy"
+            alt="Inpromptify"
             width={24}
             height={24}
             className="ml-3 h-6 w-auto"
           />
           <span className="ml-2 text-lg font-bold text-gray-900">
-            InpromptiFy
+            Inpromptify
           </span>
         </header>
 

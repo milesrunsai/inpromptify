@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Changelog",
-  description: "Latest updates and improvements to InpromptiFy.",
+  description: "Latest updates and improvements to Inpromptify.",
 };
 
 const entries = [

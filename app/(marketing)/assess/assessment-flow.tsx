@@ -648,7 +648,7 @@ export function AssessmentFlow() {
                 name: email?.split("@")[0] || undefined,
               }));
               const shareUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/results/${resultData}`;
-              const shareText = `I scored ${overallScore}/100 (${getScoreLabel(overallScore)}) on the InpromptiFy AI Proficiency Assessment. Think you can beat it?`;
+              const shareText = `I scored ${overallScore}/100 (${getScoreLabel(overallScore)}) on the Inpromptify AI Proficiency Assessment. Think you can beat it?`;
               return (
                 <>
                   <div className="flex gap-3">
@@ -732,13 +732,13 @@ export function AssessmentFlow() {
                   </div>
                   {showResumeText && (
                     <div className="bg-muted rounded-lg p-4">
-                      <pre className="whitespace-pre-wrap text-sm">{`InpromptiFy PromptScore: ${overallScore}/100 (${getScoreLabel(overallScore)}) | Verified at inpromptify.com/verify/${resultData}\nDimensions: Prompt Quality ${Math.round(state.dimensionScores["promptQuality"] || 50)} | Efficiency ${Math.round(state.dimensionScores["efficiency"] || 50)} | Speed ${Math.round(state.dimensionScores["speed"] || 50)} | Response Quality ${Math.round(state.dimensionScores["responseQuality"] || 50)} | Iteration ${Math.round(state.dimensionScores["iterationIntelligence"] || 50)}`}</pre>
+                      <pre className="whitespace-pre-wrap text-sm">{`Inpromptify PromptScore: ${overallScore}/100 (${getScoreLabel(overallScore)}) | Verified at inpromptify.com/verify/${resultData}\nDimensions: Prompt Quality ${Math.round(state.dimensionScores["promptQuality"] || 50)} | Efficiency ${Math.round(state.dimensionScores["efficiency"] || 50)} | Speed ${Math.round(state.dimensionScores["speed"] || 50)} | Response Quality ${Math.round(state.dimensionScores["responseQuality"] || 50)} | Iteration ${Math.round(state.dimensionScores["iterationIntelligence"] || 50)}`}</pre>
                       <Button
                         variant="secondary"
                         size="sm"
                         className="mt-2"
                         onClick={() => {
-                          const text = `InpromptiFy PromptScore: ${overallScore}/100 (${getScoreLabel(overallScore)}) | Verified at inpromptify.com/verify/${resultData}\nDimensions: Prompt Quality ${Math.round(state.dimensionScores["promptQuality"] || 50)} | Efficiency ${Math.round(state.dimensionScores["efficiency"] || 50)} | Speed ${Math.round(state.dimensionScores["speed"] || 50)} | Response Quality ${Math.round(state.dimensionScores["responseQuality"] || 50)} | Iteration ${Math.round(state.dimensionScores["iterationIntelligence"] || 50)}`;
+                          const text = `Inpromptify PromptScore: ${overallScore}/100 (${getScoreLabel(overallScore)}) | Verified at inpromptify.com/verify/${resultData}\nDimensions: Prompt Quality ${Math.round(state.dimensionScores["promptQuality"] || 50)} | Efficiency ${Math.round(state.dimensionScores["efficiency"] || 50)} | Speed ${Math.round(state.dimensionScores["speed"] || 50)} | Response Quality ${Math.round(state.dimensionScores["responseQuality"] || 50)} | Iteration ${Math.round(state.dimensionScores["iterationIntelligence"] || 50)}`;
                           navigator.clipboard.writeText(text);
                         }}
                       >
