@@ -87,10 +87,16 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { email, answers } = body as {
+    const { email, answers, integrity } = body as {
       email: string;
       answers: { questionId: string; selectedOptionId: string; timeTakenMs: number }[];
+      integrity?: { tabSwitches: number; pasteAttempts: number; questionsAnsweredTooFast: number; suspicionScore: number };
     };
+
+    // Anti-cheat: reject highly suspicious submissions
+    if (integrity && integrity.suspicionScore >= 60) {
+      return NextResponse.json({ error: "Suspicious activity detected. Please retake the quiz without switching tabs or pasting." }, { status: 403 });
+    }
 
     if (!email || !answers || !Array.isArray(answers)) {
       return NextResponse.json({ error: "email and answers required" }, { status: 400 });

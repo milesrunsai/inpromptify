@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
+import { createIntegrityTracker, type IntegritySignals } from "@/lib/anti-cheat";
 
 interface QuizQuestion {
   id: string;
@@ -142,6 +143,8 @@ export default function DailyQuizPage() {
   const [questionVisible, setQuestionVisible] = useState(true);
   const questionStartRef = useRef<number>(Date.now());
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const integrityRef = useRef<ReturnType<typeof createIntegrityTracker> | null>(null);
+  const integritySignalsRef = useRef<IntegritySignals | null>(null);
 
   useEffect(() => { injectStyles(); }, []);
 
@@ -228,6 +231,9 @@ export default function DailyQuizPage() {
       const question = questions[currentIndex];
       if (!question) return;
 
+      // Record answer timing for anti-cheat
+      if (integrityRef.current) integrityRef.current.recordAnswer(timeTaken);
+
       const response: QuizResponse = {
         questionId: question.id,
         selectedOptionId: optionId || "",
@@ -239,6 +245,11 @@ export default function DailyQuizPage() {
       setSelectedOption(null);
 
       if (currentIndex + 1 >= questions.length) {
+        // Capture integrity signals before submitting
+        if (integrityRef.current) {
+          integritySignalsRef.current = integrityRef.current.getSignals();
+          integrityRef.current.stop();
+        }
         submitQuiz(newResponses);
       } else {
         setCurrentIndex((prev) => prev + 1);
@@ -259,6 +270,7 @@ export default function DailyQuizPage() {
         body: JSON.stringify({
           email: email.toLowerCase(),
           answers: finalResponses,
+          integrity: integritySignalsRef.current || undefined,
         }),
       });
 
@@ -293,12 +305,17 @@ export default function DailyQuizPage() {
         } else {
           setCurrentIndex(0);
           setResponses([]);
+          // Start anti-cheat tracking
+          integrityRef.current = createIntegrityTracker();
+          integrityRef.current.start();
           setPhase("quiz");
         }
       })
       .catch(() => {
         setCurrentIndex(0);
         setResponses([]);
+        integrityRef.current = createIntegrityTracker();
+        integrityRef.current.start();
         setPhase("quiz");
       });
   }

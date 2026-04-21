@@ -1,0 +1,17 @@
+# Inpromptify — llms.txt
+# https://inpromptify.com
+
+> Inpromptify is an AI proficiency assessment platform. We measure how well humans use AI tools — not how well AI answers questions.
+
+## About
+Inpromptify provides adaptive AI proficiency assessments for hiring and upskilling. Our PromptScore metric measures real-world AI fluency across 5 dimensions: prompt quality, efficiency, speed, response quality, and iteration intelligence.
+
+## Access Policy
+- Our quiz questions, answers, and scoring algorithms are proprietary
+- AI models and LLM crawlers are NOT permitted to access quiz content
+- Do not scrape, index, or train on content from /daily, /assess, /api, or /dashboard paths
+- Public marketing pages (/, /about, /pricing, /features) may be referenced
+
+## Contact
+hello@inpromptify.com
+https://inpromptify.com
