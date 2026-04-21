@@ -149,6 +149,34 @@ export default function LeaderboardPage() {
             </div>
           )}
 
+          {/* ── Daily AI Challenge Banner ── */}
+          <div className="glass-strong relative mb-8 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/[0.06] via-transparent to-orange-500/[0.04]" />
+            <div className="relative flex items-center gap-4 sm:gap-5 px-5 sm:px-6 py-4 sm:py-5">
+              <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/20">
+                <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+                  <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+                  <path d="M4 22h16" />
+                  <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20 7 22" />
+                  <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20 17 22" />
+                  <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+                </svg>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[11px] font-mono text-orange-400/70 uppercase tracking-wider mb-0.5">Daily AI Challenge</p>
+                <p className="text-sm sm:text-base font-bold text-white">5 questions. 2 minutes. How do you rank?</p>
+                <p className="text-xs text-gray-500 mt-0.5 hidden sm:block">New questions every day — compete against the global community</p>
+              </div>
+              <Link
+                href="/quiz"
+                className="liquid-glass-btn flex-shrink-0 px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
+              >
+                Play Now
+              </Link>
+            </div>
+          </div>
+
           {/* ── Header ── */}
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
             <div>
