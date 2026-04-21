@@ -449,7 +449,7 @@ export default function DailyQuizPage() {
         />
       )}
 
-      <div className="relative section-frame">
+      <div className={`relative ${isQuizActive ? "" : "section-frame"}`}>
         <div className={`mx-auto px-4 sm:px-6 ${
           isQuizActive ? "max-w-2xl" : "max-w-3xl"
         }`}>
