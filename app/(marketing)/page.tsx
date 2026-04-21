@@ -23,16 +23,16 @@ export default function LandingPage() {
           loop
           playsInline
           preload="auto"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none mix-blend-screen opacity-60"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         >
           <source
-            src="/hero-video.mp4"
+            src="https://d8j0ntlcm91z4.cloudfront.net/user_3CVjpU5MqL28kt1M6PyOAXhNcyX/hf_20260420_060720_7b600b45-de92-47e3-b11c-619fab9fc4c5.mp4"
             type="video/mp4"
           />
         </video>
 
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f]/50 via-[#0a0a0f]/60 to-[#0a0a0f]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f]/70 via-[#0a0a0f]/80 to-[#0a0a0f]" />
 
         {/* Dot pattern overlay */}
         <div className="absolute inset-0 dot-pattern opacity-40" />
