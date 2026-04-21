@@ -3,7 +3,7 @@ import { prisma } from "@/lib/db";
 
 /** GET /api/leaderboard — public leaderboard of assessment scores */
 export async function GET(req: NextRequest) {
-  const range = req.nextUrl.searchParams.get("range") || "all";
+  const range = req.nextUrl.searchParams.get("range") || req.nextUrl.searchParams.get("period") || "all";
 
   try {
     let dateFilter = {};

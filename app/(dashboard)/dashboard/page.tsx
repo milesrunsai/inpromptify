@@ -311,6 +311,37 @@ export default async function DashboardOverviewPage() {
         </CardContent>
       </Card>
 
+      {/* Quick Links */}
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Link href="/assess">
+          <Card className="transition-shadow hover:shadow-md">
+            <CardContent className="flex items-center gap-3 py-4">
+              <Zap className="size-5 text-orange-500" />
+              <span className="text-sm font-medium text-gray-900">Take Assessment</span>
+              <ArrowRight className="ml-auto size-4 text-gray-400" />
+            </CardContent>
+          </Card>
+        </Link>
+        <Link href="/dashboard/leaderboard">
+          <Card className="transition-shadow hover:shadow-md">
+            <CardContent className="flex items-center gap-3 py-4">
+              <Trophy className="size-5 text-orange-500" />
+              <span className="text-sm font-medium text-gray-900">View Leaderboard</span>
+              <ArrowRight className="ml-auto size-4 text-gray-400" />
+            </CardContent>
+          </Card>
+        </Link>
+        <Link href="/dashboard/ai-assistant">
+          <Card className="transition-shadow hover:shadow-md">
+            <CardContent className="flex items-center gap-3 py-4">
+              <Bot className="size-5 text-orange-500" />
+              <span className="text-sm font-medium text-gray-900">AI Assistant</span>
+              <ArrowRight className="ml-auto size-4 text-gray-400" />
+            </CardContent>
+          </Card>
+        </Link>
+      </div>
+
       {/* Recent Assessments */}
       <Card>
         <CardHeader>

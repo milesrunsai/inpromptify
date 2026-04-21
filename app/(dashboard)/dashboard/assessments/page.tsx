@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 import {
   ChevronDown,
   ChevronLeft,
@@ -24,6 +25,8 @@ import {
   Search,
   Send,
   X,
+  Zap,
+  ArrowRight,
 } from "lucide-react";
 
 /* ---------- types ---------- */
@@ -52,6 +55,18 @@ interface AssessmentsResponse {
 /* ---------- constants ---------- */
 const STATUS_OPTIONS = ["All", "PENDING", "IN_PROGRESS", "COMPLETED"] as const;
 const LIMIT = 20;
+
+const ROLE_TEMPLATES = [
+  "",
+  "General AI User",
+  "AI Engineer",
+  "AI Product Manager",
+  "AI Researcher",
+  "Data Scientist",
+  "AI Content Creator",
+  "AI Ethics Specialist",
+  "AI Business Leader",
+] as const;
 
 const statusBadgeClass: Record<string, string> = {
   COMPLETED: "bg-emerald-50 text-emerald-700 border-emerald-200",
@@ -86,6 +101,7 @@ export default function AssessmentsPage() {
   /* modal state */
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [newEmail, setNewEmail] = useState("");
+  const [roleTemplate, setRoleTemplate] = useState("");
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState("");
 
@@ -141,13 +157,17 @@ export default function AssessmentsPage() {
       const res = await fetch("/api/assessments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ candidateEmail: newEmail.trim() }),
+        body: JSON.stringify({
+          candidateEmail: newEmail.trim(),
+          ...(roleTemplate ? { roleTemplate } : {}),
+        }),
       });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
         throw new Error(body.error || "Failed to create assessment");
       }
       setNewEmail("");
+      setRoleTemplate("");
       setShowCreateModal(false);
       fetchAssessments();
     } catch (err: unknown) {
@@ -465,6 +485,7 @@ export default function AssessmentsPage() {
                   setShowCreateModal(false);
                   setCreateError("");
                   setNewEmail("");
+                  setRoleTemplate("");
                 }}
                 className="flex size-8 items-center justify-center rounded-md text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-900"
               >
@@ -472,10 +493,32 @@ export default function AssessmentsPage() {
               </button>
             </div>
             <p className="mt-1 text-sm text-gray-500">
-              Send an assessment invitation to a candidate.
+              Take the assessment yourself, or invite a candidate.
             </p>
 
-            <div className="mt-5 space-y-4">
+            <div className="mt-5 space-y-5">
+              {/* Take it yourself */}
+              <Link
+                href="/assess"
+                className="flex items-center gap-3 rounded-lg border border-orange-200 bg-gradient-to-r from-orange-50 to-amber-50 p-3 transition-shadow hover:shadow-sm"
+              >
+                <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-orange-100">
+                  <Zap className="size-4 text-orange-600" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-gray-900">Take it Yourself</p>
+                  <p className="text-xs text-gray-500">Get your PromptScore in 5-10 minutes</p>
+                </div>
+                <ArrowRight className="size-4 text-orange-400" />
+              </Link>
+
+              <div className="flex items-center gap-2">
+                <div className="h-px flex-1 bg-gray-200" />
+                <span className="text-xs text-gray-400">or invite a candidate</span>
+                <div className="h-px flex-1 bg-gray-200" />
+              </div>
+
+              {/* Invite a candidate */}
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-600">
                   Candidate Email
@@ -495,6 +538,25 @@ export default function AssessmentsPage() {
                 />
               </div>
 
+              {/* Role Template */}
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-gray-600">
+                  Role Template <span className="font-normal text-gray-400">(optional)</span>
+                </label>
+                <select
+                  value={roleTemplate}
+                  onChange={(e) => setRoleTemplate(e.target.value)}
+                  className="flex h-9 w-full rounded-md border border-gray-200 bg-gray-50 px-3 py-1 text-sm text-gray-900 shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-orange-400"
+                >
+                  <option value="">No template (General)</option>
+                  {ROLE_TEMPLATES.filter(Boolean).map((r) => (
+                    <option key={r} value={r}>
+                      {r}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               {createError && (
                 <p className="text-sm text-red-400">{createError}</p>
               )}
@@ -507,6 +569,7 @@ export default function AssessmentsPage() {
                     setShowCreateModal(false);
                     setCreateError("");
                     setNewEmail("");
+                    setRoleTemplate("");
                   }}
                   className="border-gray-200 bg-gray-50 text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                 >
