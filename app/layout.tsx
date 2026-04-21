@@ -69,7 +69,7 @@ export default function RootLayout({
       <head>
         <link
           rel="preload"
-          href="https://d8j0ntlcm91z4.cloudfront.net/user_3CVjpU5MqL28kt1M6PyOAXhNcyX/hf_20260420_060720_7b600b45-de92-47e3-b11c-619fab9fc4c5.mp4"
+          href="/hero-bg.mp4"
           as="video"
           type="video/mp4"
         />
