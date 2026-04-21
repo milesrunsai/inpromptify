@@ -38,7 +38,7 @@ const navigation: NavItem[] = [
   },
 ];
 
-export function Header() {
+export function Header({ user }: { user?: { name: string; email: string } }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -172,18 +172,29 @@ export function Header() {
             >
               Book a Demo
             </Link>
-            <button
-              onClick={openSignIn}
-              className="text-[13px] text-white/80 hover:text-white transition-colors px-4 py-2"
-            >
-              Sign In
-            </button>
-            <button
-              onClick={openSignUp}
-              className="text-[13px] font-medium text-white border border-white/20 hover:border-primary/60 hover:text-primary rounded-full px-5 py-2 transition-all duration-200"
-            >
-              Get Started
-            </button>
+            {user ? (
+              <Link
+                href="/dashboard"
+                className="text-[13px] font-medium text-white border border-white/20 hover:border-primary/60 hover:text-primary rounded-full px-5 py-2 transition-all duration-200"
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <>
+                <button
+                  onClick={openSignIn}
+                  className="text-[13px] text-white/80 hover:text-white transition-colors px-4 py-2"
+                >
+                  Sign In
+                </button>
+                <button
+                  onClick={openSignUp}
+                  className="text-[13px] font-medium text-white border border-white/20 hover:border-primary/60 hover:text-primary rounded-full px-5 py-2 transition-all duration-200"
+                >
+                  Get Started
+                </button>
+              </>
+            )}
           </div>
 
           {/* Mobile Toggle */}
@@ -242,15 +253,26 @@ export function Header() {
                 <Link href="/contact" className="block text-sm text-white/60 hover:text-white">
                   Book a Demo
                 </Link>
-                <button onClick={openSignIn} className="block text-sm text-white/60 hover:text-white w-full text-left">
-                  Sign In
-                </button>
-                <button
-                  onClick={openSignUp}
-                  className="text-sm font-medium text-white border border-white/20 rounded-full w-full py-2.5 block text-center"
-                >
-                  Get Started
-                </button>
+                {user ? (
+                  <Link
+                    href="/dashboard"
+                    className="text-sm font-medium text-white border border-white/20 rounded-full w-full py-2.5 block text-center"
+                  >
+                    Dashboard
+                  </Link>
+                ) : (
+                  <>
+                    <button onClick={openSignIn} className="block text-sm text-white/60 hover:text-white w-full text-left">
+                      Sign In
+                    </button>
+                    <button
+                      onClick={openSignUp}
+                      className="text-sm font-medium text-white border border-white/20 rounded-full w-full py-2.5 block text-center"
+                    >
+                      Get Started
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>

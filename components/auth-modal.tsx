@@ -154,6 +154,7 @@ export function AuthModal({ open, onClose, defaultTab = "sign-in" }: AuthModalPr
       }
       onClose();
       router.push("/dashboard");
+      router.refresh();
     } catch {
       setSignInError("Something went wrong. Please try again.");
       setSignInLoading(false);
@@ -189,6 +190,7 @@ export function AuthModal({ open, onClose, defaultTab = "sign-in" }: AuthModalPr
       }
       onClose();
       router.push("/dashboard");
+      router.refresh();
     } catch {
       setSignUpError("Something went wrong. Please try again.");
       setSignUpLoading(false);
