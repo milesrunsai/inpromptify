@@ -34,7 +34,7 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="inline-block mb-4">
               <span className="text-lg font-bold tracking-tight text-white">
-                Inprompti<span className="gradient-text">Fy</span>
+                Inprompti<span className="text-orange-500">Fy</span>
               </span>
             </Link>
             <p className="text-xs text-white/30 leading-relaxed max-w-[200px]">

@@ -100,7 +100,7 @@ export default function Hero() {
               <span className="section-label">[ AI Assessment Platform ]</span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-4 text-white">
                 AI-Powered{" "}
-                <span className="gradient-text">Proficiency Assessment</span>
+                <span className="text-orange-500">Proficiency Assessment</span>
               </h1>
               <p className="mt-6 text-lg text-gray-400 leading-relaxed">
                 InpromptiFy is the intelligent assessment platform that measures,

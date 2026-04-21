@@ -55,7 +55,7 @@ export default function FeaturesPage() {
             <span className="section-label">[ Features ]</span>
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mt-2 text-white">
               Everything you need to{" "}
-              <span className="gradient-text">assess AI proficiency</span>
+              <span className="text-orange-500">assess AI proficiency</span>
             </h1>
             <p className="text-lg text-white/40 mt-6 leading-relaxed">
               From adaptive testing to verifiable certifications, InpromptiFy provides

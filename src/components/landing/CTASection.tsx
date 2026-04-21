@@ -81,7 +81,7 @@ export default function CTASection() {
         <div className="reveal text-center mb-12">
           <span className="section-label">[ Get Started ]</span>
           <h2 className="text-3xl sm:text-4xl font-bold mt-4 text-white">
-            Get started in <span className="gradient-text">seconds</span>
+            Get started in <span className="text-orange-500">seconds</span>
           </h2>
           <p className="mt-4 text-gray-400 max-w-xl mx-auto">
             Integrate InpromptiFy into your workflow with our simple API. SDKs

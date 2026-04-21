@@ -390,7 +390,7 @@ export default function Features() {
           <span className="section-label">[ Core Features ]</span>
           <h2 className="text-3xl sm:text-4xl font-bold mt-4 text-white">
             Everything you need to{" "}
-            <span className="gradient-text">measure AI proficiency</span>
+            <span className="text-orange-500">measure AI proficiency</span>
           </h2>
           <p className="mt-4 text-gray-400 max-w-2xl mx-auto">
             A comprehensive platform built for organizations that take AI skills

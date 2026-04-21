@@ -81,7 +81,7 @@ export default function SignupPage() {
             <div className="text-center mb-8">
               <Link href="/" className="inline-flex items-center gap-0 group mb-6">
                 <span className="text-lg font-bold tracking-tight text-white">
-                  Inprompti<span className="gradient-text">Fy</span>
+                  Inprompti<span className="text-orange-500">Fy</span>
                 </span>
               </Link>
               <h1 className="text-2xl font-bold text-white mt-4">Create your account</h1>

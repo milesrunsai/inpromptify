@@ -53,7 +53,7 @@ export default function FAQ() {
         <div className="reveal text-center mb-16">
           <span className="section-label">[ FAQ ]</span>
           <h2 className="text-3xl sm:text-4xl font-bold mt-4 text-white">
-            Frequently asked <span className="gradient-text">questions</span>
+            Frequently asked <span className="text-orange-500">questions</span>
           </h2>
         </div>
 

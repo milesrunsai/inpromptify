@@ -42,7 +42,7 @@ export default function Nav({ transparent = false }: { transparent?: boolean }) 
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center group">
           <span className="text-lg font-bold tracking-tight text-white">
-            Inprompti<span className="gradient-text">Fy</span>
+            Inprompti<span className="text-orange-500">Fy</span>
           </span>
         </Link>
 

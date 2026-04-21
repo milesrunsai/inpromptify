@@ -37,7 +37,7 @@ export default function Testimonials() {
         <div className="reveal text-center mb-16">
           <span className="section-label">[ Testimonials ]</span>
           <h2 className="text-3xl sm:text-4xl font-bold mt-4 text-white">
-            Trusted by <span className="gradient-text">industry leaders</span>
+            Trusted by <span className="text-orange-500">industry leaders</span>
           </h2>
           <p className="mt-4 text-gray-400 max-w-2xl mx-auto">
             See what teams are saying about InpromptiFy.

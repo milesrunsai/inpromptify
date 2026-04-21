@@ -255,7 +255,7 @@ export default function UseCases() {
         <div className="reveal text-center mb-16">
           <span className="section-label">[ Use Cases ]</span>
           <h2 className="text-3xl sm:text-4xl font-bold mt-4 text-white">
-            Built for <span className="gradient-text">every team</span>
+            Built for <span className="text-orange-500">every team</span>
           </h2>
           <p className="mt-4 text-gray-400 max-w-2xl mx-auto">
             From startups to enterprises, InpromptiFy adapts to your assessment needs.

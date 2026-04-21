@@ -44,7 +44,7 @@ function CountUpStat({ value, label, light }: { value: string; label: string; li
 
   return (
     <div ref={ref} className="reveal">
-      <p className={`text-3xl font-bold ${light ? 'text-orange-500' : 'gradient-text'}`}>{display}</p>
+      <p className={`text-3xl font-bold ${light ? 'text-orange-500' : 'text-orange-500'}`}>{display}</p>
       <p className={`text-sm mt-1 ${light ? 'text-gray-500' : 'text-white/30'}`}>{label}</p>
     </div>
   );
