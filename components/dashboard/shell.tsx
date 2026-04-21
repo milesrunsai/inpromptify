@@ -18,6 +18,7 @@ import {
   LogOut,
   Zap,
   Target,
+  MessageSquare,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -27,6 +28,7 @@ const mainNavItems = [
   { label: "Assessments", href: "/dashboard/assessments", icon: ClipboardList },
   { label: "Team", href: "/dashboard/team", icon: Users },
   { label: "AI Assistant", href: "/dashboard/ai-assistant", icon: Bot },
+  { label: "Prompt Review", href: "/dashboard/review", icon: MessageSquare },
   { label: "Daily Challenge", href: "/daily", icon: Zap },
   { label: "Weekly Challenge", href: "/weekly", icon: Target },
   { label: "Leaderboard", href: "/dashboard/leaderboard", icon: Trophy },

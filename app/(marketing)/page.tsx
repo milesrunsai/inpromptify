@@ -68,9 +68,12 @@ export default function LandingPage() {
                 >
                   Start Assessment
                 </Link>
-                <button className="ghost-btn px-8 py-3.5 text-base">
+                <Link
+                  href="/review"
+                  className="ghost-btn px-8 py-3.5 text-base inline-block text-center"
+                >
                   View Demo
-                </button>
+                </Link>
               </div>
 
               <p className="mt-4 text-xs text-white/70">

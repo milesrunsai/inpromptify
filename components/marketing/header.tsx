@@ -22,6 +22,7 @@ const navigation: NavItem[] = [
     name: "Product",
     items: [
       { name: "Features", href: "/features" },
+      { name: "Prompt Review", href: "/review" },
       { name: "Daily Challenge", href: "/daily" },
       { name: "Leaderboard", href: "/leaderboard" },
       { name: "Pricing", href: "/pricing" },
