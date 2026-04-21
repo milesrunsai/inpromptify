@@ -7,6 +7,7 @@ import {
   StatsSection,
   UseCasesSection,
   TestimonialsSection,
+  SecuritySection,
   FAQSection,
   CTASection,
 } from "@/components/marketing/homepage-sections";
@@ -132,6 +133,7 @@ export default function LandingPage() {
       <StatsSection />
       <UseCasesSection />
       <TestimonialsSection />
+      <SecuritySection />
       <HomepagePricing />
 
       <FAQSection />

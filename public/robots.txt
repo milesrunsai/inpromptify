@@ -1,12 +1,25 @@
 # Inpromptify — robots.txt
-User-agent: *
+
+# Allow search engines on marketing pages
+User-agent: Googlebot
 Allow: /
 Disallow: /api/
 Disallow: /dashboard/
+Disallow: /daily
+Disallow: /assess
 Disallow: /sign-in
 Disallow: /sign-up
 
-# Block AI crawlers from scraping quiz content
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /daily
+Disallow: /assess
+Disallow: /sign-in
+Disallow: /sign-up
+
+# Block AI crawlers from everything
 User-agent: GPTBot
 Disallow: /
 
@@ -36,5 +49,15 @@ Disallow: /
 
 User-agent: cohere-ai
 Disallow: /
+
+# Default: allow marketing, block quiz/api/dashboard
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /daily
+Disallow: /assess
+Disallow: /sign-in
+Disallow: /sign-up
 
 Sitemap: https://inpromptify.com/sitemap.xml

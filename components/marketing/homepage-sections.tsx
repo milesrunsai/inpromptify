@@ -751,6 +751,75 @@ export function FAQSection() {
   )
 }
 
+/* ───────────────────────── Security & Trust ───────────────────────── */
+
+export function SecuritySection() {
+  const ref = useReveal()
+
+  return (
+    <section ref={ref} className="relative py-16 sm:py-24 section-frame">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        <div className="reveal text-center mb-10">
+          <span className="section-label">[ Security ]</span>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mt-2 text-white">
+            Your data stays yours.
+          </h2>
+          <p className="text-white/50 mt-3 max-w-xl mx-auto text-sm">
+            We assess AI competency. We don't hoard data.
+          </p>
+        </div>
+
+        <div className="grid sm:grid-cols-3 gap-4">
+          {[
+            {
+              title: "Minimal collection",
+              text: "We only store assessment scores and the name you choose. No resumes, no video interviews, no sensitive documents.",
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-orange-400">
+                  <path d="M10 2L3 6v4c0 4.4 3 8.5 7 10 4-1.5 7-5.6 7-10V6l-7-4z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+                  <path d="M7 10l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              ),
+            },
+            {
+              title: "No third-party sharing",
+              text: "Your assessment data is never sold, shared with advertisers, or used to train AI models. Period.",
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-orange-400">
+                  <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="1.5" />
+                  <path d="M6 6l8 8M14 6l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              ),
+            },
+            {
+              title: "Assessment, not surveillance",
+              text: "We measure skill through structured tasks — not by recording your screen, tracking your keystrokes, or storing personal files.",
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-orange-400">
+                  <rect x="3" y="5" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                  <circle cx="10" cy="10" r="2" stroke="currentColor" strokeWidth="1.5" />
+                  <path d="M10 8v-1M10 13v-1" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                </svg>
+              ),
+            },
+          ].map((item) => (
+            <div
+              key={item.title}
+              className="reveal bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6"
+            >
+              <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center mb-4">
+                {item.icon}
+              </div>
+              <h3 className="text-sm font-semibold text-white mb-2">{item.title}</h3>
+              <p className="text-sm text-white/50 leading-relaxed">{item.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ───────────────────────── CTA Section ───────────────────────── */
 
 const codeTabs = [
