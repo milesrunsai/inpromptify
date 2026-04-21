@@ -52,48 +52,58 @@ export default async function DashboardOverviewPage() {
   // If no org, show Take Assessment hero + lightweight org prompt
   if (!org) {
     return (
-      <div className="space-y-8">
-        {/* Take Assessment hero card */}
-        <Link href="/assess" className="block">
-          <Card className="border-orange-200 bg-gradient-to-r from-orange-50 to-amber-50 transition-shadow hover:shadow-md">
-            <CardContent className="flex flex-col items-center gap-4 py-8 sm:flex-row sm:py-6">
-              <div className="flex size-14 shrink-0 items-center justify-center rounded-full bg-orange-100">
-                <img src="/logo.png" alt="InpromptiFy" className="size-9 object-contain" />
+      <div className="space-y-4">
+        {/* Quick actions */}
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Link href="/assess" className="block">
+            <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 hover:border-orange-300 hover:shadow-sm transition-all">
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-orange-50">
+                <Zap className="size-5 text-orange-500" />
               </div>
-              <div className="flex-1 text-center sm:text-left">
-                <h2 className="text-lg font-semibold text-gray-900">
-                  Take the AI Proficiency Assessment
-                </h2>
-                <p className="mt-1 text-sm text-gray-600">
-                  Get your PromptScore in 5-10 minutes
-                </p>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-gray-900">Take Assessment</p>
+                <p className="text-xs text-gray-500">Get your PromptScore</p>
               </div>
-              <span className="inline-flex items-center gap-1.5 rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-orange-600">
-                Take Assessment
-                <ArrowRight className="size-4" />
-              </span>
-            </CardContent>
-          </Card>
-        </Link>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Create an Organization</CardTitle>
-            <CardDescription>
-              You need an organization to start creating assessments and managing
-              your team. Create one from the settings page.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col items-center justify-center py-8 text-center">
-              <Users className="mb-4 size-12 text-muted-foreground/40" />
-              <p className="mt-1 max-w-md text-sm text-muted-foreground">
-                Organizations let you invite team members, run assessments, and
-                track AI proficiency scores across your company.
-              </p>
+              <ArrowRight className="size-4 text-gray-400 ml-auto flex-shrink-0" />
             </div>
-          </CardContent>
-        </Card>
+          </Link>
+          <Link href="/review" className="block">
+            <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 hover:border-orange-300 hover:shadow-sm transition-all">
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-orange-50">
+                <Bot className="size-5 text-orange-500" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-gray-900">Review Prompts</p>
+                <p className="text-xs text-gray-500">Improve your AI skills</p>
+              </div>
+              <ArrowRight className="size-4 text-gray-400 ml-auto flex-shrink-0" />
+            </div>
+          </Link>
+          <Link href="/daily" className="block">
+            <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 hover:border-orange-300 hover:shadow-sm transition-all">
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-orange-50">
+                <Trophy className="size-5 text-orange-500" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-gray-900">Daily Challenge</p>
+                <p className="text-xs text-gray-500">5 questions, compete daily</p>
+              </div>
+              <ArrowRight className="size-4 text-gray-400 ml-auto flex-shrink-0" />
+            </div>
+          </Link>
+          <Link href="/dashboard/settings" className="block">
+            <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 hover:border-orange-300 hover:shadow-sm transition-all">
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-gray-50">
+                <Users className="size-5 text-gray-500" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-gray-900">Create Organization</p>
+                <p className="text-xs text-gray-500">Team assessments & analytics</p>
+              </div>
+              <ArrowRight className="size-4 text-gray-400 ml-auto flex-shrink-0" />
+            </div>
+          </Link>
+        </div>
       </div>
     );
   }
