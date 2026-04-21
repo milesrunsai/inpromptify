@@ -19,33 +19,21 @@ interface NavItem {
 
 const navigation: NavItem[] = [
   {
-    name: "Features",
+    name: "Product",
     items: [
-      { name: "Assessment Engine", href: "/features" },
-      { name: "Team Analytics", href: "/features#analytics" },
-      { name: "PromptScore", href: "/assess" },
-      { name: "Role Templates", href: "/features#roles" },
+      { name: "Features", href: "/features" },
+      { name: "Daily Challenge", href: "/daily" },
+      { name: "Leaderboard", href: "/leaderboard" },
+      { name: "Pricing", href: "/pricing" },
     ],
   },
-  { name: "Pricing", href: "/pricing" },
-  { name: "Leaderboard", href: "/leaderboard" },
-  { name: "Daily Challenge", href: "/daily" },
-  {
-    name: "Developers",
-    items: [
-      { name: "API Reference", href: "/developers" },
-      { name: "Integrations", href: "/integrations" },
-      { name: "SDKs", href: "/developers#sdks" },
-      { name: "Webhooks", href: "/developers#webhooks" },
-    ],
-  },
+  { name: "Developers", href: "/developers" },
   {
     name: "Company",
     items: [
       { name: "About", href: "/about" },
-      { name: "Changelog", href: "/changelog" },
-      { name: "Roadmap", href: "/roadmap" },
       { name: "Careers", href: "/careers" },
+      { name: "Contact", href: "/contact" },
     ],
   },
 ];
