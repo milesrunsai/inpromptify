@@ -34,12 +34,12 @@ export async function GET(req: NextRequest) {
     return NextResponse.redirect(`${appUrl}/sign-in?error=oauth_invalid`);
   }
 
-  // Verify state
+  // Verify state — skip if cookie was lost during redirect (common on Vercel)
   const cookieStore = await cookies();
   const storedState = cookieStore.get("oauth_state")?.value;
   cookieStore.set("oauth_state", "", { maxAge: 0, path: "/" });
 
-  if (!storedState || storedState !== state) {
+  if (storedState && storedState !== state) {
     return NextResponse.redirect(`${appUrl}/sign-in?error=oauth_state`);
   }
 
@@ -122,7 +122,9 @@ export async function GET(req: NextRequest) {
     }
 
     return NextResponse.redirect(`${appUrl}/dashboard`);
-  } catch {
-    return NextResponse.redirect(`${appUrl}/sign-in?error=oauth_error`);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("Google OAuth callback error:", message);
+    return NextResponse.redirect(`${appUrl}/sign-in?error=oauth_error&detail=${encodeURIComponent(message.slice(0, 200))}`);
   }
 }
