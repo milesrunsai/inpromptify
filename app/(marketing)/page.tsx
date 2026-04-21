@@ -38,17 +38,17 @@ export default function LandingPage() {
         <div className="absolute inset-0 dot-pattern opacity-40" />
 
         {/* Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-24 pb-16 w-full">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-24 pb-20 sm:pb-24 w-full">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left — Copy */}
             <div className="max-w-xl">
               <div>
                 <span className="section-label">[ AI Assessment Platform ]</span>
-                <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-4 text-white">
+                <h1 className="text-2xl sm:text-4xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-4 text-white">
                   AI-Powered{" "}
                   <span className="gradient-text">Proficiency Assessment</span>
                 </h1>
-                <p className="mt-6 text-base sm:text-lg text-gray-400 leading-relaxed">
+                <p className="mt-6 text-sm sm:text-base lg:text-lg text-gray-400 leading-relaxed">
                   InpromptiFy is the intelligent assessment platform that measures,
                   validates, and certifies AI proficiency. Real-time scoring,
                   adaptive difficulty, and comprehensive skill mapping.

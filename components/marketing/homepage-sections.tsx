@@ -43,9 +43,9 @@ function useReveal() {
 export function BoldStatement() {
   const ref = useReveal()
   return (
-    <section ref={ref} className="bg-[#0a0a0a] py-20 px-6">
+    <section ref={ref} className="bg-[#0a0a0a] py-16 sm:py-24 lg:py-32 px-6 sm:px-8">
       <div className="max-w-5xl mx-auto">
-        <p className="text-2xl sm:text-3xl lg:text-4xl leading-relaxed reveal">
+        <p className="text-xl sm:text-2xl lg:text-4xl leading-relaxed sm:leading-loose reveal">
           <span className="text-white/40 font-normal">Unlock the potential of </span>
           <span className="text-white font-bold">AI proficiency measurement.</span>
           <br />
@@ -308,24 +308,24 @@ export function FeaturesSection() {
   const ref = useReveal()
 
   return (
-    <section ref={ref} className="relative py-24 overflow-hidden section-frame">
+    <section ref={ref} className="relative py-16 sm:py-24 lg:py-32 overflow-hidden section-frame">
       <div className="absolute inset-0 grid-pattern" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="reveal text-center mb-12">
+        <div className="reveal text-center mb-10 sm:mb-14 lg:mb-16">
           <span className="section-label">[ What we offer ]</span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-white">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mt-2 text-white">
             Not just another quiz platform.
             <br />
             <span className="gradient-text">A complete assessment engine.</span>
           </h2>
         </div>
 
-        <div className="reveal stagger-1 flex flex-wrap justify-center gap-1 mb-8 sm:mb-12">
+        <div className="reveal stagger-1 flex flex-wrap justify-center gap-2 mb-8 sm:mb-12">
           {featureTabs.map((t, i) => (
             <button
               key={t.label}
               onClick={() => setActive(i)}
-              className={`relative px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm rounded-lg transition-all duration-200 ${
+              className={`relative px-4 py-2.5 sm:px-4 sm:py-2.5 text-xs sm:text-sm rounded-lg transition-all duration-200 ${
                 i === active
                   ? 'text-white bg-orange-500/10 border border-orange-500/20'
                   : 'text-white/40 hover:text-white/60 hover:bg-white/[0.03]'
@@ -339,7 +339,7 @@ export function FeaturesSection() {
         <div className="reveal stagger-2 grid lg:grid-cols-2 gap-12 items-center">
           <div key={active}>
             <h3 className="text-2xl font-semibold mb-4 text-white">{tab.label}</h3>
-            <p className="text-gray-400 leading-relaxed mb-6">{tab.description}</p>
+            <p className="text-sm sm:text-base text-gray-400 leading-relaxed sm:leading-loose mb-6">{tab.description}</p>
             <ul className="space-y-3">
               {tab.features.map((f) => (
                 <li key={f} className="flex items-center gap-3 text-sm text-gray-300">
@@ -401,14 +401,14 @@ export function StatsSection() {
   const sectionRef = useReveal()
 
   return (
-    <section ref={sectionRef} className="relative py-24 section-frame overflow-hidden">
+    <section ref={sectionRef} className="relative py-16 sm:py-24 lg:py-32 section-frame overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="reveal text-center mb-14">
+        <div className="reveal text-center mb-10 sm:mb-14 lg:mb-16">
           <span className="section-label">[ By the numbers ]</span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-white">Built for scale.</h2>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mt-2 text-white">Built for scale.</h2>
         </div>
 
-        <div className="reveal stagger-1 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="reveal stagger-1 grid md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
           <div className="md:col-span-2 bg-white/[0.03] border border-white/[0.08] rounded-2xl p-8" ref={counter1.ref}>
             <div className="flex items-start justify-between">
               <div>
@@ -449,7 +449,7 @@ export function StatsSection() {
             </div>
           </div>
 
-          <div className="md:col-span-2 lg:col-span-4 grid md:grid-cols-2 gap-4">
+          <div className="md:col-span-2 lg:col-span-4 grid md:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
             <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center flex-shrink-0">
@@ -615,17 +615,17 @@ export function UseCasesSection() {
   const ref = useReveal()
 
   return (
-    <section ref={ref} className="relative py-24 section-frame">
+    <section ref={ref} className="relative py-16 sm:py-24 lg:py-32 section-frame">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="reveal text-center mb-12">
+        <div className="reveal text-center mb-10 sm:mb-14 lg:mb-16">
           <span className="section-label">[ Use Cases ]</span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-white">Use Cases</h2>
-          <p className="text-gray-300 mt-3 max-w-lg mx-auto">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mt-2 text-white">Use Cases</h2>
+          <p className="text-sm sm:text-base text-gray-300 mt-3 max-w-lg mx-auto">
             From individual skill checks to enterprise-wide proficiency programs
           </p>
         </div>
 
-        <div className="reveal stagger-1 flex flex-wrap justify-center gap-1 mb-8 sm:mb-12">
+        <div className="reveal stagger-1 flex flex-wrap justify-center gap-2 mb-8 sm:mb-12">
           {useCasesData.map((uc, i) => (
             <button
               key={uc.label}
@@ -644,7 +644,7 @@ export function UseCasesSection() {
         <div className="reveal stagger-2 grid lg:grid-cols-2 gap-12 items-center">
           <div key={active}>
             <h3 className="text-2xl font-semibold mb-4 text-white">{uc.title}</h3>
-            <p className="text-gray-300 leading-relaxed">{uc.description}</p>
+            <p className="text-sm sm:text-base text-gray-300 leading-relaxed sm:leading-loose">{uc.description}</p>
           </div>
           <div className="glass-strong p-8 rounded-2xl min-h-[280px] flex flex-col justify-center">
             <Mockup />
@@ -680,18 +680,18 @@ export function TestimonialsSection() {
   const ref = useReveal()
 
   return (
-    <section ref={ref} className="relative py-24 section-frame">
+    <section ref={ref} className="relative py-16 sm:py-24 lg:py-32 section-frame">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="reveal text-center mb-14">
+        <div className="reveal text-center mb-10 sm:mb-14 lg:mb-16">
           <span className="section-label">[ Testimonials ]</span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-white">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mt-2 text-white">
             Trusted by teams worldwide
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
           {testimonials.map((t, i) => (
-            <div key={t.name} className={`reveal stagger-${i + 1} bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6`}>
+            <div key={t.name} className={`reveal stagger-${i + 1} bg-white/[0.03] border border-white/[0.08] rounded-2xl p-5 sm:p-6 lg:p-8`}>
               <p className="text-sm text-white/60 leading-relaxed mb-6">
                 &ldquo;{t.quote}&rdquo;
               </p>
@@ -729,21 +729,21 @@ export function FAQSection() {
   const ref = useReveal()
 
   return (
-    <section ref={ref} className="relative py-24 section-frame">
+    <section ref={ref} className="relative py-16 sm:py-24 lg:py-32 section-frame">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        <div className="reveal text-center mb-14">
+        <div className="reveal text-center mb-10 sm:mb-14 lg:mb-16">
           <span className="section-label">[ FAQ ]</span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 text-white">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mt-2 text-white">
             Frequently asked questions.
           </h2>
         </div>
 
-        <div className="reveal stagger-1 space-y-2">
+        <div className="reveal stagger-1 space-y-3 sm:space-y-4">
           {faqs.map((faq, i) => (
             <div key={i} className="border border-white/[0.08] rounded-xl overflow-hidden">
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between px-4 sm:px-6 py-4 text-left hover:bg-white/[0.03] transition-colors"
+                className="w-full flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 text-left hover:bg-white/[0.03] transition-colors"
               >
                 <span className="text-sm font-medium text-white">{faq.q}</span>
                 <svg
@@ -808,11 +808,11 @@ export function CTASection() {
   const ref = useReveal()
 
   return (
-    <section ref={ref} className="relative py-24 section-frame">
+    <section ref={ref} className="relative py-16 sm:py-24 lg:py-32 section-frame">
       <div className="absolute inset-0 dot-pattern opacity-20" />
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6">
-        <div className="reveal text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+        <div className="reveal text-center mb-10 sm:mb-14 lg:mb-16">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white">
             Get started in seconds
           </h2>
           <p className="text-gray-300 mt-3">Create your first assessment in minutes</p>
