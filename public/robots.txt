@@ -1,20 +1,32 @@
-# Inpromptify — robots.txt
+# Inpromptify - robots.txt
 
 # Allow search engines on marketing pages
 User-agent: Googlebot
 Allow: /
+Allow: /daily
+Allow: /weekly
+Allow: /leaderboard
+Allow: /about
+Allow: /pricing
+Allow: /features
+Allow: /blog
 Disallow: /api/
 Disallow: /dashboard/
-Disallow: /daily
 Disallow: /assess
 Disallow: /sign-in
 Disallow: /sign-up
 
 User-agent: Bingbot
 Allow: /
+Allow: /daily
+Allow: /weekly
+Allow: /leaderboard
+Allow: /about
+Allow: /pricing
+Allow: /features
+Allow: /blog
 Disallow: /api/
 Disallow: /dashboard/
-Disallow: /daily
 Disallow: /assess
 Disallow: /sign-in
 Disallow: /sign-up
@@ -50,12 +62,14 @@ Disallow: /
 User-agent: cohere-ai
 Disallow: /
 
-# Default: allow marketing, block quiz/api/dashboard
+# Default: allow marketing, block app routes
 User-agent: *
 Allow: /
+Allow: /daily
+Allow: /weekly
+Allow: /leaderboard
 Disallow: /api/
 Disallow: /dashboard/
-Disallow: /daily
 Disallow: /assess
 Disallow: /sign-in
 Disallow: /sign-up
