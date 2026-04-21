@@ -17,7 +17,8 @@ function ResultsContent() {
     timeZone: "UTC",
   });
 
-  const shareText = `I scored ${score}/5 on today's InpromptiFy Daily AI Challenge! Can you beat me? inpromptify.com/daily`;
+  const shareText = `I scored ${score}/5 on today's Inpromptify Daily AI Challenge! Can you beat me? inpromptify.com/daily`;
+
 
   return (
     <div className="pt-24 pb-16 min-h-screen">
