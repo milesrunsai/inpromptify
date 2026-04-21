@@ -111,6 +111,9 @@ Rules:
 - Every wrong answer must be plausible
 - No "all of the above" or "none of the above"
 - Vary question formats: scenario-based, what-would-you-do, identify-the-problem, best-practice
+- CRITICAL: All 4 options MUST be similar in length and detail. If one answer is 2 sentences, ALL must be ~2 sentences. The correct answer must NOT be the longest.
+- Wrong answers must use real technical terms and sound equally sophisticated as the correct answer.
+- Distribute correct answers evenly across A/B/C/D.
 
 Return ONLY a JSON array. No markdown, no explanation.`;
 

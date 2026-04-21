@@ -56,6 +56,13 @@ Each question must have:
 - tags: 2-3 relevant tags
 - maxTimeSeconds: 30-60 depending on complexity
 
+CRITICAL RULES FOR ANSWER OPTIONS:
+- ALL 4 options must be similar in length and detail level. If the correct answer is 2 sentences, every wrong answer must also be ~2 sentences.
+- Wrong answers must sound equally plausible and detailed — not obviously short or vague.
+- NEVER make the correct answer the longest option. Vary which letter (A/B/C/D) is correct.
+- Wrong answers should contain real technical terminology that sounds reasonable but is subtly incorrect.
+- Avoid patterns like "all of the above" or "none of the above".
+
 Focus on practical scenarios: prompt engineering, iterating on AI output, evaluating responses,
 debugging AI-generated code, choosing the right tool/model, structured output requests.
 
