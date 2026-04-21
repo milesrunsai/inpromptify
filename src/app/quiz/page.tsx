@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -13,6 +13,11 @@ export default function QuizPage() {
   const [finished, setFinished] = useState(false);
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutes
   const [showExplanation, setShowExplanation] = useState(false);
+  const [sessionId, setSessionId] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailSaved, setEmailSaved] = useState(false);
+  const questionStartTime = useRef<number>(0);
+  const completionSent = useRef(false);
 
   useEffect(() => {
     if (!started || finished) return;
@@ -27,16 +32,50 @@ export default function QuizPage() {
     next[currentQ] = index;
     setAnswers(next);
     setShowExplanation(true);
-  }, [answers, currentQ, finished]);
+
+    // Fire-and-forget: record response
+    const q = QUIZ_QUESTIONS[currentQ];
+    const responseTimeMs = questionStartTime.current ? Date.now() - questionStartTime.current : undefined;
+    fetch("/api/quiz/respond", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sessionId,
+        questionId: q.id,
+        answerIndex: index,
+        isCorrect: index === q.correctIndex,
+        responseTimeMs,
+      }),
+    }).catch(() => {});
+  }, [answers, currentQ, finished, sessionId]);
 
   const nextQuestion = useCallback(() => {
     setShowExplanation(false);
     if (currentQ < QUIZ_QUESTIONS.length - 1) {
       setCurrentQ(currentQ + 1);
+      questionStartTime.current = Date.now();
     } else {
       setFinished(true);
     }
   }, [currentQ]);
+
+  // Send completion data when quiz finishes
+  useEffect(() => {
+    if (finished && sessionId && !completionSent.current) {
+      completionSent.current = true;
+      const finalScore = answers.reduce<number>((acc, a, i) => acc + (a === QUIZ_QUESTIONS[i].correctIndex ? 1 : 0), 0);
+      fetch("/api/quiz/complete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sessionId,
+          score: finalScore,
+          totalQuestions: QUIZ_QUESTIONS.length,
+          timeSpentSeconds: 300 - timeLeft,
+        }),
+      }).catch(() => {});
+    }
+  }, [finished, sessionId, answers, timeLeft]);
 
   const score = answers.reduce<number>((acc, a, i) => acc + (a === QUIZ_QUESTIONS[i].correctIndex ? 1 : 0), 0);
   const grade = getLetterGrade(score, QUIZ_QUESTIONS.length);
@@ -91,7 +130,12 @@ export default function QuizPage() {
               </div>
 
               <button
-                onClick={() => setStarted(true)}
+                onClick={() => {
+                  setSessionId(crypto.randomUUID());
+                  questionStartTime.current = Date.now();
+                  completionSent.current = false;
+                  setStarted(true);
+                }}
                 className="inline-flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white px-8 py-3 rounded-md text-sm font-medium transition-colors"
               >
                 Start Quiz
@@ -166,11 +210,50 @@ export default function QuizPage() {
                       setAnswers(new Array(QUIZ_QUESTIONS.length).fill(null));
                       setTimeLeft(300);
                       setShowExplanation(false);
+                      setEmail("");
+                      setEmailSaved(false);
                     }}
                     className="inline-flex items-center justify-center text-gray-400 hover:text-gray-200 px-6 py-2.5 rounded-md text-sm transition-colors border border-white/[0.06] hover:border-white/[0.12]"
                   >
                     Retake Quiz
                   </button>
+                </div>
+
+                {/* Optional email capture */}
+                <div className="border-t border-white/[0.06] mt-6 pt-6">
+                  {emailSaved ? (
+                    <p className="text-sm text-gray-500">Results saved to {email}</p>
+                  ) : (
+                    <div className="flex flex-col sm:flex-row items-center gap-2 max-w-md mx-auto">
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Enter your email to save results"
+                        className="flex-1 w-full sm:w-auto bg-transparent border border-white/[0.08] rounded-md px-3 py-2 text-sm text-gray-300 placeholder-gray-600 focus:outline-none focus:border-orange-500/40"
+                      />
+                      <button
+                        onClick={() => {
+                          if (!email) return;
+                          setEmailSaved(true);
+                          fetch("/api/quiz/complete", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                              sessionId,
+                              email,
+                              score,
+                              totalQuestions: QUIZ_QUESTIONS.length,
+                              timeSpentSeconds: 300 - timeLeft,
+                            }),
+                          }).catch(() => {});
+                        }}
+                        className="whitespace-nowrap text-sm text-orange-400 hover:text-orange-300 px-3 py-2 transition-colors"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

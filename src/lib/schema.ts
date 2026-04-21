@@ -208,4 +208,51 @@ export async function ensureSchema() {
       created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
     )
   `;
+
+  // --- IRT Calibration Data Pipeline tables ---
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS quiz_responses (
+      id SERIAL PRIMARY KEY,
+      session_id VARCHAR(64) NOT NULL,
+      user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+      question_id INTEGER NOT NULL,
+      answer_index INTEGER NOT NULL,
+      is_correct BOOLEAN NOT NULL,
+      response_time_ms INTEGER,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    )
+  `;
+
+  await sql`CREATE INDEX IF NOT EXISTS idx_quiz_responses_question ON quiz_responses(question_id)`;
+  await sql`CREATE INDEX IF NOT EXISTS idx_quiz_responses_session ON quiz_responses(session_id)`;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS item_parameters (
+      id SERIAL PRIMARY KEY,
+      question_id INTEGER UNIQUE NOT NULL,
+      difficulty NUMERIC(6,3) DEFAULT 0,
+      discrimination NUMERIC(6,3) DEFAULT 1,
+      guessing NUMERIC(6,3) DEFAULT 0.25,
+      response_count INTEGER DEFAULT 0,
+      correct_rate NUMERIC(5,3) DEFAULT 0,
+      last_calibrated_at TIMESTAMP WITH TIME ZONE,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+      updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    )
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS quiz_sessions (
+      id SERIAL PRIMARY KEY,
+      session_id VARCHAR(64) UNIQUE NOT NULL,
+      user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+      email VARCHAR(255),
+      score INTEGER NOT NULL,
+      total_questions INTEGER NOT NULL,
+      time_spent_seconds INTEGER,
+      theta_estimate NUMERIC(6,3),
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    )
+  `;
 }
