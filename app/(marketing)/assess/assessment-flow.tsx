@@ -508,290 +508,180 @@ export function AssessmentFlow({
 
     const recommendation = getHireRecommendation(overallScore);
 
+    const resultData = btoa(JSON.stringify({
+      score: overallScore,
+      dimensions: state.dimensionScores,
+      role: "General Assessment",
+      date: new Date().toISOString().split("T")[0],
+      name: email?.split("@")[0] || undefined,
+    }));
+    const shareUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/results/${resultData}`;
+    const shareText = `I scored ${overallScore}/100 (${getScoreLabel(overallScore)}) on the Inpromptify AI Proficiency Assessment. Think you can beat it?`;
+
     return (
-      <div className="flex flex-col items-center gap-8 pt-8">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Your <span className="text-primary">PromptScore</span>
-          </h1>
-          <p className="mt-2 text-muted-foreground">
-            Based on {state.questionCount} adaptive questions
-          </p>
-        </div>
+      <>
+        <style>{`header, nav, footer, [role="banner"], [role="contentinfo"] { display: none !important; }`}</style>
+        <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
+          <div className="max-w-2xl mx-auto px-6 py-16">
 
-        {/* Score ring */}
-        <Card className="w-full max-w-md text-center">
-          <CardContent className="pt-6 flex flex-col items-center">
-            <ScoreRing score={overallScore} />
-          </CardContent>
-        </Card>
-
-        {/* Hire / No-Hire recommendation */}
-        <Card className={`w-full max-w-md border ${recommendation.bg}`}>
-          <CardContent className="pt-6 text-center flex flex-col gap-2">
-            <div className={`text-xl font-bold ${recommendation.color}`}>
-              {recommendation.label}
+            {/* Score hero */}
+            <div className="text-center mb-16">
+              <p className="text-xs font-medium text-orange-500 uppercase tracking-widest mb-6">Assessment Complete</p>
+              <ScoreRing score={overallScore} />
+              <p className="mt-2 text-sm text-gray-400">
+                Based on {state.questionCount} adaptive questions
+              </p>
+              <span className={`inline-block mt-3 text-xs font-medium uppercase tracking-wider px-3 py-1 rounded-full ${
+                overallScore >= 75 ? "bg-green-50 text-green-700" :
+                overallScore >= 55 ? "bg-orange-50 text-orange-700" :
+                overallScore >= 40 ? "bg-yellow-50 text-yellow-700" :
+                "bg-red-50 text-red-700"
+              }`}>
+                {recommendation.label}
+              </span>
+              <p className="text-sm text-gray-500 mt-2 max-w-md mx-auto">{recommendation.description}</p>
             </div>
-            <p className="text-sm text-muted-foreground">
-              {recommendation.description}
-            </p>
-          </CardContent>
-        </Card>
 
-        {/* Radar chart */}
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle>Dimension Breakdown</CardTitle>
-            <CardDescription>
-              Your performance across 5 AI proficiency dimensions
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[320px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <RadarChart data={radarData} cx="50%" cy="50%" outerRadius="75%">
-                  <PolarGrid stroke="#334155" />
-                  <PolarAngleAxis
-                    dataKey="dimension"
-                    tick={{ fill: "#94a3b8", fontSize: 12 }}
-                  />
-                  <Radar
-                    dataKey="score"
-                    stroke="#f97316"
-                    fill="#f97316"
-                    fillOpacity={0.3}
-                  />
-                </RadarChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Theta progression */}
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle>Difficulty Progression</CardTitle>
-            <CardDescription>
-              How the assessment adapted to your skill level
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[240px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={thetaData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                  <XAxis
-                    dataKey="question"
-                    label={{
-                      value: "Question",
-                      position: "insideBottom",
-                      offset: -5,
-                      fill: "#94a3b8",
-                    }}
-                    tick={{ fill: "#94a3b8", fontSize: 12 }}
-                  />
-                  <YAxis
-                    domain={[10, 90]}
-                    tick={{ fill: "#94a3b8", fontSize: 12 }}
-                    label={{
-                      value: "Theta",
-                      angle: -90,
-                      position: "insideLeft",
-                      fill: "#94a3b8",
-                    }}
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#1e293b",
-                      border: "1px solid #334155",
-                      borderRadius: "8px",
-                      color: "#f1f5f9",
-                    }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="theta"
-                    stroke="#f97316"
-                    strokeWidth={2}
-                    dot={{ fill: "#f97316", r: 4 }}
-                    activeDot={{ r: 6 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Dimension bars */}
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle>Score Details</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            {Object.entries(DIMENSION_LABELS).map(([key, label]) => {
-              const score = Math.round(state.dimensionScores[key] || 50);
-              return (
-                <div key={key} className="flex flex-col gap-1.5">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="font-medium">{label}</span>
-                    <span
-                      className={`font-bold tabular-nums ${getScoreColor(score)}`}
-                    >
-                      {score}
-                    </span>
-                  </div>
-                  <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
-                    <div
-                      className="h-full rounded-full bg-primary transition-all duration-700"
-                      style={{ width: `${score}%` }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </CardContent>
-        </Card>
-
-        {/* Share — Interactive Results Card */}
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle>Share Your Results</CardTitle>
-            <CardDescription>
-              Share your verified PromptScore on social media
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-3">
-            {(() => {
-              const resultData = btoa(JSON.stringify({
-                score: overallScore,
-                dimensions: state.dimensionScores,
-                role: "General Assessment",
-                date: new Date().toISOString().split("T")[0],
-                name: email?.split("@")[0] || undefined,
-              }));
-              const shareUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/results/${resultData}`;
-              const shareText = `I scored ${overallScore}/100 (${getScoreLabel(overallScore)}) on the Inpromptify AI Proficiency Assessment. Think you can beat it?`;
-              return (
-                <>
-                  <div className="flex gap-3">
-                    <Button
-                      variant="outline"
-                      className="flex-1"
-                      onClick={() => {
-                        window.open(
-                          `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
-                          "_blank",
-                          "width=600,height=500"
-                        );
-                      }}
-                    >
-                      <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                      </svg>
-                      LinkedIn
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="flex-1"
-                      onClick={() => {
-                        window.open(
-                          `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
-                          "_blank",
-                          "width=600,height=400"
-                        );
-                      }}
-                    >
-                      <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                      </svg>
-                      Twitter / X
-                    </Button>
-                  </div>
-                  <Button
-                    variant="secondary"
-                    onClick={() => {
-                      navigator.clipboard.writeText(shareUrl).then(() => {
-                        setCopied(true);
-                        setTimeout(() => setCopied(false), 2000);
-                      });
-                    }}
-                  >
-                    {copied ? "Link Copied!" : "Copy Results Link"}
-                  </Button>
-                  <div className="flex gap-3">
-                    <Button
-                      variant="outline"
-                      className="flex-1"
-                      onClick={() => setShowResumeText((prev) => !prev)}
-                    >
-                      Add to Resume
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="flex-1"
-                      onClick={() => window.print()}
-                    >
-                      Print Results
-                    </Button>
-                  </div>
-                  <div className="flex gap-3">
-                    <Button
-                      variant="outline"
-                      className="flex-1"
-                      onClick={() => window.print()}
-                    >
-                      Download PDF
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="flex-1"
-                      onClick={() => {
-                        window.open("https://www.linkedin.com/in/me", "_blank");
-                      }}
-                    >
-                      Share to LinkedIn Featured
-                    </Button>
-                  </div>
-                  {showResumeText && (
-                    <div className="bg-muted rounded-lg p-4">
-                      <pre className="whitespace-pre-wrap text-sm">{`Inpromptify PromptScore: ${overallScore}/100 (${getScoreLabel(overallScore)}) | Verified at inpromptify.com/verify/${resultData}\nDimensions: Prompt Quality ${Math.round(state.dimensionScores["promptQuality"] || 50)} | Efficiency ${Math.round(state.dimensionScores["efficiency"] || 50)} | Speed ${Math.round(state.dimensionScores["speed"] || 50)} | Response Quality ${Math.round(state.dimensionScores["responseQuality"] || 50)} | Iteration ${Math.round(state.dimensionScores["iterationIntelligence"] || 50)}`}</pre>
-                      <Button
-                        variant="secondary"
-                        size="sm"
-                        className="mt-2"
-                        onClick={() => {
-                          const text = `Inpromptify PromptScore: ${overallScore}/100 (${getScoreLabel(overallScore)}) | Verified at inpromptify.com/verify/${resultData}\nDimensions: Prompt Quality ${Math.round(state.dimensionScores["promptQuality"] || 50)} | Efficiency ${Math.round(state.dimensionScores["efficiency"] || 50)} | Speed ${Math.round(state.dimensionScores["speed"] || 50)} | Response Quality ${Math.round(state.dimensionScores["responseQuality"] || 50)} | Iteration ${Math.round(state.dimensionScores["iterationIntelligence"] || 50)}`;
-                          navigator.clipboard.writeText(text);
-                        }}
-                      >
-                        Copy to Clipboard
-                      </Button>
+            {/* Dimension breakdown */}
+            <div className="border-t border-gray-100 pt-10 mb-12">
+              <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider mb-6">Dimension Breakdown</h3>
+              <div className="space-y-5">
+                {Object.entries(DIMENSION_LABELS).map(([key, label]) => {
+                  const score = Math.round(state.dimensionScores[key] || 50);
+                  return (
+                    <div key={key}>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm text-gray-700">{label}</span>
+                        <span className="text-sm font-bold text-gray-900 tabular-nums">{score}</span>
+                      </div>
+                      <div className="h-2 w-full rounded-full bg-gray-100 overflow-hidden">
+                        <div
+                          className="h-full rounded-full bg-orange-500 transition-all duration-1000"
+                          style={{ width: `${score}%` }}
+                        />
+                      </div>
                     </div>
-                  )}
-                </>
-              );
-            })()}
-          </CardContent>
-        </Card>
-
-        {/* CTA */}
-        <Card className="w-full text-center">
-          <CardContent className="pt-6 flex flex-col items-center gap-4">
-            <p className="text-muted-foreground">
-              Want to assess your entire team? Get detailed analytics,
-              benchmarks, and ATS integration.
-            </p>
-            <div className="flex gap-3">
-              <Link href="/sign-up">
-                <Button>Start Free Trial</Button>
-              </Link>
-              <Link href="/pricing">
-                <Button variant="outline">View Plans</Button>
-              </Link>
+                  );
+                })}
+              </div>
             </div>
-          </CardContent>
-        </Card>
-      </div>
+
+            {/* Radar chart */}
+            <div className="border-t border-gray-100 pt-10 mb-12">
+              <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider mb-6">Skill Profile</h3>
+              <div className="h-[300px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <RadarChart data={radarData} cx="50%" cy="50%" outerRadius="75%">
+                    <PolarGrid stroke="#e5e7eb" />
+                    <PolarAngleAxis
+                      dataKey="dimension"
+                      tick={{ fill: "#6b7280", fontSize: 11 }}
+                    />
+                    <Radar
+                      dataKey="score"
+                      stroke="#f97316"
+                      fill="#f97316"
+                      fillOpacity={0.15}
+                    />
+                  </RadarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Difficulty progression */}
+            <div className="border-t border-gray-100 pt-10 mb-12">
+              <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider mb-2">Difficulty Progression</h3>
+              <p className="text-xs text-gray-400 mb-6">How the assessment adapted to your skill level</p>
+              <div className="h-[200px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={thetaData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                    <XAxis
+                      dataKey="question"
+                      tick={{ fill: "#9ca3af", fontSize: 11 }}
+                      axisLine={{ stroke: "#e5e7eb" }}
+                      tickLine={false}
+                    />
+                    <YAxis
+                      domain={[10, 90]}
+                      tick={{ fill: "#9ca3af", fontSize: 11 }}
+                      axisLine={{ stroke: "#e5e7eb" }}
+                      tickLine={false}
+                    />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "#fff",
+                        border: "1px solid #e5e7eb",
+                        borderRadius: "8px",
+                        color: "#111827",
+                        boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.05)",
+                      }}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="theta"
+                      stroke="#f97316"
+                      strokeWidth={2}
+                      dot={{ fill: "#f97316", r: 3, strokeWidth: 0 }}
+                      activeDot={{ r: 5 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Share — subtle row */}
+            <div className="border-t border-gray-100 pt-10 mb-12">
+              <div className="flex items-center justify-center gap-3">
+                <button
+                  onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, "_blank")}
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-600 hover:border-gray-300 hover:text-gray-900 transition-colors"
+                >
+                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  LinkedIn
+                </button>
+                <button
+                  onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`, "_blank")}
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-600 hover:border-gray-300 hover:text-gray-900 transition-colors"
+                >
+                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  X
+                </button>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(shareUrl).then(() => {
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), 2000);
+                    });
+                  }}
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-600 hover:border-gray-300 hover:text-gray-900 transition-colors"
+                >
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" /></svg>
+                  {copied ? "Copied" : "Copy link"}
+                </button>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="text-center pb-8">
+              <p className="text-sm text-gray-500 mb-4">
+                Want to assess your entire team?
+              </p>
+              <div className="flex items-center justify-center gap-3">
+                <Link href="/sign-up" className="px-6 py-2.5 rounded-lg bg-orange-500 text-white text-sm font-semibold hover:bg-orange-600 transition-colors">
+                  Start Free Trial
+                </Link>
+                <Link href="/pricing" className="px-6 py-2.5 rounded-lg border border-gray-200 text-sm font-medium text-gray-700 hover:border-gray-300 transition-colors">
+                  View Plans
+                </Link>
+              </div>
+            </div>
+
+          </div>
+          {/* Logo watermark */}
+          <img src="/logo.png" alt="" className="fixed bottom-6 left-6 h-5 w-auto opacity-20" />
+        </div>
+      </>
     );
   }
 
