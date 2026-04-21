@@ -19,6 +19,7 @@ import {
   Zap,
   Target,
   MessageSquare,
+  CreditCard,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -37,6 +38,11 @@ const mainNavItems = [
 ];
 
 const adminNavItems = [
+  { label: "Admin Home", href: "/dashboard/admin", icon: LayoutDashboard },
+  { label: "Users", href: "/dashboard/admin/users", icon: Users },
+  { label: "Payments", href: "/dashboard/admin/payments", icon: CreditCard },
+  { label: "Conversations", href: "/dashboard/admin/conversations", icon: MessageSquare },
+  { label: "Leaderboard", href: "/dashboard/admin/leaderboard", icon: Trophy },
   { label: "Questions", href: "/dashboard/admin/questions", icon: ShieldCheck },
   { label: "Bookings", href: "/dashboard/admin/bookings", icon: Calendar },
 ];
