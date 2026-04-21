@@ -86,10 +86,11 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { email, answers, integrity } = body as {
+    const { email, answers, integrity, performanceResponse } = body as {
       email: string;
       answers: { questionId: string; selectedOptionId: string; timeTakenMs: number }[];
       integrity?: { tabSwitches: number; pasteAttempts: number; questionsAnsweredTooFast: number; suspicionScore: number };
+      performanceResponse?: { scenario: string; response: string; timeSpentMs: number };
     };
 
     // Anti-cheat: reject highly suspicious submissions
@@ -150,6 +151,62 @@ export async function POST(req: NextRequest) {
       if (user) userId = user.id;
     } catch {}
 
+    // Score performance task if provided
+    let performanceScore: { promptQuality: number; efficiency: number; responseQuality: number; iterationIntelligence: number; overall: number; feedback: string } | null = null;
+    if (performanceResponse && performanceResponse.response && performanceResponse.response.trim().length >= 50) {
+      try {
+        const openaiRes = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+          },
+          body: JSON.stringify({
+            model: "gpt-4o-mini",
+            temperature: 0.3,
+            messages: [
+              {
+                role: "system",
+                content: `You are an expert AI prompt engineer evaluating a user's prompt-writing ability.\n\nScore the following prompt response on these 5 dimensions (0-100 each):\n1. Prompt Quality: Specificity, constraints, context provided\n2. Efficiency: Conciseness without losing clarity\n3. Response Quality: Would this prompt likely produce a high-quality AI output?\n4. Iteration Intelligence: Does it anticipate edge cases, include evaluation criteria, or show strategic thinking?\n5. Overall Skill: Holistic assessment of prompting ability\n\nThe scenario was: ${performanceResponse.scenario}\nThe user wrote: ${performanceResponse.response}\n\nRespond with ONLY a JSON object: {"promptQuality":N,"efficiency":N,"responseQuality":N,"iterationIntelligence":N,"overall":N,"feedback":"one sentence"}`,
+              },
+            ],
+          }),
+        });
+
+        if (openaiRes.ok) {
+          const openaiData = await openaiRes.json();
+          const content = openaiData.choices?.[0]?.message?.content?.trim();
+          if (content) {
+            const parsed = JSON.parse(content);
+            if (typeof parsed.overall === "number") {
+              performanceScore = {
+                promptQuality: parsed.promptQuality,
+                efficiency: parsed.efficiency,
+                responseQuality: parsed.responseQuality,
+                iterationIntelligence: parsed.iterationIntelligence,
+                overall: parsed.overall,
+                feedback: parsed.feedback || "",
+              };
+            }
+          }
+        }
+      } catch (e) {
+        console.error("Performance scoring failed:", e);
+        // Continue without performance score
+      }
+    }
+
+    // Merge performance data into responses
+    const responsesWithPerformance = performanceResponse ? {
+      mcq: responses,
+      performance: {
+        scenario: performanceResponse.scenario,
+        response: performanceResponse.response,
+        timeSpentMs: performanceResponse.timeSpentMs,
+        score: performanceScore,
+      },
+    } : responses;
+
     // Save attempt
     const attempt = await prisma.dailyQuizAttempt.create({
       data: {
@@ -158,7 +215,7 @@ export async function POST(req: NextRequest) {
         date,
         score,
         totalQuestions: 5,
-        responses,
+        responses: responsesWithPerformance,
         streak,
       },
     });
@@ -177,12 +234,18 @@ export async function POST(req: NextRequest) {
     const rank = betterScores + 1;
     const percentile = totalToday > 1 ? Math.round(((totalToday - rank) / (totalToday - 1)) * 100) : 100;
 
-    return NextResponse.json({
+    const responseData: any = {
       attempt,
       rank,
       totalParticipants: totalToday,
       percentile,
-    });
+    };
+
+    if (performanceScore) {
+      responseData.performanceScore = performanceScore;
+    }
+
+    return NextResponse.json(responseData);
   } catch (error) {
     console.error("Daily quiz POST error:", error);
     return NextResponse.json({ error: "Failed to submit quiz" }, { status: 500 });

@@ -18,6 +18,15 @@ interface QuizResponse {
   timeTakenMs: number;
 }
 
+interface PerformanceScore {
+  promptQuality: number;
+  efficiency: number;
+  responseQuality: number;
+  iterationIntelligence: number;
+  overall: number;
+  feedback: string;
+}
+
 interface AttemptResult {
   attempt: {
     id: string;
@@ -29,6 +38,7 @@ interface AttemptResult {
   rank: number;
   totalParticipants: number;
   percentile: number;
+  performanceScore?: PerformanceScore;
 }
 
 interface LeaderboardEntry {
@@ -45,7 +55,26 @@ interface YesterdayEntry {
   totalQuestions: number;
 }
 
-type Phase = "loading" | "intro" | "email" | "quiz" | "results" | "already-taken";
+type Phase = "loading" | "intro" | "email" | "quiz" | "performance" | "results" | "already-taken";
+
+const PERFORMANCE_SCENARIOS = [
+  "A startup CEO asks you to use AI to write investor outreach emails. They want personalized, warm emails that don't sound AI-generated. Write the prompt you would use.",
+  "Your manager wants a weekly AI-generated summary of 50+ customer support tickets, highlighting trends and urgent issues. Write the prompt.",
+  "A legal team needs AI to review a 30-page contract and flag non-standard clauses, risks, and missing protections. Write the prompt.",
+  "You're building a chatbot for an e-commerce site. The AI needs to handle returns, track orders, and upsell — but must escalate angry customers to humans. Write the system prompt.",
+  "A marketing team wants AI to analyze their competitor's pricing page and generate a comparison table with strategic recommendations. Write the prompt.",
+  "A teacher needs AI to generate a differentiated lesson plan for a mixed-ability class of 30 students on photosynthesis. Write the prompt.",
+];
+
+function getTodayScenario(): string {
+  const dateStr = new Date().toISOString().slice(0, 10);
+  let hash = 0;
+  for (let i = 0; i < dateStr.length; i++) {
+    hash = ((hash << 5) - hash + dateStr.charCodeAt(i)) | 0;
+  }
+  const index = Math.abs(hash) % PERFORMANCE_SCENARIOS.length;
+  return PERFORMANCE_SCENARIOS[index];
+}
 
 // CSS keyframes injected once
 const styleId = "daily-quiz-styles";
@@ -140,6 +169,12 @@ export default function DailyQuizPage() {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [todayStats, setTodayStats] = useState({ participants: 0, topScore: 0, avgScore: 0 });
   const [yesterdayLeaders, setYesterdayLeaders] = useState<YesterdayEntry[]>([]);
+  const [performanceText, setPerformanceText] = useState("");
+  const [performanceTimeLeft, setPerformanceTimeLeft] = useState(90);
+  const [performanceSubmitting, setPerformanceSubmitting] = useState(false);
+  const performanceStartRef = useRef<number>(0);
+  const performanceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const mcqResponsesRef = useRef<QuizResponse[]>([]);
   const [questionVisible, setQuestionVisible] = useState(true);
   const questionStartRef = useRef<number>(Date.now());
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -245,12 +280,11 @@ export default function DailyQuizPage() {
       setSelectedOption(null);
 
       if (currentIndex + 1 >= questions.length) {
-        // Capture integrity signals before submitting
-        if (integrityRef.current) {
-          integritySignalsRef.current = integrityRef.current.getSignals();
-          integrityRef.current.stop();
-        }
-        submitQuiz(newResponses);
+        mcqResponsesRef.current = newResponses;
+        setPhase("performance");
+        performanceStartRef.current = Date.now();
+        setPerformanceTimeLeft(90);
+        setPerformanceText("");
       } else {
         setCurrentIndex((prev) => prev + 1);
       }
@@ -259,7 +293,47 @@ export default function DailyQuizPage() {
     [currentIndex, questions, responses]
   );
 
-  async function submitQuiz(finalResponses: QuizResponse[]) {
+  // Start performance timer
+  useEffect(() => {
+    if (phase !== "performance") return;
+    performanceTimerRef.current = setInterval(() => {
+      setPerformanceTimeLeft((prev) => {
+        if (prev <= 1) {
+          handlePerformanceSubmit(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => {
+      if (performanceTimerRef.current) clearInterval(performanceTimerRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase]);
+
+  function handlePerformanceSubmit(timedOut = false) {
+    if (performanceTimerRef.current) clearInterval(performanceTimerRef.current);
+    if (performanceSubmitting) return;
+    setPerformanceSubmitting(true);
+
+    // Capture integrity signals
+    if (integrityRef.current) {
+      integritySignalsRef.current = integrityRef.current.getSignals();
+      integrityRef.current.stop();
+    }
+
+    const timeSpentMs = Date.now() - performanceStartRef.current;
+    const scenario = getTodayScenario();
+    const responseText = performanceText.trim();
+
+    submitQuiz(mcqResponsesRef.current, responseText.length >= 50 ? {
+      scenario,
+      response: responseText,
+      timeSpentMs,
+    } : undefined);
+  }
+
+  async function submitQuiz(finalResponses: QuizResponse[], performanceResponse?: { scenario: string; response: string; timeSpentMs: number }) {
     setSubmitting(true);
     setPhase("loading");
 
@@ -271,6 +345,7 @@ export default function DailyQuizPage() {
           email: email.toLowerCase(),
           answers: finalResponses,
           integrity: integritySignalsRef.current || undefined,
+          performanceResponse: performanceResponse || undefined,
         }),
       });
 
@@ -633,6 +708,127 @@ export default function DailyQuizPage() {
             </div>
           )}
 
+          {/* ===== PERFORMANCE PHASE ===== */}
+          {phase === "performance" && (
+            <div className="animate-fade-slide-up">
+              <div className="text-center mb-6">
+                <span className="section-label">[ Bonus Challenge ]</span>
+                <h2 className="text-2xl sm:text-3xl font-bold text-white">Write a Real Prompt</h2>
+                <p className="text-sm text-white/50 mt-2">
+                  This is where your PromptScore comes from
+                </p>
+              </div>
+
+              {/* Timer */}
+              <div className="flex justify-end mb-4">
+                <div
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-500 ${
+                    performanceTimeLeft > 60
+                      ? "border-green-500/20"
+                      : performanceTimeLeft > 30
+                      ? "border-yellow-500/20"
+                      : "border-red-500/20"
+                  }`}
+                  style={{
+                    backgroundColor:
+                      performanceTimeLeft > 60
+                        ? "rgba(34, 197, 94, 0.06)"
+                        : performanceTimeLeft > 30
+                        ? "rgba(234, 179, 8, 0.06)"
+                        : "rgba(239, 68, 68, 0.08)",
+                  }}
+                >
+                  <svg
+                    className={`w-5 h-5 transition-colors duration-500 ${
+                      performanceTimeLeft > 60
+                        ? "text-green-400"
+                        : performanceTimeLeft > 30
+                        ? "text-yellow-400"
+                        : "text-red-400"
+                    }`}
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 6v6l4 2" />
+                  </svg>
+                  <span
+                    className={`text-lg font-mono tabular-nums font-bold transition-colors duration-500 ${
+                      performanceTimeLeft > 60
+                        ? "text-green-400"
+                        : performanceTimeLeft > 30
+                        ? "text-yellow-400"
+                        : "text-red-400"
+                    }`}
+                  >
+                    {performanceTimeLeft}s
+                  </span>
+                </div>
+              </div>
+
+              {/* Scenario */}
+              <div className="glass-strong p-6 sm:p-8 mb-6">
+                <div className="flex items-start gap-3 mb-4">
+                  <span className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-4 h-4 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                  </span>
+                  <div>
+                    <h3 className="text-xs font-medium text-white/40 uppercase tracking-wider mb-2">Scenario</h3>
+                    <p className="text-sm sm:text-base text-white/80 leading-relaxed">
+                      {getTodayScenario()}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Textarea */}
+              <div className="relative">
+                <textarea
+                  value={performanceText}
+                  onChange={(e) => {
+                    if (e.target.value.length <= 1000) setPerformanceText(e.target.value);
+                  }}
+                  onPaste={(e) => e.preventDefault()}
+                  placeholder="Write your prompt here..."
+                  className="w-full h-48 sm:h-56 px-4 py-3 rounded-xl bg-white/[0.06] border border-white/[0.12] text-white placeholder-white/30 focus:outline-none focus:border-orange-500/50 text-sm resize-none"
+                  disabled={performanceSubmitting}
+                  autoFocus
+                />
+                <div className="flex items-center justify-between mt-2">
+                  <span className={`text-xs ${
+                    performanceText.length < 50 ? "text-white/30" : "text-green-400/60"
+                  }`}>
+                    {performanceText.length < 50
+                      ? `${50 - performanceText.length} more characters needed`
+                      : "Minimum met"}
+                  </span>
+                  <span className={`text-xs tabular-nums ${
+                    performanceText.length > 900 ? "text-red-400" : "text-white/30"
+                  }`}>
+                    {performanceText.length}/1000
+                  </span>
+                </div>
+              </div>
+
+              {/* Submit */}
+              <button
+                onClick={() => handlePerformanceSubmit(false)}
+                disabled={performanceText.length < 50 || performanceSubmitting}
+                className="glow-btn w-full px-8 py-3.5 text-base mt-6 disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                {performanceSubmitting ? "Submitting..." : "Submit Prompt"}
+              </button>
+
+              <button
+                onClick={() => handlePerformanceSubmit(false)}
+                className="w-full text-xs text-white/30 hover:text-white/50 mt-3 transition-colors text-center"
+              >
+                Skip bonus challenge
+              </button>
+            </div>
+          )}
+
           {/* ===== RESULTS PHASE ===== */}
           {phase === "results" && result && (
             <div className="text-center">
@@ -676,6 +872,55 @@ export default function DailyQuizPage() {
                   </div>
                 </div>
               </div>
+
+              {/* Performance Score */}
+              {result.performanceScore && (
+                <div className="glass-strong p-6 sm:p-8 mb-8 text-left">
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h3 className="text-sm font-medium text-white/40 uppercase tracking-wider">Performance Task</h3>
+                      <p className="text-xs text-white/30 mt-1">Where the real skill measurement happens</p>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-3xl font-bold gradient-text animate-score-pop">
+                        {result.performanceScore.overall}
+                      </div>
+                      <div className="text-xs text-white/40">/100</div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    {[
+                      { label: "Prompt Quality", value: result.performanceScore.promptQuality },
+                      { label: "Efficiency", value: result.performanceScore.efficiency },
+                      { label: "Response Quality", value: result.performanceScore.responseQuality },
+                      { label: "Iteration Intelligence", value: result.performanceScore.iterationIntelligence },
+                    ].map((dim) => (
+                      <div key={dim.label}>
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-xs text-white/50">{dim.label}</span>
+                          <span className="text-xs font-bold text-white/70 tabular-nums">{dim.value}</span>
+                        </div>
+                        <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
+                          <div
+                            className="h-full rounded-full transition-all duration-1000"
+                            style={{
+                              width: `${dim.value}%`,
+                              background: `linear-gradient(90deg, #f97316, #fb923c)`,
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {result.performanceScore.feedback && (
+                    <p className="text-sm text-white/50 mt-5 italic border-t border-white/[0.06] pt-4">
+                      &ldquo;{result.performanceScore.feedback}&rdquo;
+                    </p>
+                  )}
+                </div>
+              )}
 
               {/* Share buttons — full width stacked */}
               <div className="mb-8 space-y-3">
