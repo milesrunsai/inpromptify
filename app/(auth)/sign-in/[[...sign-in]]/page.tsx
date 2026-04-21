@@ -27,8 +27,9 @@ export default function SignInPage() {
 
   useEffect(() => {
     const oauthError = searchParams.get("error");
+    const detail = searchParams.get("detail");
     if (oauthError && OAUTH_ERRORS[oauthError]) {
-      setError(OAUTH_ERRORS[oauthError]);
+      setError(OAUTH_ERRORS[oauthError] + (detail ? ` (${detail})` : ""));
     }
   }, [searchParams]);
 

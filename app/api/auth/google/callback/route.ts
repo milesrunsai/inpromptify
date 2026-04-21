@@ -60,7 +60,9 @@ export async function GET(req: NextRequest) {
     });
 
     if (!tokenRes.ok) {
-      return NextResponse.redirect(`${appUrl}/sign-in?error=oauth_token`);
+      const tokenErr = await tokenRes.text();
+      console.error("Google token exchange failed:", tokenRes.status, tokenErr);
+      return NextResponse.redirect(`${appUrl}/sign-in?error=oauth_token&detail=${encodeURIComponent(tokenErr.slice(0, 200))}`);
     }
 
     const tokens: GoogleTokenResponse = await tokenRes.json();
@@ -72,6 +74,8 @@ export async function GET(req: NextRequest) {
     );
 
     if (!userRes.ok) {
+      const userErr = await userRes.text();
+      console.error("Google userinfo failed:", userRes.status, userErr);
       return NextResponse.redirect(`${appUrl}/sign-in?error=oauth_userinfo`);
     }
 
