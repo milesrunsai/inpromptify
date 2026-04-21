@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
@@ -76,8 +77,15 @@ export function DashboardShell({
         {/* Org header */}
         <div className="flex h-16 items-center justify-between border-b border-sidebar-border px-4">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <span className="text-lg font-bold text-sidebar-primary">
-              Inpromptify
+            <Image
+              src="/logo.png"
+              alt="InpromptiFy"
+              width={28}
+              height={28}
+              className="h-7 w-auto"
+            />
+            <span className="text-lg font-bold text-sidebar-foreground">
+              InpromptiFy
             </span>
           </Link>
           <button
@@ -198,8 +206,15 @@ export function DashboardShell({
           >
             <Menu className="size-5" />
           </button>
-          <span className="ml-3 text-lg font-bold text-orange-500">
-            Inpromptify
+          <Image
+            src="/logo.png"
+            alt="InpromptiFy"
+            width={24}
+            height={24}
+            className="ml-3 h-6 w-auto"
+          />
+          <span className="ml-2 text-lg font-bold text-gray-900">
+            InpromptiFy
           </span>
         </header>
 
