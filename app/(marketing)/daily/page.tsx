@@ -433,13 +433,37 @@ export default function DailyQuizPage() {
   // White background for quiz/performance phases, dark for intro/results
   const isQuizActive = phase === "quiz" || phase === "performance" || phase === "email";
 
+  // Add keyboard event listener for quiz phase
+  useEffect(() => {
+    if (phase !== "quiz" || !questions[currentIndex]) return;
+    
+    const handleKeyPress = (e: KeyboardEvent) => {
+      const key = e.key.toLowerCase();
+      const options = questions[currentIndex].options;
+      let optionIndex = -1;
+      
+      if (key === 'a') optionIndex = 0;
+      else if (key === 'b') optionIndex = 1;
+      else if (key === 'c') optionIndex = 2;
+      else if (key === 'd') optionIndex = 3;
+      
+      if (optionIndex >= 0 && optionIndex < options.length && !selectedOption) {
+        const optionId = options[optionIndex].id;
+        setSelectedOption(optionId);
+        setTimeout(() => handleAnswer(optionId), 200);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [phase, currentIndex, questions, selectedOption, handleAnswer]);
+
   return (
-    <div className={`relative min-h-screen ${
-      isQuizActive
-        ? "bg-white pt-32 sm:pt-40 pb-16"
-        : "pt-24 pb-16 grid-pattern"
-    }`}>
-      {/* Radial glow — only on dark phases */}
+    <div className={isQuizActive ? "min-h-screen flex items-center justify-center" : "relative min-h-screen pt-24 pb-16 grid-pattern"}>      
+      {isQuizActive && (
+        <style>{`header, nav, footer, [role="banner"], [role="contentinfo"] { display: none !important; }`}</style>
+      )}
+      
       {!isQuizActive && (
         <div
           className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px]"
@@ -448,11 +472,8 @@ export default function DailyQuizPage() {
           }}
         />
       )}
-
-      <div className={`relative ${isQuizActive ? "" : "section-frame"}`}>
-        <div className={`mx-auto px-4 sm:px-6 ${
-          isQuizActive ? "max-w-2xl" : "max-w-3xl"
-        }`}>
+      <div className={`relative ${isQuizActive ? "w-full max-w-2xl mx-auto px-6" : "section-frame"}`}>
+        <div className={`${isQuizActive ? "" : "mx-auto px-4 sm:px-6 max-w-3xl"}`}>
           {/* Loading */}
           {phase === "loading" && (
             <div className="flex flex-col items-center justify-center py-32">
@@ -612,33 +633,32 @@ export default function DailyQuizPage() {
 
           {/* ===== USERNAME PHASE ===== */}
           {phase === "email" && (
-            <div className="text-center animate-fade-slide-up">
-              <p className="text-xs font-medium text-orange-500 uppercase tracking-widest mb-3">Daily Challenge</p>
-              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Pick a name</h2>
-              <p className="text-sm text-gray-500 mb-10">
-                This shows on the leaderboard
-              </p>
-
-              <div className="max-w-sm mx-auto">
+            <div className="text-center">
+              {/* Brand mark */}
+              <img src="/logo.png" alt="" className="h-5 w-auto opacity-20 absolute bottom-6 left-6" />
+              
+              <h2 className="text-2xl sm:text-3xl font-medium text-gray-900 mb-6 max-w-xl mx-auto">Pick a name for the leaderboard</h2>
+              
+              <div className="max-w-sm mx-auto space-y-6">
                 <input
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value.slice(0, 20))}
                   onKeyDown={(e) => e.key === "Enter" && handleStartQuiz()}
                   placeholder="Your name or alias"
-                  className="w-full px-4 py-3.5 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 text-sm"
+                  className="w-full px-6 py-5 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 text-base"
                   autoFocus
                 />
                 <button
                   onClick={handleStartQuiz}
                   disabled={!email || email.trim().length < 2}
-                  className="w-full px-8 py-3.5 text-base mt-4 rounded-xl bg-orange-500 text-white font-semibold hover:bg-orange-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="w-full px-8 py-4 text-base rounded-xl bg-orange-500 text-white font-semibold hover:bg-orange-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   Begin Quiz
                 </button>
                 <button
                   onClick={() => setPhase("intro")}
-                  className="text-xs text-gray-400 hover:text-gray-600 mt-4 transition-colors"
+                  className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
                 >
                   Back
                 </button>
@@ -648,62 +668,46 @@ export default function DailyQuizPage() {
 
           {/* ===== QUIZ PHASE ===== */}
           {phase === "quiz" && questions[currentIndex] && (
-            <div className="relative">
-              {/* Progress bar */}
-              <div className="flex items-center gap-3 mb-10">
-                <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+            <div className="relative w-full">
+              {/* Progress indicator - top left */}
+              <div className="absolute top-6 left-6">
+                <div className="text-xs font-mono text-gray-400 mb-2">
+                  {currentIndex + 1} / {questions.length}
+                </div>
+                <div className="w-16 h-0.5 bg-gray-200 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-orange-500 rounded-full transition-all duration-500"
-                    style={{ width: `${(currentIndex / questions.length) * 100}%` }}
+                    className="h-full bg-orange-500 rounded-full transition-all duration-500 ease-out"
+                    style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
                   />
                 </div>
-                <span className="text-xs text-gray-400 tabular-nums">
-                  {currentIndex + 1}/{questions.length}
+              </div>
+
+              {/* Timer - top right */}
+              <div className="absolute top-6 right-6">
+                <span className={`text-4xl font-mono font-bold tabular-nums transition-colors duration-500 ${
+                  timeLeft > 20 ? "text-gray-400" :
+                  timeLeft > 10 ? "text-yellow-500" :
+                  "text-red-500"
+                }`}>
+                  {timeLeft}
                 </span>
               </div>
 
-              {/* Timer + question label */}
-              <div className="flex items-center justify-between mb-8">
-                <span className="text-xs text-gray-400 uppercase tracking-wider font-medium">
-                  Question {currentIndex + 1}
-                </span>
-                <div
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-500 ${
-                    timeLeft > 20 ? "border-green-200 bg-green-50" :
-                    timeLeft > 10 ? "border-yellow-200 bg-yellow-50" :
-                    "border-red-200 bg-red-50"
-                  }`}
-                >
-                  <svg className={`w-4 h-4 transition-colors duration-500 ${
-                    timeLeft > 20 ? "text-green-500" :
-                    timeLeft > 10 ? "text-yellow-500" :
-                    "text-red-500"
-                  }`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 6v6l4 2" />
-                  </svg>
-                  <span className={`text-lg font-mono tabular-nums font-bold transition-colors duration-500 ${
-                    timeLeft > 20 ? "text-green-600" :
-                    timeLeft > 10 ? "text-yellow-600" :
-                    "text-red-600"
-                  }`}>
-                    {timeLeft}s
-                  </span>
-                </div>
-              </div>
+              {/* Brand mark - bottom left */}
+              <img src="/logo.png" alt="" className="h-5 w-auto opacity-20 absolute bottom-6 left-6" />
 
               {/* Question with entrance animation */}
               <div
-                className={`transition-all duration-300 ${
-                  questionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+                className={`transition-all duration-300 ease-out ${
+                  questionVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3"
                 }`}
               >
-                <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 leading-relaxed mb-8">
+                <h2 className="text-2xl sm:text-3xl font-medium text-gray-900 leading-relaxed text-center max-w-xl mx-auto mb-16">
                   {questions[currentIndex].text}
                 </h2>
 
                 {/* Options */}
-                <div className="space-y-3">
+                <div className="space-y-4 max-w-xl mx-auto">
                   {questions[currentIndex].options.map((option, idx) => (
                     <button
                       key={option.id}
@@ -712,139 +716,110 @@ export default function DailyQuizPage() {
                         setTimeout(() => handleAnswer(option.id), 200);
                       }}
                       disabled={selectedOption !== null}
-                      className={`w-full text-left px-5 py-4 rounded-xl border transition-all duration-200 ${
+                      className={`w-full text-left py-5 px-6 rounded-xl border-2 transition-all duration-200 group ${
                         selectedOption === option.id
-                          ? "bg-orange-50 border-orange-500 text-gray-900 ring-2 ring-orange-500/20"
-                          : "bg-gray-50 border-gray-200 text-gray-700 hover:border-orange-300 hover:bg-orange-50/50"
+                          ? "bg-orange-50 border-orange-500 border-l-8"
+                          : "bg-white border-gray-200 hover:border-l-4 hover:border-l-orange-500"
                       }`}
                     >
-                      <span className="flex items-start gap-3">
-                        <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5 ${
+                      <span className="flex items-start gap-4">
+                        <span className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-mono font-bold flex-shrink-0 ${
                           selectedOption === option.id
                             ? "bg-orange-500 text-white"
-                            : "bg-gray-200 text-gray-500"
+                            : "bg-gray-100 text-gray-600"
                         }`}>
                           {String.fromCharCode(65 + idx)}
                         </span>
-                        <span className="text-sm sm:text-base">{option.text}</span>
+                        <span className="text-base leading-relaxed pt-1">{option.text}</span>
                       </span>
                     </button>
                   ))}
                 </div>
+                
+                {/* Keyboard hint */}
+                <p className="text-center text-xs text-gray-300 mt-8">
+                  Press A-D to answer
+                </p>
               </div>
+              
+              {/* Question transition overlay */}
+              <div className={`absolute inset-0 bg-white pointer-events-none transition-opacity duration-300 ${
+                questionVisible ? "opacity-0" : "opacity-100"
+              }`} />
             </div>
           )}
 
           {/* ===== PERFORMANCE PHASE ===== */}
           {phase === "performance" && (
-            <div className="animate-fade-slide-up">
-              <div className="text-center mb-8">
-                <p className="text-xs font-medium text-orange-500 uppercase tracking-widest mb-3">Bonus Challenge</p>
-                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Write a Real Prompt</h2>
-                <p className="text-sm text-gray-500 mt-2">
-                  This is where your PromptScore comes from
-                </p>
+            <div className="w-full">
+              {/* Timer - top right */}
+              <div className="absolute top-6 right-6">
+                <span className={`text-4xl font-mono font-bold tabular-nums transition-colors duration-500 ${
+                  performanceTimeLeft > 60 ? "text-gray-400" :
+                  performanceTimeLeft > 30 ? "text-yellow-500" :
+                  "text-red-500"
+                }`}>
+                  {performanceTimeLeft}
+                </span>
               </div>
 
-              {/* Timer */}
-              <div className="flex justify-end mb-6">
-                <div
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-500 ${
-                    performanceTimeLeft > 60
-                      ? "border-green-200 bg-green-50"
-                      : performanceTimeLeft > 30
-                      ? "border-yellow-200 bg-yellow-50"
-                      : "border-red-200 bg-red-50"
-                  }`}
-                >
-                  <svg
-                    className={`w-4 h-4 transition-colors duration-500 ${
-                      performanceTimeLeft > 60
-                        ? "text-green-500"
-                        : performanceTimeLeft > 30
-                        ? "text-yellow-500"
-                        : "text-red-500"
-                    }`}
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 6v6l4 2" />
-                  </svg>
-                  <span
-                    className={`text-lg font-mono tabular-nums font-bold transition-colors duration-500 ${
-                      performanceTimeLeft > 60
-                        ? "text-green-600"
-                        : performanceTimeLeft > 30
-                        ? "text-yellow-600"
-                        : "text-red-600"
-                    }`}
-                  >
-                    {performanceTimeLeft}s
-                  </span>
+              {/* Brand mark - bottom left */}
+              <img src="/logo.png" alt="" className="h-5 w-auto opacity-20 absolute bottom-6 left-6" />
+
+              <div className="max-w-3xl mx-auto">
+                {/* Scenario */}
+                <div className="bg-white border border-gray-200 border-l-4 border-l-orange-500 rounded-xl p-6 sm:p-8 mb-8">
+                  <p className="text-base text-gray-700 leading-relaxed">
+                    {getTodayScenario()}
+                  </p>
                 </div>
-              </div>
 
-              {/* Scenario */}
-              <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 sm:p-8 mb-6">
-                <div className="flex items-start gap-3">
-                  <span className="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center flex-shrink-0">
-                    <svg className="w-4 h-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                    </svg>
-                  </span>
-                  <div>
-                    <h3 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">Scenario</h3>
-                    <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                      {getTodayScenario()}
-                    </p>
+                {/* Textarea */}
+                <div className="relative">
+                  <textarea
+                    value={performanceText}
+                    onChange={(e) => {
+                      if (e.target.value.length <= 1000) setPerformanceText(e.target.value);
+                    }}
+                    onPaste={(e) => e.preventDefault()}
+                    placeholder="Write your prompt here..."
+                    className="w-full h-64 px-6 py-5 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 text-base resize-none leading-relaxed"
+                    disabled={performanceSubmitting}
+                    autoFocus
+                  />
+                  <div className="flex items-center justify-between mt-3">
+                    <span className={`text-sm ${
+                      performanceText.length < 50 ? "text-gray-400" : "text-green-600"
+                    }`}>
+                      {performanceText.length < 50
+                        ? `${50 - performanceText.length} more characters needed`
+                        : "Minimum met"}
+                    </span>
+                    <span className={`text-sm tabular-nums ${
+                      performanceText.length > 900 ? "text-red-500" : "text-gray-400"
+                    }`}>
+                      {performanceText.length}/1000
+                    </span>
                   </div>
                 </div>
-              </div>
 
-              {/* Textarea */}
-              <div className="relative">
-                <textarea
-                  value={performanceText}
-                  onChange={(e) => {
-                    if (e.target.value.length <= 1000) setPerformanceText(e.target.value);
-                  }}
-                  onPaste={(e) => e.preventDefault()}
-                  placeholder="Write your prompt here..."
-                  className="w-full h-48 sm:h-56 px-4 py-3.5 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 text-sm resize-none"
-                  disabled={performanceSubmitting}
-                  autoFocus
-                />
-                <div className="flex items-center justify-between mt-2">
-                  <span className={`text-xs ${
-                    performanceText.length < 50 ? "text-gray-400" : "text-green-600"
-                  }`}>
-                    {performanceText.length < 50
-                      ? `${50 - performanceText.length} more characters needed`
-                      : "Minimum met"}
-                  </span>
-                  <span className={`text-xs tabular-nums ${
-                    performanceText.length > 900 ? "text-red-500" : "text-gray-400"
-                  }`}>
-                    {performanceText.length}/1000
-                  </span>
+                {/* Submit */}
+                <div className="flex gap-4 mt-8">
+                  <button
+                    onClick={() => handlePerformanceSubmit(false)}
+                    disabled={performanceText.length < 50 || performanceSubmitting}
+                    className="flex-1 px-8 py-4 text-base rounded-xl bg-orange-500 text-white font-semibold hover:bg-orange-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    {performanceSubmitting ? "Submitting..." : "Submit Prompt"}
+                  </button>
+                  <button
+                    onClick={() => handlePerformanceSubmit(false)}
+                    className="px-6 py-4 text-base text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    Skip
+                  </button>
                 </div>
               </div>
-
-              {/* Submit */}
-              <button
-                onClick={() => handlePerformanceSubmit(false)}
-                disabled={performanceText.length < 50 || performanceSubmitting}
-                className="w-full px-8 py-3.5 text-base mt-6 rounded-xl bg-orange-500 text-white font-semibold hover:bg-orange-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-              >
-                {performanceSubmitting ? "Submitting..." : "Submit Prompt"}
-              </button>
-
-              <button
-                onClick={() => handlePerformanceSubmit(false)}
-                className="w-full text-xs text-gray-400 hover:text-gray-600 mt-4 transition-colors text-center"
-              >
-                Skip bonus challenge
-              </button>
             </div>
           )}
 
