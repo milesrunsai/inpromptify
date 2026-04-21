@@ -48,8 +48,9 @@ export default function QuizPage() {
     return (
       <>
         <Nav />
-        <main className="bg-[#111118] min-h-screen">
-          <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 pt-28 pb-20 md:pb-28">
+        <main className="bg-[#111118] min-h-screen flex flex-col">
+          <div className="flex-1 flex items-center justify-center px-5 sm:px-6 lg:px-8">
+          <div className="max-w-3xl w-full py-20">
             <div className="text-center mb-12">
               <p className="text-[11px] font-mono text-orange-400/70 uppercase tracking-wider mb-3">Free Assessment</p>
               <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4">
@@ -96,6 +97,7 @@ export default function QuizPage() {
                 Start Quiz
               </button>
             </div>
+          </div>
           </div>
         </main>
         <Footer />
