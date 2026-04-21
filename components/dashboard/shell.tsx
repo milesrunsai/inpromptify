@@ -11,6 +11,8 @@ import {
   ShieldCheck,
   Calendar,
   Bot,
+  Trophy,
+  BarChart3,
   Menu,
   X,
   LogOut,
@@ -23,6 +25,8 @@ const mainNavItems = [
   { label: "Assessments", href: "/dashboard/assessments", icon: ClipboardList },
   { label: "Team", href: "/dashboard/team", icon: Users },
   { label: "AI Assistant", href: "/dashboard/ai-assistant", icon: Bot },
+  { label: "Leaderboard", href: "/dashboard/leaderboard", icon: Trophy },
+  { label: "My Results", href: "/dashboard/results", icon: BarChart3 },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 

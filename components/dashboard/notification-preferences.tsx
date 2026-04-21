@@ -38,7 +38,7 @@ export function NotificationPreferences() {
       {notifications.map((item) => (
         <div
           key={item.id}
-          className="flex items-center justify-between gap-4 rounded-lg border border-white/[0.08] bg-white/[0.03] px-4 py-3"
+          className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3"
         >
           <div className="min-w-0">
             <p className="text-sm font-medium">{item.label}</p>
@@ -50,8 +50,8 @@ export function NotificationPreferences() {
             role="switch"
             aria-checked={enabled[item.id]}
             onClick={() => toggle(item.id)}
-            className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border border-white/[0.08] transition-colors ${
-              enabled[item.id] ? "bg-orange-500" : "bg-white/[0.06]"
+            className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border border-gray-300 transition-colors ${
+              enabled[item.id] ? "bg-orange-500" : "bg-gray-200"
             }`}
           >
             <span

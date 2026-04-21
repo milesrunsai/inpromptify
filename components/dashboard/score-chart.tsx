@@ -20,20 +20,25 @@ export function ScoreChart({
       <BarChart data={data}>
         <CartesianGrid
           strokeDasharray="3 3"
-          stroke="rgba(255,255,255,0.06)"
+          stroke="rgba(0,0,0,0.06)"
         />
         <XAxis
           dataKey="range"
-          stroke="rgba(255,255,255,0.4)"
+          stroke="rgba(0,0,0,0.4)"
           fontSize={12}
+          tick={{ fill: "#6b7280" }}
         />
-        <YAxis stroke="rgba(255,255,255,0.4)" fontSize={12} />
+        <YAxis
+          stroke="rgba(0,0,0,0.4)"
+          fontSize={12}
+          tick={{ fill: "#6b7280" }}
+        />
         <Tooltip
           contentStyle={{
-            backgroundColor: "#1a1a1a",
-            border: "1px solid rgba(255,255,255,0.08)",
+            backgroundColor: "#ffffff",
+            border: "1px solid #e5e7eb",
             borderRadius: "8px",
-            color: "#fff",
+            color: "#111827",
           }}
         />
         <Bar dataKey="count" fill="#f97316" radius={[4, 4, 0, 0]} />

@@ -17,6 +17,9 @@ import {
   Users,
   CreditCard,
   ArrowRight,
+  Zap,
+  Trophy,
+  Bot,
 } from "lucide-react";
 import { ScoreChart } from "@/components/dashboard/score-chart";
 
@@ -46,7 +49,7 @@ export default async function DashboardOverviewPage() {
   const firstName = user.name?.split(" ")[0] ?? "there";
   const org = await getUserOrg(user.id);
 
-  // If no org, show a lightweight prompt
+  // If no org, show Take Assessment hero + lightweight org prompt
   if (!org) {
     return (
       <div className="space-y-8">
@@ -56,6 +59,30 @@ export default async function DashboardOverviewPage() {
             Welcome back, {firstName}!
           </p>
         </div>
+
+        {/* Take Assessment hero card */}
+        <Link href="/assess" className="block">
+          <Card className="border-orange-200 bg-gradient-to-r from-orange-50 to-amber-50 transition-shadow hover:shadow-md">
+            <CardContent className="flex flex-col items-center gap-4 py-8 sm:flex-row sm:py-6">
+              <div className="flex size-14 shrink-0 items-center justify-center rounded-full bg-orange-100">
+                <Zap className="size-7 text-orange-600" />
+              </div>
+              <div className="flex-1 text-center sm:text-left">
+                <h2 className="text-lg font-semibold text-gray-900">
+                  Take the AI Proficiency Assessment
+                </h2>
+                <p className="mt-1 text-sm text-gray-600">
+                  Get your PromptScore in 5-10 minutes
+                </p>
+              </div>
+              <span className="inline-flex items-center gap-1.5 rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-orange-600">
+                Take Assessment
+                <ArrowRight className="size-4" />
+              </span>
+            </CardContent>
+          </Card>
+        </Link>
+
         <Card>
           <CardHeader>
             <CardTitle>Create an Organization</CardTitle>
@@ -87,8 +114,8 @@ export default async function DashboardOverviewPage() {
     },
   });
 
-  // Fetch assessment data
-  const [totalAssessments, completedAssessments, recentAssessments] =
+  // Fetch assessment data + user's own latest score
+  const [totalAssessments, completedAssessments, recentAssessments, myLatestAssessment] =
     await Promise.all([
       prisma.assessment.count({
         where: { orgId: org.id },
@@ -109,6 +136,17 @@ export default async function DashboardOverviewPage() {
           createdAt: true,
         },
       }),
+      user.email
+        ? prisma.assessment.findFirst({
+            where: {
+              candidateEmail: user.email,
+              status: "COMPLETED",
+              score: { not: null },
+            },
+            orderBy: { completedAt: "desc" },
+            select: { score: true, completedAt: true },
+          })
+        : null,
     ]);
 
   const avgScore =
@@ -183,6 +221,52 @@ export default async function DashboardOverviewPage() {
           <ArrowRight className="size-3.5" />
         </Link>
       </div>
+
+      {/* Take Assessment hero card */}
+      <Link href="/assess" className="block">
+        <Card className="border-orange-200 bg-gradient-to-r from-orange-50 to-amber-50 transition-shadow hover:shadow-md">
+          <CardContent className="flex flex-col items-center gap-4 py-8 sm:flex-row sm:py-6">
+            <div className="flex size-14 shrink-0 items-center justify-center rounded-full bg-orange-100">
+              <Zap className="size-7 text-orange-600" />
+            </div>
+            <div className="flex-1 text-center sm:text-left">
+              <h2 className="text-lg font-semibold text-gray-900">
+                Take the AI Proficiency Assessment
+              </h2>
+              <p className="mt-1 text-sm text-gray-600">
+                Get your PromptScore in 5-10 minutes
+              </p>
+            </div>
+            <span className="inline-flex items-center gap-1.5 rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-orange-600">
+              Take Assessment
+              <ArrowRight className="size-4" />
+            </span>
+          </CardContent>
+        </Card>
+      </Link>
+
+      {/* Latest PromptScore */}
+      {myLatestAssessment && (
+        <Card className="border-orange-200">
+          <CardContent className="flex items-center gap-4 py-5">
+            <div className="flex size-12 items-center justify-center rounded-full bg-orange-100">
+              <TrendingUp className="size-6 text-orange-600" />
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Your Latest PromptScore</p>
+              <p className="text-3xl font-bold text-gray-900">
+                {myLatestAssessment.score}%
+              </p>
+            </div>
+            <Link
+              href="/dashboard/results"
+              className="ml-auto text-sm font-medium text-orange-600 hover:text-orange-700"
+            >
+              View all results &rarr;
+            </Link>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Stat cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

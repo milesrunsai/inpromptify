@@ -30,13 +30,13 @@ export function ApiKeys({
   return (
     <div className="space-y-4">
       {showAlert && (
-        <div className="rounded-lg border border-orange-500/20 bg-orange-500/10 px-4 py-3 text-sm text-orange-300">
+        <div className="rounded-lg border border-orange-500/20 bg-orange-500/10 px-4 py-3 text-sm text-orange-600">
           Coming soon -- API key management is under development.
         </div>
       )}
 
       {keys.length === 0 ? (
-        <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-6 text-center">
+        <div className="rounded-lg border border-gray-200 bg-gray-50 p-6 text-center">
           <Key className="mx-auto mb-3 size-8 text-muted-foreground/40" />
           <p className="text-sm text-muted-foreground">
             No API keys yet. Create one to integrate InpromptiFy into your
@@ -48,7 +48,7 @@ export function ApiKeys({
           {keys.map((key) => (
             <div
               key={key.id}
-              className="flex items-center justify-between rounded-lg border border-white/[0.08] bg-white/[0.03] px-4 py-3"
+              className="flex items-center justify-between rounded-lg border border-gray-200 bg-gray-50 px-4 py-3"
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
@@ -64,7 +64,7 @@ export function ApiKeys({
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => handleAction("copy")}
-                  className="rounded-md p-1.5 text-muted-foreground hover:bg-white/[0.06] hover:text-foreground"
+                  className="rounded-md p-1.5 text-muted-foreground hover:bg-gray-100 hover:text-foreground"
                   title="Copy key prefix"
                 >
                   <Copy className="size-3.5" />
