@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 
 interface LeaderboardEntry {
   rank: number;
@@ -70,19 +69,26 @@ export default function LeaderboardPage() {
       : top3;
 
   return (
-    <div className="pt-24 pb-16">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+    <div className="relative pt-24 pb-16 min-h-screen overflow-hidden">
+      {/* Video background — only on /leaderboard */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none"
+      >
+        <source
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_3CVjpU5MqL28kt1M6PyOAXhNcyX/hf_20260421_090946_47124ffa-1e4f-49c9-a0ed-84039d5331f6.mp4"
+          type="video/mp4"
+        />
+      </video>
+      {/* Dark overlay to keep text readable */}
+      <div className="absolute inset-0 bg-black/60 pointer-events-none" />
+
+      <div className="relative max-w-4xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="text-center mb-10">
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <Image
-              src="/images/crown-logo.png"
-              alt="Crown"
-              width={48}
-              height={48}
-              className="w-12 h-12"
-            />
-          </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
             Leaderboard
           </h1>
@@ -137,7 +143,9 @@ export default function LeaderboardPage() {
           </div>
         ) : entries.length === 0 ? (
           <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-12 text-center">
-            <p className="text-4xl mb-4">🏆</p>
+            <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-orange-500/20 flex items-center justify-center border border-orange-500/30">
+              <span className="text-lg font-bold text-orange-400">#1</span>
+            </div>
             <h3 className="text-lg font-semibold text-white mb-2">
               No one has played yet. Be the first.
             </h3>
@@ -184,7 +192,7 @@ export default function LeaderboardPage() {
                                 : "bg-amber-700/20 text-amber-500 border border-amber-700/30"
                           }`}
                         >
-                          {isFirst ? "👑" : `#${entry.rank}`}
+                          {`#${entry.rank}`}
                         </div>
 
                         {/* Name */}
@@ -208,7 +216,7 @@ export default function LeaderboardPage() {
                         {/* Streak */}
                         {entry.streak > 1 && (
                           <p className="text-xs text-orange-400/70 mt-1.5">
-                            🔥 {entry.streak}
+                            {entry.streak} day streak
                           </p>
                         )}
                       </div>
@@ -276,7 +284,7 @@ export default function LeaderboardPage() {
                       </div>
                       <div className="col-span-2">
                         {entry.streak > 1 ? (
-                          <span className="text-xs text-orange-400">🔥 {entry.streak}</span>
+                          <span className="text-xs text-orange-400">{entry.streak} day streak</span>
                         ) : (
                           <span className="text-xs text-white/20" />
                         )}
@@ -300,7 +308,7 @@ export default function LeaderboardPage() {
                             </span>
                           )}
                           {entry.streak > 1 && (
-                            <span className="text-[10px] text-orange-400">🔥 {entry.streak}</span>
+                            <span className="text-[10px] text-orange-400">{entry.streak} day streak</span>
                           )}
                         </div>
                       </div>

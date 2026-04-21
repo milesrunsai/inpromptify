@@ -42,6 +42,7 @@ model User {
   sessions         Session[]
   chatMessages     AiChatMessage[]
   apiKeys          ApiKey[]
+  weeklyAttempts   WeeklyChallengeAttempt[]
   createdAt        DateTime        @default(now())
 }
 
@@ -196,6 +197,21 @@ model DailyQuizAttempt {
 
   @@unique([email, date])
   @@index([date, score])
+}
+
+model WeeklyChallengeAttempt {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  weekId         String
+  score          Int
+  totalQuestions Int      @default(15)
+  responses      Json
+  totalTimeMs    Int
+  createdAt      DateTime @default(now())
+
+  @@unique([userId, weekId])
+  @@index([weekId, score])
 }
 
 model DemoBooking {
