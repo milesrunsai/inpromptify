@@ -16,9 +16,9 @@ interface Booking {
 }
 
 const statusColors: Record<string, string> = {
-  pending: "bg-yellow-500/20 text-yellow-400",
-  confirmed: "bg-green-500/20 text-green-400",
-  cancelled: "bg-red-500/20 text-red-400",
+  pending: "bg-yellow-50 text-yellow-700",
+  confirmed: "bg-green-50 text-green-700",
+  cancelled: "bg-red-50 text-red-700",
 };
 
 export default function AdminBookingsPage() {
@@ -36,7 +36,7 @@ export default function AdminBookingsPage() {
   if (loading) {
     return (
       <div className="p-8">
-        <h1 className="text-2xl font-bold text-hero-heading">Demo Bookings</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Demo Bookings</h1>
         <div className="mt-8 space-y-4">
           {[1, 2, 3].map((i) => (
             <div key={i} className="h-20 rounded-xl bg-card animate-pulse" />
@@ -50,7 +50,7 @@ export default function AdminBookingsPage() {
     <div className="p-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-hero-heading">Demo Bookings</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Demo Bookings</h1>
           <p className="text-sm text-muted-foreground mt-1">
             {bookings.length} total booking{bookings.length !== 1 ? "s" : ""}
           </p>
@@ -58,7 +58,7 @@ export default function AdminBookingsPage() {
       </div>
 
       {bookings.length === 0 ? (
-        <div className="liquid-glass rounded-xl p-12 text-center">
+        <div className="rounded-xl border border-gray-200 bg-white p-12 text-center">
           <p className="text-muted-foreground">No demo bookings yet.</p>
           <p className="text-sm text-muted-foreground/70 mt-2">
             Bookings from the /contact page will appear here.
@@ -67,11 +67,11 @@ export default function AdminBookingsPage() {
       ) : (
         <div className="space-y-4">
           {bookings.map((booking) => (
-            <div key={booking.id} className="liquid-glass rounded-xl p-6">
+            <div key={booking.id} className="rounded-xl border border-gray-200 bg-white p-6">
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center gap-3">
-                    <h3 className="font-semibold text-hero-heading">{booking.name}</h3>
+                    <h3 className="font-semibold text-gray-900">{booking.name}</h3>
                     <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${statusColors[booking.status] || statusColors.pending}`}>
                       {booking.status}
                     </span>

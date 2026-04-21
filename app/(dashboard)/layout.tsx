@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getCurrentUser, getUserOrg } from "@/lib/auth";
+import { isAdmin } from "@/lib/admin";
 import { DashboardShell } from "@/components/dashboard/shell";
 
 export default async function DashboardLayout({
@@ -19,6 +20,7 @@ export default async function DashboardLayout({
       userImageUrl={user.imageUrl ?? ""}
       userName={user.name ?? user.email}
       hasOrg={!!org}
+      isAdmin={isAdmin(user.email)}
     >
       {children}
     </DashboardShell>

@@ -66,16 +66,44 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "No organization" }, { status: 403 });
   }
 
-  // Check credits
+  // Check credits and tier-based monthly limit
   const subscription = await prisma.subscription.findFirst({
     where: { orgId: org.id },
   });
-  const credits = subscription?.credits ?? 5; // Free tier default
+  const credits = subscription?.credits ?? 5;
   if (credits === 0) {
     return NextResponse.json(
       { error: "No credits remaining. Please upgrade your plan." },
       { status: 403 }
     );
+  }
+
+  const tierMonthlyLimits: Record<string, number> = {
+    FREE: 3,
+    STARTER: 50,
+    BUSINESS: 500,
+    ENTERPRISE: -1,
+  };
+  const tier = subscription?.tier ?? "FREE";
+  const monthlyLimit = tierMonthlyLimits[tier] ?? 3;
+
+  if (monthlyLimit !== -1) {
+    const monthStart = new Date();
+    monthStart.setDate(1);
+    monthStart.setHours(0, 0, 0, 0);
+
+    const monthCount = await prisma.assessment.count({
+      where: { orgId: org.id, createdAt: { gte: monthStart } },
+    });
+
+    if (monthCount >= monthlyLimit) {
+      return NextResponse.json(
+        {
+          error: `You have reached your monthly assessment limit (${monthlyLimit}). Upgrade your plan for more.`,
+        },
+        { status: 429 }
+      );
+    }
   }
 
   const body = await req.json();

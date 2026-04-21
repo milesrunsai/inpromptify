@@ -17,10 +17,10 @@ import { ApiKeys, type ApiKeyData } from "@/components/dashboard/api-keys";
 import { NotificationPreferences } from "@/components/dashboard/notification-preferences";
 
 const tierBadgeStyles: Record<string, string> = {
-  FREE: "bg-white/[0.06] text-white/60 border-white/[0.08]",
-  STARTER: "bg-orange-500/15 text-orange-400 border-orange-500/20",
-  BUSINESS: "bg-blue-500/15 text-blue-400 border-blue-500/20",
-  ENTERPRISE: "bg-purple-500/15 text-purple-400 border-purple-500/20",
+  FREE: "bg-gray-100 text-gray-600 border-gray-200",
+  STARTER: "bg-orange-50 text-orange-700 border-orange-200",
+  BUSINESS: "bg-blue-50 text-blue-700 border-blue-200",
+  ENTERPRISE: "bg-purple-50 text-purple-700 border-purple-200",
 };
 
 export default async function SettingsPage() {

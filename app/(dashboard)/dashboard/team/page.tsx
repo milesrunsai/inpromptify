@@ -165,8 +165,8 @@ export default function TeamPage() {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-white">Team</h1>
-          <p className="text-sm text-white/50">
+          <h1 className="text-2xl font-bold tracking-tight text-gray-900">Team</h1>
+          <p className="text-sm text-gray-500">
             Manage team members and their roles.
           </p>
         </div>
@@ -181,10 +181,10 @@ export default function TeamPage() {
       </div>
 
       {/* Members */}
-      <Card className="border-white/[0.08] bg-[#141414]">
+      <Card className="border-gray-200 bg-white">
         <CardHeader>
-          <CardTitle className="text-white">Team Members</CardTitle>
-          <CardDescription className="text-white/50">
+          <CardTitle className="text-gray-900">Team Members</CardTitle>
+          <CardDescription className="text-gray-500">
             People in your organization who can create and view assessments.
           </CardDescription>
         </CardHeader>
@@ -194,26 +194,26 @@ export default function TeamPage() {
               {Array.from({ length: 4 }).map((_, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-3 rounded-lg border border-white/[0.05] bg-white/[0.02] p-4"
+                  className="flex items-center gap-3 rounded-lg border border-gray-100 bg-gray-50 p-4"
                 >
-                  <div className="size-10 animate-pulse rounded-full bg-white/[0.06]" />
+                  <div className="size-10 animate-pulse rounded-full bg-gray-200" />
                   <div className="flex-1 space-y-2">
-                    <div className="h-4 w-40 animate-pulse rounded bg-white/[0.06]" />
-                    <div className="h-3 w-56 animate-pulse rounded bg-white/[0.06]" />
+                    <div className="h-4 w-40 animate-pulse rounded bg-gray-200" />
+                    <div className="h-3 w-56 animate-pulse rounded bg-gray-200" />
                   </div>
-                  <div className="h-5 w-16 animate-pulse rounded bg-white/[0.06]" />
+                  <div className="h-5 w-16 animate-pulse rounded bg-gray-200" />
                 </div>
               ))}
             </div>
           ) : members.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-center">
-              <div className="mb-4 flex size-16 items-center justify-center rounded-full bg-white/[0.05]">
-                <Users className="size-7 text-white/30" />
+              <div className="mb-4 flex size-16 items-center justify-center rounded-full bg-gray-100">
+                <Users className="size-7 text-gray-400" />
               </div>
-              <h3 className="text-lg font-medium text-white">
+              <h3 className="text-lg font-medium text-gray-900">
                 No team members yet
               </h3>
-              <p className="mt-1 max-w-sm text-sm text-white/50">
+              <p className="mt-1 max-w-sm text-sm text-gray-500">
                 Invite team members to collaborate on assessments and view results.
               </p>
               <Button
@@ -230,21 +230,21 @@ export default function TeamPage() {
               {members.map((member) => (
                 <div
                   key={member.id}
-                  className="flex items-center justify-between rounded-lg border border-white/[0.08] bg-white/[0.03] p-4"
+                  className="flex items-center justify-between rounded-lg border border-gray-200 bg-gray-50 p-4"
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex size-10 items-center justify-center rounded-full bg-orange-500/10 text-sm font-medium text-orange-400">
                       {getInitials(member.name, member.email)}
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-white">
+                      <p className="text-sm font-medium text-gray-900">
                         {member.name || member.email}
                       </p>
-                      <p className="text-xs text-white/50">{member.email}</p>
+                      <p className="text-xs text-gray-500">{member.email}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <p className="hidden text-xs text-white/30 sm:block">
+                    <p className="hidden text-xs text-gray-400 sm:block">
                       Joined {new Date(member.joinedAt).toLocaleDateString()}
                     </p>
 
@@ -260,21 +260,21 @@ export default function TeamPage() {
                           "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium transition-colors",
                           member.role === "ADMIN"
                             ? "border-orange-500/20 bg-orange-500/10 text-orange-400"
-                            : "border-white/[0.1] bg-white/[0.05] text-white/60"
+                            : "border-gray-200 bg-gray-100 text-gray-500"
                         )}
                       >
                         {member.role === "ADMIN" ? "Admin" : "Member"}
                         <ChevronDown className="size-3" />
                       </button>
                       {openRoleMenuId === member.id && (
-                        <div className="absolute right-0 top-full z-40 mt-1 w-32 rounded-lg border border-white/[0.08] bg-[#141414] py-1 shadow-xl">
+                        <div className="absolute right-0 top-full z-40 mt-1 w-32 rounded-lg border border-gray-200 bg-white py-1 shadow-xl">
                           <button
                             onClick={() => handleRoleChange(member.id, "ADMIN")}
                             className={cn(
-                              "flex w-full items-center px-3 py-1.5 text-left text-xs transition-colors hover:bg-white/[0.06]",
+                              "flex w-full items-center px-3 py-1.5 text-left text-xs transition-colors hover:bg-gray-100",
                               member.role === "ADMIN"
                                 ? "text-orange-400"
-                                : "text-white/70"
+                                : "text-gray-600"
                             )}
                           >
                             Admin
@@ -282,10 +282,10 @@ export default function TeamPage() {
                           <button
                             onClick={() => handleRoleChange(member.id, "MEMBER")}
                             className={cn(
-                              "flex w-full items-center px-3 py-1.5 text-left text-xs transition-colors hover:bg-white/[0.06]",
+                              "flex w-full items-center px-3 py-1.5 text-left text-xs transition-colors hover:bg-gray-100",
                               member.role === "MEMBER"
                                 ? "text-orange-400"
-                                : "text-white/70"
+                                : "text-gray-600"
                             )}
                           >
                             Member
@@ -296,7 +296,7 @@ export default function TeamPage() {
 
                     <button
                       onClick={() => handleRemove(member.id)}
-                      className="flex size-7 items-center justify-center rounded-md text-white/30 transition-colors hover:bg-red-500/10 hover:text-red-400"
+                      className="flex size-7 items-center justify-center rounded-md text-gray-400 transition-colors hover:bg-red-500/10 hover:text-red-400"
                       title="Remove member"
                     >
                       <Trash2 className="size-3.5" />
@@ -311,10 +311,10 @@ export default function TeamPage() {
 
       {/* Pending Invites */}
       {!loading && invites.length > 0 && (
-        <Card className="border-white/[0.08] bg-[#141414]">
+        <Card className="border-gray-200 bg-white">
           <CardHeader>
-            <CardTitle className="text-white">Pending Invites</CardTitle>
-            <CardDescription className="text-white/50">
+            <CardTitle className="text-gray-900">Pending Invites</CardTitle>
+            <CardDescription className="text-gray-500">
               Invitations that have been sent but not yet accepted.
             </CardDescription>
           </CardHeader>
@@ -323,17 +323,17 @@ export default function TeamPage() {
               {invites.map((invite) => (
                 <div
                   key={invite.id}
-                  className="flex items-center justify-between rounded-lg border border-white/[0.08] bg-white/[0.03] p-4"
+                  className="flex items-center justify-between rounded-lg border border-gray-200 bg-gray-50 p-4"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="flex size-10 items-center justify-center rounded-full bg-white/[0.05] text-white/30">
+                    <div className="flex size-10 items-center justify-center rounded-full bg-gray-100 text-gray-400">
                       <Mail className="size-4" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-white">
+                      <p className="text-sm font-medium text-gray-900">
                         {invite.email}
                       </p>
-                      <div className="flex items-center gap-2 text-xs text-white/40">
+                      <div className="flex items-center gap-2 text-xs text-gray-400">
                         <Clock className="size-3" />
                         Invited{" "}
                         {new Date(invite.invitedAt).toLocaleDateString()}
@@ -354,14 +354,14 @@ export default function TeamPage() {
                         "inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium",
                         invite.role === "ADMIN"
                           ? "border-orange-500/20 bg-orange-500/10 text-orange-400"
-                          : "border-white/[0.1] bg-white/[0.05] text-white/60"
+                          : "border-gray-200 bg-gray-100 text-gray-500"
                       )}
                     >
                       {invite.role === "ADMIN" ? "Admin" : "Member"}
                     </span>
                     <button
                       onClick={() => handleCancelInvite(invite.id)}
-                      className="flex size-7 items-center justify-center rounded-md text-white/30 transition-colors hover:bg-red-500/10 hover:text-red-400"
+                      className="flex size-7 items-center justify-center rounded-md text-gray-400 transition-colors hover:bg-red-500/10 hover:text-red-400"
                       title="Cancel invite"
                     >
                       <X className="size-3.5" />
@@ -377,9 +377,9 @@ export default function TeamPage() {
       {/* Invite Modal */}
       {showInviteModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-xl border border-white/[0.08] bg-[#141414] p-6 shadow-2xl">
+          <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-6 shadow-2xl">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-white">
+              <h2 className="text-lg font-semibold text-gray-900">
                 Invite Team Member
               </h2>
               <button
@@ -389,19 +389,19 @@ export default function TeamPage() {
                   setInviteEmail("");
                   setInviteRole("MEMBER");
                 }}
-                className="flex size-8 items-center justify-center rounded-md text-white/40 transition-colors hover:bg-white/[0.06] hover:text-white"
+                className="flex size-8 items-center justify-center rounded-md text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-900"
               >
                 <X className="size-4" />
               </button>
             </div>
-            <p className="mt-1 text-sm text-white/50">
+            <p className="mt-1 text-sm text-gray-500">
               Send an invitation to join your organization.
             </p>
 
             <div className="mt-5 space-y-4">
               {/* Email */}
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-white/70">
+                <label className="mb-1.5 block text-sm font-medium text-gray-600">
                   Email Address
                 </label>
                 <Input
@@ -415,39 +415,39 @@ export default function TeamPage() {
                       handleInvite();
                     }
                   }}
-                  className="border-white/[0.08] bg-white/[0.03] text-white placeholder:text-white/30"
+                  className="border-gray-200 bg-gray-50 text-gray-900 placeholder:text-gray-400"
                 />
               </div>
 
               {/* Role */}
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-white/70">
+                <label className="mb-1.5 block text-sm font-medium text-gray-600">
                   Role
                 </label>
                 <div className="relative">
                   <button
                     onClick={() => setShowRoleDropdown((v) => !v)}
-                    className="flex h-8 w-full items-center justify-between rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 text-sm text-white/70 transition-colors hover:bg-white/[0.06]"
+                    className="flex h-8 w-full items-center justify-between rounded-lg border border-gray-200 bg-gray-50 px-3 text-sm text-gray-600 transition-colors hover:bg-gray-100"
                   >
                     <span>{inviteRole === "ADMIN" ? "Admin" : "Member"}</span>
                     <ChevronDown className="size-3.5" />
                   </button>
                   {showRoleDropdown && (
-                    <div className="absolute left-0 top-full z-50 mt-1 w-full rounded-lg border border-white/[0.08] bg-[#1a1a1a] py-1 shadow-xl">
+                    <div className="absolute left-0 top-full z-50 mt-1 w-full rounded-lg border border-gray-200 bg-white py-1 shadow-xl">
                       <button
                         onClick={() => {
                           setInviteRole("ADMIN");
                           setShowRoleDropdown(false);
                         }}
                         className={cn(
-                          "flex w-full flex-col px-3 py-2 text-left transition-colors hover:bg-white/[0.06]",
+                          "flex w-full flex-col px-3 py-2 text-left transition-colors hover:bg-gray-100",
                           inviteRole === "ADMIN"
                             ? "text-orange-400"
-                            : "text-white/70"
+                            : "text-gray-600"
                         )}
                       >
                         <span className="text-sm font-medium">Admin</span>
-                        <span className="text-xs text-white/40">
+                        <span className="text-xs text-gray-400">
                           Can manage team, assessments, and billing
                         </span>
                       </button>
@@ -457,14 +457,14 @@ export default function TeamPage() {
                           setShowRoleDropdown(false);
                         }}
                         className={cn(
-                          "flex w-full flex-col px-3 py-2 text-left transition-colors hover:bg-white/[0.06]",
+                          "flex w-full flex-col px-3 py-2 text-left transition-colors hover:bg-gray-100",
                           inviteRole === "MEMBER"
                             ? "text-orange-400"
-                            : "text-white/70"
+                            : "text-gray-600"
                         )}
                       >
                         <span className="text-sm font-medium">Member</span>
-                        <span className="text-xs text-white/40">
+                        <span className="text-xs text-gray-400">
                           Can create and view assessments
                         </span>
                       </button>
@@ -487,7 +487,7 @@ export default function TeamPage() {
                     setInviteEmail("");
                     setInviteRole("MEMBER");
                   }}
-                  className="border-white/[0.08] bg-white/[0.03] text-white/70 hover:bg-white/[0.06] hover:text-white"
+                  className="border-gray-200 bg-gray-50 text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                 >
                   Cancel
                 </Button>

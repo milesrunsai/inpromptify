@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser, getUserOrg } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import OpenAI from "openai";
@@ -7,10 +7,22 @@ import OpenAI from "openai";
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const SYSTEM_PROMPT =
-  "You are an AI learning assistant for InpromptiFy, an AI proficiency assessment platform. " +
-  "Help users understand AI concepts, improve their prompt engineering skills, and prepare for " +
-  "AI proficiency assessments. Be concise, practical, and encouraging. If asked about assessment " +
-  "results, provide actionable study recommendations.";
+  "You are the official InpromptiFy AI assistant. You ONLY help with topics related to InpromptiFy and AI proficiency. " +
+  "This includes: AI assessment preparation, prompt engineering tips, understanding your PromptScore results, " +
+  "platform features and pricing, account and billing questions, AI concepts relevant to proficiency assessments, " +
+  "and best practices for improving AI literacy. " +
+  "You must REFUSE any requests unrelated to InpromptiFy or AI proficiency assessment. " +
+  "If a user asks about unrelated topics (coding homework, general knowledge, creative writing, etc.), " +
+  "politely decline and redirect them back to InpromptiFy topics. " +
+  "Be concise, practical, and encouraging. If asked about assessment results, provide actionable study recommendations.";
+
+/** Tier-based daily AI chat limits */
+const TIER_CHAT_LIMITS: Record<string, number> = {
+  FREE: 20,
+  STARTER: 100,
+  BUSINESS: 500,
+  ENTERPRISE: -1, // unlimited
+};
 
 /** POST /api/ai-chat — streaming AI chat */
 export async function POST(req: NextRequest) {
@@ -19,12 +31,46 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  // Per-IP burst rate limit
   const rl = rateLimit(`ai-chat:${getClientIp(req)}`, 20);
   if (!rl.allowed) {
     return NextResponse.json(
       { error: "Rate limited. Try again later." },
       { status: 429 }
     );
+  }
+
+  // Tier-based daily limit
+  const org = await getUserOrg(user.id);
+  let tier = "FREE";
+  if (org) {
+    const sub = await prisma.subscription.findFirst({
+      where: { orgId: org.id },
+    });
+    if (sub) tier = sub.tier;
+  }
+
+  const dailyLimit = TIER_CHAT_LIMITS[tier] ?? 20;
+  if (dailyLimit !== -1) {
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    const todayCount = await prisma.aiChatMessage.count({
+      where: {
+        userId: user.id,
+        role: "user",
+        createdAt: { gte: todayStart },
+      },
+    });
+
+    if (todayCount >= dailyLimit) {
+      return NextResponse.json(
+        {
+          error: `You have reached your daily AI chat limit (${dailyLimit} messages). Upgrade your plan for more.`,
+        },
+        { status: 429 }
+      );
+    }
   }
 
   const body = await req.json();

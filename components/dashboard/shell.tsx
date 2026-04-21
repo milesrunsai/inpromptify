@@ -36,12 +36,14 @@ export function DashboardShell({
   userImageUrl,
   userName,
   hasOrg,
+  isAdmin = false,
 }: {
   children: React.ReactNode;
   orgName: string;
   userImageUrl: string;
   userName: string;
   hasOrg: boolean;
+  isAdmin?: boolean;
 }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -120,35 +122,39 @@ export function DashboardShell({
             );
           })}
 
-          {/* Admin separator */}
-          <div className="px-3 pt-4 pb-1">
-            <div className="flex items-center gap-2">
-              <div className="h-px flex-1 bg-sidebar-border" />
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-sidebar-foreground/40">
-                Admin
-              </span>
-              <div className="h-px flex-1 bg-sidebar-border" />
-            </div>
-          </div>
+          {/* Admin separator — only shown to admins */}
+          {isAdmin && (
+            <>
+              <div className="px-3 pt-4 pb-1">
+                <div className="flex items-center gap-2">
+                  <div className="h-px flex-1 bg-sidebar-border" />
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-sidebar-foreground/40">
+                    Admin
+                  </span>
+                  <div className="h-px flex-1 bg-sidebar-border" />
+                </div>
+              </div>
 
-          {adminNavItems.map((item) => {
-            const isActive = pathname.startsWith(item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                  isActive
-                    ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                    : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
-                )}
-              >
-                <item.icon className="size-4" />
-                {item.label}
-              </Link>
-            );
-          })}
+              {adminNavItems.map((item) => {
+                const isActive = pathname.startsWith(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                      isActive
+                        ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                        : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                    )}
+                  >
+                    <item.icon className="size-4" />
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </>
+          )}
         </nav>
 
         {/* User footer */}
@@ -183,22 +189,22 @@ export function DashboardShell({
       </aside>
 
       {/* Main content */}
-      <div className="flex flex-1 flex-col overflow-hidden">
+      <div className="dashboard-theme flex flex-1 flex-col overflow-hidden bg-white">
         {/* Top bar (mobile) */}
-        <header className="flex h-16 items-center border-b border-border px-4 lg:hidden">
+        <header className="flex h-16 items-center border-b border-gray-200 bg-white px-4 lg:hidden">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="rounded-md p-2 text-foreground hover:bg-muted"
+            className="rounded-md p-2 text-gray-700 hover:bg-gray-100"
           >
             <Menu className="size-5" />
           </button>
-          <span className="ml-3 text-lg font-bold text-primary">
+          <span className="ml-3 text-lg font-bold text-orange-500">
             Inpromptify
           </span>
         </header>
 
         {/* Content area */}
-        <main className="flex-1 overflow-y-auto p-6 lg:p-8">{children}</main>
+        <main className="flex-1 overflow-y-auto bg-white p-6 lg:p-8">{children}</main>
       </div>
     </div>
   );

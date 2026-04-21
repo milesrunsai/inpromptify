@@ -30,14 +30,14 @@ function nextId(): string {
 function TypingIndicator() {
   return (
     <div className="flex items-start gap-3">
-      <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/[0.05]">
-        <Bot className="size-4 text-white/50" />
+      <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-gray-100">
+        <Bot className="size-4 text-gray-400" />
       </div>
-      <div className="rounded-2xl rounded-tl-sm border border-white/[0.08] bg-white/[0.03] px-4 py-3">
+      <div className="rounded-2xl rounded-tl-sm border border-gray-200 bg-gray-50 px-4 py-3">
         <div className="flex items-center gap-1">
-          <span className="size-1.5 animate-bounce rounded-full bg-white/40 [animation-delay:0ms]" />
-          <span className="size-1.5 animate-bounce rounded-full bg-white/40 [animation-delay:150ms]" />
-          <span className="size-1.5 animate-bounce rounded-full bg-white/40 [animation-delay:300ms]" />
+          <span className="size-1.5 animate-bounce rounded-full bg-gray-400 [animation-delay:0ms]" />
+          <span className="size-1.5 animate-bounce rounded-full bg-gray-400 [animation-delay:150ms]" />
+          <span className="size-1.5 animate-bounce rounded-full bg-gray-400 [animation-delay:300ms]" />
         </div>
       </div>
     </div>
@@ -188,10 +188,10 @@ export default function AiAssistantPage() {
             <div className="mb-6 flex size-16 items-center justify-center rounded-2xl bg-orange-500/10">
               <Sparkles className="size-8 text-orange-400" />
             </div>
-            <h2 className="text-xl font-semibold text-white">
+            <h2 className="text-xl font-semibold text-gray-900">
               AI Assistant
             </h2>
-            <p className="mt-2 max-w-md text-center text-sm text-white/50">
+            <p className="mt-2 max-w-md text-center text-sm text-gray-500">
               Ask me anything about AI proficiency, prompt engineering, or
               assessment preparation. I&apos;m here to help you succeed.
             </p>
@@ -201,7 +201,7 @@ export default function AiAssistantPage() {
                 <button
                   key={prompt}
                   onClick={() => sendMessage(prompt)}
-                  className="rounded-lg border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-left text-sm text-white/70 transition-colors hover:bg-white/[0.06] hover:text-white"
+                  className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-left text-sm text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900"
                 >
                   {prompt}
                 </button>
@@ -225,13 +225,13 @@ export default function AiAssistantPage() {
                     "flex size-8 shrink-0 items-center justify-center rounded-full",
                     msg.role === "user"
                       ? "bg-orange-500/10"
-                      : "bg-white/[0.05]"
+                      : "bg-gray-100"
                   )}
                 >
                   {msg.role === "user" ? (
                     <User className="size-4 text-orange-400" />
                   ) : (
-                    <Bot className="size-4 text-white/50" />
+                    <Bot className="size-4 text-gray-400" />
                   )}
                 </div>
 
@@ -240,8 +240,8 @@ export default function AiAssistantPage() {
                   className={cn(
                     "max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed",
                     msg.role === "user"
-                      ? "rounded-tr-sm bg-orange-500/10 text-white"
-                      : "rounded-tl-sm border border-white/[0.08] bg-white/[0.03] text-white/80"
+                      ? "rounded-tr-sm bg-orange-500/10 text-orange-900"
+                      : "rounded-tl-sm border border-gray-200 bg-gray-50 text-gray-700"
                   )}
                 >
                   {msg.content ? (
@@ -264,7 +264,7 @@ export default function AiAssistantPage() {
       </div>
 
       {/* Input bar */}
-      <div className="border-t border-white/[0.08] px-4 pt-4 pb-2">
+      <div className="border-t border-gray-200 px-4 pt-4 pb-2">
         <form
           onSubmit={handleSubmit}
           className="mx-auto flex max-w-3xl gap-2"
@@ -275,7 +275,7 @@ export default function AiAssistantPage() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={isStreaming}
-            className="flex-1 border-white/[0.08] bg-white/[0.03] text-white placeholder:text-white/30 disabled:opacity-50"
+            className="flex-1 border-gray-200 bg-white text-gray-900 placeholder:text-gray-400 disabled:opacity-50"
           />
           <Button
             type="submit"
@@ -286,7 +286,7 @@ export default function AiAssistantPage() {
             <Send className="size-4" />
           </Button>
         </form>
-        <p className="mx-auto mt-2 max-w-3xl text-center text-xs text-white/30">
+        <p className="mx-auto mt-2 max-w-3xl text-center text-xs text-gray-400">
           AI responses are generated and may not always be accurate. Verify
           important information independently.
         </p>

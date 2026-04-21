@@ -22,9 +22,9 @@ import { ScoreChart } from "@/components/dashboard/score-chart";
 
 function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
-    COMPLETED: "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
-    IN_PROGRESS: "bg-yellow-500/15 text-yellow-400 border-yellow-500/20",
-    PENDING: "bg-white/[0.06] text-white/50 border-white/[0.08]",
+    COMPLETED: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    IN_PROGRESS: "bg-yellow-50 text-yellow-700 border-yellow-200",
+    PENDING: "bg-gray-100 text-gray-500 border-gray-200",
   };
 
   return (
@@ -240,7 +240,7 @@ export default async function DashboardOverviewPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.08] text-left text-muted-foreground">
+                  <tr className="border-b border-gray-200 text-left text-muted-foreground">
                     <th className="pb-3 pr-4 font-medium">Candidate</th>
                     <th className="pb-3 pr-4 font-medium">Score</th>
                     <th className="pb-3 pr-4 font-medium">Status</th>
@@ -251,7 +251,7 @@ export default async function DashboardOverviewPage() {
                   {recentAssessments.map((assessment) => (
                     <tr
                       key={assessment.id}
-                      className="border-b border-white/[0.04] last:border-0"
+                      className="border-b border-gray-100 last:border-0"
                     >
                       <td className="py-3 pr-4">
                         <span className="font-medium">
