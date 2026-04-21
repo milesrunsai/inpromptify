@@ -342,7 +342,11 @@ export default function DailyQuizPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: email.toLowerCase(),
+          email: (() => {
+            const anonId = typeof window !== "undefined" ? localStorage.getItem("inpromptify_anon_id") || "anon" : "anon";
+            return `${anonId}@anon.inpromptify.com`;
+          })(),
+          displayName: email.trim(),
           answers: finalResponses,
           integrity: integritySignalsRef.current || undefined,
           performanceResponse: performanceResponse || undefined,
@@ -370,8 +374,15 @@ export default function DailyQuizPage() {
   }
 
   function handleStartQuiz() {
-    if (!email) return;
-    fetch(`/api/daily/status?email=${encodeURIComponent(email)}`)
+    if (!email || email.trim().length < 2) return;
+    // Use localStorage to generate a stable anonymous ID for dedup
+    let anonId = typeof window !== "undefined" ? localStorage.getItem("inpromptify_anon_id") : null;
+    if (!anonId) {
+      anonId = crypto.randomUUID();
+      if (typeof window !== "undefined") localStorage.setItem("inpromptify_anon_id", anonId);
+    }
+    const dedupEmail = `${anonId}@anon.inpromptify.com`;
+    fetch(`/api/daily/status?email=${encodeURIComponent(dedupEmail)}`)
       .then((r) => r.json())
       .then((data) => {
         if (data.taken) {
@@ -588,28 +599,28 @@ export default function DailyQuizPage() {
             </div>
           )}
 
-          {/* ===== EMAIL PHASE ===== */}
+          {/* ===== USERNAME PHASE ===== */}
           {phase === "email" && (
             <div className="text-center animate-fade-slide-up">
               <span className="section-label">[ Daily Challenge ]</span>
-              <h2 className="text-2xl font-bold text-white mb-2">Enter your email</h2>
+              <h2 className="text-2xl font-bold text-white mb-2">Pick a name</h2>
               <p className="text-sm text-white/50 mb-8">
-                To track your score and leaderboard position
+                This shows on the leaderboard
               </p>
 
               <div className="max-w-sm mx-auto">
                 <input
-                  type="email"
+                  type="text"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value.slice(0, 20))}
                   onKeyDown={(e) => e.key === "Enter" && handleStartQuiz()}
-                  placeholder="you@example.com"
+                  placeholder="Your name or alias"
                   className="w-full px-4 py-3 rounded-xl bg-white/[0.06] border border-white/[0.12] text-white placeholder-white/30 focus:outline-none focus:border-orange-500/50 text-sm"
                   autoFocus
                 />
                 <button
                   onClick={handleStartQuiz}
-                  disabled={!email || !email.includes("@")}
+                  disabled={!email || email.trim().length < 2}
                   className="glow-btn w-full px-8 py-3.5 text-base mt-4 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   Begin Quiz

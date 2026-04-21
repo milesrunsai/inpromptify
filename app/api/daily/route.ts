@@ -86,8 +86,9 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { email, answers, integrity, performanceResponse } = body as {
+    const { email, displayName, answers, integrity, performanceResponse } = body as {
       email: string;
+      displayName?: string;
       answers: { questionId: string; selectedOptionId: string; timeTakenMs: number }[];
       integrity?: { tabSwitches: number; pasteAttempts: number; questionsAnsweredTooFast: number; suspicionScore: number };
       performanceResponse?: { scenario: string; response: string; timeSpentMs: number };
@@ -196,8 +197,9 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Merge performance data into responses
+    // Merge performance data + displayName into responses
     const responsesWithPerformance = performanceResponse ? {
+      displayName: displayName || undefined,
       mcq: responses,
       performance: {
         scenario: performanceResponse.scenario,
@@ -205,7 +207,7 @@ export async function POST(req: NextRequest) {
         timeSpentMs: performanceResponse.timeSpentMs,
         score: performanceScore,
       },
-    } : responses;
+    } : { displayName: displayName || undefined, mcq: responses };
 
     // Save individual responses to CalibrationResponse for IRT calibration
     try {
