@@ -7,15 +7,22 @@ interface LeaderboardEntry {
   rank: number;
   name: string;
   score: number;
-  role: string;
   date: string;
-  dimensions: Record<string, number>;
+  role?: string;
+  streak?: number;
+  totalQuestions?: number;
+  bestScore?: number;
+  days?: number;
+  dimensions?: Record<string, number>;
 }
 
-function getScoreColor(score: number): string {
-  if (score >= 80) return "text-green-400";
-  if (score >= 65) return "text-orange-400";
-  if (score >= 45) return "text-yellow-400";
+type Tab = "daily" | "weekly" | "alltime";
+
+function getScoreColor(score: number, max: number): string {
+  const pct = (score / max) * 100;
+  if (pct >= 80) return "text-green-400";
+  if (pct >= 60) return "text-orange-400";
+  if (pct >= 40) return "text-yellow-400";
   return "text-red-400";
 }
 
@@ -40,44 +47,54 @@ function getRankBadge(rank: number): string {
 export default function LeaderboardPage() {
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
-  const [timeRange, setTimeRange] = useState<"all" | "month" | "week">("all");
+  const [tab, setTab] = useState<Tab>("daily");
 
   useEffect(() => {
-    fetch(`/api/leaderboard?range=${timeRange}`)
+    setLoading(true);
+    fetch(`/api/leaderboard?tab=${tab}`)
       .then((r) => r.json())
       .then((data) => setEntries(data.entries || []))
       .catch(() => setEntries([]))
       .finally(() => setLoading(false));
-  }, [timeRange]);
+  }, [tab]);
+
+  const isDaily = tab === "daily";
+  const isWeekly = tab === "weekly";
+  const maxScore = isDaily ? 5 : isWeekly ? 35 : 100;
 
   return (
     <div className="pt-24 pb-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="text-center mb-12">
-          <span className="inline-block text-xs tracking-[0.2em] uppercase text-orange-500 font-mono mb-4">[ Leaderboard ]</span>
+          <span className="inline-block text-xs tracking-[0.2em] uppercase text-orange-500 font-mono mb-4">
+            [ Leaderboard ]
+          </span>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mt-2 text-white">
-            Top <span className="gradient-text">PromptScores</span>
+            Top <span className="gradient-text">Scores</span>
           </h1>
           <p className="text-lg text-white/60 mt-4 max-w-xl mx-auto">
-            See how you rank against others. Public assessment scores
-            are displayed anonymously by default.
+            Compete daily, build your streak, and climb the ranks.
           </p>
         </div>
 
-        {/* Time range filter */}
+        {/* Tab navigation */}
         <div className="flex items-center justify-center gap-2 mb-8">
-          {(["all", "month", "week"] as const).map((range) => (
+          {([
+            { id: "daily" as Tab, label: "Daily" },
+            { id: "weekly" as Tab, label: "Weekly" },
+            { id: "alltime" as Tab, label: "All Time" },
+          ]).map((t) => (
             <button
-              key={range}
-              onClick={() => { setTimeRange(range); setLoading(true); }}
-              className={`px-4 py-2 rounded-lg text-sm transition-all ${
-                timeRange === range
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                tab === t.id
                   ? "bg-orange-500/20 text-orange-400 border border-orange-500/30"
                   : "text-white/40 hover:text-white/60 border border-transparent"
               }`}
             >
-              {range === "all" ? "All Time" : range === "month" ? "This Month" : "This Week"}
+              {t.label}
             </button>
           ))}
         </div>
@@ -85,9 +102,26 @@ export default function LeaderboardPage() {
         {/* Stats bar */}
         <div className="grid grid-cols-3 gap-4 mb-8">
           {[
-            { label: "Total Assessments", value: entries.length || "—" },
-            { label: "Average Score", value: entries.length ? Math.round(entries.reduce((a, b) => a + b.score, 0) / entries.length) : "—" },
-            { label: "Top Score", value: entries.length ? entries[0]?.score : "—" },
+            {
+              label: isDaily ? "Players Today" : isWeekly ? "Players This Week" : "Total Assessments",
+              value: entries.length || "—",
+            },
+            {
+              label: "Average Score",
+              value: entries.length
+                ? isDaily || isWeekly
+                  ? `${(entries.reduce((a, b) => a + b.score, 0) / entries.length).toFixed(1)}/${isDaily ? 5 : ""}`
+                  : Math.round(entries.reduce((a, b) => a + b.score, 0) / entries.length)
+                : "—",
+            },
+            {
+              label: "Top Score",
+              value: entries.length
+                ? isDaily
+                  ? `${entries[0]?.score}/5`
+                  : entries[0]?.score
+                : "—",
+            },
           ].map((stat) => (
             <div key={stat.label} className="bg-white/[0.03] border border-white/[0.08] rounded-xl p-4 text-center">
               <div className="text-2xl font-bold gradient-text">{stat.value}</div>
@@ -106,27 +140,29 @@ export default function LeaderboardPage() {
         ) : entries.length === 0 ? (
           <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-12 text-center">
             <h3 className="text-lg font-semibold text-white mb-2">
-              No public scores yet
+              {isDaily ? "No one has played today yet" : "No scores yet"}
             </h3>
             <p className="text-sm text-white/60 mb-6">
-              Be the first to take the assessment and claim the top spot.
+              {isDaily
+                ? "Be the first to take today's Daily Challenge!"
+                : "Be the first to take the assessment and claim the top spot."}
             </p>
             <Link
-              href="/assess"
+              href={isDaily || isWeekly ? "/daily" : "/assess"}
               className="glow-btn px-8 py-3 text-sm font-medium inline-block"
             >
-              Take the Assessment
+              {isDaily || isWeekly ? "Take Daily Challenge" : "Take the Assessment"}
             </Link>
           </div>
         ) : (
           <div className="space-y-2">
-            {/* Header row — hidden on mobile */}
+            {/* Header row */}
             <div className="hidden sm:grid grid-cols-12 gap-4 px-4 py-2 text-xs text-white/40 uppercase tracking-wider">
               <div className="col-span-1">Rank</div>
               <div className="col-span-4">User</div>
               <div className="col-span-2">Score</div>
-              <div className="col-span-2">Level</div>
-              <div className="col-span-3">Date</div>
+              <div className="col-span-2">{isDaily ? "Time" : isWeekly ? "Days" : "Level"}</div>
+              <div className="col-span-3">{isDaily ? "Submitted" : isWeekly ? "Streak" : "Date"}</div>
             </div>
 
             {entries.map((entry) => (
@@ -134,7 +170,7 @@ export default function LeaderboardPage() {
                 key={`${entry.rank}-${entry.name}`}
                 className="bg-white/[0.03] border border-white/[0.08] rounded-xl hover:border-orange-500/10 transition-all"
               >
-                {/* Desktop: grid row */}
+                {/* Desktop */}
                 <div className="hidden sm:grid grid-cols-12 gap-4 px-4 py-4 items-center">
                   <div className="col-span-1">
                     <span className={`inline-flex items-center justify-center w-8 h-8 rounded-lg border text-sm font-bold ${getRankBadge(entry.rank)}`}>
@@ -143,22 +179,55 @@ export default function LeaderboardPage() {
                   </div>
                   <div className="col-span-4">
                     <span className="text-sm font-medium text-white">{entry.name}</span>
-                    <span className="block text-xs text-white/40">{entry.role}</span>
+                    {!isDaily && !isWeekly && entry.role && (
+                      <span className="block text-xs text-white/40">{entry.role}</span>
+                    )}
                   </div>
                   <div className="col-span-2">
-                    <span className={`text-lg font-bold tabular-nums ${getScoreColor(entry.score)}`}>
-                      {entry.score}
-                    </span>
-                    <span className="text-xs text-white/40"> / 100</span>
+                    {isDaily ? (
+                      <span className={`text-lg font-bold tabular-nums ${getScoreColor(entry.score, 5)}`}>
+                        {entry.score}<span className="text-xs text-white/40">/5</span>
+                      </span>
+                    ) : isWeekly ? (
+                      <span className={`text-lg font-bold tabular-nums ${getScoreColor(entry.score, 35)}`}>
+                        {entry.score}
+                      </span>
+                    ) : (
+                      <>
+                        <span className={`text-lg font-bold tabular-nums ${getScoreColor(entry.score, 100)}`}>
+                          {entry.score}
+                        </span>
+                        <span className="text-xs text-white/40"> / 100</span>
+                      </>
+                    )}
                   </div>
                   <div className="col-span-2">
-                    <span className="text-xs text-white/50">{getScoreLabel(entry.score)}</span>
+                    {isDaily ? (
+                      <span className="text-xs text-white/50">{entry.date}</span>
+                    ) : isWeekly ? (
+                      <span className="text-xs text-white/50">{entry.date}</span>
+                    ) : (
+                      <span className="text-xs text-white/50">{getScoreLabel(entry.score)}</span>
+                    )}
                   </div>
                   <div className="col-span-3">
-                    <span className="text-xs text-white/40">{entry.date}</span>
+                    {isDaily ? (
+                      <span className="text-xs text-white/40">{entry.date}</span>
+                    ) : isWeekly ? (
+                      entry.streak && entry.streak > 1 ? (
+                        <span className="inline-flex items-center gap-1 text-xs text-orange-400">
+                          {entry.streak} day streak
+                        </span>
+                      ) : (
+                        <span className="text-xs text-white/40">—</span>
+                      )
+                    ) : (
+                      <span className="text-xs text-white/40">{entry.date}</span>
+                    )}
                   </div>
                 </div>
-                {/* Mobile: card layout */}
+
+                {/* Mobile */}
                 <div className="sm:hidden flex items-center gap-3 px-4 py-4">
                   <span className={`inline-flex items-center justify-center w-8 h-8 rounded-lg border text-sm font-bold flex-shrink-0 ${getRankBadge(entry.rank)}`}>
                     {entry.rank}
@@ -166,13 +235,18 @@ export default function LeaderboardPage() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium text-white truncate">{entry.name}</span>
-                      <span className={`text-lg font-bold tabular-nums flex-shrink-0 ml-2 ${getScoreColor(entry.score)}`}>
-                        {entry.score}
+                      <span className={`text-lg font-bold tabular-nums flex-shrink-0 ml-2 ${getScoreColor(entry.score, isDaily ? 5 : isWeekly ? 35 : 100)}`}>
+                        {entry.score}{isDaily && <span className="text-xs text-white/40">/5</span>}
                       </span>
                     </div>
                     <div className="flex items-center justify-between mt-0.5">
-                      <span className="text-xs text-white/40">{entry.role}</span>
-                      <span className="text-xs text-white/50">{getScoreLabel(entry.score)}</span>
+                      <span className="text-xs text-white/40">{entry.date}</span>
+                      {isWeekly && entry.streak && entry.streak > 1 && (
+                        <span className="text-xs text-orange-400">{entry.streak} streak</span>
+                      )}
+                      {!isDaily && !isWeekly && (
+                        <span className="text-xs text-white/50">{getScoreLabel(entry.score)}</span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -181,19 +255,27 @@ export default function LeaderboardPage() {
           </div>
         )}
 
-        {/* Your position CTA */}
+        {/* CTA */}
         <div className="mt-12 text-center">
           <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-8 max-w-lg mx-auto">
             <h2 className="text-xl font-bold text-white">Where do you rank?</h2>
             <p className="text-sm text-white/60 mt-2">
-              Take the free assessment and see your position on the global leaderboard.
+              {isDaily || isWeekly
+                ? "Take the daily challenge and compete for the top spot."
+                : "Take the free assessment and see your position on the global leaderboard."}
             </p>
-            <div className="mt-4">
+            <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center">
               <Link
-                href="/assess"
+                href="/daily"
                 className="glow-btn px-8 py-3 text-sm font-medium inline-block"
               >
-                Take the Assessment
+                Daily Challenge
+              </Link>
+              <Link
+                href="/assess"
+                className="ghost-btn px-8 py-3 text-sm font-medium inline-block"
+              >
+                Full Assessment
               </Link>
             </div>
           </div>

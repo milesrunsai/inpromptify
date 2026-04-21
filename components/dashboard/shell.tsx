@@ -16,6 +16,7 @@ import {
   Menu,
   X,
   LogOut,
+  Zap,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -25,6 +26,7 @@ const mainNavItems = [
   { label: "Assessments", href: "/dashboard/assessments", icon: ClipboardList },
   { label: "Team", href: "/dashboard/team", icon: Users },
   { label: "AI Assistant", href: "/dashboard/ai-assistant", icon: Bot },
+  { label: "Daily Challenge", href: "/daily", icon: Zap },
   { label: "Leaderboard", href: "/dashboard/leaderboard", icon: Trophy },
   { label: "My Results", href: "/dashboard/results", icon: BarChart3 },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },

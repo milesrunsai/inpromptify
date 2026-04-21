@@ -29,6 +29,7 @@ const navigation: NavItem[] = [
   },
   { name: "Pricing", href: "/pricing" },
   { name: "Leaderboard", href: "/leaderboard" },
+  { name: "Daily Challenge", href: "/daily" },
   {
     name: "Developers",
     items: [

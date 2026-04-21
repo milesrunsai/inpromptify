@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HeroQuiz } from "@/components/marketing/hero-quiz";
+import { DailyChallengeBanner } from "@/components/marketing/daily-challenge-banner";
 import {
   BoldStatement,
   FeaturesSection,
@@ -125,6 +126,7 @@ export default function LandingPage() {
         </div>
       </section>
 
+      <DailyChallengeBanner />
       <BoldStatement />
       <FeaturesSection />
       <StatsSection />

@@ -183,6 +183,21 @@ model ApiKey {
   @@index([userId])
 }
 
+model DailyQuizAttempt {
+  id            String   @id @default(cuid())
+  email         String
+  userId        String?
+  date          String   // YYYY-MM-DD format
+  score         Int      // 0-5
+  totalQuestions Int     @default(5)
+  responses     Json     // [{questionId, selectedOptionId, correct, timeTakenMs}]
+  streak        Int      @default(1)
+  createdAt     DateTime @default(now())
+
+  @@unique([email, date])
+  @@index([date, score])
+}
+
 model DemoBooking {
   id        String   @id @default(cuid())
   name      String
