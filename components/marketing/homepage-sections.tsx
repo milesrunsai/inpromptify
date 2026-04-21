@@ -82,7 +82,7 @@ const featureTabs = [
     label: 'Custom Assessments',
     description:
       'Build assessments for any AI tool, framework, or methodology. Use our question bank or create your own with our intuitive editor and AI-assisted question generation.',
-    features: ['Drag-and-drop builder', 'AI question generation', '10,000+ question bank', 'Custom branding options'],
+    features: ['Drag-and-drop builder', 'AI question generation', '1,000+ question bank', 'Custom branding options'],
   },
   {
     label: 'Team Analytics',
@@ -657,27 +657,12 @@ export function UseCasesSection() {
 
 /* ───────────────────────── Testimonials ───────────────────────── */
 
-const testimonials = [
-  {
-    quote: 'Inpromptify completely transformed our hiring process. We went from guessing about AI skills to having quantifiable, comparable data on every candidate.',
-    name: 'Rachel Torres', title: 'VP of Engineering', company: 'Nexus AI', initials: 'RT', gradient: 'from-orange-500 to-amber-500',
-  },
-  {
-    quote: 'The adaptive testing is genuinely impressive. It finds the exact boundary of what someone knows and gives us a precise skill map. Nothing else comes close.',
-    name: 'David Kim', title: 'CTO', company: 'Synthwave Labs', initials: 'DK', gradient: 'from-amber-500 to-yellow-500',
-  },
-  {
-    quote: 'We rolled out Inpromptify across 2,000 employees in three weeks. The team analytics dashboard gave our L&D team exactly the insights they needed to prioritize training.',
-    name: 'Priya Mehta', title: 'Chief People Officer', company: 'ScalePoint', initials: 'PM', gradient: 'from-orange-600 to-orange-400',
-  },
-  {
-    quote: 'Our certification program went from a manual nightmare to a fully automated pipeline. The verifiable digital badges have been a huge hit with our community.',
-    name: 'Marcus Johnson', title: 'Director of Education', company: 'AI Academy', initials: 'MJ', gradient: 'from-orange-500 to-red-500',
-  },
-]
+const testimonials: { quote: string; name: string; title: string; company: string; initials: string; gradient: string }[] = []
 
 export function TestimonialsSection() {
   const ref = useReveal()
+
+  if (testimonials.length === 0) return null
 
   return (
     <section ref={ref} className="relative py-16 sm:py-24 lg:py-32 section-frame">
