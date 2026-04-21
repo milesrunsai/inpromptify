@@ -91,7 +91,34 @@ export default function middleware(req: NextRequest) {
     }
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+
+  // Security headers
+  response.headers.set(
+    "Content-Security-Policy",
+    [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://js.stripe.com https://accounts.google.com https://us-assets.i.posthog.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "img-src 'self' data: blob: https: http:",
+      "font-src 'self' https://fonts.gstatic.com",
+      "media-src 'self' https://d8j0ntlcm91z4.cloudfront.net",
+      "connect-src 'self' https://api.openai.com https://api.stripe.com https://challenges.cloudflare.com https://accounts.google.com https://www.linkedin.com https://us.i.posthog.com https://us-assets.i.posthog.com",
+      "frame-src https://challenges.cloudflare.com https://js.stripe.com https://accounts.google.com",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "frame-ancestors 'none'",
+      "upgrade-insecure-requests",
+    ].join("; ")
+  );
+  response.headers.set("X-Frame-Options", "DENY");
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), interest-cohort=()");
+  response.headers.set("Strict-Transport-Security", "max-age=63072000; includeSubDomains");
+
+  return response;
 }
 
 export const config = {
