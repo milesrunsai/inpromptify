@@ -47,7 +47,7 @@ export default function LandingPage() {
                 <span className="section-label">[ AI Assessment Platform ]</span>
                 <h1 className="text-2xl sm:text-4xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-4 text-white">
                   Enterprise{" "}
-                  <span className="gradient-text">AI Skills Assessment</span>
+                  <span className="text-orange-500">AI Skills Assessment</span>
                 </h1>
                 <p className="mt-6 text-sm sm:text-base lg:text-lg text-gray-400 leading-relaxed">
                   Screen AI talent and assess workforce competency with standardized testing. Reduce mis-hires by 95% and accelerate AI transformation.
@@ -131,47 +131,40 @@ export default function LandingPage() {
       <FeaturesSection />
       <StatsSection />
       
-      {/* Leaderboard Preview */}
-      <section className="py-24 bg-gray-50">
+      {/* Credibility / Methodology Section */}
+      <section className="py-24 border-t border-white/[0.06]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900">Today's Top Performers</h2>
-            <p className="mt-4 text-lg text-gray-600">See how you compare to AI professionals worldwide</p>
+            <span className="text-xs font-medium uppercase tracking-wider text-orange-500">[ Built on proven methodology ]</span>
+            <h2 className="text-3xl font-bold text-white mt-4">Enterprise-Grade Assessment Science</h2>
+            <p className="mt-4 text-lg text-white/50 max-w-2xl mx-auto">
+              Our assessments use Item Response Theory (IRT) — the same psychometric framework behind the GMAT, GRE, and medical licensing boards.
+            </p>
           </div>
-          
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <div className="space-y-4">
-                {/* Sample leaderboard entries */}
-                {[
-                  { rank: 1, name: "Alex Chen", score: 94, badge: "🥇" },
-                  { rank: 2, name: "Jordan Smith", score: 91, badge: "🥈" },
-                  { rank: 3, name: "Sam Taylor", score: 89, badge: "🥉" },
-                  { rank: 4, name: "Casey Rivera", score: 87, badge: "" },
-                  { rank: 5, name: "River Jones", score: 85, badge: "" },
-                ].map((entry) => (
-                  <div key={entry.rank} className="flex items-center justify-between p-4 rounded-lg hover:bg-gray-50 transition-colors">
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-sm font-semibold text-gray-600">
-                        {entry.badge || entry.rank}
-                      </div>
-                      <span className="font-medium text-gray-900">{entry.name}</span>
-                    </div>
-                    <span className="text-lg font-bold text-orange-600">{entry.score}/100</span>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="mt-8 text-center">
-                <Link 
-                  href="/assess" 
-                  className="inline-flex items-center px-6 py-3 rounded-lg bg-orange-600 text-white font-semibold hover:bg-orange-700 transition-colors"
-                >
-                  Take Assessment & Join Leaderboard
-                </Link>
-                <p className="mt-2 text-sm text-gray-500">Free • 10 minutes • Instant results</p>
-              </div>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6 text-center">
+              <p className="text-2xl font-bold text-orange-500 mb-2">50+ AI Models</p>
+              <p className="text-sm text-white/50">Tracked across all major providers. Real-time model knowledge coverage.</p>
             </div>
+            <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6 text-center">
+              <p className="text-2xl font-bold text-orange-500 mb-2">5 Dimensions</p>
+              <p className="text-sm text-white/50">Prompt Engineering, Model Selection, AI Ethics, Practical Application, Emerging Tech.</p>
+            </div>
+            <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6 text-center">
+              <p className="text-2xl font-bold text-orange-500 mb-2">48-Hour Updates</p>
+              <p className="text-sm text-white/50">Questions updated within 48 hours of new model releases. Always current.</p>
+            </div>
+          </div>
+
+          <div className="mt-12 text-center">
+            <Link
+              href="/assess"
+              className="inline-flex items-center px-6 py-3 rounded-lg bg-orange-500 text-white font-semibold hover:bg-orange-600 transition-colors"
+            >
+              Take the Assessment
+            </Link>
+            <p className="mt-2 text-sm text-white/30">Free -- No account required -- Instant results</p>
           </div>
         </div>
       </section>

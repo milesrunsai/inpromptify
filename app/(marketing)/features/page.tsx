@@ -4,16 +4,16 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Features",
   description:
-    "Adaptive testing, five-dimension scoring, team analytics, anti-cheat, and enterprise integrations. See how Inpromptify measures real AI proficiency.",
+    "IRT-calibrated adaptive testing, five-dimension scoring, anti-cheat architecture, role-specific assessments, and enterprise integrations. See how Inpromptify measures real AI proficiency.",
 };
 
 const heroFeatures = [
   {
     title: "Adaptive Assessment Engine",
     description:
-      "Our engine tracks your ability in real-time using theta estimation. Each question is selected based on your performance so far, targeting your weakest dimensions and adjusting difficulty dynamically. No two assessments are the same.",
+      "Our engine tracks your ability in real-time using theta estimation, built on Item Response Theory (IRT) — the same psychometric framework behind the GMAT, GRE, and medical licensing exams. Each question is selected based on your performance so far, targeting your weakest dimensions and adjusting difficulty dynamically. No two assessments are the same.",
     details: [
-      "Real-time theta tracking adjusts difficulty after every answer",
+      "IRT-calibrated theta tracking adjusts difficulty after every answer",
       "Branching question paths based on dimension coverage gaps",
       "Confidence-weighted scoring using response time as a signal",
       "Terminates intelligently when your score stabilizes (8-12 questions)",
@@ -26,11 +26,11 @@ const heroFeatures = [
     description:
       "A single number does not capture AI proficiency. Inpromptify scores across five distinct dimensions that map to real-world AI usage patterns. Each dimension is weighted based on the role template selected.",
     details: [
-      "Prompt Quality — clarity, specificity, and structure of instructions",
-      "Efficiency — token usage optimization and concise prompting",
-      "Speed — ability to produce correct answers under time pressure",
-      "Response Quality — accuracy evaluation and hallucination detection",
-      "Iteration Intelligence — refining outputs through follow-up prompts",
+      "Prompt Engineering — clarity, specificity, and structure of instructions",
+      "Model Selection — choosing the right model for the task and budget",
+      "AI Ethics — responsible use, bias awareness, and safety practices",
+      "Practical Application — solving real problems with AI tools effectively",
+      "Emerging Tech — staying current with new models, tools, and techniques",
     ],
     image: "https://images.unsplash.com/photo-1666875753105-c63a6f3bdc86?w=800&q=80",
     imageAlt: "AI neural network visualization",
@@ -44,7 +44,7 @@ const featureGrid = [
       {
         title: "100+ Question Bank",
         description:
-          "Curated questions testing applied AI judgment, not definitions. Covers prompt engineering, RAG, agents, evaluation, safety, workflow optimization, and more. Auto-refreshed weekly via LLM generation with human review.",
+          "Curated questions testing applied AI judgment, not definitions. Covers prompt engineering, RAG, agents, evaluation, safety, workflow optimization, and more. Questions updated within 48 hours of new model releases.",
       },
       {
         title: "8 Role Templates",
@@ -148,8 +148,7 @@ export default function FeaturesPage() {
         <div className="max-w-3xl">
           <span className="section-label">[ Features ]</span>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mt-2 text-white leading-tight">
-            The complete AI proficiency{" "}
-            <span className="gradient-text">assessment platform</span>
+            The complete AI proficiency assessment platform
           </h1>
           <p className="text-lg text-gray-400 mt-6 leading-relaxed">
             Not another quiz tool. Inpromptify is a psychometrically-designed adaptive
@@ -195,6 +194,39 @@ export default function FeaturesPage() {
           ))}
         </div>
 
+        {/* IRT-Calibrated Scoring */}
+        <div className="mt-24">
+          <h2 className="text-xs font-medium uppercase tracking-wider text-orange-400/60 mb-6">
+            Methodology
+          </h2>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="glass-strong p-6 rounded-2xl">
+              <h3 className="text-base font-semibold text-white mb-2">IRT-Calibrated Scoring</h3>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                Item Response Theory (IRT) is the gold standard in psychometric assessment — the same methodology used by the GMAT, GRE, USMLE, and other high-stakes standardized tests. Each question in our bank has calibrated difficulty and discrimination parameters. Your ability estimate (theta) updates after every response, converging on your true proficiency level with mathematical precision. This means fewer questions, more accurate scores, and defensible results for hiring decisions.
+              </p>
+            </div>
+            <div className="glass-strong p-6 rounded-2xl">
+              <h3 className="text-base font-semibold text-white mb-2">Model Knowledge Flywheel</h3>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                The AI landscape moves fast. When a new model launches — Claude Opus 4.7, GPT-5.4, Gemini 3.1 Pro — our question bank updates within 48 hours. We track 50+ AI models across all major providers. New capabilities, API changes, and best practices are reflected in assessment questions automatically. Your assessments always measure current, relevant AI knowledge — not last year's landscape.
+              </p>
+            </div>
+            <div className="glass-strong p-6 rounded-2xl">
+              <h3 className="text-base font-semibold text-white mb-2">Anti-Cheat Architecture</h3>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                Traditional MCQ assessments are easy to game. Inpromptify uses free-text prompt evaluation alongside multiple choice — candidates must demonstrate they can actually write effective prompts, not just recognize correct answers. Combined with tab-switch detection, paste prevention, response time analysis, and behavioral pattern matching, our integrity system ensures assessment results you can trust for real hiring decisions.
+              </p>
+            </div>
+            <div className="glass-strong p-6 rounded-2xl">
+              <h3 className="text-base font-semibold text-white mb-2">Role-Specific Assessments</h3>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                AI proficiency looks different for every role. Our 6 role categories — Software Engineers, Product Managers, Data Scientists, Marketing, Executives, and HR/Talent — each have calibrated scoring weights across 5 dimensions: Prompt Engineering, Model Selection, AI Ethics, Practical Application, and Emerging Tech. A PM and an engineer take the same platform but are measured on what matters for their function.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Feature Grid by Category */}
         <div className="mt-24 space-y-16">
           {featureGrid.map((category) => (
@@ -227,7 +259,7 @@ export default function FeaturesPage() {
             How it works
           </h2>
           <p className="text-center text-gray-400 mt-4 max-w-2xl mx-auto">
-            From first click to verified PromptScore in under 3 minutes.
+            From first click to verified PromptScore in under 15 minutes.
           </p>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
@@ -245,19 +277,19 @@ export default function FeaturesPage() {
               {
                 step: "03",
                 title: "Answer adaptive questions",
-                description: "8-12 questions that adjust in real-time. The engine finds your exact level without wasting time on questions that are too easy or too hard.",
+                description: "8-12 IRT-calibrated questions that adjust in real-time. The engine finds your exact level without wasting time on questions that are too easy or too hard.",
               },
               {
                 step: "04",
                 title: "Get your PromptScore",
-                description: "Instant results with radar chart, dimension breakdown, hire recommendation, and shareable credential for LinkedIn and X.",
+                description: "Instant results with radar chart, 5-dimension breakdown, hire recommendation, and shareable credential for LinkedIn and X.",
               },
             ].map((item) => (
               <div
                 key={item.step}
                 className="glass-strong p-6 rounded-2xl"
               >
-                <div className="text-2xl font-bold gradient-text mb-3">{item.step}</div>
+                <div className="text-2xl font-bold text-orange-500 mb-3">{item.step}</div>
                 <h3 className="text-sm font-semibold text-white mb-2">{item.title}</h3>
                 <p className="text-sm text-gray-400 leading-relaxed">{item.description}</p>
               </div>
@@ -272,7 +304,7 @@ export default function FeaturesPage() {
               See it in action
             </h2>
             <p className="text-gray-400 mt-3">
-              Take the free 3-minute assessment. No account required.
+              Take the free assessment. No account required.
               Get your PromptScore instantly.
             </p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
@@ -282,12 +314,12 @@ export default function FeaturesPage() {
               >
                 Start Free Assessment
               </Link>
-              <Link
-                href="/contact"
+              <a
+                href="mailto:enterprise@inpromptify.com"
                 className="ghost-btn px-8 py-3 text-sm inline-block text-center"
               >
                 Book a Demo
-              </Link>
+              </a>
             </div>
           </div>
         </div>

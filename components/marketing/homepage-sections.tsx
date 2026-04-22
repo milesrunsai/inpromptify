@@ -174,7 +174,7 @@ function RealTimeScoringViz() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <span className="text-xs font-mono text-white/40">Score Breakdown</span>
-        <span className="text-2xl font-bold gradient-text">84%</span>
+        <span className="text-2xl font-bold text-orange-500">84%</span>
       </div>
       <div className="space-y-3">
         {sections.map((s) => (
@@ -316,7 +316,7 @@ export function FeaturesSection() {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mt-2 text-white">
             Not just another quiz platform.
             <br />
-            <span className="gradient-text">A complete assessment engine.</span>
+            <span className="text-orange-500">A complete assessment engine.</span>
           </h2>
         </div>
 
@@ -397,23 +397,22 @@ function useCountUp(target: number, suffix = '', duration = 2000) {
 }
 
 export function StatsSection() {
-  const counter1 = useCountUp(150000, '+')
   const sectionRef = useReveal()
 
   return (
     <section ref={sectionRef} className="relative py-16 sm:py-24 lg:py-32 section-frame overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <div className="reveal text-center mb-10 sm:mb-14 lg:mb-16">
-          <span className="section-label">[ By the numbers ]</span>
+          <span className="section-label">[ Built on proven methodology ]</span>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mt-2 text-white">Built for scale.</h2>
         </div>
 
         <div className="reveal stagger-1 grid md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
-          <div className="md:col-span-2 bg-white/[0.03] border border-white/[0.08] rounded-2xl p-8" ref={counter1.ref}>
+          <div className="md:col-span-2 bg-white/[0.03] border border-white/[0.08] rounded-2xl p-8">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-5xl font-bold gradient-text">{counter1.display}</p>
-                <p className="text-sm text-white/60 mt-2">Assessments completed across 40+ countries</p>
+                <p className="text-3xl font-bold text-orange-500">IRT-Calibrated Scoring</p>
+                <p className="text-sm text-white/60 mt-2">Built on Item Response Theory — the same framework behind the GMAT, GRE, and medical licensing exams</p>
               </div>
               <div className="text-white/[0.06]">
                 <svg width="120" height="60" viewBox="0 0 120 60" fill="none" className="opacity-50">
@@ -432,8 +431,8 @@ export function StatsSection() {
               </svg>
             </div>
             <div>
-              <p className="text-lg font-semibold text-white">Enterprise Ready</p>
-              <p className="text-xs text-white/60 mt-1">SOC 2 compliant, GDPR ready</p>
+              <p className="text-lg font-semibold text-white">5 AI Dimensions</p>
+              <p className="text-xs text-white/60 mt-1">Adaptive assessment across Prompt Engineering, Model Selection, AI Ethics, Practical Application, and Emerging Tech</p>
             </div>
           </div>
 
@@ -444,8 +443,8 @@ export function StatsSection() {
               </svg>
             </div>
             <div>
-              <p className="text-lg font-semibold text-white">Instant Results</p>
-              <p className="text-xs text-white/60 mt-1">Real-time AI-powered scoring</p>
+              <p className="text-lg font-semibold text-white">50+ AI Models Tracked</p>
+              <p className="text-xs text-white/60 mt-1">Questions updated within 48 hours of new model releases</p>
             </div>
           </div>
 
@@ -597,7 +596,7 @@ function EducationMockup() {
           { label: 'Completion', value: '91%' }, { label: 'Pass Rate', value: '82%' },
         ].map((stat) => (
           <div key={stat.label} className="px-4 py-3 rounded-lg border border-white/[0.08] bg-white/[0.02]">
-            <p className="text-lg font-semibold gradient-text">{stat.value}</p>
+            <p className="text-lg font-semibold text-orange-500">{stat.value}</p>
             <p className="text-[10px] text-white/30 mt-0.5">{stat.label}</p>
           </div>
         ))}

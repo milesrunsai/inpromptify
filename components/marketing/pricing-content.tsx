@@ -102,6 +102,42 @@ const businessPlans: Plan[] = [
   },
 ]
 
+interface EnterpriseTier {
+  name: string
+  price: string
+  assessments: string
+  features: string[]
+  highlighted?: boolean
+}
+
+const enterpriseTiers: EnterpriseTier[] = [
+  {
+    name: 'Starter',
+    price: '$10K/yr',
+    assessments: '500 assessments',
+    features: ['5 role templates', 'Team dashboard', 'CSV export', 'Email support'],
+  },
+  {
+    name: 'Professional',
+    price: '$25K/yr',
+    assessments: '2,000 assessments',
+    features: ['All role templates', 'Advanced analytics', 'ATS integrations', 'Priority support'],
+    highlighted: true,
+  },
+  {
+    name: 'Enterprise',
+    price: '$50K/yr',
+    assessments: 'Unlimited assessments',
+    features: ['Custom templates', 'SSO + SCIM', 'White-label option', 'Dedicated success manager'],
+  },
+  {
+    name: 'Custom',
+    price: '$100K+/yr',
+    assessments: 'Unlimited + on-premise',
+    features: ['Everything in Enterprise', 'On-premise deployment', 'Custom integrations', 'SLA guarantee'],
+  },
+]
+
 export function PricingContent() {
   const [category, setCategory] = useState<PricingCategory>('jobseekers')
   const [annual, setAnnual] = useState(true)
@@ -242,6 +278,77 @@ export function PricingContent() {
           })}
         </div>
 
+        {/* Enterprise Pricing Section */}
+        <div className="mt-20">
+          <div className="text-center mb-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">Enterprise Plans</h2>
+            <p className="text-sm text-gray-400 mt-3 max-w-lg mx-auto">
+              Built on IRT scoring methodology used by GMAT, GRE, and medical licensing boards.
+              Role-specific assessments across 5 AI dimensions.
+            </p>
+          </div>
+
+          <div className="grid gap-4 mt-10 md:grid-cols-2 lg:grid-cols-4">
+            {enterpriseTiers.map((tier) => (
+              <div
+                key={tier.name}
+                className={`rounded-2xl p-6 flex flex-col ${
+                  tier.highlighted
+                    ? 'bg-gradient-to-b from-orange-500/[0.08] to-transparent border-2 border-orange-500/30 shadow-lg shadow-orange-500/5 relative'
+                    : 'glass-strong'
+                }`}
+              >
+                {tier.highlighted && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] font-mono uppercase tracking-wider bg-orange-500 text-white px-3 py-1 rounded-full">
+                    Most Popular
+                  </span>
+                )}
+                <h3 className="text-lg font-semibold text-white">{tier.name}</h3>
+                <div className="mt-3">
+                  <span className="text-2xl sm:text-3xl font-bold text-white">{tier.price}</span>
+                </div>
+                <p className="text-sm text-orange-400 mt-1">{tier.assessments}</p>
+
+                <ul className="mt-6 space-y-2.5 flex-1">
+                  {tier.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-sm text-gray-300">
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        className="text-orange-400 flex-shrink-0 mt-0.5"
+                      >
+                        <path
+                          d="M11.5 3.5L5.25 9.75 2.5 7"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href="mailto:enterprise@inpromptify.com"
+                  className="mt-8 w-full py-2.5 rounded-lg text-sm font-medium transition-all text-center block glow-btn"
+                >
+                  Contact Sales
+                </a>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <p className="text-xs text-white/30">
+              All enterprise plans include IRT-calibrated adaptive assessments, anti-cheat architecture, and 48-hour model knowledge updates.
+            </p>
+          </div>
+        </div>
+
         {/* FAQ section */}
         <div className="max-w-3xl mx-auto mt-20 text-center">
           <h2 className="text-2xl font-bold text-white mb-8">Frequently asked</h2>
@@ -249,7 +356,7 @@ export function PricingContent() {
             {[
               {
                 q: 'What counts as an assessment?',
-                a: "One assessment = one full adaptive test (8–12 questions across 5 dimensions, role-weighted scoring). Partial attempts or abandoned sessions don't count against your limit. The Daily Challenge does not count against your assessment limit.",
+                a: "One assessment = one full adaptive test (8-12 questions across 5 dimensions, role-weighted scoring). Partial attempts or abandoned sessions don't count against your limit. The Daily Challenge does not count against your assessment limit.",
               },
               {
                 q: 'Can I try before I buy?',
@@ -265,7 +372,11 @@ export function PricingContent() {
               },
               {
                 q: "What's the difference between PromptScore and the Daily Challenge?",
-                a: 'PromptScore is your full adaptive assessment — 8–12 questions, 5-dimension scoring, role-weighted. The Daily Challenge is a quick 5-question benchmark that refreshes every day — great for practice and leaderboard competition.',
+                a: 'PromptScore is your full adaptive assessment — 8-12 questions, 5-dimension scoring, role-weighted. The Daily Challenge is a quick 5-question benchmark that refreshes every day — great for practice and leaderboard competition.',
+              },
+              {
+                q: 'What methodology does the scoring use?',
+                a: 'Our assessments use Item Response Theory (IRT) — the same psychometric framework behind the GMAT, GRE, and medical licensing exams. Each question has calibrated difficulty parameters, and your ability estimate converges on your true proficiency level with mathematical precision.',
               },
             ].map((item) => (
               <details
