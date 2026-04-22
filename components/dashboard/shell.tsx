@@ -31,7 +31,7 @@ const mainNavItems = [
   { label: "AI Assistant", href: "/dashboard/ai-assistant", icon: Bot },
   { label: "Prompt Review", href: "/dashboard/review", icon: MessageSquare },
   { label: "Daily Challenge", href: "/daily", icon: Zap },
-  { label: "Weekly Challenge", href: "/weekly", icon: Target },
+  // { label: "Weekly Challenge", href: "/weekly", icon: Target }, // Removed
   { label: "Leaderboard", href: "/dashboard/leaderboard", icon: Trophy },
   { label: "My Results", href: "/dashboard/results", icon: BarChart3 },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
