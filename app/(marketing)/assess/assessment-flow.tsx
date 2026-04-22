@@ -28,18 +28,9 @@ import { seededShuffle } from "@/lib/shuffle";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
-// Lazy-load recharts to prevent SSR/bundle crashes on mobile
-const RadarChart = dynamic(() => import("recharts").then(m => m.RadarChart), { ssr: false });
-const PolarGrid = dynamic(() => import("recharts").then(m => m.PolarGrid), { ssr: false });
-const PolarAngleAxis = dynamic(() => import("recharts").then(m => m.PolarAngleAxis), { ssr: false });
-const Radar = dynamic(() => import("recharts").then(m => m.Radar), { ssr: false });
-const ResponsiveContainer = dynamic(() => import("recharts").then(m => m.ResponsiveContainer), { ssr: false });
-const LineChart = dynamic(() => import("recharts").then(m => m.LineChart), { ssr: false });
-const Line = dynamic(() => import("recharts").then(m => m.Line), { ssr: false });
-const XAxis = dynamic(() => import("recharts").then(m => m.XAxis), { ssr: false });
-const YAxis = dynamic(() => import("recharts").then(m => m.YAxis), { ssr: false });
-const CartesianGrid = dynamic(() => import("recharts").then(m => m.CartesianGrid), { ssr: false });
-const Tooltip = dynamic(() => import("recharts").then(m => m.Tooltip), { ssr: false });
+// Lazy-load chart components to prevent SSR/bundle crashes
+const SkillRadarChart = dynamic(() => import("./results-charts").then(m => m.SkillRadarChart), { ssr: false, loading: () => <div className="h-[300px] w-full flex items-center justify-center text-gray-400 text-sm">Loading chart...</div> });
+const DifficultyChart = dynamic(() => import("./results-charts").then(m => m.DifficultyChart), { ssr: false, loading: () => <div className="h-[200px] w-full flex items-center justify-center text-gray-400 text-sm">Loading chart...</div> });
 
 type Phase = "start" | "question" | "results";
 
@@ -690,65 +681,14 @@ export function AssessmentFlow({
             {/* Radar chart */}
             <div className="border-t border-gray-100 pt-10 mb-12">
               <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider mb-6">Skill Profile</h3>
-              <div className="h-[300px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <RadarChart data={radarData} cx="50%" cy="50%" outerRadius="75%">
-                    <PolarGrid stroke="#e5e7eb" />
-                    <PolarAngleAxis
-                      dataKey="dimension"
-                      tick={{ fill: "#6b7280", fontSize: 11 }}
-                    />
-                    <Radar
-                      dataKey="score"
-                      stroke="#f97316"
-                      fill="#f97316"
-                      fillOpacity={0.15}
-                    />
-                  </RadarChart>
-                </ResponsiveContainer>
-              </div>
+              <SkillRadarChart data={radarData} />
             </div>
 
             {/* Difficulty progression */}
             <div className="border-t border-gray-100 pt-10 mb-12">
               <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider mb-2">Difficulty Progression</h3>
               <p className="text-xs text-gray-400 mb-6">How the assessment adapted to your skill level</p>
-              <div className="h-[200px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={thetaData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                    <XAxis
-                      dataKey="question"
-                      tick={{ fill: "#9ca3af", fontSize: 11 }}
-                      axisLine={{ stroke: "#e5e7eb" }}
-                      tickLine={false}
-                    />
-                    <YAxis
-                      domain={[10, 90]}
-                      tick={{ fill: "#9ca3af", fontSize: 11 }}
-                      axisLine={{ stroke: "#e5e7eb" }}
-                      tickLine={false}
-                    />
-                    <Tooltip
-                      contentStyle={{
-                        backgroundColor: "#fff",
-                        border: "1px solid #e5e7eb",
-                        borderRadius: "8px",
-                        color: "#111827",
-                        boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.05)",
-                      }}
-                    />
-                    <Line
-                      type="monotone"
-                      dataKey="theta"
-                      stroke="#f97316"
-                      strokeWidth={2}
-                      dot={{ fill: "#f97316", r: 3, strokeWidth: 0 }}
-                      activeDot={{ r: 5 }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
+              <DifficultyChart data={thetaData} />
             </div>
 
             {/* Share — subtle row */}
