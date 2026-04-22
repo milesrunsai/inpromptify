@@ -180,6 +180,7 @@ export function AssessmentFlow({
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [shuffledOptions, setShuffledOptions] = useState<Question["options"]>([]);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [textAnswer, setTextAnswer] = useState<string>("");
   const [timeLeft, setTimeLeft] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmittingResults, setIsSubmittingResults] = useState(false);
@@ -228,8 +229,9 @@ export function AssessmentFlow({
         return;
       }
       setCurrentQuestion(next);
-      setShuffledOptions(seededShuffle(next.options, userEmail + next.id));
+      setShuffledOptions(next.options ? seededShuffle(next.options, userEmail + next.id) : []);
       setSelectedOption(null);
+      setTextAnswer(""); // Reset text input
       questionStartTime.current = Date.now();
       startTimer(next.maxTimeSeconds);
     },
@@ -280,7 +282,13 @@ export function AssessmentFlow({
       if (timerRef.current) clearInterval(timerRef.current);
 
       const timeTakenMs = Date.now() - questionStartTime.current;
-      const answerId = timedOut ? "__timeout__" : selectedOption || "__timeout__";
+      // Handle both MCQ and text answers
+      let answerId: string;
+      if (currentQuestion.type === "text") {
+        answerId = timedOut ? "__timeout__" : textAnswer.trim() || "__timeout__";
+      } else {
+        answerId = timedOut ? "__timeout__" : selectedOption || "__timeout__";
+      }
 
       // Record answer timing for integrity tracking
       if (trackerRef.current) {
@@ -456,6 +464,8 @@ export function AssessmentFlow({
               {currentQuestion.text}
             </h2>
 
+            {/* Multiple Choice Questions */}
+            {(!currentQuestion.type || currentQuestion.type === "mcq") && currentQuestion.options && (
             <div className="space-y-3">
               {shuffledOptions.map((option, idx) => (
                 <button
@@ -485,9 +495,54 @@ export function AssessmentFlow({
                 </button>
               ))}
             </div>
+            )}
+            
+            {/* Text Input Questions */}
+            {currentQuestion.type === "text" && (
+              <div className="space-y-6">
+                <div className="relative">
+                  <textarea
+                    value={textAnswer}
+                    onChange={(e) => setTextAnswer(e.target.value)}
+                    placeholder={currentQuestion.placeholder || "Type your answer here..."}
+                    className="w-full h-32 p-4 border border-gray-200 rounded-xl resize-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 text-sm leading-relaxed"
+                    maxLength={500}
+                  />
+                  <div className="absolute bottom-3 right-3 text-xs text-gray-400">
+                    {textAnswer.length}/500
+                  </div>
+                </div>
+                
+                {currentQuestion.minLength && textAnswer.length < currentQuestion.minLength && (
+                  <p className="text-xs text-gray-500 text-center">
+                    Minimum {currentQuestion.minLength} characters required
+                  </p>
+                )}
+                
+                <div className="text-center">
+                  <button
+                    onClick={() => {
+                      if (isSubmitting) return;
+                      if (currentQuestion.minLength && textAnswer.length < currentQuestion.minLength) return;
+                      setTimeout(() => handleSubmitAnswer(), 200);
+                    }}
+                    disabled={isSubmitting || (currentQuestion.minLength && textAnswer.length < currentQuestion.minLength)}
+                    className={`px-8 py-3 rounded-lg font-semibold transition-all ${
+                      isSubmitting || (currentQuestion.minLength && textAnswer.length < currentQuestion.minLength)
+                        ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                        : "bg-orange-500 text-white hover:bg-orange-600"
+                    }`}
+                  >
+                    {isSubmitting ? "Submitting..." : "Submit Answer"}
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* Keyboard hint — hide on mobile */}
-            <p className="hidden sm:block text-center text-xs text-gray-300 mt-8">Press A–D to answer</p>
+            {(!currentQuestion.type || currentQuestion.type === "mcq") && (
+              <p className="hidden sm:block text-center text-xs text-gray-300 mt-8">Press A–D to answer</p>
+            )}
           </div>
           </div>
 

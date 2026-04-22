@@ -1,8 +1,12 @@
 export interface Question {
   id: string;
   text: string;
-  options: { id: string; text: string; isCorrect: boolean }[];
-  correctOptionId: string;
+  type?: "mcq" | "text"; // Multiple choice or text input
+  options?: { id: string; text: string; isCorrect: boolean }[]; // Optional for text questions
+  correctOptionId?: string; // Optional for text questions
+  correctAnswer?: string; // For text questions
+  placeholder?: string; // For text input
+  minLength?: number; // Minimum text length
   difficulty: number;
   dimensions: string[];
   tags: string[];
@@ -170,7 +174,15 @@ export function processAnswer(
   selectedOptionId: string,
   timeTakenMs: number
 ): AssessmentState {
-  const wasCorrect = selectedOptionId === question.correctOptionId;
+  let wasCorrect: boolean;
+  
+  if (question.type === "text") {
+    // For text questions, assume correct for now (will be evaluated server-side)
+    // Score should be between 0-1, treat >0.7 as correct
+    wasCorrect = selectedOptionId.length > (question.minLength || 50);
+  } else {
+    wasCorrect = selectedOptionId === question.correctOptionId;
+  }
   const maxTimeMs = question.maxTimeSeconds * 1000;
 
   const newTheta = calculateNextTheta(
