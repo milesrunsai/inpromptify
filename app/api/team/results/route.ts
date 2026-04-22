@@ -62,9 +62,9 @@ export async function GET(req: NextRequest) {
         name: a.candidateEmail.split('@')[0], // Use email prefix as name
         score: a.score,
         completedAt: a.completedAt,
-        performance: a.score >= 85 ? 'Excellent' : 
-                    a.score >= 70 ? 'Good' : 
-                    a.score >= 55 ? 'Average' : 'Needs Improvement'
+        performance: (a.score ?? 0) >= 85 ? 'Excellent' : 
+                    (a.score ?? 0) >= 70 ? 'Good' : 
+                    (a.score ?? 0) >= 55 ? 'Average' : 'Needs Improvement'
       }))
     });
 
