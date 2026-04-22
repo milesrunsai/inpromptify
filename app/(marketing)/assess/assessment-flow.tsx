@@ -274,6 +274,38 @@ export function AssessmentFlow({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeLeft]);
 
+  // Auto-submit to leaderboard when results phase is reached
+  useEffect(() => {
+    if (phase === "results" && showOnLeaderboard && email && !leaderboardRank && !isSubmittingResults) {
+      const submitToLeaderboard = async () => {
+        setIsSubmittingResults(true);
+        try {
+          const response = await fetch('/api/assessment-submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email,
+              displayName: displayName || email.split('@')[0],
+              score: overallScore,
+              dimensionScores: state.dimensionScores,
+              showOnLeaderboard,
+              responses: allResponses,
+            }),
+          });
+          const data = await response.json();
+          if (data.success && data.rank) {
+            setLeaderboardRank(data.rank);
+          }
+        } catch (error) {
+          console.error('Failed to submit to leaderboard:', error);
+        }
+        setIsSubmittingResults(false);
+      };
+      submitToLeaderboard();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase]);
+
   const handleSubmitAnswer = useCallback(
     (timedOut = false) => {
       if (!currentQuestion || isSubmitting) return;
@@ -578,42 +610,6 @@ export function AssessmentFlow({
     }));
 
     const recommendation = getHireRecommendation(overallScore);
-
-    // Submit to leaderboard if not already done
-    const handleSubmitToLeaderboard = async () => {
-      if (!email || !showOnLeaderboard || isSubmittingResults) return;
-      
-      setIsSubmittingResults(true);
-      try {
-        const response = await fetch('/api/assessment-submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email,
-            displayName: displayName || email.split('@')[0],
-            score: overallScore,
-            dimensionScores: state.dimensionScores,
-            showOnLeaderboard,
-            responses: allResponses, // Include all individual responses
-          }),
-        });
-        
-        const data = await response.json();
-        if (data.success && data.rank) {
-          setLeaderboardRank(data.rank);
-        }
-      } catch (error) {
-        console.error('Failed to submit to leaderboard:', error);
-      }
-      setIsSubmittingResults(false);
-    };
-
-    // Auto-submit on results load if opted in
-    React.useEffect(() => {
-      if (showOnLeaderboard && email && !leaderboardRank && !isSubmittingResults) {
-        handleSubmitToLeaderboard();
-      }
-    }, [showOnLeaderboard, email, leaderboardRank, isSubmittingResults]);
 
     const resultData = btoa(JSON.stringify({
       score: overallScore,
