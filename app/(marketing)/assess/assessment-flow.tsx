@@ -26,19 +26,20 @@ import { QUESTION_POOL } from "@/lib/question-bank";
 import { createIntegrityTracker, type IntegritySignals } from "@/lib/anti-cheat";
 import { seededShuffle } from "@/lib/shuffle";
 import Link from "next/link";
-import {
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  Radar,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-} from "recharts";
+import dynamic from "next/dynamic";
+
+// Lazy-load recharts to prevent SSR/bundle crashes on mobile
+const RadarChart = dynamic(() => import("recharts").then(m => m.RadarChart), { ssr: false });
+const PolarGrid = dynamic(() => import("recharts").then(m => m.PolarGrid), { ssr: false });
+const PolarAngleAxis = dynamic(() => import("recharts").then(m => m.PolarAngleAxis), { ssr: false });
+const Radar = dynamic(() => import("recharts").then(m => m.Radar), { ssr: false });
+const ResponsiveContainer = dynamic(() => import("recharts").then(m => m.ResponsiveContainer), { ssr: false });
+const LineChart = dynamic(() => import("recharts").then(m => m.LineChart), { ssr: false });
+const Line = dynamic(() => import("recharts").then(m => m.Line), { ssr: false });
+const XAxis = dynamic(() => import("recharts").then(m => m.XAxis), { ssr: false });
+const YAxis = dynamic(() => import("recharts").then(m => m.YAxis), { ssr: false });
+const CartesianGrid = dynamic(() => import("recharts").then(m => m.CartesianGrid), { ssr: false });
+const Tooltip = dynamic(() => import("recharts").then(m => m.Tooltip), { ssr: false });
 
 type Phase = "start" | "question" | "results";
 
@@ -330,7 +331,7 @@ export function AssessmentFlow({
         loadNextQuestion(newState, email);
       }, delay);
     },
-    [currentQuestion, selectedOption, state, isSubmitting, loadNextQuestion, email]
+    [currentQuestion, selectedOption, textAnswer, state, isSubmitting, loadNextQuestion, email]
   );
 
   // Keyboard shortcuts for question phase
