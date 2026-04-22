@@ -68,6 +68,8 @@ model Assessment {
   isPublic        Boolean          @default(true) // public tests show on leaderboard
   visibility      String           @default("public") // public, private, org-only
   issuedBy        String? // org that issued the test (null = self-taken)
+  inviteSubject   String? // email subject for team invites
+  inviteMessage   String? // email message for team invites
   completedAt     DateTime?
   createdAt       DateTime         @default(now())
 }

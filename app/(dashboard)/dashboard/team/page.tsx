@@ -22,6 +22,7 @@ import {
   Users,
   X,
 } from "lucide-react";
+import { TeamAssessments } from "@/components/dashboard/team-assessments";
 
 /* ---------- types ---------- */
 interface TeamMember {
@@ -179,6 +180,9 @@ export default function TeamPage() {
           Invite Member
         </Button>
       </div>
+
+      {/* Team Assessments */}
+      <TeamAssessments />
 
       {/* Members */}
       <Card className="border-gray-200 bg-white">

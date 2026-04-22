@@ -51,7 +51,8 @@ export async function POST(req: NextRequest) {
             candidateEmail: email.toLowerCase(),
             status: "PENDING",
             inviteMessage: message || `You've been invited to take an AI proficiency assessment by ${org.name}`,
-            inviteSubject: subject || "AI Proficiency Assessment Invitation"
+            inviteSubject: subject || "AI Proficiency Assessment Invitation",
+            currentTheta: 50.0
           }
         })
       )
