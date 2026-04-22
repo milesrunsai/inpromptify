@@ -25,11 +25,11 @@ export const metadata: Metadata = {
     },
   },
   title: {
-    default: "Inpromptify — AI Proficiency Assessment",
-    template: "%s | Inpromptify",
+    default: "AI Skills Assessment Platform for Enterprise Hiring | InpromptiFy",
+    template: "%s | InpromptiFy",
   },
   description:
-    "Adaptive AI proficiency assessments for hiring and upskilling. Measure real AI fluency with PromptScore.",
+    "Enterprise AI competency assessment platform. Screen candidates and upskill teams with standardized AI proficiency testing. Used by leading tech companies for hiring and workforce development.",
   icons: {
     icon: [
       { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
@@ -40,8 +40,8 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "Inpromptify — AI Proficiency Assessment",
-    description: "Measure real AI proficiency. Not AI trivia. Take the free 3-minute assessment and get your PromptScore.",
+    title: "AI Skills Assessment Platform for Enterprise Hiring | InpromptiFy",
+    description: "Screen AI talent and assess workforce competency with our enterprise assessment platform. Standardized testing for prompt engineering, model selection, and AI implementation skills.",
     url: "https://inpromptify.com",
     siteName: "Inpromptify",
     images: [
@@ -56,8 +56,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Inpromptify — AI Proficiency Assessment",
-    description: "Measure real AI proficiency. Not AI trivia. Get your PromptScore in 3 minutes.",
+    title: "AI Skills Assessment Platform for Enterprise | InpromptiFy",
+    description: "Enterprise AI competency testing for hiring and workforce development. Standardized assessments for AI skills evaluation.",
     images: ["/og-image.png"],
     site: "@Inpromptify",
     creator: "@Inpromptify",

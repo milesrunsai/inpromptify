@@ -13,10 +13,14 @@ import {
   CTASection,
 } from "@/components/marketing/homepage-sections";
 import { HomepagePricing } from "@/components/marketing/homepage-pricing";
+import { SchemaMarkup } from "@/components/seo/schema-markup";
 
 export default function LandingPage() {
   return (
     <>
+      <SchemaMarkup type="organization" />
+      <SchemaMarkup type="software" />
+      <SchemaMarkup type="service" />
       {/* Hero */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         {/* Static gradient background — visible instantly while video loads */}
@@ -42,11 +46,11 @@ export default function LandingPage() {
               <div>
                 <span className="section-label">[ AI Assessment Platform ]</span>
                 <h1 className="text-2xl sm:text-4xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-4 text-white">
-                  AI-Powered{" "}
-                  <span className="gradient-text">Proficiency Assessment</span>
+                  Enterprise{" "}
+                  <span className="gradient-text">AI Skills Assessment</span>
                 </h1>
                 <p className="mt-6 text-sm sm:text-base lg:text-lg text-gray-400 leading-relaxed">
-                  Get your AI proficiency score in 10 minutes. Join 1,000+ professionals on the leaderboard. See exactly where you rank.
+                  Screen AI talent and assess workforce competency with standardized testing. Reduce mis-hires by 95% and accelerate AI transformation.
                 </p>
               </div>
 
