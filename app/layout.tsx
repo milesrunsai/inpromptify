@@ -16,6 +16,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   title: {
     default: "Inpromptify — AI Proficiency Assessment",
     template: "%s | Inpromptify",
