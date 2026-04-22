@@ -38,8 +38,8 @@ const DIMENSION_WEIGHTS: Record<string, number> = {
   iterationIntelligence: 0.15,
 };
 
-const MIN_QUESTIONS = 8;
-const MAX_QUESTIONS = 12;
+const MIN_QUESTIONS = 12;
+const MAX_QUESTIONS = 15;
 const THETA_STABILITY_THRESHOLD = 3;
 const STABILITY_WINDOW = 3;
 

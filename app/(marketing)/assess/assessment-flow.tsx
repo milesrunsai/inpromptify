@@ -441,14 +441,14 @@ export function AssessmentFlow({
           <div className="fixed top-0 left-0 right-0 h-1 bg-gray-100 z-10">
             <div
               className="h-full bg-orange-500 transition-all duration-500"
-              style={{ width: `${(state.questionCount / 12) * 100}%` }}
+              style={{ width: `${(state.questionCount / 15) * 100}%` }}
             />
           </div>
 
           {/* Top bar: question counter + timer */}
           <div className="fixed top-4 left-0 right-0 px-6 sm:px-8 flex items-center justify-between z-10">
             <span className="text-xs sm:text-sm font-mono text-gray-400">
-              {state.questionCount + 1} / 12
+              {state.questionCount + 1} / 15
             </span>
             <span className={`text-lg sm:text-2xl font-mono font-bold tabular-nums transition-colors duration-500 ${
               isTimeLow ? "text-red-500" : isTimeWarn ? "text-yellow-500" : "text-gray-300"

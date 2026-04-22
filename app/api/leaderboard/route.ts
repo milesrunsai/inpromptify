@@ -68,7 +68,10 @@ export async function GET(req: NextRequest) {
     if (tab === "daily") {
       const today = new Date().toISOString().slice(0, 10);
       const attempts = await prisma.dailyQuizAttempt.findMany({
-        where: { date: today },
+        where: { 
+          date: today,
+          totalQuestions: 100 // Only main assessments, not daily quizzes
+        },
         orderBy: [{ score: "desc" }, { createdAt: "asc" }],
         take: 100,
       });
@@ -109,7 +112,10 @@ export async function GET(req: NextRequest) {
       const weekAgoStr = weekAgo.toISOString().slice(0, 10);
 
       const attempts = await prisma.dailyQuizAttempt.findMany({
-        where: { date: { gte: weekAgoStr } },
+        where: { 
+          date: { gte: weekAgoStr },
+          totalQuestions: 100 // Only main assessments
+        },
         orderBy: { score: "desc" },
       });
 
@@ -188,13 +194,8 @@ export async function GET(req: NextRequest) {
     }
 
     // ── All Time tab ──
-    const assessments = await prisma.assessment.findMany({
-      where: {
-        status: "COMPLETED",
-        score: { not: null },
-        isPublic: true,
-        visibility: "public",
-      },
+    const allAttempts = await prisma.dailyQuizAttempt.findMany({
+      where: { totalQuestions: 100 }, // Only main assessments
       orderBy: { score: "desc" },
       take: 100,
       select: {
@@ -206,28 +207,20 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    const entries = assessments.map((a, i) => {
-      const dims = (a.dimensionScores as Record<string, number>) || {};
-      let topDimension: string | null = null;
-      let weakDimension: string | null = null;
-
-      const dimEntries = Object.entries(dims).filter(([, v]) => typeof v === "number");
-      if (dimEntries.length > 0) {
-        dimEntries.sort((x, y) => y[1] - x[1]);
-        topDimension = DIMENSION_LABELS[dimEntries[0][0]] || dimEntries[0][0];
-        weakDimension = DIMENSION_LABELS[dimEntries[dimEntries.length - 1][0]] || dimEntries[dimEntries.length - 1][0];
-      }
-
+    const entries = allAttempts.slice(0, 100).map((a, i) => {
+      const perf = extractPerformanceData(a.responses);
+      const displayName = (a.responses as any)?.displayName || anonymizeEmail(a.email);
+      
       return {
         rank: i + 1,
-        name: anonymizeEmail(a.candidateEmail),
-        percentage: a.score || 0, // Assessment score is already 0-100
-        score: a.score || 0,
+        name: displayName,
+        percentage: a.score, // Main assessment score is 0-100
+        score: a.score,
         totalQuestions: 100,
-        streak: 0,
-        performanceScore: null,
-        topDimension,
-        weakDimension,
+        streak: a.streak,
+        performanceScore: perf.performanceScore,
+        topDimension: perf.topDimension,
+        weakDimension: perf.weakDimension,
       };
     });
 
