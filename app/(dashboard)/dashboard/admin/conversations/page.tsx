@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { MessageSquare, User, Bot, Expand, Compress, Terminal } from "lucide-react";
+import { MessageSquare, User, Bot, Expand, Minimize, Terminal } from "lucide-react";
 
 interface AiConversation {
   id: string;
@@ -166,7 +166,7 @@ export default function AdminConversationsPage() {
                       {session.messages.length} messages
                     </div>
                     {expandedId === key ? (
-                      <Compress className="size-4 text-gray-400" />
+                      <Minimize className="size-4 text-gray-400" />
                     ) : (
                       <Expand className="size-4 text-gray-400" />
                     )}

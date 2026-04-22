@@ -200,10 +200,11 @@ export async function GET(req: NextRequest) {
       take: 100,
       select: {
         id: true,
-        candidateEmail: true,
+        email: true,
         score: true,
-        dimensionScores: true,
-        completedAt: true,
+        responses: true,
+        streak: true,
+        createdAt: true,
       },
     });
 

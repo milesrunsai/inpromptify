@@ -319,8 +319,8 @@ export function AssessmentFlow({
     function handleKeyDown(e: KeyboardEvent) {
       const key = e.key.toUpperCase();
       const idx = key.charCodeAt(0) - 65; // A=0, B=1, C=2, D=3
-      if (idx >= 0 && idx < shuffledOptions.length) {
-        setSelectedOption(shuffledOptions[idx].id);
+      if (idx >= 0 && idx < (shuffledOptions?.length || 0)) {
+        setSelectedOption(shuffledOptions?.[idx]?.id || "");
         setTimeout(() => handleSubmitAnswer(), 200);
       }
     }
@@ -467,7 +467,7 @@ export function AssessmentFlow({
             {/* Multiple Choice Questions */}
             {(!currentQuestion.type || currentQuestion.type === "mcq") && currentQuestion.options && (
             <div className="space-y-3">
-              {shuffledOptions.map((option, idx) => (
+              {shuffledOptions?.map((option, idx) => (
                 <button
                   key={option.id}
                   onClick={() => {
@@ -526,9 +526,9 @@ export function AssessmentFlow({
                       if (currentQuestion.minLength && textAnswer.length < currentQuestion.minLength) return;
                       setTimeout(() => handleSubmitAnswer(), 200);
                     }}
-                    disabled={isSubmitting || (currentQuestion.minLength && textAnswer.length < currentQuestion.minLength)}
+                    disabled={isSubmitting || !!(currentQuestion.minLength && textAnswer.length < currentQuestion.minLength)}
                     className={`px-8 py-3 rounded-lg font-semibold transition-all ${
-                      isSubmitting || (currentQuestion.minLength && textAnswer.length < currentQuestion.minLength)
+                      isSubmitting || !!(currentQuestion.minLength && textAnswer.length < currentQuestion.minLength)
                         ? "bg-gray-200 text-gray-400 cursor-not-allowed"
                         : "bg-orange-500 text-white hover:bg-orange-600"
                     }`}

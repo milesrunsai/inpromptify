@@ -40,8 +40,8 @@ export async function POST(req: NextRequest) {
       await prisma.questionBank.create({
         data: {
           text: q.text,
-          options: q.options,
-          correctOptionId: q.correctOptionId,
+          options: q.options || [],
+          correctOptionId: q.correctOptionId || "",
           difficulty: q.difficulty,
           dimensions: q.dimensions,
           tags: q.tags,

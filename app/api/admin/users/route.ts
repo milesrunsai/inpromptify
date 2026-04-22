@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
               org: {
                 include: {
                   subscriptions: {
-                    orderBy: { createdAt: "desc" },
+                    orderBy: { id: "desc" },
                     take: 1,
                   },
                 },

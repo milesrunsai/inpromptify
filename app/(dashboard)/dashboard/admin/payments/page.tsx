@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/db";
 import { Download, AlertCircle } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 interface PaymentData {
   id: string;
   userEmail: string;
@@ -31,7 +33,7 @@ async function getPaymentData(): Promise<PaymentData[]> {
           },
         },
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: { id: "desc" }, // Use id since createdAt doesn't exist
       take: 100,
     });
 
@@ -44,7 +46,7 @@ async function getPaymentData(): Promise<PaymentData[]> {
         plan: sub.tier,
         amount: getPlanAmount(sub.tier),
         status: sub.status,
-        date: sub.createdAt?.toISOString() || new Date().toISOString(),
+        date: sub.org.createdAt?.toISOString() || new Date().toISOString(),
       };
     });
   } catch (error) {
