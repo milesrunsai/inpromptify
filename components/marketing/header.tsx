@@ -23,7 +23,7 @@ const navigation: NavItem[] = [
     items: [
       { name: "Features", href: "/features" },
       { name: "Prompt Review", href: "/review" },
-      { name: "Daily Challenge", href: "/daily" },
+      // { name: "Daily Challenge", href: "/daily" },
       { name: "Leaderboard", href: "/leaderboard" },
       { name: "Pricing", href: "/pricing" },
     ],

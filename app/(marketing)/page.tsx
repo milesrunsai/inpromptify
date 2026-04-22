@@ -46,18 +46,16 @@ export default function LandingPage() {
                   <span className="gradient-text">Proficiency Assessment</span>
                 </h1>
                 <p className="mt-6 text-sm sm:text-base lg:text-lg text-gray-400 leading-relaxed">
-                  Inpromptify is the intelligent assessment platform that measures,
-                  validates, and certifies AI proficiency. Real-time scoring,
-                  adaptive difficulty, and comprehensive skill mapping.
+                  Get your AI proficiency score in 10 minutes. Join 1,000+ professionals on the leaderboard. See exactly where you rank.
                 </p>
               </div>
 
               <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-4">
                 <Link
-                  href="/sign-up"
+                  href="/assess"
                   className="glow-btn px-8 py-3.5 text-base inline-block text-center"
                 >
-                  Start Assessment
+                  Take AI Assessment
                 </Link>
                 <Link
                   href="/review"
@@ -128,6 +126,51 @@ export default function LandingPage() {
       <BoldStatement />
       <FeaturesSection />
       <StatsSection />
+      
+      {/* Leaderboard Preview */}
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900">Today's Top Performers</h2>
+            <p className="mt-4 text-lg text-gray-600">See how you compare to AI professionals worldwide</p>
+          </div>
+          
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-lg p-8">
+              <div className="space-y-4">
+                {/* Sample leaderboard entries */}
+                {[
+                  { rank: 1, name: "Alex Chen", score: 94, badge: "🥇" },
+                  { rank: 2, name: "Jordan Smith", score: 91, badge: "🥈" },
+                  { rank: 3, name: "Sam Taylor", score: 89, badge: "🥉" },
+                  { rank: 4, name: "Casey Rivera", score: 87, badge: "" },
+                  { rank: 5, name: "River Jones", score: 85, badge: "" },
+                ].map((entry) => (
+                  <div key={entry.rank} className="flex items-center justify-between p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-sm font-semibold text-gray-600">
+                        {entry.badge || entry.rank}
+                      </div>
+                      <span className="font-medium text-gray-900">{entry.name}</span>
+                    </div>
+                    <span className="text-lg font-bold text-orange-600">{entry.score}/100</span>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="mt-8 text-center">
+                <Link 
+                  href="/assess" 
+                  className="inline-flex items-center px-6 py-3 rounded-lg bg-orange-600 text-white font-semibold hover:bg-orange-700 transition-colors"
+                >
+                  Take Assessment & Join Leaderboard
+                </Link>
+                <p className="mt-2 text-sm text-gray-500">Free • 10 minutes • Instant results</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <UseCasesSection />
       <TestimonialsSection />
       <SecuritySection />
