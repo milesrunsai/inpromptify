@@ -110,7 +110,7 @@ export default async function DashboardOverviewPage() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <p className="text-sm font-semibold text-gray-900">Free Plan</p>
-              <p className="text-xs text-gray-500">3 assessments/mo, 3 prompt reviews/day, basic PromptScore</p>
+              <p className="text-xs text-gray-500">1 assessment/month, basic PromptScore</p>
             </div>
             <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-gray-100 text-gray-600">Current</span>
           </div>
@@ -123,7 +123,11 @@ export default async function DashboardOverviewPage() {
               </div>
               <div className="flex items-center gap-1.5">
                 <svg className="size-3.5 text-orange-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                Unlimited reviews
+                Daily skill exercises
+              </div>
+              <div className="flex items-center gap-1.5">
+                <svg className="size-3.5 text-orange-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                AI news & model updates
               </div>
               <div className="flex items-center gap-1.5">
                 <svg className="size-3.5 text-orange-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
@@ -131,15 +135,11 @@ export default async function DashboardOverviewPage() {
               </div>
               <div className="flex items-center gap-1.5">
                 <svg className="size-3.5 text-orange-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                Full dimension breakdown
+                Progress tracking
               </div>
               <div className="flex items-center gap-1.5">
                 <svg className="size-3.5 text-orange-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                LinkedIn badge
-              </div>
-              <div className="flex items-center gap-1.5">
-                <svg className="size-3.5 text-orange-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                Score history
+                Improvement recommendations
               </div>
             </div>
             <Link
