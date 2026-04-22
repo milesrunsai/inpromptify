@@ -3,214 +3,148 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { ScoreRing } from "@/components/ui/score-ring";
 
 interface ResultData {
   score: number;
   dimensions: Record<string, number>;
-  role: string;
   date: string;
   name?: string;
 }
 
-const DIMENSION_LABELS: Record<string, string> = {
-  promptQuality: "Prompt Quality",
-  efficiency: "Efficiency",
-  speed: "Speed",
-  responseQuality: "Response Quality",
-  iterationIntelligence: "Iteration Intelligence",
-};
-
 function getScoreLabel(score: number): string {
-  if (score >= 97) return "Grandmaster";
-  if (score >= 92) return "Master";
-  if (score >= 85) return "Expert";
-  if (score >= 75) return "Advanced";
-  if (score >= 65) return "Proficient";
-  if (score >= 45) return "Intermediate";
-  if (score >= 25) return "Developing";
-  return "Beginner";
-}
-
-function getScoreColor(score: number): string {
-  if (score >= 80) return "#22c55e";
-  if (score >= 65) return "#f97316";
-  if (score >= 45) return "#eab308";
-  return "#ef4444";
-}
-
-function getRecommendation(score: number): { label: string; color: string; text: string } {
-  if (score >= 75) return { label: "Strong Hire", color: "#22c55e", text: "Demonstrates advanced AI fluency across multiple dimensions. Recommended for AI-intensive roles." };
-  if (score >= 55) return { label: "Hire", color: "#f97316", text: "Solid AI proficiency with room for growth. Suitable for roles with moderate AI requirements." };
-  if (score >= 40) return { label: "Conditional", color: "#eab308", text: "Foundational AI knowledge present. May benefit from targeted training before placement." };
-  return { label: "Not Ready", color: "#ef4444", text: "Significant gaps in AI proficiency. Recommend structured upskilling program before assessment." };
+  if (score >= 85) return "Exceptional";
+  if (score >= 70) return "Proficient";
+  if (score >= 55) return "Developing";
+  return "Needs Improvement";
 }
 
 export default function ResultsPage() {
   const params = useParams();
-  const id = params.id as string;
-  const [result, setResult] = useState<ResultData | null>(null);
+  const [resultData, setResultData] = useState<ResultData | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Decode result from URL param (base64 encoded JSON)
     try {
-      const decoded = atob(id);
-      const data = JSON.parse(decoded);
-      setResult(data);
-    } catch {
-      setResult(null);
+      const id = params.id as string;
+      if (id) {
+        // Decode the base64 result data
+        const decoded = atob(id);
+        const data = JSON.parse(decoded);
+        setResultData(data);
+      }
+    } catch (error) {
+      console.error("Failed to decode result data:", error);
     }
-  }, [id]);
+    setLoading(false);
+  }, [params.id]);
 
-  if (!result) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-400">Invalid or expired results link.</p>
+        <div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
-  const recommendation = getRecommendation(result.score);
+  if (!resultData) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Invalid Result</h1>
+          <p className="text-gray-600 mb-8">This result link is not valid or has expired.</p>
+          <Link 
+            href="/assess"
+            className="bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600"
+          >
+            Take Assessment
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const shareUrl = `${typeof window !== "undefined" ? window.location.origin : ""}${typeof window !== "undefined" ? window.location.pathname : ""}`;
+  const shareText = `I scored ${resultData.score}/100 (${getScoreLabel(resultData.score)}) on the Inpromptify AI Proficiency Assessment. Think you can beat it?`;
 
   return (
-    <div className="min-h-screen pt-24 pb-16">
-      <div className="max-w-4xl mx-auto px-4">
-        {/* Score Card */}
-        <div
-          className="relative rounded-2xl overflow-hidden"
-          style={{ minHeight: "600px" }}
-        >
-          {/* Background */}
-          <img
-            src="/scorecard-bg.jpg"
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/40" />
+    <>
+      <style>{`header, nav, footer, [role="banner"], [role="contentinfo"] { display: none !important; }`}</style>
+      <div className="min-h-screen bg-white">
+        <div className="max-w-2xl mx-auto px-6 py-16">
+          
+          {/* Header */}
+          <div className="text-center mb-16">
+            <p className="text-xs font-medium text-orange-500 uppercase tracking-widest mb-6">Assessment Complete</p>
+            <ScoreRing score={resultData.score} />
+            <p className="mt-2 text-sm text-gray-400">
+              AI Proficiency Assessment Result
+            </p>
+          </div>
 
-          {/* Content overlay */}
-          <div className="relative z-10 p-8 sm:p-12 flex flex-col h-full min-h-[600px]">
-            {/* Header */}
-            <div className="flex items-center justify-between">
-              <Image
-                src="/logo.png"
-                alt="Inpromptify"
-                width={40}
-                height={40}
-                className="h-8 w-auto"
-              />
-              <span className="text-xs text-white/40 tracking-wider uppercase">
-                AI Proficiency Assessment
-              </span>
-            </div>
-
-            {/* Score */}
-            <div className="flex-1 flex flex-col items-center justify-center text-center py-12">
-              {result.name && (
-                <p className="text-sm text-white/50 mb-4">{result.name}</p>
-              )}
-
-              {/* Score circle */}
-              <div className="relative w-40 h-40 mb-6">
-                <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
-                  <circle
-                    cx="60" cy="60" r="54"
-                    fill="none"
-                    stroke="rgba(255,255,255,0.06)"
-                    strokeWidth="6"
-                  />
-                  <circle
-                    cx="60" cy="60" r="54"
-                    fill="none"
-                    stroke={getScoreColor(result.score)}
-                    strokeWidth="6"
-                    strokeLinecap="round"
-                    strokeDasharray={`${(result.score / 100) * 339.292} 339.292`}
-                  />
-                </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-5xl font-bold text-white tabular-nums">
-                    {result.score}
+          {/* Score breakdown */}
+          <div className="bg-gray-50 rounded-2xl p-8 mb-12">
+            <h3 className="text-lg font-semibold text-gray-900 mb-6">Your AI Skills Breakdown</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {Object.entries(resultData.dimensions || {}).map(([dimension, score]) => (
+                <div key={dimension} className="flex items-center justify-between p-4 bg-white rounded-lg">
+                  <span className="text-sm font-medium text-gray-700 capitalize">
+                    {dimension.replace(/([A-Z])/g, ' $1').trim()}
                   </span>
-                  <span className="text-xs text-white/50 mt-1">/ 100</span>
+                  <span className="text-sm font-bold text-gray-900">{score}/100</span>
                 </div>
-              </div>
-
-              <h2 className="text-2xl font-bold text-white">
-                {getScoreLabel(result.score)}
-              </h2>
-              <p className="text-sm text-white/50 mt-1">
-                PromptScore
-              </p>
-
-              {/* Recommendation badge */}
-              <div
-                className="mt-4 px-4 py-1.5 rounded-full text-xs font-semibold"
-                style={{
-                  backgroundColor: `${recommendation.color}20`,
-                  color: recommendation.color,
-                }}
-              >
-                {recommendation.label}
-              </div>
-            </div>
-
-            {/* Dimension bars */}
-            <div className="space-y-3 mb-8">
-              {Object.entries(DIMENSION_LABELS).map(([key, label]) => {
-                const score = Math.round(result.dimensions[key] || 50);
-                return (
-                  <div key={key}>
-                    <div className="flex items-center justify-between text-xs mb-1">
-                      <span className="text-white/60">{label}</span>
-                      <span className="text-white font-medium tabular-nums">{score}</span>
-                    </div>
-                    <div className="h-1.5 w-full rounded-full bg-white/[0.06]">
-                      <div
-                        className="h-full rounded-full transition-all duration-700"
-                        style={{
-                          width: `${score}%`,
-                          backgroundColor: getScoreColor(score),
-                        }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Footer */}
-            <div className="flex items-center justify-between text-xs text-white/30">
-              <span>{result.role || "General Assessment"}</span>
-              <span>inpromptify.com</span>
+              ))}
             </div>
           </div>
-        </div>
 
-        {/* CTA below card */}
-        <div className="mt-12 text-center">
-          <h2 className="text-2xl font-bold text-white">
-            Think you can beat this score?
-          </h2>
-          <p className="text-gray-400 mt-2">
-            Take the free 3-minute AI proficiency assessment. No account required.
-          </p>
-          <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
+          {/* Share section */}
+          <div className="text-center mb-12">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Share Your Score</h3>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+                  alert('Link copied to clipboard!');
+                }}
+                className="bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600"
+              >
+                Copy Link
+              </button>
+              <a
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600"
+              >
+                Share on X
+              </a>
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link 
               href="/assess"
-              className="glow-btn px-8 py-3 text-sm font-medium inline-block text-center"
+              className="bg-gray-900 text-white px-8 py-3 rounded-lg hover:bg-gray-800 text-center"
             >
-              Take the Assessment
+              Retake Assessment
             </Link>
-            <Link
-              href="/features"
-              className="ghost-btn px-8 py-3 text-sm inline-block text-center"
+            <Link 
+              href="/leaderboard"
+              className="border border-gray-300 text-gray-900 px-8 py-3 rounded-lg hover:bg-gray-50 text-center"
             >
-              How It Works
+              View Leaderboard
+            </Link>
+          </div>
+
+          {/* Footer */}
+          <div className="text-center mt-16">
+            <Link href="/" className="text-sm text-gray-500 hover:text-gray-700">
+              ← Return to Home
             </Link>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
