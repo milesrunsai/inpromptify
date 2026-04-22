@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -182,6 +182,8 @@ export function AssessmentFlow({
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmittingResults, setIsSubmittingResults] = useState(false);
+  const [leaderboardRank, setLeaderboardRank] = useState<number | null>(null);
   const [integritySignals, setIntegritySignals] = useState<IntegritySignals | null>(null);
   const [copied, setCopied] = useState(false);
   const [showResumeText, setShowResumeText] = useState(false);
@@ -510,6 +512,41 @@ export function AssessmentFlow({
 
     const recommendation = getHireRecommendation(overallScore);
 
+    // Submit to leaderboard if not already done
+    const handleSubmitToLeaderboard = async () => {
+      if (!email || !showOnLeaderboard || isSubmittingResults) return;
+      
+      setIsSubmittingResults(true);
+      try {
+        const response = await fetch('/api/assessment-submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email,
+            displayName: displayName || email.split('@')[0],
+            score: overallScore,
+            dimensionScores: state.dimensionScores,
+            showOnLeaderboard,
+          }),
+        });
+        
+        const data = await response.json();
+        if (data.success && data.rank) {
+          setLeaderboardRank(data.rank);
+        }
+      } catch (error) {
+        console.error('Failed to submit to leaderboard:', error);
+      }
+      setIsSubmittingResults(false);
+    };
+
+    // Auto-submit on results load if opted in
+    React.useEffect(() => {
+      if (showOnLeaderboard && email && !leaderboardRank && !isSubmittingResults) {
+        handleSubmitToLeaderboard();
+      }
+    }, [showOnLeaderboard, email, leaderboardRank, isSubmittingResults]);
+
     const resultData = btoa(JSON.stringify({
       score: overallScore,
       dimensions: state.dimensionScores,
@@ -533,6 +570,11 @@ export function AssessmentFlow({
               <p className="mt-2 text-sm text-gray-400">
                 Based on {state.questionCount} adaptive questions
               </p>
+              {leaderboardRank && (
+                <p className="mt-4 text-sm text-gray-500">
+                  🏆 You ranked #{leaderboardRank} on today's leaderboard!
+                </p>
+              )}
               <span className={`inline-block mt-3 text-xs font-medium uppercase tracking-wider px-3 py-1 rounded-full ${
                 overallScore >= 75 ? "bg-green-50 text-green-700" :
                 overallScore >= 55 ? "bg-orange-50 text-orange-700" :
@@ -661,6 +703,14 @@ export function AssessmentFlow({
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" /></svg>
                   {copied ? "Copied" : "Copy link"}
                 </button>
+                {showOnLeaderboard && (
+                  <Link 
+                    href="/leaderboard" 
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-orange-200 bg-orange-50 text-sm text-orange-700 hover:bg-orange-100 transition-colors"
+                  >
+                    🏆 View Leaderboard
+                  </Link>
+                )}
               </div>
             </div>
 
