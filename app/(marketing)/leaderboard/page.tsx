@@ -146,10 +146,10 @@ export default function LeaderboardPage() {
               Take the challenge and claim the top spot.
             </p>
             <Link
-              href="/daily"
+              href="/assess"
               className="glow-btn px-8 py-3 text-sm font-medium inline-block"
             >
-              Start Daily Challenge
+              Take AI Assessment
             </Link>
           </div>
         ) : (
@@ -322,10 +322,10 @@ export default function LeaderboardPage() {
             </p>
             <div className="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
               <Link
-                href="/daily"
+                href="/assess"
                 className="glow-btn px-8 py-3 text-sm font-medium inline-block"
               >
-                Daily Challenge
+                AI Assessment
               </Link>
               <Link
                 href="/assess"
