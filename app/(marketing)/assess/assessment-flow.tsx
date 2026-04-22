@@ -185,6 +185,13 @@ export function AssessmentFlow({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmittingResults, setIsSubmittingResults] = useState(false);
   const [leaderboardRank, setLeaderboardRank] = useState<number | null>(null);
+  const [allResponses, setAllResponses] = useState<Array<{
+    questionId: string;
+    selectedOptionId: string;
+    wasCorrect: boolean;
+    timeTakenMs: number;
+    questionType: string;
+  }>>([]);
   const [integritySignals, setIntegritySignals] = useState<IntegritySignals | null>(null);
   const [copied, setCopied] = useState(false);
   const [showResumeText, setShowResumeText] = useState(false);
@@ -294,6 +301,19 @@ export function AssessmentFlow({
       if (trackerRef.current) {
         trackerRef.current.recordAnswer(timeTakenMs);
       }
+
+      // Record response for calibration
+      const wasCorrect = currentQuestion.type === "text" 
+        ? answerId.length > (currentQuestion.minLength || 50)
+        : answerId === currentQuestion.correctOptionId;
+        
+      setAllResponses(prev => [...prev, {
+        questionId: currentQuestion.id,
+        selectedOptionId: answerId,
+        wasCorrect,
+        timeTakenMs,
+        questionType: currentQuestion.type || "mcq"
+      }]);
 
       const newState = processAnswer(
         state,
@@ -582,6 +602,7 @@ export function AssessmentFlow({
             score: overallScore,
             dimensionScores: state.dimensionScores,
             showOnLeaderboard,
+            responses: allResponses, // Include all individual responses
           }),
         });
         

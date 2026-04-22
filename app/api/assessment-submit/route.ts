@@ -6,7 +6,7 @@ import { prisma } from "@/lib/db";
 export async function POST(req: NextRequest) {
   try {
     const user = await getCurrentUser();
-    const { email, displayName, score, dimensionScores, showOnLeaderboard } = await req.json();
+    const { email, displayName, score, dimensionScores, showOnLeaderboard, responses } = await req.json();
 
     if (!email || typeof score !== "number") {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -32,6 +32,26 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ 
         error: "You can only take the main assessment once per day" 
       }, { status: 409 });
+    }
+
+    // Save individual responses for calibration
+    if (responses && Array.isArray(responses)) {
+      try {
+        await Promise.all(
+          responses.map((r: any) =>
+            prisma.calibrationResponse.create({
+              data: {
+                questionId: r.questionId,
+                selectedOptionId: r.selectedOptionId,
+                wasCorrect: r.wasCorrect,
+                timeTakenMs: r.timeTakenMs,
+              },
+            })
+          )
+        );
+      } catch (e) {
+        console.error("CalibrationResponse write failed:", e);
+      }
     }
 
     // Save to leaderboard if opted in
